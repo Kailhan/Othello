@@ -1,7 +1,13 @@
 public class Logic {
 
-    public int countBlack(){
-       return 0;
+    public int countBlack(int[][] boardGrid){
+       for(int i = 0; i < boardGrid.length){
+           for(int j = 0; j < boardGrid[0].length){
+               {
+
+               }
+           }
+       }
     }
 
     public int countWhite(){
@@ -22,9 +28,9 @@ public class Logic {
 
     }
 
-    public enum turn(.){
+    public enum turn(){
 
-    }
+
 
 
 }
