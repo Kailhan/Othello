@@ -1,26 +1,38 @@
 public class Logic {
 
-    public int countBlack(int[][] boardGrid){
-       for(int i = 0; i < boardGrid.length){
-           for(int j = 0; j < boardGrid[0].length){
-               {
-
-               }
-           }
-       }
+    public int countBlack(Grid grid) {
+        int[][] boardGrid = grid.getBoardGrid();
+        int nrBlack = 0;
+        for (int i = 0; i < boardGrid.length; i++) {
+            for (int j = 0; j < boardGrid[0].length; j++) {
+                if (boardGrid[i][j] == 1) nrBlack++;
+            }
+        }
+        return nrBlack;
     }
 
-    public int countWhite(){
-        return 0;
+
+    public int countWhite(Grid grid){
+        int[][] boardGrid = grid.getBoardGrid();
+        int nrWhite = 0;
+        for (int i = 0; i < boardGrid.length; i++) {
+            for (int j = 0; j < boardGrid[0].length; j++) {
+                if (boardGrid[i][j] == 1) nrWhite++;
+            }
+        }
+        return nrWhite;
     }
 
     //change color; who's turn; only coordinate as input
-    public void changeColor(int x, int y){
+    public void changeColor(Grid grid, int x, int y){
+        int[][] boardGrid = grid.getBoardGrid();
 
+        if(boardGrid[x][y] == 1) boardGrid[x][y] = 2;
+        if(boardGrid[x][y] == 2) boardGrid[x][y] = 1;
     }
 
     public boolean checkSquareAllowed(Grid grid, int x, int y){
-        grid.BoardGrid(x,y)
+        int[][] boardGrid = grid.getBoardGrid();
         return false;
     }
 
@@ -28,7 +40,6 @@ public class Logic {
 
     }
 
-    public enum turn(){
 
 
 
