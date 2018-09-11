@@ -31,20 +31,47 @@ public class Logic {
         if(boardGrid[x][y] == 2) boardGrid[x][y] = 1;
     }
 
-    public boolean checkSquareAllowed(Grid grid, int x, int y){
-        int[][] boardGrid = grid.getBoardGrid();
+    public boolean checkSquareAllowed(Grid grid, GameEngine gameEngine, int x, int y){
+        int[][] board = grid.getBoardGrid();
+        int sizeBoard = grid.getSize();
+
+        if(board[x][y] == 0){
+            if(x==0 && y==0){
+
+            }
+            if(x==0){
+
+            }
+            if(y==0){
+
+            }
+            if(x==sizeBoard && y==sizeBoard){
+
+            }
+            if(x==sizeBoard){
+
+            }
+            if(y==sizeBoard){
+
+            }
+            else{
+
+            }
+        } else{
+            return false;
+        }
         return false;
     }
 
     public int numberSquaresAllowed(){
-
+        return 0;
     }
 
-    public enum changeTurn(GameEngine gameEngine){
-        if(gameEngine.getTurn() == WHITE){
-            gameEngine.setTurn(BLACK);
+    public void changeTurn(GameEngine gameEngine){
+        if(gameEngine.getTurn() == 1){
+            gameEngine.setTurn(2);
         } else{
-            gameEngine.setTurn(WHITE);
+            gameEngine.setTurn(1);
         }
     }
 

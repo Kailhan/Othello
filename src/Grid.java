@@ -35,4 +35,8 @@ public class Grid {
         return boardGrid;
     }
 
+    public int getSize(){
+        return size;
+    }
+
 }
