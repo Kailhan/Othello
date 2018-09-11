@@ -14,7 +14,8 @@ public class Logic {
     }
 
     public boolean checkSquareAllowed(Grid grid, int x, int y){
-        grid.BoardGrid(x,y)
+        int[][] board = grid.getBoardGrid();
+
         return false;
     }
 
@@ -22,8 +23,12 @@ public class Logic {
 
     }
 
-    public enum turn(.){
-
+    public enum changeTurn(GameEngine gameEngine){
+        if(gameEngine.getTurn() == WHITE){
+            gameEngine.setTurn(BLACK);
+        } else{
+            gameEngine.setTurn(WHITE);
+        }
     }
 
 
