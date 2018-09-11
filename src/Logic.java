@@ -1,11 +1,11 @@
 public class Logic {
 
     public int countBlack(Grid grid) {
-        int[][] boardGrid = grid.getBoardGrid();
+        int[][] board = grid.getBoardGrid();
         int nrBlack = 0;
-        for (int i = 0; i < boardGrid.length; i++) {
-            for (int j = 0; j < boardGrid[0].length; j++) {
-                if (boardGrid[i][j] == 1) nrBlack++;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j] == 1) nrBlack++;
             }
         }
         return nrBlack;
@@ -13,11 +13,11 @@ public class Logic {
 
 
     public int countWhite(Grid grid){
-        int[][] boardGrid = grid.getBoardGrid();
+        int[][] board = grid.getBoardGrid();
         int nrWhite = 0;
-        for (int i = 0; i < boardGrid.length; i++) {
-            for (int j = 0; j < boardGrid[0].length; j++) {
-                if (boardGrid[i][j] == 1) nrWhite++;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j] == 1) nrWhite++;
             }
         }
         return nrWhite;
@@ -25,10 +25,10 @@ public class Logic {
 
     //change color; who's turn; only coordinate as input
     public void changeColor(Grid grid, int x, int y){
-        int[][] boardGrid = grid.getBoardGrid();
+        int[][] board = grid.getBoardGrid();
 
-        if(boardGrid[x][y] == 1) boardGrid[x][y] = 2;
-        if(boardGrid[x][y] == 2) boardGrid[x][y] = 1;
+        if(board[x][y] == 1) board[x][y] = 2;
+        if(board[x][y] == 2) board[x][y] = 1;
     }
 
     public boolean checkSquareAllowed(Grid grid, GameEngine gameEngine, int x, int y){
@@ -63,8 +63,17 @@ public class Logic {
         return false;
     }
 
-    public int numberSquaresAllowed(){
-        return 0;
+    public int numberSquaresAllowed(Grid grid, GameEngine gameEngine){
+        int[][] board = grid.getBoardGrid();
+
+        int nrOfAllowedSquares = 0;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (checkSquareAllowed(grid, gameEngine, i,j)) nrOfAllowedSquares++;
+            }
+            return nrOfAllowedSquares;
+        }
+
     }
 
     public void changeTurn(GameEngine gameEngine){
