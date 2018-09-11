@@ -1,29 +1,14 @@
 public class GameEngine {
+    //player 1 is black, player 2 is white
+    private int turn = 1; //player 1 begins
 
-    public int countBlack(){
-       return 0;
+
+    public int getTurn(){
+        return turn;
     }
 
-    public int countWhite(){
-        return 0;
+    public void setTurn(int newTurn){
+        turn = newTurn;
     }
-
-    //change color; who's turn; only coordinate as input
-    public void changeColor(int x, int y){
-
-    }
-
-    public boolean checkSquareAllowed(){
-        return false;
-    }
-
-    public int numberSquaresAllowed(){
-
-    }
-
-    public enum turn(.){
-
-    }
-
 
 }
