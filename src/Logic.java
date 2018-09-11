@@ -40,8 +40,13 @@ public class Logic {
 
     }
 
-
-
+    public enum changeTurn(GameEngine gameEngine){
+        if(gameEngine.getTurn() == WHITE){
+            gameEngine.setTurn(BLACK);
+        } else{
+            gameEngine.setTurn(WHITE);
+        }
+    }
 
 
 }
