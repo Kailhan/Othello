@@ -17,3 +17,6 @@ out/production/Othello/AI/AI.class
 .idea/workspace.xml
 .idea/misc.xml
 .idea/workspace.xml
+*.xml
+*.class
+.idea/workspace.xml
