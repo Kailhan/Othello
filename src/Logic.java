@@ -1,4 +1,4 @@
-public class GameEngine {
+public class Logic {
 
     public int countBlack(){
        return 0;
@@ -13,7 +13,8 @@ public class GameEngine {
 
     }
 
-    public boolean checkSquareAllowed(){
+    public boolean checkSquareAllowed(Grid grid, int x, int y){
+        grid.BoardGrid(x,y)
         return false;
     }
 
