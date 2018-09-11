@@ -31,5 +31,8 @@ public class Grid {
         }
     }
 
+    public int[][] getBoardGrid(){
+        return boardGrid;
+    }
 
 }
