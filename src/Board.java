@@ -1,6 +1,4 @@
-import java.util.Arrays;
-
-public class Grid {
+public class Board {
 
     private int[][] boardGrid;
     private final int EMPTY = 0;
@@ -9,11 +7,11 @@ public class Grid {
 
     private int size;
 
-    public Grid() {
+    public Board() {
         this(8);
     }
 
-    public Grid(int size) {
+    public Board(int size) {
         size = (size < 4) ? 4: size; //enforces minimum size of 4
         this.size = ((size % 2) == 0) ? size : (size-1); //makes sure board is even
         boardGrid = new int[size][size];
@@ -29,6 +27,14 @@ public class Grid {
                 System.out.print(boardGrid[r][c] + " ");
             System.out.println();
         }
+    }
+
+    public int[][] getBoardGrid() {
+        return boardGrid;
+    }
+
+    public void setBoardGrid(int[][] boardGrid) {
+        this.boardGrid = boardGrid;
     }
 
 }
