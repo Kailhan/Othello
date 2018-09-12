@@ -10,17 +10,17 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoardVisual extends Application {
+public class GameScreen extends Application {
 
     private Stage window;
     private int[][] board;
     private GridPane grid = new GridPane();
-    private int windowSize = 800;
+    private int windowSize = 600;
     private int gap = 5;
 
-    File discBlack = new File("Assets/disc_blackBgr.png");
-    File discWhite = new File("Assets/disc_whiteBgr.png");
-    File bgr = new File("Assets/Bgr.png");
+    File discBlack = new File("src/Assets/disc_blackBgr.png");
+    File discWhite = new File("src/Assets/disc_whiteBgr.png");
+    File bgr = new File("src/Assets/Bgr.png");
 
     public static void main(String[] args) {
         launch(args);
