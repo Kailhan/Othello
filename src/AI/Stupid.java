@@ -1,6 +1,6 @@
 package AI;
 
-public class Stupid {
+public class Stupid implements AI {
     private int[][] board;
     private int[][] move;
 

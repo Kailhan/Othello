@@ -37,8 +37,7 @@ public class Board {
         this.boardGrid = boardGrid;
     }
 
-    public int getSize(){
+    public int getSize() {
         return size;
     }
-
 }

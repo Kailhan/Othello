@@ -31,7 +31,6 @@ public class Logic {
         if(board[x][y] == 2) board[x][y] = 1;
     }
 
-    //only returns if it possible to place a disk on the selected square (NOT: show the disks that would switch color)
     public boolean checkSquareAllowed(Board grid, GameEngine gameEngine, int x, int y){
         int[][] board = grid.getBoardGrid();
         int sizeBoard = grid.getSize();
@@ -64,19 +63,17 @@ public class Logic {
         return false;
     }
 
-    public int numberSquaresAllowed(Board grid, GameEngine gameEngine) {
+    public int numberSquaresAllowed(Board grid, GameEngine gameEngine){
         int[][] board = grid.getBoardGrid();
 
         int nrOfAllowedSquares = 0;
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                if (checkSquareAllowed(grid, gameEngine, i, j)) nrOfAllowedSquares++;
+                if (checkSquareAllowed(grid, gameEngine, i,j)) nrOfAllowedSquares++;
             }
             return nrOfAllowedSquares;
         }
-        return 0; //plsfix
-    }
-
+        return 0;
     }
 
     public void changeTurn(GameEngine gameEngine){
@@ -86,6 +83,4 @@ public class Logic {
             gameEngine.setTurn(1);
         }
     }
-
-
 }

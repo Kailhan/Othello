@@ -26,6 +26,7 @@ public class BoardVisual extends Application {
         launch(args);
     }
 
+
     public void start(Stage primaryStage) throws Exception {
 
         this.board = new Board().getBoardGrid();
@@ -34,7 +35,7 @@ public class BoardVisual extends Application {
         window.setTitle("Othello");
 
         //grid.setPadding(new Insets(10, 10, 10, 10));
-        grid.setGridLinesVisible(false);
+        grid.setGridLinesVisible(true);
         grid.setVgap(gap);
         grid.setHgap(gap);
 
