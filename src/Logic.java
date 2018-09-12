@@ -35,83 +35,32 @@ public class Logic {
     public boolean checkSquareAllowed(Board grid, GameEngine gameEngine, int x, int y){
         int[][] board = grid.getBoardGrid();
         int sizeBoard = grid.getSize();
-        int turn = gameEngine.getTurn();
-        int playerNr = 1;
-
-        if(turn%2 != 0){
-            playerNr = 1; //player 1 Black
-        }
-        else playerNr = 2; //player 2 White
 
         if(board[x][y] == 0){
-            //check corners and sides
-            for(int i=x; i>-1; i--){ //vertical North
-                if(board[i][y] == 0){
-                    break;
-                }
-                if(board[i][y] == playerNr){
-                    return true;
-                }
+            if(x==0 && y==0){
+
             }
-            for(int i=x; i>-1; i--){ //diagonal N-E
-                for(int j=y; j<sizeBoard; j++){
-                    if(board[i][j] == 0){
-                        break;
-                    }
-                    if(board[i][j] == playerNr){
-                        return true;
-                    }
-                }
+            if(x==0){
+
             }
-            for(int i=y; i>-1; i--){ //horizontal East
-                if(board[x][i] == 0){
-                    break;
-                }
-                if(board[x][i] == playerNr){
-                    return true;
-                }
+            if(y==0){
+
             }
-            for(int i=x; i>sizeBoard; i++){ //diagonal E-Z
-                for(int j=y; j<sizeBoard; j++){
-                    if(board[i][j] == 0){
-                        break;
-                    }
-                    if(board[i][j] == playerNr){
-                        return true;
-                    }
-                }
+            if(x==sizeBoard && y==sizeBoard){
+
             }
-            for(int i=x; i>sizeBoard; i++){ //vertical South
-                if(board[i][y] == 0){
-                    break;
-                }
-                if(board[i][y] == playerNr){
-                    return true;
-                }
+            if(x==sizeBoard){
+
             }
-            for(int i=x; i>sizeBoard; i++){ //diagonal S-W
-                for(int j=y; j<-1; j--){
-                    if(board[i][j] == 0){
-                        break;
-                    }
-                    if(board[i][j] == playerNr){
-                        return true;
-                    }
-                }
+            if(y==sizeBoard){
+
             }
-            for(int i=y; i>-1; i--){ //horizontal West
-                if(board[x][i] == 0){
-                    break;
-                }
-                if(board[x][i] == playerNr){
-                    return true;
-                }
+            else{
+
             }
-        }
-        else{
+        } else{
             return false;
         }
-
         return false;
     }
 
@@ -128,12 +77,6 @@ public class Logic {
         return 0; //plsfix
     }
 
-    public void applyMove(){
-
-    }
-
-    public int numberSquaresAllowed(){
-        return 0;
     }
 
     public void changeTurn(GameEngine gameEngine){
