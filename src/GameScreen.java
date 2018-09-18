@@ -1,9 +1,10 @@
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -16,7 +17,8 @@ import java.util.List;
 public class GameScreen extends Application {
 
     private Stage window;
-    private int[][] board;
+    private Board board;
+    private int[][] boardGrid;
     private GridPane grid = new GridPane();
     private int windowSize = 600;
     private int gap = 5;
@@ -34,8 +36,9 @@ public class GameScreen extends Application {
 
     public void start(Stage primaryStage) throws Exception {
 
-        this.board = new Board().getBoardGrid();
-        this.tileSize = windowSize/board[0].length;
+        this.board = new Board();
+        this.boardGrid = board.getBoardGrid();
+        this.tileSize = windowSize/ boardGrid[0].length;
         this.window = primaryStage;
         window.setTitle("Othello");
 
@@ -49,7 +52,7 @@ public class GameScreen extends Application {
         BorderPane bPane = new BorderPane();
         bPane.setCenter(grid); //can directly create scene from grid if borderpane layout is not gonna be used
 
-        Scene scene = new Scene(bPane, windowSize + tileSize*3 + gap*(board.length+2), windowSize + gap*(board.length-1), Color.rgb(128, 128, 128));
+        Scene scene = new Scene(bPane, windowSize + tileSize*3 + gap*(boardGrid.length+2), windowSize + gap*(boardGrid.length-1), Color.rgb(128, 128, 128));
         window.setScene(scene);
         window.show();
     }
@@ -63,27 +66,39 @@ public class GameScreen extends Application {
         Button button = new Button("Start a game");
 
         List<ImageView> toAdd = new ArrayList<>();
-        for (int r = 0; r < board.length; r++) {
-            for (int c = 0; c < board[r].length; c++) {
-                if(board[r][c] == 0) {
+        for (int r = 0; r < boardGrid.length; r++) {
+            for (int c = 0; c < boardGrid[r].length; c++) {
+                if(boardGrid[r][c] == 0) {
                     toAdd.add(new ImageView(bgrImg));
                 }
-                if(board[r][c] == 1) {
+                if(boardGrid[r][c] == 1) {
                     toAdd.add(new ImageView(discBlackImg));
                 }
-                if(board[r][c] == 2) {
+                if(boardGrid[r][c] == 2) {
                     toAdd.add(new ImageView(discWhiteImg));
                 }
+                toAdd.get(toAdd.size()-1).addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    if(1==1) {
+                         //= new ImageView(bgrImg);
+                    }
+                    event.consume();
+                });
                 GridPane.setConstraints(toAdd.get(toAdd.size()-1), r, c);
             }
         }
 
         toAdd.add(new ImageView(discBlackMenuImg));
-        GridPane.setConstraints(toAdd.get(toAdd.size()-1), board.length, 3);
+        GridPane.setConstraints(toAdd.get(toAdd.size()-1), boardGrid.length, 3);
         toAdd.add(new ImageView(discWhiteMenuImg));
-        GridPane.setConstraints(toAdd.get(toAdd.size()-1), board.length + 2, 3);
-        GridPane.setConstraints(button, board.length, 4);
+        GridPane.setConstraints(toAdd.get(toAdd.size()-1), boardGrid.length + 2, 3);
+        GridPane.setConstraints(button, boardGrid.length, 5);
+
+        Label blackDiscs = new Label(Integer.toString(board.getNumberOfBlackSquares()));
+        GridPane.setConstraints(blackDiscs, boardGrid.length, 4);
+        Label whiteDiscs = new Label(Integer.toString(board.getNumberOfWhiteSquares()));
+        GridPane.setConstraints(whiteDiscs, boardGrid.length + 2, 4);
+
         grid.getChildren().addAll(toAdd);
-        grid.getChildren().addAll(button);
+        grid.getChildren().addAll(button, blackDiscs, whiteDiscs);
     }
 }
