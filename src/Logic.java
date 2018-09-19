@@ -39,84 +39,121 @@ public class Logic {
         int sizeBoard = grid.getSize();
         int turn = gameEngine.getTurn();
         int playerNr = 1;
+        int edgeBoardNeg = -1;
 
-        if(turn%2 != 0){
-            playerNr = 1; //player 1 Black
-        }
-        else playerNr = 2; //player 2 White
+        if(board[x][y] == 0) { //square is empty
+            //if (x == 0 && y == 0) {
+            if (turn % 2 != 0) {
+                playerNr = 1; //player 1 Black
+            } else {
+                playerNr = 2; //player 2 White
+            }
 
-        if(board[x][y] == 0){
-            //check corners and sides
-            for(int i=x; i>-1; i--){ //vertical North
-                if(board[i][y] == 0){
-                    break;
-                }
-                if(board[i][y] == playerNr){
-                    return true;
-                }
-            }
-            for(int i=x; i>-1; i--){ //diagonal N-E
-                for(int j=y; j<sizeBoard; j++){
-                    if(board[i][j] == 0){
+            if (x == 0)
+
+                //check on same color in row/diagonal/colomn
+                for (int i = y - 1; i > edgeBoardNeg; i--) { //vertical - North
+                    if (y == 0) {
                         break;
                     }
-                    if(board[i][j] == playerNr){
-                        return true;
-                    }
-                }
-            }
-            for(int i=y; i>-1; i--){ //horizontal East
-                if(board[x][i] == 0){
-                    break;
-                }
-                if(board[x][i] == playerNr){
-                    return true;
-                }
-            }
-            for(int i=x; i>sizeBoard; i++){ //diagonal E-Z
-                for(int j=y; j<sizeBoard; j++){
-                    if(board[i][j] == 0){
+                    if (board[x][i] == 0) {
                         break;
                     }
-                    if(board[i][j] == playerNr){
+                    if (board[x][i] == playerNr) {
                         return true;
-                    }
+                    } //disk is same color as the player
                 }
-            }
-            for(int i=x; i>sizeBoard; i++){ //vertical South
-                if(board[i][y] == 0){
-                    break;
-                }
-                if(board[i][y] == playerNr){
-                    return true;
-                }
-            }
-            for(int i=x; i>sizeBoard; i++){ //diagonal S-W
-                for(int j=y; j<-1; j--){
-                    if(board[i][j] == 0){
+            for (int i = y - 1; i > edgeBoardNeg; i--) { //diagonal - NorthEast
+                for (int j = x + 1; j < sizeBoard; j++) {
+                    if (y == 0 || x == sizeBoard - 1) {
                         break;
                     }
-                    if(board[i][j] == playerNr){
-                        return true;
+                    if (board[i][j] == 0) {
+                        break;
                     }
+                    if (board[i][j] == playerNr) {
+                        return true;
+                    } //disk is same color as the player
                 }
             }
-            for(int i=y; i>-1; i--){ //horizontal West
-                if(board[x][i] == 0){
+            for (int i = x + 1; i < sizeBoard; i++) { //horizontal - East
+                if (x == sizeBoard - 1) {
                     break;
                 }
-                if(board[x][i] == playerNr){
+                if (board[i][y] == 0) {
+                    break;
+                }
+                if (board[i][y] == playerNr) {
                     return true;
+                } //disk is same color as the player
+            }
+            for (int i = y + 1; i < sizeBoard; i++) { //diagonal - EastSouth
+                for (int j = x + 1; j < sizeBoard; j++) {
+                    if (y == sizeBoard - 1 || x == sizeBoard - 1) {
+                        break;
+                    }
+                    if (board[i][j] == 0) {
+                        break;
+                    }
+                    if (board[i][j] == playerNr) {
+                        return true;
+                    } //disk is same color as the player
                 }
             }
-        }
-        else{
+            for (int i = y + 1; i < sizeBoard; i++) { //vertical - South
+                if (y == sizeBoard - 1) {
+                    break;
+                }
+                if (board[x][i] == 0) {
+                    break;
+                }
+                if (board[x][i] == playerNr) {
+                    return true;
+                } //disk is same color as the player
+            }
+            for (int i = y + 1; i < sizeBoard; i++) { //diagonal - SouthWest
+                for (int j = x - 1; j > edgeBoardNeg; j--) {
+                    if (y == sizeBoard - 1 || x == 0) {
+                        break;
+                    }
+                    if (board[i][j] == 0) {
+                        break;
+                    }
+                    if (board[i][j] == playerNr) {
+                        return true;
+                    } //disk is same color as the player
+                }
+            }
+            for (int i = x - 1; i > edgeBoardNeg; i--) { //horizontal - East
+                if (x == 0) {
+                    break;
+                }
+                if (board[i][y] == 0) {
+                    break;
+                }
+                if (board[i][y] == playerNr) {
+                    return true;
+                } //disk is same color as the player
+            }
+            for (int i = y - 1; i > edgeBoardNeg; i--) { //diagonal - WestNorth
+                for (int j = x - 1; j > edgeBoardNeg; j--) {
+                    if (x == 0 || y == 0) {
+                        break;
+                    }
+                    if (board[i][j] == 0) {
+                        break;
+                    }
+                    if (board[i][j] == playerNr) {
+                        return true;
+                    } //disk is same color as the player
+                }
+            }
             return false;
         }
-
         return false;
     }
 
+    //counts the amount of possible moves
     public int numberSquaresAllowed(Board grid, GameEngine gameEngine) {
         int[][] board = grid.getBoardGrid();
 
@@ -130,25 +167,19 @@ public class Logic {
         return 0;
     }
 
-        public void applyMove(Board grid, GameEngine gameEngine, int xCoord, int yCoord) {
-            int[][] board = grid.getBoardGrid();
+    //disk flips or placed in an empty square
+    public void applyMove(Board grid, GameEngine gameEngine, int xCoord, int yCoord) {
+        int[][] board = grid.getBoardGrid();
 
-            if((board[xCoord][yCoord] == 0 || board[xCoord][yCoord] == 2) && gameEngine.getTurn() == 1) board[xCoord][yCoord] = 1; //if the square is empty or white and it's black's turn, put a black disc in the square
-            if((board[xCoord][yCoord] == 0 || board[xCoord][yCoord] == 1) && gameEngine.getTurn() == 2) board[xCoord][yCoord] = 2; //if the square is empty or black and it's white's turn, put a white disc in the square
-        }
+        if((board[xCoord][yCoord] == 0 || board[xCoord][yCoord] == 2) && gameEngine.getTurn() == 1) board[xCoord][yCoord] = 1; //if the square is empty or white and it's black's turn, put a black disc in the square
+        if((board[xCoord][yCoord] == 0 || board[xCoord][yCoord] == 1) && gameEngine.getTurn() == 2) board[xCoord][yCoord] = 2; //if the square is empty or black and it's white's turn, put a white disc in the square
+    }
 
-        public int numberSquaresAllowed () {
-            return 0;
+    public void changeTurn(GameEngine gameEngine){
+        if (gameEngine.getTurn() == 1) {
+            gameEngine.setTurn(2);
+        } else {
+            gameEngine.setTurn(1);
         }
-
-        public void changeTurn(GameEngine gameEngine){
-            if (gameEngine.getTurn() == 1) {
-                gameEngine.setTurn(2);
-            } else {
-                gameEngine.setTurn(1);
-            }
-        }
+    }
 }
-
-
-
