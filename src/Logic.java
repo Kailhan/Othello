@@ -1,6 +1,6 @@
 public class Logic {
 
-    public int countBlack(Grid grid) {
+    public int countBlack(Board grid) {
         int[][] board = grid.getBoardGrid();
         int nrBlack = 0;
         for (int i = 0; i < board.length; i++) {
@@ -12,7 +12,7 @@ public class Logic {
     }
 
 
-    public int countWhite(Grid grid){
+    public int countWhite(Board grid){
         int[][] board = grid.getBoardGrid();
         int nrWhite = 0;
         for (int i = 0; i < board.length; i++) {
@@ -24,15 +24,17 @@ public class Logic {
     }
 
     //change color; who's turn; only coordinate as input
-    public void changeColor(Grid grid, int x, int y){
+    /*
+    public void changeColor(Board grid, int x, int y){
         int[][] board = grid.getBoardGrid();
 
         if(board[x][y] == 1) board[x][y] = 2;
         if(board[x][y] == 2) board[x][y] = 1;
     }
+    */
 
     //only returns if it possible to place a disk on the selected square (NOT: show the disks that would switch color)
-    public boolean checkSquareAllowed(Grid grid, GameEngine gameEngine, int x, int y){
+    public boolean checkSquareAllowed(Board grid, GameEngine gameEngine, int x, int y){
         int[][] board = grid.getBoardGrid();
         int sizeBoard = grid.getSize();
         int turn = gameEngine.getTurn();
@@ -115,7 +117,7 @@ public class Logic {
         return false;
     }
 
-    public int numberSquaresAllowed(Grid grid, GameEngine gameEngine) {
+    public int numberSquaresAllowed(Board grid, GameEngine gameEngine) {
         int[][] board = grid.getBoardGrid();
 
         int nrOfAllowedSquares = 0;
@@ -125,9 +127,14 @@ public class Logic {
             }
             return nrOfAllowedSquares;
         }
+        return 0;
+    }
 
-        public void applyMove () {
+        public void applyMove(Board grid, GameEngine gameEngine, int xCoord, int yCoord) {
+            int[][] board = grid.getBoardGrid();
 
+            if((board[xCoord][yCoord] == 0 || board[xCoord][yCoord] == 2) && gameEngine.getTurn() == 1) board[xCoord][yCoord] = 1; //if the square is empty or white and it's black's turn, put a black disc in the square
+            if((board[xCoord][yCoord] == 0 || board[xCoord][yCoord] == 1) && gameEngine.getTurn() == 2) board[xCoord][yCoord] = 2; //if the square is empty or black and it's white's turn, put a white disc in the square
         }
 
         public int numberSquaresAllowed () {
@@ -141,7 +148,7 @@ public class Logic {
                 gameEngine.setTurn(1);
             }
         }
-    }
-
-
 }
+
+
+
