@@ -24,9 +24,10 @@ public class Board {
 
     public void displayBoardGrid() {
         for(int r = 0; r < size; r++) {
-            for(int c = 0; c < size; c++)
+            for(int c = 0; c < size; c++) {
                 System.out.print(boardGrid[r][c] + " ");
-            System.out.println();
+                System.out.println();
+            }
         }
     }
 
