@@ -72,6 +72,7 @@ public class GameScreen extends Application {
     }
 
     public void redrawBoard (){
+        grid.getChildren().clear();
         List<Button> toAdd = new ArrayList<>();
         for (int r = 0; r < boardGrid.length; r++) {
             for (int c = 0; c < boardGrid[r].length; c++) {
