@@ -13,7 +13,8 @@ public class Board {
 
     public Board(int size) {
         size = (size < 4) ? 4: size; //enforces minimum size of 4
-        this.size = ((size % 2) == 0) ? size : (size-1); //makes sure board is even
+        size = ((size % 2) == 0) ? size : (size-1); //makes sure board is even
+        this.size = size;
         boardGrid = new int[size][size];
         boardGrid[(size/2)-1][(size/2)-1] = BLACK;
         boardGrid[(size/2)-1][(size/2)] = WHITE;
@@ -40,5 +41,35 @@ public class Board {
 
     public int getSize() {
         return size;
+    }
+
+    public int getNumberOfEmptySquares(){
+        int numberOfEmptySquares = 0;
+        for(int i = 0; i < boardGrid.length; i++) {
+            for(int j = 0; j < boardGrid[i].length; j++) {
+                if(boardGrid[i][j] == 0) numberOfEmptySquares++;
+            }
+        }
+        return  numberOfEmptySquares;
+    }
+
+    public int getNumberOfBlackSquares(){
+        int numberOfBlackSquares = 0;
+        for(int i = 0; i < boardGrid.length; i++) {
+            for(int j = 0; j < boardGrid[i].length; j++) {
+                if(boardGrid[i][j] == 1) numberOfBlackSquares++;
+            }
+        }
+        return  numberOfBlackSquares;
+    }
+
+    public int getNumberOfWhiteSquares(){
+        int numberOfWhiteSquares = 0;
+        for(int i = 0; i < boardGrid.length; i++) {
+            for(int j = 0; j < boardGrid[i].length; j++) {
+                if(boardGrid[i][j] == 2) numberOfWhiteSquares++;
+            }
+        }
+        return  numberOfWhiteSquares;
     }
 }
