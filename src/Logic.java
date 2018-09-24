@@ -19,7 +19,6 @@ public class Logic {
         return nrBlack;
     }
 
-
     public int countWhite(){
         int nrWhite = 0;
         for (int i = 0; i < board.length; i++) {
@@ -170,10 +169,15 @@ public class Logic {
     }
 
     //disk flips or placed in an empty square
-    public void applyMove(int xCoord, int yCoord) {
-
-        if((board[xCoord][yCoord] == 0 || board[xCoord][yCoord] == 2) && turn == 1) board[xCoord][yCoord] = 1; //if the square is empty or white and it's black's turn, put a black disc in the square
-        if((board[xCoord][yCoord] == 0 || board[xCoord][yCoord] == 1) && turn == 2) board[xCoord][yCoord] = 2; //if the square is empty or black and it's white's turn, put a white disc in the square
+    public int[][] applyMove(int xCoord, int yCoord) {
+        if(checkSquareAllowed(xCoord, yCoord)) {
+            if((board[xCoord][yCoord] == 0 || board[xCoord][yCoord] == 2) && turn == 1) board[xCoord][yCoord] = 1; //if the square is empty or white and it's black's turn, put a black disc in the square
+            if((board[xCoord][yCoord] == 0 || board[xCoord][yCoord] == 1) && turn == 2) board[xCoord][yCoord] = 2; //if the square is empty or black and it's white's turn, put a white disc in the square
+        } else {
+            System.out.println("Move not allowed");
+        }
+        changeTurn();
+        return board;
     }
 
     public void changeTurn(){

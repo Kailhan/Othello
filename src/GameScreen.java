@@ -37,6 +37,8 @@ public class GameScreen extends Application {
     private ImageView discBlackMenuView;
     private ImageView discWhiteMenuView;
 
+    private Logic logic;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -56,10 +58,9 @@ public class GameScreen extends Application {
         this.button = new Button("Start a game");
         this.window = primaryStage;
 
-        grid.setGridLinesVisible(false);
-        //grid.setVgap(gap);
-        //grid.setHgap(gap);
+        this.logic = new Logic(board);
 
+        grid.setGridLinesVisible(false);
         redrawBoard();
 
         BorderPane bPane = new BorderPane();
@@ -110,7 +111,7 @@ public class GameScreen extends Application {
     public void updateBoard(String ID) {
         int x = Integer.parseInt(ID.split("\\,")[0]);
         int y = Integer.parseInt(ID.split("\\,")[1]);
-        boardGrid[x][y] = 1;
+        boardGrid = logic.applyMove(x, y).clone();
         redrawBoard();
     }
 }
