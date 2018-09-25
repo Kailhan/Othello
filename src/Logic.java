@@ -180,6 +180,7 @@ public class Logic {
         return board;
     }
 
+
     public void changeTurn(){
         if (turn == 1) {
             turn = 2;

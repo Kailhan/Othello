@@ -1,20 +1,18 @@
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameScreen extends Application {
-
+public class GameScene extends BorderPane {
     private Stage window;
     private Board board;
     private int[][] boardGrid;
@@ -39,11 +37,7 @@ public class GameScreen extends Application {
 
     private Logic logic;
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    public void start(Stage primaryStage) throws Exception {
+    public GameScene() {
 
         this.board = new Board();
         this.boardGrid = board.getBoardGrid();
@@ -57,7 +51,6 @@ public class GameScreen extends Application {
         this.discWhiteMenuView = new ImageView(discWhiteMenuImg);
         this.button = new Button("Start a game");
         this.button.setWrapText(true);
-        this.window = primaryStage;
 
         this.logic = new Logic(board);
 
@@ -66,11 +59,6 @@ public class GameScreen extends Application {
 
         BorderPane bPane = new BorderPane();
         bPane.setCenter(grid); //can directly create scene from grid if borderpane layout is not gonna be used
-
-        Scene scene = new Scene(bPane, windowSize + tileSize*3 + gap*(boardGrid.length+2), windowSize + gap*(boardGrid.length-1), Color.rgb(128, 128, 128));
-        window.setTitle("Othello");
-        window.setScene(scene);
-        window.show();
     }
 
     public void redrawBoard (){
@@ -118,4 +106,5 @@ public class GameScreen extends Application {
         boardGrid = logic.applyMove(x, y).clone();
         redrawBoard();
     }
+
 }

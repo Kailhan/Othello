@@ -24,17 +24,20 @@ public class StartVisual extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        window = primaryStage;
+        window.setTitle("Othello Game - Settings");
+        Label label = new Label("Welcome to the Othello game!");
 
         submit = new Button("Start");
         submit.setOnAction(e -> {
             if (action_difficultyLevel != null && playerMode.getValue() != null && size.getValue() != null) {
-                Settings settings = Settings.getSettings(action_difficultyLevel, action_gameMode, action_boardSize);
-            window.close();
-        }});
+                //Settings settings = Settings.getSettings(action_difficultyLevel, action_gameMode, action_boardSize);
+                //window.close();
+            }
+            //primaryStage.setScene(new Scene(new GameScene(), windowSize, windowSize));
+            primaryStage.getScene().setRoot(new Scene(new GameScene(), windowSize, windowSize).getRoot());
+        });
 
-        window = primaryStage;
-        window.setTitle("Othello Game - Settings");
-        Label label = new Label("Welcome to the Othello game!");
 
         difficulty = new ComboBox<>();
         difficulty.getItems().addAll("Easy", "Medium", "Hard");
