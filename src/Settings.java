@@ -14,7 +14,6 @@ public class Settings {
     public static final int LARGE = 2;
 
 
-
     public Settings() {
         this(EASY,HvH,SMALL);
     }
