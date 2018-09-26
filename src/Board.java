@@ -127,6 +127,7 @@ public class Board {
                 boardGrid[x][y] = WHITE;
             }
             changePlayer();
+
 //        if(Logic.checkSquareAllowed(x, y, this, turn))
 //        {
 //            if(boardGrid[x][y] == 0)
