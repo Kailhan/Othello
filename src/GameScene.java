@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameScene extends BorderPane {
+    private BorderPane bPane;
     private Stage window;
     private Board board;
     private int[][] boardGrid;
@@ -57,7 +58,7 @@ public class GameScene extends BorderPane {
         grid.setGridLinesVisible(false);
         redrawBoard();
 
-        BorderPane bPane = new BorderPane();
+        bPane = new BorderPane();
         bPane.setCenter(grid); //can directly create scene from grid if borderpane layout is not gonna be used
     }
 
@@ -107,4 +108,23 @@ public class GameScene extends BorderPane {
         redrawBoard();
     }
 
+    public BorderPane getbPane() {
+        return bPane;
+    }
+
+    public int[][] getBoardGrid() {
+        return boardGrid;
+    }
+
+    public int getWindowSize() {
+        return windowSize;
+    }
+
+    public int getGap() {
+        return gap;
+    }
+
+    public int getTileSize() {
+        return tileSize;
+    }
 }

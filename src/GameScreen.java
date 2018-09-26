@@ -36,6 +36,7 @@ public class GameScreen extends Application {
     private Button button;
     private ImageView discBlackMenuView;
     private ImageView discWhiteMenuView;
+    private BorderPane bPane;
 
     private Logic logic;
 
@@ -64,7 +65,7 @@ public class GameScreen extends Application {
         grid.setGridLinesVisible(false);
         redrawBoard();
 
-        BorderPane bPane = new BorderPane();
+        bPane = new BorderPane();
         bPane.setCenter(grid); //can directly create scene from grid if borderpane layout is not gonna be used
 
         Scene scene = new Scene(bPane, windowSize + tileSize*3 + gap*(boardGrid.length+2), windowSize + gap*(boardGrid.length-1), Color.rgb(128, 128, 128));
@@ -118,4 +119,5 @@ public class GameScreen extends Application {
         boardGrid = logic.applyMove(x, y).clone();
         redrawBoard();
     }
+
 }

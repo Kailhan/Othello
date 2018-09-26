@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,7 +11,8 @@ import javafx.scene.control.ComboBox;
 public class StartVisual extends Application {
     public static void main(String[] args) {launch(args);}
 
-    private Stage window;
+    private Stage settingsStage;
+    private Stage gameStage;
     private Scene scene;
     private Button submit;
     private ComboBox<String> difficulty;
@@ -20,24 +22,27 @@ public class StartVisual extends Application {
     private static String action_difficultyLevel;
     private static String action_gameMode;
     private static String action_boardSize;
-    private int windowSize = 400;
+    private int windowSize = 800;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        window = primaryStage;
-        window.setTitle("Othello Game - Settings");
+        this.settingsStage = primaryStage;
+        settingsStage.setTitle("Othello Game - Settings");
         Label label = new Label("Welcome to the Othello game!");
 
         submit = new Button("Start");
         submit.setOnAction(e -> {
             if (action_difficultyLevel != null && playerMode.getValue() != null && size.getValue() != null) {
                 //Settings settings = Settings.getSettings(action_difficultyLevel, action_gameMode, action_boardSize);
-                //window.close();
+                //settingsStage.close();
             }
-            //primaryStage.setScene(new Scene(new GameScene(), windowSize, windowSize));
-            primaryStage.getScene().setRoot(new Scene(new GameScene(), windowSize, windowSize).getRoot());
+            gameStage = new Stage();
+            gameStage.setTitle("Othello Game");
+            GameScene gameScene = new GameScene();
+            gameStage.setScene(new Scene(gameScene.getbPane(), windowSize + gameScene.getTileSize()*3 + gameScene.getGap()*(gameScene.getBoardGrid().length+2), windowSize + gameScene.getGap()*(gameScene.getBoardGrid().length-1), Color.rgb(128, 128, 128)));
+            gameStage.show();
+            settingsStage.close();
         });
-
 
         difficulty = new ComboBox<>();
         difficulty.getItems().addAll("Easy", "Medium", "Hard");
@@ -58,9 +63,14 @@ public class StartVisual extends Application {
         layout.getChildren().addAll(label, difficulty, playerMode, size, submit);
         layout.setAlignment(Pos.CENTER);
         scene = new Scene(layout, windowSize, windowSize);
-        window.setScene(scene);
-        window.show();
+        settingsStage.setScene(scene);
+        settingsStage.show();
         }
+
+        public void setGameStage(Stage stage) {
+            this.gameStage = stage;
+        }
+
 }
 
 
