@@ -114,11 +114,33 @@ public class Board {
     }
 
     //disk flips or placed in an empty square
-    public void applyMove(int xCoord, int yCoord) {
-        if(Logic.checkSquareAllowed(xCoord, yCoord, this, turn)) {
-            if((boardGrid[xCoord][yCoord] == 0 || boardGrid[xCoord][yCoord] == WHITE) && currentPlayer == BLACK) boardGrid[xCoord][yCoord] = BLACK; //if the square is empty or white and it's black's turn, put a black disc in the square
-            if((boardGrid[xCoord][yCoord] == 0 || boardGrid[xCoord][yCoord] == WHITE) && currentPlayer == WHITE) boardGrid[xCoord][yCoord] = WHITE; //if the square is empty or black and it's white's turn, put a white disc in the square
-        } else {
+    public void applyMove(int x, int y)
+    {
+        if(boardGrid[x][y] == 0 && Logic.checkSquareAllowed(x, y, this, currentPlayer))
+        {
+            if(currentPlayer == BLACK)
+            {
+                boardGrid[x][y] = BLACK;
+            }
+            else
+            {
+                boardGrid[x][y] = WHITE;
+            }
+            changePlayer();
+//        if(Logic.checkSquareAllowed(x, y, this, turn))
+//        {
+//            if(boardGrid[x][y] == 0)
+//            {
+//                if(currentPlayer == BLACK)
+//                {
+//
+//                }
+//            }
+//            if(boardGrid[xCoord][yCoord] == 0 && currentPlayer == BLACK) boardGrid[xCoord][yCoord] = BLACK; //if the square is empty or white and it's black's turn, put a black disc in the square
+//            if(boardGrid[xCoord][yCoord] == 0 && currentPlayer == WHITE) boardGrid[xCoord][yCoord] = WHITE; //if the square is empty or black and it's white's turn, put a white disc in the square
+        }
+        else
+        {
             System.out.println("Move not allowed");
         }
         incrementTurn();
