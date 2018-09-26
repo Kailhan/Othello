@@ -52,9 +52,15 @@ public class Logic {
 
     public static boolean checkDirectionAllowed(int x, int y, Board board, int playerNr, String direction)
     {
+        boolean foundEnemy = false;
+
         switch(direction)
         {
             case "N" :
+                for(int i = y + 1; i < 0; i++)
+                    {
+                        if()
+                    }
             case "NE" :
             case "E" :
             case "SE" :
