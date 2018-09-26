@@ -118,13 +118,23 @@ public class Board {
     {
         if(boardGrid[x][y] == 0 && Logic.checkSquareAllowed(x, y, this, currentPlayer))
         {
+            int[][] flippedDisks = Logic.getFlippedDisks(x, y, this, currentPlayer);
+
             if(currentPlayer == BLACK)
             {
                 boardGrid[x][y] = BLACK;
+                for(int i = 0; i < flippedDisks.length; i++)
+                {
+                    boardGrid[flippedDisks[i][0]][flippedDisks[i][1]] = BLACK;
+                }
             }
             else
             {
                 boardGrid[x][y] = WHITE;
+                for(int i = 0; i < flippedDisks.length; i++)
+                {
+                    boardGrid[flippedDisks[i][0]][flippedDisks[i][1]] = WHITE;
+                }
             }
             changePlayer();
 
