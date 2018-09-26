@@ -1,3 +1,4 @@
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -53,7 +54,9 @@ public class GameScene extends BorderPane {
         this.button = new Button("Start a game");
         button.setOnAction(e -> {
             SettingsScene settingsScene = new SettingsScene(primaryStage);
-            primaryStage.close();
+            Node source = (Node)e.getSource();
+            Stage stage = (Stage)source.getScene().getWindow();
+            stage.close();
             this.primaryStage = new Stage();
             this.primaryStage.setTitle("Othello Settings");
             this.primaryStage.setScene(settingsScene.getSettingsScene());

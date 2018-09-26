@@ -1,4 +1,5 @@
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -33,7 +34,9 @@ public class SettingsScene extends VBox {
                 //primaryStage.close();
             }
             GameScene gameScene = new GameScene(primaryStage);
-            this.primaryStage.close();
+            Node source = (Node)e.getSource();
+            Stage stage = (Stage)source.getScene().getWindow();
+            stage.close();
             this.primaryStage = new Stage();
             this.primaryStage.setTitle("Othello Game");
             this.primaryStage.setScene(gameScene.getGameScene());
