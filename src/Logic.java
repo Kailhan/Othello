@@ -24,71 +24,71 @@ public class Logic {
         int boardSize = board.getSize();
 
         if (boardGrid[x][y] == 0) {
-            if (x != 0 && x != boardSize - 1 && y != 0 && y != boardSize - 1) { //middle
-                if(checkDirectionAllowed(x, y, board, playerNr, "N") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "NE") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "E") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "SE") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "S") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "SW") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "W") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "NW") == true)
+            if (x > 1  && x < boardSize - 2 && y > 1 && y < boardSize - 2) { //middle
+                if(checkDirectionAllowed(x, y, board, playerNr, "N") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "NE") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "E") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "SE") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "S") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "SW") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "W") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "NW"))
                     return true;
             }
-            else if (x == 0 && y != 0 && y != boardSize - 1) { //left edge
-                if(checkDirectionAllowed(x, y, board, playerNr, "N") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "NE") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "E") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "SE") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "S") == true)
+            else if (x <= 1 && y > 1 && y < boardSize - 2) { //left edge
+                if(checkDirectionAllowed(x, y, board, playerNr, "N") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "NE") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "E") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "SE") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "S"))
                     return true;
             }
-            else if (x == boardSize - 1 && y != 0 && y != boardSize - 1) { //right edge
-                if(checkDirectionAllowed(x, y, board, playerNr, "N") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "S") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "SW") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "W") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "NW") == true)
+            else if (x > boardSize - 2 && y > 1 && y < boardSize - 2) { //right edge
+                if(checkDirectionAllowed(x, y, board, playerNr, "N") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "S") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "SW") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "W") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "NW"))
                     return true;
             }
-            else if (x != 0 && x != boardSize - 1 && y == 0) { //top edge
-                if(checkDirectionAllowed(x, y, board, playerNr, "E") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "SE") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "S") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "SW") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "W") == true)
+            else if (x > 1 && x < boardSize - 2 && y <= 1) { //top edge
+                if(checkDirectionAllowed(x, y, board, playerNr, "E") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "SE") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "S") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "SW") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "W"))
                     return true;
             }
-            else if (x != 0 && x != boardSize - 1 && y == boardSize - 1) { //bottom edge
-                if(checkDirectionAllowed(x, y, board, playerNr, "N") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "NE") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "E") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "W") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "NW") == true)
+            else if (x > 1 && x < boardSize - 2 && y > boardSize - 2) { //bottom edge
+                if(checkDirectionAllowed(x, y, board, playerNr, "N") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "NE") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "E") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "W") |
+                        checkDirectionAllowed(x, y, board, playerNr, "NW"))
                     return true;
             }
-            else if (x == 0 && y == 0) { //top left corner
-                if(checkDirectionAllowed(x, y, board, playerNr, "E") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "SE") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "S") == true )
+            else if (x <= 1 && y <= 1) { //top left corner
+                if(checkDirectionAllowed(x, y, board, playerNr, "E") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "SE") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "S"))
                     return true;
             }
-            else if (x == 0 && y == boardSize-1) { //bottom left corner
-                if(checkDirectionAllowed(x, y, board, playerNr, "N") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "NE") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "E") == true)
+            else if (x <= 1 && y > boardSize - 2) { //bottom left corner
+                if(checkDirectionAllowed(x, y, board, playerNr, "N") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "NE") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "E"))
                     return true;
             }
-            else if (x == boardSize-1 && y == 0) { //top right corner
-                if(checkDirectionAllowed(x, y, board, playerNr, "S") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "SW") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "W") == true)
+            else if (x > boardSize - 2 && y <= 1) { //top right corner
+                if(checkDirectionAllowed(x, y, board, playerNr, "S") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "SW") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "W"))
                     return true;
             }
-            else if (x == boardSize-1 && y == boardSize-1) { //bottom right corner
-                if(checkDirectionAllowed(x, y, board, playerNr, "N") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "W") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "NW") == true)
+            else if (x > boardSize - 2 && y > boardSize - 2) { //bottom right corner
+                if(checkDirectionAllowed(x, y, board, playerNr, "N") ||
+                        checkDirectionAllowed(x, y, board, playerNr, "W")||
+                        checkDirectionAllowed(x, y, board, playerNr, "NW"))
                     return true;
             }
         }
@@ -244,5 +244,8 @@ public class Logic {
         }
         return 0;
     }
+
+
+
 
 }
