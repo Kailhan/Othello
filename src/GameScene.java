@@ -5,7 +5,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameScene extends BorderPane {
-    private Stage stage;
+    private Stage primaryStage;
     private BorderPane bPane;
     private Scene scene;
     private Board board;
@@ -40,7 +39,7 @@ public class GameScene extends BorderPane {
     private Logic logic;
 
     public GameScene(Stage primaryStage) {
-        this.stage = primaryStage;
+        this.primaryStage = primaryStage;
         this.board = new Board();
         this.boardGrid = board.getBoardGrid();
         this.tileSize = windowSize/ boardGrid[0].length;
@@ -53,15 +52,14 @@ public class GameScene extends BorderPane {
         this.discWhiteMenuView = new ImageView(discWhiteMenuImg);
         this.button = new Button("Start a game");
         button.setOnAction(e -> {
-//            gameStage = new Stage();
-//            gameStage.setTitle("Othello Game");
-//            GameScene gameScene = new GameScene();
-//            gameStage.setScene(new Scene(gameScene.getbPane(), windowSize + gameScene.getTileSize()*3 + gameScene.getGap()*(gameScene.getBoardGrid().length+2), windowSize + gameScene.getGap()*(gameScene.getBoardGrid().length-1), Color.rgb(128, 128, 128)));
-//            gameStage.show();
-//            settingsStage.close();
+            SettingsScene settingsScene = new SettingsScene(primaryStage);
+            primaryStage.close();
+            this.primaryStage = new Stage();
+            this.primaryStage.setTitle("Othello Settings");
+            this.primaryStage.setScene(settingsScene.getSettingsScene());
+            this.primaryStage.show();
         });
         this.button.setWrapText(true);
-
         this.logic = new Logic(board);
 
         grid.setGridLinesVisible(false);
@@ -120,21 +118,5 @@ public class GameScene extends BorderPane {
 
     public Scene getGameScene() {
         return scene;
-    }
-
-    public int[][] getBoardGrid() {
-        return boardGrid;
-    }
-
-    public int getWindowSize() {
-        return windowSize;
-    }
-
-    public int getGap() {
-        return gap;
-    }
-
-    public int getTileSize() {
-        return tileSize;
     }
 }
