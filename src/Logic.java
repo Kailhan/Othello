@@ -56,7 +56,7 @@ public class Logic {
                         checkDirectionAllowed(x, y, board, playerNr, "SE") == true ||
                         checkDirectionAllowed(x, y, board, playerNr, "S") == true ||
                         checkDirectionAllowed(x, y, board, playerNr, "SW") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "W") == true ||)
+                        checkDirectionAllowed(x, y, board, playerNr, "W") == true)
                     return true;
             }
             else if (x != 0 && x != boardSize - 1 && y == boardSize - 1) { //bottom edge
@@ -70,7 +70,7 @@ public class Logic {
             else if (x == 0 && y == 0) { //top left corner
                 if(checkDirectionAllowed(x, y, board, playerNr, "E") == true ||
                         checkDirectionAllowed(x, y, board, playerNr, "SE") == true ||
-                        checkDirectionAllowed(x, y, board, playerNr, "S") == true ||)
+                        checkDirectionAllowed(x, y, board, playerNr, "S") == true )
                     return true;
             }
             else if (x == 0 && y == boardSize-1) { //bottom left corner
