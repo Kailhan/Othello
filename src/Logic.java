@@ -245,7 +245,4 @@ public class Logic {
         return 0;
     }
 
-
-
-
 }
