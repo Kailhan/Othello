@@ -1,4 +1,4 @@
-import javafx.application.Application;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -6,16 +6,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameScreen extends Application {
-
-    private Stage window;
+public class GameScene extends BorderPane {
+    private Stage primaryStage;
+    private BorderPane bPane;
+    private Scene scene;
     private Board board;
     private int[][] boardGrid;
     private GridPane grid = new GridPane();
@@ -39,12 +39,8 @@ public class GameScreen extends Application {
 
     private Logic logic;
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    public void start(Stage primaryStage) throws Exception {
-
+    public GameScene(Stage primaryStage) {
+        this.primaryStage = primaryStage;
         this.board = new Board();
         this.boardGrid = board.getBoardGrid();
         this.tileSize = windowSize/ boardGrid[0].length;
@@ -56,20 +52,25 @@ public class GameScreen extends Application {
         this.discBlackMenuView = new ImageView(discBlackMenuImg);
         this.discWhiteMenuView = new ImageView(discWhiteMenuImg);
         this.button = new Button("Start a game");
-        this.window = primaryStage;
-
-        this.logic = new Logic(board);
+        button.setOnAction(e -> {
+            SettingsScene settingsScene = new SettingsScene(primaryStage);
+            Node source = (Node)e.getSource();
+            Stage stage = (Stage)source.getScene().getWindow();
+            stage.close();
+            this.primaryStage = new Stage();
+            this.primaryStage.setTitle("Othello Settings");
+            this.primaryStage.setScene(settingsScene.getSettingsScene());
+            this.primaryStage.show();
+        });
+        this.button.setWrapText(true);
+        this.logic = new Logic();
 
         grid.setGridLinesVisible(false);
         redrawBoard();
 
-        BorderPane bPane = new BorderPane();
+        bPane = new BorderPane();
         bPane.setCenter(grid); //can directly create scene from grid if borderpane layout is not gonna be used
-
-        Scene scene = new Scene(bPane, windowSize + tileSize*3 + gap*(boardGrid.length+2), windowSize + gap*(boardGrid.length-1), Color.rgb(128, 128, 128));
-        window.setTitle("Othello");
-        window.setScene(scene);
-        window.show();
+        scene = new Scene(bPane);
     }
 
     public void redrawBoard (){
@@ -77,20 +78,23 @@ public class GameScreen extends Application {
         List<Button> toAdd = new ArrayList<>();
         for (int r = 0; r < boardGrid.length; r++) {
             for (int c = 0; c < boardGrid[r].length; c++) {
-                if(boardGrid[r][c] == 0) {
+                if(boardGrid[r][c] == Board.EMPTY) {
                     toAdd.add(new Button(null, new ImageView(bgrImg)));
                 }
-                if(boardGrid[r][c] == 1) {
+                if(boardGrid[r][c] == Board.BLACK) {
                     toAdd.add(new Button(null, new ImageView(discBlackImg)));
                 }
-                if(boardGrid[r][c] == 2) {
+                if(boardGrid[r][c] == Board.WHITE) {
                     toAdd.add(new Button(null, new ImageView(discWhiteImg)));
                 }
                 toAdd.get(toAdd.size()-1).setId(r+","+c);
+                toAdd.get(toAdd.size()-1).setStyle("-fx-background-color: #00CE00; ");
+                toAdd.get(toAdd.size()-1).setStyle("-fx-background-color: #007F0E; ");
                 toAdd.get(toAdd.size()-1).setOnAction((event) -> {
                     Button button = (Button)event.getSource();
                     updateBoard(button.getId());
                 });
+
                 GridPane.setConstraints(toAdd.get(toAdd.size()-1), r, c);
             }
         }
@@ -99,9 +103,9 @@ public class GameScreen extends Application {
         GridPane.setConstraints(discWhiteMenuView, boardGrid.length + 2, 3);
         GridPane.setConstraints(button, boardGrid.length, 5);
 
-        Label blackDiscs = new Label(Integer.toString(board.getNumberOfBlackSquares()));
+        Label blackDiscs = new Label(Integer.toString(board.getNrBlackSquares()));
         GridPane.setConstraints(blackDiscs, boardGrid.length, 4);
-        Label whiteDiscs = new Label(Integer.toString(board.getNumberOfWhiteSquares()));
+        Label whiteDiscs = new Label(Integer.toString(board.getNrWhiteSquares()));
         GridPane.setConstraints(whiteDiscs, boardGrid.length + 2, 4);
 
         grid.getChildren().addAll(toAdd);
@@ -111,7 +115,11 @@ public class GameScreen extends Application {
     public void updateBoard(String ID) {
         int x = Integer.parseInt(ID.split("\\,")[0]);
         int y = Integer.parseInt(ID.split("\\,")[1]);
-        boardGrid = logic.applyMove(x, y).clone();
+        board.applyMove(x, y);
         redrawBoard();
+    }
+
+    public Scene getGameScene() {
+        return scene;
     }
 }
