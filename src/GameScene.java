@@ -13,8 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameScene extends BorderPane {
+    private Stage stage;
     private BorderPane bPane;
-    private Stage window;
+    private Scene scene;
     private Board board;
     private int[][] boardGrid;
     private GridPane grid = new GridPane();
@@ -38,8 +39,8 @@ public class GameScene extends BorderPane {
 
     private Logic logic;
 
-    public GameScene() {
-
+    public GameScene(Stage primaryStage) {
+        this.stage = primaryStage;
         this.board = new Board();
         this.boardGrid = board.getBoardGrid();
         this.tileSize = windowSize/ boardGrid[0].length;
@@ -51,6 +52,14 @@ public class GameScene extends BorderPane {
         this.discBlackMenuView = new ImageView(discBlackMenuImg);
         this.discWhiteMenuView = new ImageView(discWhiteMenuImg);
         this.button = new Button("Start a game");
+        button.setOnAction(e -> {
+//            gameStage = new Stage();
+//            gameStage.setTitle("Othello Game");
+//            GameScene gameScene = new GameScene();
+//            gameStage.setScene(new Scene(gameScene.getbPane(), windowSize + gameScene.getTileSize()*3 + gameScene.getGap()*(gameScene.getBoardGrid().length+2), windowSize + gameScene.getGap()*(gameScene.getBoardGrid().length-1), Color.rgb(128, 128, 128)));
+//            gameStage.show();
+//            settingsStage.close();
+        });
         this.button.setWrapText(true);
 
         this.logic = new Logic(board);
@@ -60,6 +69,7 @@ public class GameScene extends BorderPane {
 
         bPane = new BorderPane();
         bPane.setCenter(grid); //can directly create scene from grid if borderpane layout is not gonna be used
+        scene = new Scene(bPane);
     }
 
     public void redrawBoard (){
@@ -108,8 +118,8 @@ public class GameScene extends BorderPane {
         redrawBoard();
     }
 
-    public BorderPane getbPane() {
-        return bPane;
+    public Scene getGameScene() {
+        return scene;
     }
 
     public int[][] getBoardGrid() {
