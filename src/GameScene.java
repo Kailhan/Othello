@@ -78,13 +78,13 @@ public class GameScene extends BorderPane {
         List<Button> toAdd = new ArrayList<>();
         for (int r = 0; r < boardGrid.length; r++) {
             for (int c = 0; c < boardGrid[r].length; c++) {
-                if(boardGrid[r][c] == 0) {
+                if(boardGrid[r][c] == Board.EMPTY) {
                     toAdd.add(new Button(null, new ImageView(bgrImg)));
                 }
-                if(boardGrid[r][c] == 1) {
+                if(boardGrid[r][c] == Board.BLACK) {
                     toAdd.add(new Button(null, new ImageView(discBlackImg)));
                 }
-                if(boardGrid[r][c] == 2) {
+                if(boardGrid[r][c] == Board.WHITE) {
                     toAdd.add(new Button(null, new ImageView(discWhiteImg)));
                 }
                 toAdd.get(toAdd.size()-1).setId(r+","+c);
