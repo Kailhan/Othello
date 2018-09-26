@@ -200,12 +200,4 @@ public class Logic {
         return 0;
     }
 
-
-    public void changeTurn(){
-        if (turn == 1) {
-            turn = 2;
-        } else {
-            turn = 1;
-        }
-    }
 }

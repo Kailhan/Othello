@@ -63,7 +63,7 @@ public class GameScene extends BorderPane {
             this.primaryStage.show();
         });
         this.button.setWrapText(true);
-        this.logic = new Logic(board);
+        this.logic = new Logic();
 
         grid.setGridLinesVisible(false);
         redrawBoard();
@@ -103,9 +103,9 @@ public class GameScene extends BorderPane {
         GridPane.setConstraints(discWhiteMenuView, boardGrid.length + 2, 3);
         GridPane.setConstraints(button, boardGrid.length, 5);
 
-        Label blackDiscs = new Label(Integer.toString(board.getNumberOfBlackSquares()));
+        Label blackDiscs = new Label(Integer.toString(board.getNrBlackSquares()));
         GridPane.setConstraints(blackDiscs, boardGrid.length, 4);
-        Label whiteDiscs = new Label(Integer.toString(board.getNumberOfWhiteSquares()));
+        Label whiteDiscs = new Label(Integer.toString(board.getNrWhiteSquares()));
         GridPane.setConstraints(whiteDiscs, boardGrid.length + 2, 4);
 
         grid.getChildren().addAll(toAdd);
@@ -115,7 +115,7 @@ public class GameScene extends BorderPane {
     public void updateBoard(String ID) {
         int x = Integer.parseInt(ID.split("\\,")[0]);
         int y = Integer.parseInt(ID.split("\\,")[1]);
-        boardGrid = logic.applyMove(x, y).clone();
+        board.applyMove(x, y);
         redrawBoard();
     }
 
