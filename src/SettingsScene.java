@@ -17,9 +17,9 @@ public class SettingsScene extends VBox {
     private ComboBox<String> playerMode;
     private ComboBox<String> size;
 
-    private static String action_difficultyLevel;
-    private static String action_gameMode;
-    private static String action_boardSize;
+    private static int action_difficultyLevel;
+    private static int action_gameMode;
+    private static int action_boardSize;
     private int windowSize = 800;
 
     public SettingsScene(Stage primaryStage) {
@@ -33,7 +33,7 @@ public class SettingsScene extends VBox {
                 //Settings settings = Settings.getSettings(action_difficultyLevel, action_gameMode, action_boardSize);
                 //primaryStage.close();
             }
-            GameScene gameScene = new GameScene(primaryStage);
+            GameScene gameScene = new GameScene(primaryStage, settings);
             Node source = (Node)e.getSource();
             Stage stage = (Stage)source.getScene().getWindow();
             stage.close();

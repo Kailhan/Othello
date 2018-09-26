@@ -11,8 +11,10 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class GameScene extends BorderPane {
+    private Settings settings;
     private Stage primaryStage;
     private BorderPane bPane;
     private Scene scene;
@@ -39,7 +41,7 @@ public class GameScene extends BorderPane {
 
     private Logic logic;
 
-    public GameScene(Stage primaryStage) {
+    public GameScene(Stage primaryStage, Settings settings) {
         this.primaryStage = primaryStage;
         this.board = new Board();
         this.boardGrid = board.getBoardGrid();
@@ -71,6 +73,9 @@ public class GameScene extends BorderPane {
         bPane = new BorderPane();
         bPane.setCenter(grid); //can directly create scene from grid if borderpane layout is not gonna be used
         scene = new Scene(bPane);
+    }
+    public GameScene(Stage primaryStage, Settings settings) {
+        this.settings = settings;
     }
 
     public void redrawBoard (){
