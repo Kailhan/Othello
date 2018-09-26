@@ -97,16 +97,60 @@ public class Logic {
 
     public static boolean checkDirectionAllowed(int x, int y, Board board, int playerNr, String direction)
     {
+        int[][] boardGrid = board.getBoardGrid();
+        int boardSize = board.getSize();
         boolean foundEnemy = false;
 
         switch(direction)
         {
             case "N" :
-                for(int i = y + 1; i < 0; i++)
+                for(int i = 1; y - i >= 0; i++)
                     {
-                        if()
+                        if(boardGrid[x][y - i] == 0)
+                        {
+                            return false;
+                        }
+                        else if(boardGrid[x][y - i] == playerNr * -1)
+                        {
+                            foundEnemy = true;
+                        }
+                        else if (boardGrid[x][y - i] == playerNr)
+                        {
+                            if(foundEnemy)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
                     }
+                return false;
             case "NE" :
+                for(int i = 1; y - i >= 0 && x + i < boardSize; i++)
+                {
+                    if(boardGrid[x + i][y - i] == 0)
+                    {
+                        return false;
+                    }
+                    else if(boardGrid[x + i][y - i] == playerNr * -1)
+                    {
+                        foundEnemy = true;
+                    }
+                    else if (boardGrid[x + i][y - i] == playerNr)
+                    {
+                        if(foundEnemy)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return false;
             case "E" :
             case "SE" :
             case "S" :
