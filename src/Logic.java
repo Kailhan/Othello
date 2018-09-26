@@ -43,7 +43,7 @@ public class Logic {
                         checkDirectionAllowed(x, y, board, playerNr, "S"))
                     return true;
             }
-            else if (x > boardSize - 2 && y > 1 && y < boardSize - 2) { //right edge
+            else if (x >= boardSize - 2 && y > 1 && y < boardSize - 2) { //right edge
                 if(checkDirectionAllowed(x, y, board, playerNr, "N") ||
                         checkDirectionAllowed(x, y, board, playerNr, "S") ||
                         checkDirectionAllowed(x, y, board, playerNr, "SW") ||
@@ -59,7 +59,7 @@ public class Logic {
                         checkDirectionAllowed(x, y, board, playerNr, "W"))
                     return true;
             }
-            else if (x > 1 && x < boardSize - 2 && y > boardSize - 2) { //bottom edge
+            else if (x > 1 && x < boardSize - 2 && y >= boardSize - 2) { //bottom edge
                 if(checkDirectionAllowed(x, y, board, playerNr, "N") ||
                         checkDirectionAllowed(x, y, board, playerNr, "NE") ||
                         checkDirectionAllowed(x, y, board, playerNr, "E") ||
@@ -73,19 +73,19 @@ public class Logic {
                         checkDirectionAllowed(x, y, board, playerNr, "S"))
                     return true;
             }
-            else if (x <= 1 && y > boardSize - 2) { //bottom left corner
+            else if (x <= 1 && y >= boardSize - 2) { //bottom left corner
                 if(checkDirectionAllowed(x, y, board, playerNr, "N") ||
                         checkDirectionAllowed(x, y, board, playerNr, "NE") ||
                         checkDirectionAllowed(x, y, board, playerNr, "E"))
                     return true;
             }
-            else if (x > boardSize - 2 && y <= 1) { //top right corner
+            else if (x >= boardSize - 2 && y <= 1) { //top right corner
                 if(checkDirectionAllowed(x, y, board, playerNr, "S") ||
                         checkDirectionAllowed(x, y, board, playerNr, "SW") ||
                         checkDirectionAllowed(x, y, board, playerNr, "W"))
                     return true;
             }
-            else if (x > boardSize - 2 && y > boardSize - 2) { //bottom right corner
+            else if (x >= boardSize - 2 && y >= boardSize - 2) { //bottom right corner
                 if(checkDirectionAllowed(x, y, board, playerNr, "N") ||
                         checkDirectionAllowed(x, y, board, playerNr, "W")||
                         checkDirectionAllowed(x, y, board, playerNr, "NW"))
@@ -97,16 +97,204 @@ public class Logic {
 
     public static boolean checkDirectionAllowed(int x, int y, Board board, int playerNr, String direction)
     {
+        int[][] boardGrid = board.getBoardGrid();
+        int boardSize = board.getSize();
+        boolean foundEnemy = false;
+
         switch(direction)
         {
             case "N" :
+                for(int i = 1; y - i >= 0; i++)
+                    {
+                        if(boardGrid[x][y - i] == 0)
+                        {
+                            return false;
+                        }
+                        else if(boardGrid[x][y - i] == playerNr * -1)
+                        {
+                            foundEnemy = true;
+                        }
+                        else if (boardGrid[x][y - i] == playerNr)
+                        {
+                            if(foundEnemy)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                return false;
             case "NE" :
+                for(int i = 1; y - i >= 0 && x + i < boardSize; i++)
+                {
+                    if(boardGrid[x + i][y - i] == 0)
+                    {
+                        return false;
+                    }
+                    else if(boardGrid[x + i][y - i] == playerNr * -1)
+                    {
+                        foundEnemy = true;
+                    }
+                    else if (boardGrid[x + i][y - i] == playerNr)
+                    {
+                        if(foundEnemy)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return false;
             case "E" :
+                for(int i = 1; x + i < boardSize; i++)
+                {
+                    if(boardGrid[x + i][y] == 0)
+                    {
+                        return false;
+                    }
+                    else if(boardGrid[x + i][y] == playerNr * -1)
+                    {
+                        foundEnemy = true;
+                    }
+                    else if (boardGrid[x + i][y] == playerNr)
+                    {
+                        if(foundEnemy)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return false;
             case "SE" :
+                for(int i = 1; y + i < boardSize && x + i < boardSize; i++)
+                {
+                    if(boardGrid[x + i][y + i] == 0)
+                    {
+                        return false;
+                    }
+                    else if(boardGrid[x + i][y + i] == playerNr * -1)
+                    {
+                        foundEnemy = true;
+                    }
+                    else if (boardGrid[x + i][y + i] == playerNr)
+                    {
+                        if(foundEnemy)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return false;
             case "S" :
+                for(int i = 1; y + i < boardSize; i++)
+                {
+                    if(boardGrid[x][y + i] == 0)
+                    {
+                        return false;
+                    }
+                    else if(boardGrid[x][y + i] == playerNr * -1)
+                    {
+                        foundEnemy = true;
+                    }
+                    else if (boardGrid[x][y + i] == playerNr)
+                    {
+                        if(foundEnemy)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return false;
             case "SW" :
+                for(int i = 1; y + i < boardSize && x - i >= 0; i++)
+                {
+                    if(boardGrid[x - i][y + i] == 0)
+                    {
+                        return false;
+                    }
+                    else if(boardGrid[x - i][y + i] == playerNr * -1)
+                    {
+                        foundEnemy = true;
+                    }
+                    else if (boardGrid[x - i][y + i] == playerNr)
+                    {
+                        if(foundEnemy)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return false;
             case "W" :
+                for(int i = 1; x - i >= 0; i++)
+                {
+                    if(boardGrid[x - i][y] == 0)
+                    {
+                        return false;
+                    }
+                    else if(boardGrid[x - i][y] == playerNr * -1)
+                    {
+                        foundEnemy = true;
+                    }
+                    else if (boardGrid[x - i][y] == playerNr)
+                    {
+                        if(foundEnemy)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return false;
             case "NW" :
+                for(int i = 1; y - i >= 0 && x - i >= 0; i++)
+                {
+                    if(boardGrid[x - i][y - i] == 0)
+                    {
+                        return false;
+                    }
+                    else if(boardGrid[x - i][y - i] == playerNr * -1)
+                    {
+                        foundEnemy = true;
+                    }
+                    else if (boardGrid[x - i][y - i] == playerNr)
+                    {
+                        if(foundEnemy)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return false;
 
             default:
 
