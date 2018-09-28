@@ -26,11 +26,13 @@ public class GameScene extends BorderPane {
     private File discBlack = new File("src/Assets/disc_blackBgr.png");
     private File discWhite = new File("src/Assets/disc_whiteBgr.png");
     private File bgr = new File("src/Assets/Bgr.png");
+    private File bgr1 = new File("src/Assets/Bgr1.png");
     private File discBlackMenu = new File("src/Assets/disc_blackMenu.png");
     private File discWhiteMenu = new File("src/Assets/disc_whiteMenu.png");
     private Image discBlackImg;
     private Image discWhiteImg;
     private Image bgrImg;
+    private Image bgrImg1;
     private Image discBlackMenuImg;
     private Image discWhiteMenuImg;
     private Button button;
@@ -47,6 +49,7 @@ public class GameScene extends BorderPane {
         this.discBlackImg = new Image(discBlack.toURI().toString(), tileSize, tileSize, false,false);
         this.discWhiteImg = new Image(discWhite.toURI().toString(), tileSize, tileSize, false,false);
         this.bgrImg = new Image(bgr.toURI().toString(), tileSize, tileSize, false,false);
+        this.bgrImg1 = new Image(bgr1.toURI().toString(), tileSize, tileSize, false,false);
         this.discBlackMenuImg = new Image(discBlackMenu.toURI().toString(), tileSize, tileSize, false,false);
         this.discWhiteMenuImg = new Image(discWhiteMenu.toURI().toString(), tileSize, tileSize, false,false);
         this.discBlackMenuView = new ImageView(discBlackMenuImg);
@@ -79,7 +82,11 @@ public class GameScene extends BorderPane {
         for (int r = 0; r < boardGrid.length; r++) {
             for (int c = 0; c < boardGrid[r].length; c++) {
                 if(boardGrid[r][c] == Board.EMPTY) {
-                    toAdd.add(new Button(null, new ImageView(bgrImg)));
+                    if(Logic.checkSquareAllowed(r, c, board, board.getCurrentPlayer())) {
+                        toAdd.add(new Button(null, new ImageView(bgrImg1)));
+                    } else {
+                        toAdd.add(new Button(null, new ImageView(bgrImg)));
+                    }
                 }
                 if(boardGrid[r][c] == Board.BLACK) {
                     toAdd.add(new Button(null, new ImageView(discBlackImg)));
