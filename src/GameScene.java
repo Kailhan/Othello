@@ -96,7 +96,7 @@ public class GameScene extends BorderPane {
                 }
                 toAdd.get(toAdd.size()-1).setId(r+","+c);
                 toAdd.get(toAdd.size()-1).setStyle("-fx-background-color: #00CE00; ");
-                toAdd.get(toAdd.size()-1).setStyle("-fx-background-color: #007F0E; ");
+                toAdd.get(toAdd.size()-1).setStyle("-fx-background-color: #007F3F; ");
                 toAdd.get(toAdd.size()-1).setOnAction((event) -> {
                     Button button = (Button)event.getSource();
                     updateBoard(button.getId());
