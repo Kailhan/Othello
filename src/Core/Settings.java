@@ -1,3 +1,5 @@
+package Core;
+
 public class Settings {
 
     //values to return in the class object:

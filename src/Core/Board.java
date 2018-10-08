@@ -1,3 +1,5 @@
+package Core;
+
 public class Board {
 
     private int[][] boardGrid;
@@ -138,7 +140,7 @@ public class Board {
             }
             changePlayer();
 
-//        if(Logic.checkSquareAllowed(x, y, this, turn))
+//        if(Core.Logic.checkSquareAllowed(x, y, this, turn))
 //        {
 //            if(boardGrid[x][y] == 0)
 //            {

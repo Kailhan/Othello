@@ -1,8 +1,9 @@
+package Core;
+
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -24,13 +25,13 @@ public class SettingsScene extends VBox {
 
     public SettingsScene(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Othello Game - Settings");
+        this.primaryStage.setTitle("Othello Game - Core.Settings");
         Label label = new Label("Welcome to the Othello game!");
 
         submit = new Button("Start");
         submit.setOnAction(e -> {
             if (action_difficultyLevel != null && playerMode.getValue() != null && size.getValue() != null) {
-                //Settings settings = Settings.getSettings(action_difficultyLevel, action_gameMode, action_boardSize);
+                //Core.Settings settings = Core.Settings.getSettings(action_difficultyLevel, action_gameMode, action_boardSize);
                 //primaryStage.close();
             }
             GameScene gameScene = new GameScene(primaryStage);

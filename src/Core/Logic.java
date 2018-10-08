@@ -1,3 +1,5 @@
+package Core;
+
 public class Logic {
 
     public static boolean checkSquareAllowed(int x, int y, Board board, int playerNr) //Returns true if the position clicked would result in disks being flipped

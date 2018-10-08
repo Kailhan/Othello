@@ -1,5 +1,7 @@
 package AI;
 
+import Core.*;
+
 public class TreeSearch {
 
     private Logic logic;
@@ -41,5 +43,5 @@ public class TreeSearch {
 }
 
 /*
-A list of possible moves for each turn needs to be created using Logic.checkSquareAllowed
+A list of possible moves for each turn needs to be created using Core.Logic.checkSquareAllowed
  */
