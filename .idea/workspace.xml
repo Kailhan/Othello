@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a184a4f4-bc08-48d2-be6b-7c297d407c20" name="Default" comment="Logic applyMove">
+      <change beforePath="$PROJECT_DIR$/src/Core/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Board.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/GameScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/GameScene.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -26,7 +27,7 @@
       <file leaf-file-name="Node.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AI/Node.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
+            <state relative-caret-position="17">
               <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
             </state>
           </provider>
@@ -35,8 +36,8 @@
       <file leaf-file-name="Board.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Core/Board.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1413">
-              <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
+            <state relative-caret-position="442">
+              <caret line="160" column="9" selection-start-line="160" selection-start-column="9" selection-end-line="160" selection-end-column="9" />
               <folding>
                 <element signature="e#267#268#0" expanded="true" />
                 <element signature="e#290#291#0" expanded="true" />
@@ -60,11 +61,11 @@
       <file leaf-file-name="GameScene.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Core/GameScene.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="65" column="85" selection-start-line="65" selection-start-column="85" selection-end-line="65" selection-end-column="85" />
+            <state relative-caret-position="1492">
+              <caret line="180" column="9" selection-start-line="180" selection-start-column="9" selection-end-line="180" selection-end-column="9" />
               <folding>
-                <element signature="e#6350#6351#0" expanded="true" />
-                <element signature="e#6378#6379#0" expanded="true" />
+                <element signature="e#8198#8199#0" expanded="true" />
+                <element signature="e#8226#8227#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -100,8 +101,8 @@
       <file leaf-file-name="SettingsScene.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Core/SettingsScene.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+            <state relative-caret-position="17">
+              <caret line="36" selection-start-line="36" selection-end-line="36" />
             </state>
           </provider>
         </entry>
@@ -127,6 +128,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>boardGrid</find>
+      <find>appl</find>
     </findStrings>
     <replaceStrings>
       <replace>board</replace>
@@ -153,6 +155,7 @@
         <option value="$PROJECT_DIR$/src/GameScreen.java" />
         <option value="$PROJECT_DIR$/src/Logic.java" />
         <option value="$PROJECT_DIR$/src/AI/TreeSearch.java" />
+        <option value="$PROJECT_DIR$/src/Core/Board.java" />
         <option value="$PROJECT_DIR$/src/Core/GameScene.java" />
       </list>
     </option>
@@ -163,7 +166,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="y" value="22" />
     <option name="width" value="1280" />
     <option name="height" value="774" />
@@ -384,10 +387,10 @@
       <window_info anchor="right" id="Palette&#9;" order="13" />
       <window_info id="Image Layers" order="11" />
       <window_info anchor="right" id="Capture Analysis" order="14" />
-      <window_info anchor="bottom" id="Event Log" order="14" sideWeight="0.5067114" side_tool="true" visible="true" weight="0.23789173" />
+      <window_info active="true" anchor="bottom" id="Event Log" order="14" sideWeight="0.5067114" side_tool="true" visible="true" weight="0.3148148" />
       <window_info anchor="right" id="Maven Projects" order="11" />
       <window_info anchor="bottom" id="Version Control" order="15" />
-      <window_info active="true" anchor="bottom" id="Run" order="5" sideWeight="0.49328858" visible="true" weight="0.23789173" />
+      <window_info anchor="bottom" id="Run" order="5" sideWeight="0.49328858" visible="true" weight="0.3148148" />
       <window_info anchor="bottom" id="Terminal" order="16" />
       <window_info id="Capture Tool" order="8" />
       <window_info id="Designer" order="9" />
@@ -601,24 +604,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AI/Node.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Core/Settings.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/SettingsScene.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -636,6 +625,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/javafx-src.zip!/javafx/scene/image/Image.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="79">
+          <caret line="658" selection-start-line="658" selection-end-line="658" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Core/SettingsScene.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Core/Logic.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1090">
@@ -645,8 +648,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Core/Board.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1413">
-          <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
+        <state relative-caret-position="442">
+          <caret line="160" column="9" selection-start-line="160" selection-start-column="9" selection-end-line="160" selection-end-column="9" />
           <folding>
             <element signature="e#267#268#0" expanded="true" />
             <element signature="e#290#291#0" expanded="true" />
@@ -666,20 +669,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/javafx-src.zip!/javafx/scene/image/Image.java">
+    <entry file="file://$PROJECT_DIR$/src/AI/Node.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="79">
-          <caret line="658" selection-start-line="658" selection-end-line="658" />
+        <state relative-caret-position="17">
+          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Core/GameScene.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="65" column="85" selection-start-line="65" selection-start-column="85" selection-end-line="65" selection-end-column="85" />
+        <state relative-caret-position="1492">
+          <caret line="180" column="9" selection-start-line="180" selection-start-column="9" selection-end-line="180" selection-end-column="9" />
           <folding>
-            <element signature="e#6350#6351#0" expanded="true" />
-            <element signature="e#6378#6379#0" expanded="true" />
+            <element signature="e#8198#8199#0" expanded="true" />
+            <element signature="e#8226#8227#0" expanded="true" />
           </folding>
         </state>
       </provider>

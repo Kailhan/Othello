@@ -6,7 +6,10 @@ public class Board {
     public static final int EMPTY = 0;
     public static final int BLACK = 1;
     public static final int WHITE = -1;
+    public static final int ONGOING = 0;
+    public static final int FINISHED = 1;
 
+    private int gameState = 0;
     private int size;
     private int turn;
     private int currentPlayer;

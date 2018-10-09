@@ -2,6 +2,7 @@ package Core;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -96,6 +97,20 @@ public class GameScene extends BorderPane {
     }
 
     public void redrawBoard (){
+        boolean isMovePossible = false;
+        do {
+            for (int r = 0; r < boardGrid.length; r++) {
+                for (int c = 0; c < boardGrid[r].length; c++) {
+                    if(Logic.checkSquareAllowed(r, c, board, board.getCurrentPlayer())) {
+                        isMovePossible = true;
+                    }
+                }
+            }
+        } while (!isMovePossible);
+        if(!isMovePossible) {
+            board.incrementTurn();
+            redrawBoard();
+        }
         grid.getChildren().clear();
         List<Button> toAdd = new ArrayList<>();
         for (int r = 0; r < boardGrid.length; r++) {
@@ -152,6 +167,18 @@ public class GameScene extends BorderPane {
         int y = Integer.parseInt(ID.split("\\,")[1]);
         board.applyMove(x, y);
         redrawBoard();
+        if(board.getNrEmptySquares() == 0) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Game Finished");
+            alert.setHeaderText(null);
+            if (board.getNrBlackSquares() > board.getNrWhiteSquares()) {
+                alert.setContentText("BLACK has won!!!");
+            } else {
+                alert.setContentText("WHITE has won!!!");
+            }
+            alert.showAndWait();
+            button.fire();
+        }
     }
 
     public Scene getGameScene() {
