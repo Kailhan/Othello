@@ -2,18 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a184a4f4-bc08-48d2-be6b-7c297d407c20" name="Default" comment="Logic applyMove">
-      <change beforePath="$PROJECT_DIR$/src/Assets/Button_Icon_Black.pdn" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Button_Icon_Black.pdn" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/Button_Icon_White.pdn" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/Button_Icon_White.pdn" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/disc_black.pdn" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/disc_black.pdn" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/disc_blackBgr.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/disc_blackBgr.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/disc_blackBgrSel.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/disc_blackBgrSel.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/disc_blackMenu.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/disc_blackMenu.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/disc_blackSel.pdn" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/disc_blackSel.pdn" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/disc_white.pdn" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/disc_white.pdn" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/disc_whiteBgr.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/disc_whiteBgr.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/disc_whiteBgrSel.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/disc_whiteBgrSel.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/disc_whiteMenu.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/disc_whiteMenu.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Assets/disc_whiteSel.pdn" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assets/disc_whiteSel.pdn" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/GameScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/GameScene.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -29,7 +17,7 @@
       <file leaf-file-name="Logic.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Core/Logic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-6437">
+            <state relative-caret-position="-1090">
               <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
             </state>
           </provider>
@@ -47,7 +35,7 @@
       <file leaf-file-name="Board.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Core/Board.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
+            <state relative-caret-position="-1413">
               <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
               <folding>
                 <element signature="e#267#268#0" expanded="true" />
@@ -72,8 +60,21 @@
       <file leaf-file-name="GameScene.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Core/GameScene.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="120" lean-forward="true" selection-start-line="120" selection-end-line="120" />
+            <state relative-caret-position="156">
+              <caret line="65" column="85" selection-start-line="65" selection-start-column="85" selection-end-line="65" selection-end-column="85" />
+              <folding>
+                <element signature="e#6350#6351#0" expanded="true" />
+                <element signature="e#6378#6379#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Image.java" pinned="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/javafx-src.zip!/javafx/scene/image/Image.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="79">
+              <caret line="658" selection-start-line="658" selection-end-line="658" />
             </state>
           </provider>
         </entry>
@@ -383,10 +384,10 @@
       <window_info anchor="right" id="Palette&#9;" order="13" />
       <window_info id="Image Layers" order="11" />
       <window_info anchor="right" id="Capture Analysis" order="14" />
-      <window_info anchor="bottom" id="Event Log" order="14" sideWeight="0.5067114" side_tool="true" visible="true" weight="0.13675214" />
+      <window_info anchor="bottom" id="Event Log" order="14" sideWeight="0.5067114" side_tool="true" visible="true" weight="0.23789173" />
       <window_info anchor="right" id="Maven Projects" order="11" />
       <window_info anchor="bottom" id="Version Control" order="15" />
-      <window_info active="true" anchor="bottom" id="Run" order="5" sideWeight="0.49328858" visible="true" weight="0.13675214" />
+      <window_info active="true" anchor="bottom" id="Run" order="5" sideWeight="0.49328858" visible="true" weight="0.23789173" />
       <window_info anchor="bottom" id="Terminal" order="16" />
       <window_info id="Capture Tool" order="8" />
       <window_info id="Designer" order="9" />
@@ -637,14 +638,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Core/Logic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6437">
+        <state relative-caret-position="-1090">
           <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Core/Board.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
+        <state relative-caret-position="-1413">
           <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
           <folding>
             <element signature="e#267#268#0" expanded="true" />
@@ -665,10 +666,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/javafx-src.zip!/javafx/scene/image/Image.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="79">
+          <caret line="658" selection-start-line="658" selection-end-line="658" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Core/GameScene.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="120" lean-forward="true" selection-start-line="120" selection-end-line="120" />
+        <state relative-caret-position="156">
+          <caret line="65" column="85" selection-start-line="65" selection-start-column="85" selection-end-line="65" selection-end-column="85" />
+          <folding>
+            <element signature="e#6350#6351#0" expanded="true" />
+            <element signature="e#6378#6379#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

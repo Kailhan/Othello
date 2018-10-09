@@ -33,6 +33,8 @@ public class GameScene extends BorderPane {
     private File discWhiteMenu = new File("src/Assets/disc_whiteMenu.png");
     private File discBlackMenuSel = new File("src/Assets/disc_blackMenuSel.png");
     private File discWhiteMenuSel = new File("src/Assets/disc_whiteMenuSel.png");
+    private ArrayList<File> flipped = new ArrayList<>();
+    private ArrayList<Image> flippedImg = new ArrayList<>();
     private Image discBlackImg;
     private Image discWhiteImg;
     private Image bgrImg;
@@ -58,7 +60,11 @@ public class GameScene extends BorderPane {
         this.discBlackImg = new Image(discBlack.toURI().toString(), tileSize, tileSize, false,false);
         this.discWhiteImg = new Image(discWhite.toURI().toString(), tileSize, tileSize, false,false);
         this.bgrImg = new Image(bgr.toURI().toString(), tileSize, tileSize, false,false);
-        this.bgrImg1 = new Image(bgr1.toURI().toString(), tileSize, tileSize, false,false);
+        for(int i = 0; i < 9; i++) {
+            String fileName = "src/Assets/" + Integer.toString(i+1) + ".png";
+            flipped.add(new File(fileName));
+            flippedImg.add(new Image(flipped.get(flipped.size()-1).toURI().toString(), tileSize, tileSize, false,false));
+        }
         this.discBlackMenuImg = new Image(discBlackMenu.toURI().toString(), tileSize, tileSize, false,false);
         this.discWhiteMenuImg = new Image(discWhiteMenu.toURI().toString(), tileSize, tileSize, false,false);
         this.discBlackMenuView = new ImageView(discBlackMenuImg);
@@ -96,7 +102,9 @@ public class GameScene extends BorderPane {
             for (int c = 0; c < boardGrid[r].length; c++) {
                 if(boardGrid[r][c] == Board.EMPTY) {
                     if(Logic.checkSquareAllowed(r, c, board, board.getCurrentPlayer())) {
-                        toAdd.add(new Button(null, new ImageView(bgrImg1)));
+                        int flippedNo = logic.getFlippedDisks(r, c, board, board.getCurrentPlayer()).length;
+                        flippedNo = (flippedNo > 10 ? 10 : flippedNo);
+                        toAdd.add(new Button(null, new ImageView(flippedImg.get(flippedNo-1))));
                     } else {
                         toAdd.add(new Button(null, new ImageView(bgrImg)));
                     }
