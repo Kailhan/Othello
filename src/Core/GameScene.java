@@ -31,15 +31,22 @@ public class GameScene extends BorderPane {
     private File bgr1 = new File("src/Assets/Bgr1.png");
     private File discBlackMenu = new File("src/Assets/disc_blackMenu.png");
     private File discWhiteMenu = new File("src/Assets/disc_whiteMenu.png");
+    private File discBlackMenuSel = new File("src/Assets/disc_blackMenuSel.png");
+    private File discWhiteMenuSel = new File("src/Assets/disc_whiteMenuSel.png");
     private Image discBlackImg;
     private Image discWhiteImg;
     private Image bgrImg;
     private Image bgrImg1;
     private Image discBlackMenuImg;
     private Image discWhiteMenuImg;
-    private Button button;
     private ImageView discBlackMenuView;
     private ImageView discWhiteMenuView;
+    private Image discBlackMenuImgSel;
+    private Image discWhiteMenuImgSel;
+    private ImageView discBlackMenuViewSel;
+    private ImageView discWhiteMenuViewSel;
+    private Button button;
+
 
     private Logic logic;
 
@@ -56,6 +63,10 @@ public class GameScene extends BorderPane {
         this.discWhiteMenuImg = new Image(discWhiteMenu.toURI().toString(), tileSize, tileSize, false,false);
         this.discBlackMenuView = new ImageView(discBlackMenuImg);
         this.discWhiteMenuView = new ImageView(discWhiteMenuImg);
+        this.discBlackMenuImgSel = new Image(discBlackMenuSel.toURI().toString(), tileSize, tileSize, false,false);
+        this.discWhiteMenuImgSel = new Image(discWhiteMenuSel.toURI().toString(), tileSize, tileSize, false,false);
+        this.discBlackMenuViewSel = new ImageView(discBlackMenuImgSel);
+        this.discWhiteMenuViewSel = new ImageView(discWhiteMenuImgSel);
         this.button = new Button("Start a game");
         button.setOnAction(e -> {
             SettingsScene settingsScene = new SettingsScene(primaryStage);
@@ -107,9 +118,16 @@ public class GameScene extends BorderPane {
                 GridPane.setConstraints(toAdd.get(toAdd.size()-1), r, c);
             }
         }
+        if(board.getTurn() % 2 == 0) {
+            GridPane.setConstraints(discBlackMenuViewSel, boardGrid.length, 3);
+            GridPane.setConstraints(discWhiteMenuView, boardGrid.length + 2, 3);
+            grid.getChildren().addAll(discBlackMenuViewSel, discWhiteMenuView);
+        } else {
+            GridPane.setConstraints(discBlackMenuView, boardGrid.length, 3);
+            GridPane.setConstraints(discWhiteMenuViewSel, boardGrid.length + 2, 3);
+            grid.getChildren().addAll(discBlackMenuView, discWhiteMenuViewSel);
+        }
 
-        GridPane.setConstraints(discBlackMenuView, boardGrid.length, 3);
-        GridPane.setConstraints(discWhiteMenuView, boardGrid.length + 2, 3);
         GridPane.setConstraints(button, boardGrid.length, 5);
 
         Label blackDiscs = new Label(Integer.toString(board.getNrBlackSquares()));
@@ -118,7 +136,7 @@ public class GameScene extends BorderPane {
         GridPane.setConstraints(whiteDiscs, boardGrid.length + 2, 4);
 
         grid.getChildren().addAll(toAdd);
-        grid.getChildren().addAll(button, discBlackMenuView, discWhiteMenuView, blackDiscs, whiteDiscs);
+        grid.getChildren().addAll(button, blackDiscs, whiteDiscs);
     }
 
     public void updateBoard(String ID) {
