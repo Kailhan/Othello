@@ -1,5 +1,6 @@
 package Core;
 
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -48,9 +49,8 @@ public class GameScene extends BorderPane {
     private Image discWhiteMenuImgSel;
     private ImageView discBlackMenuViewSel;
     private ImageView discWhiteMenuViewSel;
-    private Button button;
-
-
+    private Button goToMenuBut;
+    private Button restartGameBut;
     private Logic logic;
 
     public GameScene(Stage primaryStage) {
@@ -74,8 +74,8 @@ public class GameScene extends BorderPane {
         this.discWhiteMenuImgSel = new Image(discWhiteMenuSel.toURI().toString(), tileSize, tileSize, false,false);
         this.discBlackMenuViewSel = new ImageView(discBlackMenuImgSel);
         this.discWhiteMenuViewSel = new ImageView(discWhiteMenuImgSel);
-        this.button = new Button("Start a game");
-        button.setOnAction(e -> {
+        this.goToMenuBut = new Button("Menu");
+        goToMenuBut.setOnAction(e -> {
             SettingsScene settingsScene = new SettingsScene(primaryStage);
             Node source = (Node)e.getSource();
             Stage stage = (Stage)source.getScene().getWindow();
@@ -85,10 +85,23 @@ public class GameScene extends BorderPane {
             this.primaryStage.setScene(settingsScene.getSettingsScene());
             this.primaryStage.show();
         });
-        this.button.setWrapText(true);
+        this.goToMenuBut.setWrapText(true);
+        this.restartGameBut = new Button("Restart Game");
+        restartGameBut.setOnAction(e -> {
+            GameScene gameScene = new GameScene(primaryStage);
+            Node source = (Node)e.getSource();
+            Stage stage = (Stage)source.getScene().getWindow();
+            stage.close();
+            this.primaryStage = new Stage();
+            this.primaryStage.setTitle("Othello Game");
+            this.primaryStage.setScene(gameScene.getGameScene());
+            this.primaryStage.show();
+        });
+        this.restartGameBut.setWrapText(true);
         this.logic = new Logic();
 
         grid.setGridLinesVisible(false);
+        grid.setAlignment(Pos.CENTER);
         redrawBoard();
 
         bPane = new BorderPane();
@@ -151,7 +164,8 @@ public class GameScene extends BorderPane {
             grid.getChildren().addAll(discBlackMenuView, discWhiteMenuViewSel);
         }
 
-        GridPane.setConstraints(button, boardGrid.length, 5);
+        GridPane.setConstraints(goToMenuBut, boardGrid.length + 1, 5);
+        GridPane.setConstraints(restartGameBut, boardGrid.length + 1, 6);
 
         Label blackDiscs = new Label(Integer.toString(board.getNrBlackSquares()));
         GridPane.setConstraints(blackDiscs, boardGrid.length, 4);
@@ -159,7 +173,7 @@ public class GameScene extends BorderPane {
         GridPane.setConstraints(whiteDiscs, boardGrid.length + 2, 4);
 
         grid.getChildren().addAll(toAdd);
-        grid.getChildren().addAll(button, blackDiscs, whiteDiscs);
+        grid.getChildren().addAll(goToMenuBut, restartGameBut, blackDiscs, whiteDiscs);
     }
 
     public void updateBoard(String ID) {
@@ -177,7 +191,7 @@ public class GameScene extends BorderPane {
                 alert.setContentText("WHITE has won!!!");
             }
             alert.showAndWait();
-            button.fire();
+            goToMenuBut.fire();
         }
     }
 
