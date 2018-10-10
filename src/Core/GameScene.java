@@ -52,6 +52,7 @@ public class GameScene extends BorderPane {
     private Button goToMenuBut;
     private Button restartGameBut;
     private Logic logic;
+    private boolean isMovePossible;
 
     public GameScene(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -110,70 +111,80 @@ public class GameScene extends BorderPane {
     }
 
     public void redrawBoard (){
-        boolean isMovePossible = false;
-//        do {
-//            for (int r = 0; r < boardGrid.length; r++) {
-//                for (int c = 0; c < boardGrid[r].length; c++) {
-//                    if(Logic.checkSquareAllowed(r, c, board, board.getCurrentPlayer())) {
-//                        isMovePossible = true;
-//                    }
-//                }
-//            }
-//        } while (!isMovePossible);
-//        if(!isMovePossible) {
-//            board.incrementTurn();
-//            redrawBoard();
-//        }
-        grid.getChildren().clear();
-        List<Button> toAdd = new ArrayList<>();
+        isMovePossible = false;
         for (int r = 0; r < boardGrid.length; r++) {
             for (int c = 0; c < boardGrid[r].length; c++) {
-                if(boardGrid[r][c] == Board.EMPTY) {
-                    if(Logic.checkSquareAllowed(r, c, board, board.getCurrentPlayer())) {
-                        int flippedNo = logic.getFlippedDisks(r, c, board, board.getCurrentPlayer()).length;
-                        flippedNo = (flippedNo > 10 ? 10 : flippedNo);
-                        toAdd.add(new Button(null, new ImageView(flippedImg.get(flippedNo-1))));
-                    } else {
-                        toAdd.add(new Button(null, new ImageView(bgrImg)));
-                    }
+                if (Logic.checkSquareAllowed(r, c, board, board.getCurrentPlayer())) {
+                    isMovePossible = true;
+                    break;
                 }
-                if(boardGrid[r][c] == Board.BLACK) {
-                    toAdd.add(new Button(null, new ImageView(discBlackImg)));
-                }
-                if(boardGrid[r][c] == Board.WHITE) {
-                    toAdd.add(new Button(null, new ImageView(discWhiteImg)));
-                }
-                toAdd.get(toAdd.size()-1).setId(r+","+c);
-                toAdd.get(toAdd.size()-1).setStyle("-fx-background-color: #00CE00; ");
-                toAdd.get(toAdd.size()-1).setStyle("-fx-background-color: #007F3F; ");
-                toAdd.get(toAdd.size()-1).setOnAction((event) -> {
-                    Button button = (Button)event.getSource();
-                    updateBoard(button.getId());
-                });
-
-                GridPane.setConstraints(toAdd.get(toAdd.size()-1), r, c);
             }
         }
-        if(board.getTurn() % 2 == 0) {
-            GridPane.setConstraints(discBlackMenuViewSel, boardGrid.length, 3);
-            GridPane.setConstraints(discWhiteMenuView, boardGrid.length + 2, 3);
-            grid.getChildren().addAll(discBlackMenuViewSel, discWhiteMenuView);
-        } else {
-            GridPane.setConstraints(discBlackMenuView, boardGrid.length, 3);
-            GridPane.setConstraints(discWhiteMenuViewSel, boardGrid.length + 2, 3);
-            grid.getChildren().addAll(discBlackMenuView, discWhiteMenuViewSel);
+        if(!isMovePossible) {
+            board.changePlayer();
+            for (int r = 0; r < boardGrid.length; r++) {
+                for (int c = 0; c < boardGrid[r].length; c++) {
+                    if (Logic.checkSquareAllowed(r, c, board, board.getCurrentPlayer())) {
+                        isMovePossible = true;
+                        break;
+                    }
+                }
+            }
+        }
+        if(isMovePossible) {
+            board.incrementTurn();
+            grid.getChildren().clear();
+            List<Button> toAdd = new ArrayList<>();
+            for (int r = 0; r < boardGrid.length; r++) {
+                for (int c = 0; c < boardGrid[r].length; c++) {
+                    if(boardGrid[r][c] == Board.EMPTY) {
+                        if (Logic.checkSquareAllowed(r, c, board, board.getCurrentPlayer())) {
+                            int flippedNo = logic.getFlippedDisks(r, c, board, board.getCurrentPlayer()).length;
+                            flippedNo = (flippedNo > 10 ? 10 : flippedNo);
+                            toAdd.add(new Button(null, new ImageView(flippedImg.get(flippedNo-1))));
+                        } else {
+                            toAdd.add(new Button(null, new ImageView(bgrImg)));
+                        }
+                    }
+                    if(boardGrid[r][c] == Board.BLACK) {
+                        toAdd.add(new Button(null, new ImageView(discBlackImg)));
+                    }
+                    if(boardGrid[r][c] == Board.WHITE) {
+                        toAdd.add(new Button(null, new ImageView(discWhiteImg)));
+                    }
+                    toAdd.get(toAdd.size()-1).setId(r+","+c);
+                    toAdd.get(toAdd.size()-1).setStyle("-fx-background-color: #00CE00; ");
+                    toAdd.get(toAdd.size()-1).setStyle("-fx-background-color: #007F3F; ");
+                    toAdd.get(toAdd.size()-1).setOnAction((event) -> {
+                        Button button = (Button)event.getSource();
+                        updateBoard(button.getId());
+                    });
+
+                    GridPane.setConstraints(toAdd.get(toAdd.size()-1), r, c);
+                }
+            }
+            if(board.getCurrentPlayer() == board.BLACK) {
+                GridPane.setConstraints(discBlackMenuViewSel, boardGrid.length, 3);
+                GridPane.setConstraints(discWhiteMenuView, boardGrid.length + 2, 3);
+                grid.getChildren().addAll(discBlackMenuViewSel, discWhiteMenuView);
+            } else {
+                GridPane.setConstraints(discBlackMenuView, boardGrid.length, 3);
+                GridPane.setConstraints(discWhiteMenuViewSel, boardGrid.length + 2, 3);
+                grid.getChildren().addAll(discBlackMenuView, discWhiteMenuViewSel);
+            }
+
+            GridPane.setConstraints(goToMenuBut, boardGrid.length + 1, 5);
+            GridPane.setConstraints(restartGameBut, boardGrid.length + 1, 6);
+
+            Label blackDiscs = new Label(Integer.toString(board.getNrBlackSquares()));
+            GridPane.setConstraints(blackDiscs, boardGrid.length, 4);
+            Label whiteDiscs = new Label(Integer.toString(board.getNrWhiteSquares()));
+            GridPane.setConstraints(whiteDiscs, boardGrid.length + 2, 4);
+
+            grid.getChildren().addAll(toAdd);
+            grid.getChildren().addAll(goToMenuBut, restartGameBut, blackDiscs, whiteDiscs);
         }
 
-        GridPane.setConstraints(goToMenuBut, boardGrid.length + 1, 5);
-        GridPane.setConstraints(restartGameBut, boardGrid.length + 1, 6);
-
-        Label blackDiscs = new Label(Integer.toString(board.getNrBlackSquares()));
-        GridPane.setConstraints(blackDiscs, boardGrid.length, 4);
-        Label whiteDiscs = new Label(Integer.toString(board.getNrWhiteSquares()));
-        GridPane.setConstraints(whiteDiscs, boardGrid.length + 2, 4);
-
-        grid.getChildren().addAll(toAdd);
-        grid.getChildren().addAll(goToMenuBut, restartGameBut, blackDiscs, whiteDiscs);
     }
 
     public void updateBoard(String ID) {
@@ -181,7 +192,7 @@ public class GameScene extends BorderPane {
         int y = Integer.parseInt(ID.split("\\,")[1]);
         board.applyMove(x, y);
         redrawBoard();
-        if(board.getNrEmptySquares() == 0) {
+        if(!isMovePossible) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Game Finished");
             alert.setHeaderText(null);
