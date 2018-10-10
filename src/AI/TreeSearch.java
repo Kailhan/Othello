@@ -20,6 +20,34 @@ public class TreeSearch {
 
     }
 
+    //black is max
+    //white is min
+    //Look at which factor for the range (now sitting at 100 to -100) can increase/decrease;
+    //to do: finnish functions in stability and do the moves functions...
+    public int evaluationFunction(){
+        int totalscore = 0;
+        int corners;
+        int stableScore;
+
+        int numberOfCoins =  100 * (board.getNrBlackSquares() - board.getNrWhiteSquares()) / (board.getNrBlackSquares() + board.getNrWhiteSquares());
+        int numberOfMoves =  100 * 6;//amount of moves
+
+
+
+        if(board.getStabilityBlack() + board.getStabilityWhite() != 0) {
+            stableScore = 100 * (board.getStabilityBlack() - board.getStabilityWhite()) / (board.getStabilityBlack() + board.getStabilityWhite());
+        }
+        else stableScore = 0;
+
+
+        if(board.getBlackCorners() + board.getNrWhiteSquares() != 0) {
+            corners = 100 * (board.getBlackCorners() - board.getNrWhiteSquares()) / (board.getBlackCorners() + board.getNrWhiteSquares());
+        }
+        else corners = 0;
+
+        return totalscore = numberOfCoins + corners + numberOfMoves + stableScore;
+    }
+
     public void createTree(){
         this.boardGrid = board.getBoardGrid();
         for(int i = 0; i < boardGrid.length; i++){

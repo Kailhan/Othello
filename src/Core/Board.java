@@ -161,4 +161,85 @@ public class Board {
         }
         incrementTurn();
     }
+
+    //number of blackSquares in corners
+    public int getBlackCorners() {
+        int nrBlackCorners = 0;
+        for (int i = 0; i < boardGrid.length; i += boardGrid.length)
+            for (int j = 0; j < boardGrid[i].length; j += boardGrid[i].length)
+                if (boardGrid[i][j] == BLACK)
+                    nrBlackCorners++;
+
+        return nrBlackCorners;
+    }
+
+    //number of whiteSquares in corners
+    public int getWhiteCorners() {
+        int nrWhiteCorners = 0;
+        for (int i = 0; i < boardGrid.length; i += boardGrid.length)
+            for (int j = 0; j < boardGrid[i].length; j += boardGrid[i].length)
+                if (boardGrid[i][j] == WHITE)
+                    nrWhiteCorners++;
+
+        return nrWhiteCorners;
+    }
+
+
+    //number of stable coins without corners
+    //to finnish!!!
+    public int[] getnrOfStable(){
+        int[] totalStable = new int[2];
+
+
+
+        return totalStable;
+    }
+
+    //number of semistable coins
+    //to finnish!!!
+    public int[] getNrOfSemiStable(){
+        int[] totalSemiStable = new int[2];
+
+
+
+        return totalSemiStable;
+    }
+
+    //number of unStable coins
+    //to finnish!!!
+    public int[] getNrOfUnStable(){
+        int[] totalunStable = new int[2];
+
+
+
+        return totalunStable;
+    }
+
+
+
+    //Stability of the white squares
+    public int getStabilityWhite(){
+        int totalStability = 0;
+        int stableWhite = getnrOfStable()[0];
+        int semiStableWhite  = getNrOfSemiStable()[0];
+        int unstableWhite = getNrOfUnStable()[0];
+
+        totalStability =  stableWhite + semiStableWhite + unstableWhite + getWhiteCorners();
+        return totalStability;
+    }
+
+    //stability of the black squares
+    public int getStabilityBlack(){
+        int totalStability = 0;
+        int stableBlack = getnrOfStable()[1];
+        int semiStableBlack = getNrOfSemiStable()[1];
+        int unstableBlack = getNrOfUnStable()[1];
+
+        totalStability = stableBlack + semiStableBlack + unstableBlack + getBlackCorners();
+        return totalStability;
+    }
+
+
+
+
 }
