@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a184a4f4-bc08-48d2-be6b-7c297d407c20" name="Default" comment="Logic applyMove">
-      <change beforePath="$PROJECT_DIR$/src/Core/GameScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/GameScene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/StartGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/StartGame.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -14,87 +15,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Logic.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Core/Logic.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Node.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AI/Node.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Board.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Core/Board.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2317">
-              <caret line="160" column="9" selection-start-line="160" selection-start-column="9" selection-end-line="160" selection-end-column="9" />
-              <folding>
-                <element signature="e#1200#1201#0" expanded="true" />
-                <element signature="e#1232#1233#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GameScene.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Core/GameScene.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="37" column="28" selection-start-line="37" selection-start-column="28" selection-end-line="37" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Image.java" pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/javafx-src.zip!/javafx/scene/image/Image.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="9027">
-              <caret line="658" selection-start-line="658" selection-end-line="658" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Settings.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Core/Settings.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" selection-start-line="8" selection-end-line="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StartGame.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="StartGame.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Core/StartGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SettingsScene.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Core/SettingsScene.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="42" column="65" lean-forward="true" selection-start-line="42" selection-start-column="65" selection-end-line="42" selection-end-column="65" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AI.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AI/AI.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+            <state relative-caret-position="300">
+              <caret line="21" column="4" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -126,8 +51,8 @@
   <component name="GradleLocalSettings">
     <option name="projectSyncType">
       <map>
-        <entry key="$PROJECT_DIR$/../../Project1-2c" value="PREVIEW" />
-        <entry key="$PROJECT_DIR$/../../Project1-2cV2" value="PREVIEW" />
+        <entry key="$USER_HOME$/Project1-2c" value="PREVIEW" />
+        <entry key="$USER_HOME$/Project1-2cV2" value="PREVIEW" />
       </map>
     </option>
   </component>
@@ -143,6 +68,7 @@
         <option value="$PROJECT_DIR$/src/AI/TreeSearch.java" />
         <option value="$PROJECT_DIR$/src/Core/Board.java" />
         <option value="$PROJECT_DIR$/src/Core/GameScene.java" />
+        <option value="$PROJECT_DIR$/src/Core/StartGame.java" />
       </list>
     </option>
   </component>
@@ -162,6 +88,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -183,12 +111,6 @@
               <item name="Othello" type="b2602c69:ProjectViewProjectNode" />
               <item name="Othello" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="AI" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Othello" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Othello" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="Core" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -196,8 +118,6 @@
         </subPane>
       </pane>
       <pane id="AndroidView" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -209,6 +129,160 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="ChangesBrowser.SHOW_FLATTEN" value="true" />
+  </component>
+  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
+    <UpdatedFiles>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Updated from server" />
+        <option name="myStatusName" value="Changed on server" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="CHANGED_ON_SERVER" />
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated" />
+          <option name="myStatusName" value="Changed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UPDATED" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.gitignore</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/Button_Icon_Black.pdn</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/Button_Icon_White.pdn</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/disc_black.pdn</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/disc_blackBgr.png</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/disc_blackBgrSel.png</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/disc_blackMenu.png</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/disc_blackSel.pdn</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/disc_white.pdn</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/disc_whiteBgr.png</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/disc_whiteBgrSel.png</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/disc_whiteMenu.png</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/disc_whiteSel.pdn</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Created" />
+          <option name="myStatusName" value="Created" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CREATED" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/uiDesigner.xml</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/workspace.xml</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/AI/TreeSearch.java</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/1.png</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/10.png</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/2.png</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/3.png</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/4.png</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/5.png</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/6.png</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/7.png</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/8.png</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/9+pdn.pdn</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/9.png</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/Bgr1.png</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/Button_Icon_BlackSel.pdn</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/Button_Icon_WhiteSel.pdn</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/Number.pdn</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/disc_blackMenuSel.png</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Assets/disc_whiteMenuSel.png</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Core/Board.java</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Core/GameScene.java</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Core/Logic.java</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Core/Settings.java</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Core/SettingsScene.java</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Core/StartGame.java</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Deleted" />
+          <option name="myStatusName" value="Deleted" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="true" />
+          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Board.java</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/GameScene.java</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Logic.java</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/Settings.java</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/SettingsScene.java</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/src/StartGame.java</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Restored" />
+          <option name="myStatusName" value="Will be restored" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="RESTORED" />
+        </FILE-GROUP>
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Modified" />
+        <option name="myStatusName" value="Modified" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MODIFIED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Skipped" />
+        <option name="myStatusName" value="Skipped" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SKIPPED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with conflicts" />
+        <option name="myStatusName" value="Will be merged with conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_CONFLICTS" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with tree conflicts" />
+        <option name="myStatusName" value="Merged with tree conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with property conflicts" />
+        <option name="myStatusName" value="Will be merged with property conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged" />
+        <option name="myStatusName" value="Will be merged" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Not in repository" />
+        <option name="myStatusName" value="Not in repository" />
+        <option name="mySupportsDeletion" value="true" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="UNKNOWN" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally added" />
+        <option name="myStatusName" value="Locally added" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_ADDED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally removed" />
+        <option name="myStatusName" value="Locally removed" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_REMOVED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Switched" />
+        <option name="myStatusName" value="Switched" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SWITCHED" />
+      </FILE-GROUP>
+    </UpdatedFiles>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -364,54 +438,72 @@
     <option name="totallyTimeSpent" value="16220000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="49" y="23" width="1391" height="877" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info anchor="right" id="Palette" order="10" />
-      <window_info anchor="bottom" id="TODO" order="12" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Messages" order="0" sideWeight="0.4899329" weight="0.2877493" />
-      <window_info anchor="right" id="Palette&#9;" order="13" />
-      <window_info id="Image Layers" order="11" />
-      <window_info anchor="right" id="Capture Analysis" order="14" />
-      <window_info anchor="bottom" id="Event Log" order="14" sideWeight="0.5073826" side_tool="true" visible="true" weight="0.19800569" />
-      <window_info anchor="right" id="Maven Projects" order="11" />
-      <window_info anchor="bottom" id="Version Control" order="15" />
-      <window_info anchor="bottom" id="Run" order="5" sideWeight="0.49261746" visible="true" weight="0.19800569" />
-      <window_info anchor="bottom" id="Terminal" order="16" />
-      <window_info id="Capture Tool" order="8" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info id="Image Layers" order="2" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="right" id="Maven Projects" order="3" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.20672478" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info id="Designer" order="2" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13227893" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info id="UI Designer" order="2" />
+      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="right" id="Palette" order="10" />
       <window_info id="Designer" order="9" />
-      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.1671141" />
-      <window_info id="Structure" order="7" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
-      <window_info id="UI Designer" order="10" />
-      <window_info anchor="right" id="Theme Preview" order="15" />
-      <window_info id="Favorites" order="12" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="8" weight="0.4" />
-      <window_info anchor="right" id="Code Iris" order="16" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="8" weight="0.25" />
+      <window_info anchor="right" id="Capture Analysis" order="14" />
       <window_info anchor="right" id="Database" order="12" />
       <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
+      <window_info anchor="right" id="Code Iris" order="16" />
+      <window_info anchor="bottom" id="Terminal" order="16" />
+      <window_info id="Structure" order="7" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" order="1" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="12" />
+      <window_info id="Favorites" order="12" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="15" />
+      <window_info anchor="bottom" id="Run" order="5" sideWeight="0.49261746" visible="true" weight="0.19800569" />
+      <window_info id="Image Layers" order="11" />
+      <window_info id="Capture Tool" order="8" />
+      <window_info id="UI Designer" order="10" />
+      <window_info anchor="bottom" id="Debug" order="8" weight="0.4" />
+      <window_info anchor="right" id="Theme Preview" order="15" />
+      <window_info anchor="right" id="Palette&#9;" order="13" />
       <window_info anchor="bottom" id="Message" order="2" />
+      <window_info anchor="bottom" id="Event Log" order="14" sideWeight="0.5073826" side_tool="true" visible="true" weight="0.19800569" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="3" sideWeight="0.49932885" weight="0.32905984" />
+      <window_info anchor="right" id="Maven Projects" order="11" />
+      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.1671141" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info id="Designer" order="3" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Capture Analysis" order="7" />
+      <window_info anchor="right" id="Database" order="5" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="right" id="Theme Preview" order="8" />
-      <window_info anchor="bottom" id="Messages" order="0" sideWeight="0.49375" weight="0.06562054" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="7" />
       <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.32952926" />
       <window_info id="Image Layers" order="5" />
-      <window_info id="Capture Tool" order="2" />
+      <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info anchor="bottom" id="Find" order="2" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
@@ -420,8 +512,9 @@
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info id="Capture Tool" order="2" />
       <window_info anchor="bottom" id="Message" order="1" />
-      <window_info anchor="right" id="Database" order="5" />
+      <window_info anchor="bottom" id="Messages" order="0" sideWeight="0.49375" weight="0.06562054" />
       <window_info anchor="right" id="Maven Projects" order="4" />
       <window_info id="Favorites" order="6" side_tool="true" />
     </layout-to-restore>
@@ -444,6 +537,20 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/Board.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1470">
+          <caret line="118" column="87" selection-start-line="118" selection-start-column="87" selection-end-line="118" selection-end-column="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Logic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Core/Logic.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -469,13 +576,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/javafx-src.zip!/javafx/scene/image/Image.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11186">
-          <caret line="658" selection-start-line="658" selection-end-line="658" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/javafx-src.zip!/javafx/scene/image/Image.java" />
     <entry file="file://$PROJECT_DIR$/src/Core/Settings.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -630,13 +731,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/StartGame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AI/TreeSearch.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -644,13 +738,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/javafx-src.zip!/javafx/scene/image/Image.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9027">
-          <caret line="658" selection-start-line="658" selection-end-line="658" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/javafx-src.zip!/javafx/scene/image/Image.java" />
     <entry file="file://$PROJECT_DIR$/src/Core/Logic.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -694,6 +782,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" selection-start-line="8" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Core/StartGame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="21" column="4" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="4" />
         </state>
       </provider>
     </entry>

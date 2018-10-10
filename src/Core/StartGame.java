@@ -19,6 +19,7 @@ public class StartGame extends Application {
         primaryStage.setScene(settingsScene.getSettingsScene());
         primaryStage.show();
     }
+
 }
 
 
