@@ -111,19 +111,19 @@ public class GameScene extends BorderPane {
 
     public void redrawBoard (){
         boolean isMovePossible = false;
-        do {
-            for (int r = 0; r < boardGrid.length; r++) {
-                for (int c = 0; c < boardGrid[r].length; c++) {
-                    if(Logic.checkSquareAllowed(r, c, board, board.getCurrentPlayer())) {
-                        isMovePossible = true;
-                    }
-                }
-            }
-        } while (!isMovePossible);
-        if(!isMovePossible) {
-            board.incrementTurn();
-            redrawBoard();
-        }
+//        do {
+//            for (int r = 0; r < boardGrid.length; r++) {
+//                for (int c = 0; c < boardGrid[r].length; c++) {
+//                    if(Logic.checkSquareAllowed(r, c, board, board.getCurrentPlayer())) {
+//                        isMovePossible = true;
+//                    }
+//                }
+//            }
+//        } while (!isMovePossible);
+//        if(!isMovePossible) {
+//            board.incrementTurn();
+//            redrawBoard();
+//        }
         grid.getChildren().clear();
         List<Button> toAdd = new ArrayList<>();
         for (int r = 0; r < boardGrid.length; r++) {
