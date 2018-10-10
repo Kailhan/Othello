@@ -1,10 +1,15 @@
+package Core;
+
 public class Board {
 
     private int[][] boardGrid;
     public static final int EMPTY = 0;
     public static final int BLACK = 1;
     public static final int WHITE = -1;
+    public static final int ONGOING = 0;
+    public static final int FINISHED = 1;
 
+    private int gameState = 0;
     private int size;
     private int turn;
     private int currentPlayer;
@@ -118,16 +123,27 @@ public class Board {
     {
         if(boardGrid[x][y] == 0 && Logic.checkSquareAllowed(x, y, this, currentPlayer))
         {
+            int[][] flippedDisks = Logic.getFlippedDisks(x, y, this, currentPlayer);
+
             if(currentPlayer == BLACK)
             {
                 boardGrid[x][y] = BLACK;
+                for(int i = 0; i < flippedDisks.length; i++)
+                {
+                    boardGrid[flippedDisks[i][0]][flippedDisks[i][1]] = BLACK;
+                }
             }
             else
             {
                 boardGrid[x][y] = WHITE;
+                for(int i = 0; i < flippedDisks.length; i++)
+                {
+                    boardGrid[flippedDisks[i][0]][flippedDisks[i][1]] = WHITE;
+                }
             }
             changePlayer();
-//        if(Logic.checkSquareAllowed(x, y, this, turn))
+
+//        if(Core.Logic.checkSquareAllowed(x, y, this, turn))
 //        {
 //            if(boardGrid[x][y] == 0)
 //            {

@@ -1,8 +1,9 @@
+package Core;
+
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -24,7 +25,7 @@ public class SettingsScene extends VBox {
 
     public SettingsScene(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Othello Game - Settings");
+        this.primaryStage.setTitle("Othello Game - Core.Settings");
         Label label = new Label("Welcome to the Othello game!");
 
         submit = new Button("Start");
@@ -67,13 +68,15 @@ public class SettingsScene extends VBox {
         });
 
         size = new ComboBox<>();
-        size.getItems().addAll("Small", "Large");
+        size.getItems().addAll("Small", "Medium", "Large");
         size.setPromptText("Select board size");
         size.setOnAction(e -> {
             if (size.getValue() == "Small") {
-                action_boardSize = Settings.SMALL;
+                action_boardSize = Settings.SIZE_SMALL;
+            } else if (size.getValue() == "MEDIUM") {
+                action_boardSize = Settings.SIZE_MEDIUM;
             } else {
-                action_boardSize = Settings.LARGE;
+                action_boardSize = Settings.SIZE_LARGE;
             }
         });
 

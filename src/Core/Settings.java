@@ -1,3 +1,5 @@
+package Core;
+
 public class Settings {
 
     //values to return in the class object:
@@ -10,12 +12,13 @@ public class Settings {
     public static final int HvH = 0;
     public static final int HvA = 1;
     public static final int AvA = 2;
-    public static final int SMALL = 0;
-    public static final int LARGE = 2;
+    public static final int SIZE_SMALL = 4;
+    public static final int SIZE_MEDIUM = 6;
+    public static final int SIZE_LARGE = 8;
 
 
     public Settings() {
-        this(EASY,HvH,SMALL);
+        this(EASY,HvH,SIZE_LARGE);
     }
 
     public Settings(int difficultyLevel, int gameMode, int boardSize) {
