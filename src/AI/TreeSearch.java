@@ -32,7 +32,7 @@ public class TreeSearch {
         int numberOfMoves;
         int numberOfCoins =  WEIGHT * (board.getNrBlackSquares() - board.getNrWhiteSquares()) / (board.getNrBlackSquares() + board.getNrWhiteSquares());
 
-        if(true){/*(blackPlayerMoves  + whitePlayerMoves != 0) {
+        if(true){/*(blackPlayerMoves  + whitePlayerMoves != 0) { //use checknumberofsquares.... at apply move, and switch whenever. turn swaps
             numberOfMoves = 100 * 6;//amount of moves
         */}
         else numberOfMoves = 0;

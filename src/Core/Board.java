@@ -3,11 +3,13 @@ package Core;
 public class Board {
 
     private int[][] boardGrid;
+
     public static final int EMPTY = 0;
     public static final int BLACK = 1;
     public static final int WHITE = -1;
     public static final int ONGOING = 0;
     public static final int FINISHED = 1;
+
 
     private int gameState = 0;
     private int size;
@@ -121,7 +123,6 @@ public class Board {
     //disk flips or placed in an empty square
     public void applyMove(int x, int y)
     {
-
         if(boardGrid[x][y] == 0 && Logic.checkSquareAllowed(x, y, this, currentPlayer))
         {
             int[][] flippedDisks = Logic.getFlippedDisks(x, y, this, currentPlayer);
