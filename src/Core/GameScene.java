@@ -165,22 +165,22 @@ public class GameScene extends BorderPane {
                 }
             }
             if(board.getCurrentPlayer() == board.BLACK) {
-                GridPane.setConstraints(discBlackMenuViewSel, boardGrid.length, 3);
-                GridPane.setConstraints(discWhiteMenuView, boardGrid.length + 2, 3);
+                GridPane.setConstraints(discBlackMenuViewSel, boardGrid.length, 1);
+                GridPane.setConstraints(discWhiteMenuView, boardGrid.length + 2, 1);
                 grid.getChildren().addAll(discBlackMenuViewSel, discWhiteMenuView);
             } else {
-                GridPane.setConstraints(discBlackMenuView, boardGrid.length, 3);
-                GridPane.setConstraints(discWhiteMenuViewSel, boardGrid.length + 2, 3);
+                GridPane.setConstraints(discBlackMenuView, boardGrid.length, 1);
+                GridPane.setConstraints(discWhiteMenuViewSel, boardGrid.length + 2, 1);
                 grid.getChildren().addAll(discBlackMenuView, discWhiteMenuViewSel);
             }
 
-            GridPane.setConstraints(goToMenuBut, boardGrid.length + 1, 5);
-            GridPane.setConstraints(restartGameBut, boardGrid.length + 1, 6);
+            GridPane.setConstraints(goToMenuBut, boardGrid.length + 1, 3);
+            GridPane.setConstraints(restartGameBut, boardGrid.length + 1, 4);
 
             Label blackDiscs = new Label(Integer.toString(board.getNrBlackSquares()));
-            GridPane.setConstraints(blackDiscs, boardGrid.length, 4);
+            GridPane.setConstraints(blackDiscs, boardGrid.length, 2);
             Label whiteDiscs = new Label(Integer.toString(board.getNrWhiteSquares()));
-            GridPane.setConstraints(whiteDiscs, boardGrid.length + 2, 4);
+            GridPane.setConstraints(whiteDiscs, boardGrid.length + 2, 2);
 
             grid.getChildren().addAll(toAdd);
             grid.getChildren().addAll(goToMenuBut, restartGameBut, blackDiscs, whiteDiscs);
