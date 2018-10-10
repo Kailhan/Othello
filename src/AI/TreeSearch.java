@@ -10,6 +10,7 @@ public class TreeSearch {
     private int currentPossibleMoves[][];
     private Node parent;
     private int moveIndex;
+    private final static int WEIGHT = 100;
 
     public TreeSearch(){
         this.logic = new Logic();
@@ -17,35 +18,36 @@ public class TreeSearch {
         this.boardGrid = board.getBoardGrid();
         this.parent = new Node(new int[2]);
         currentPossibleMoves = new int[boardGrid.length][2];
-
     }
 
     //black is max
     //white is min
     //Look at which factor for the range (now sitting at 100 to -100) can increase/decrease;
     //to do: finnish functions in stability and do the moves functions...
+    //Maybe make room for opening moves (set of the best opening moves)
     public int evaluationFunction(){
         int totalscore = 0;
         int corners;
         int stableScore;
+        int numberOfMoves;
+        int numberOfCoins =  WEIGHT * (board.getNrBlackSquares() - board.getNrWhiteSquares()) / (board.getNrBlackSquares() + board.getNrWhiteSquares());
 
-        int numberOfCoins =  100 * (board.getNrBlackSquares() - board.getNrWhiteSquares()) / (board.getNrBlackSquares() + board.getNrWhiteSquares());
-        int numberOfMoves =  100 * 6;//amount of moves
-
-
+        if(true){/*(blackPlayerMoves  + whitePlayerMoves != 0) {
+            numberOfMoves = 100 * 6;//amount of moves
+        */}
+        else numberOfMoves = 0;
 
         if(board.getStabilityBlack() + board.getStabilityWhite() != 0) {
-            stableScore = 100 * (board.getStabilityBlack() - board.getStabilityWhite()) / (board.getStabilityBlack() + board.getStabilityWhite());
+            stableScore = WEIGHT * (board.getStabilityBlack() - board.getStabilityWhite()) / (board.getStabilityBlack() + board.getStabilityWhite());
         }
         else stableScore = 0;
 
-
         if(board.getBlackCorners() + board.getNrWhiteSquares() != 0) {
-            corners = 100 * (board.getBlackCorners() - board.getNrWhiteSquares()) / (board.getBlackCorners() + board.getNrWhiteSquares());
+            corners = WEIGHT * (board.getBlackCorners() - board.getNrWhiteSquares()) / (board.getBlackCorners() + board.getNrWhiteSquares());
         }
         else corners = 0;
 
-        return totalscore = numberOfCoins + corners + numberOfMoves + stableScore;
+        return totalscore = numberOfCoins + corners + /*numberOfMoves*/ + stableScore; //to be checked if its the correct way to add scores. .
     }
 
     public void createTree(){

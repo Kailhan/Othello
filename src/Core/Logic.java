@@ -1,11 +1,15 @@
 package Core;
 
+import java.net.SocketTimeoutException;
+
+
 public class Logic {
 
     public static boolean checkSquareAllowed(int x, int y, Board board, int playerNr) //Returns true if the position clicked would result in disks being flipped
     {
         int[][] boardGrid = board.getBoardGrid();
         int boardSize = board.getSize();
+
 
         if (boardGrid[x][y] == 0) //If the square is empty
         {
@@ -18,6 +22,7 @@ public class Logic {
                         getFlippedDisksDirection(x, y, board, playerNr, "SW").length > 0 ||
                         getFlippedDisksDirection(x, y, board, playerNr, "W").length > 0 ||
                         getFlippedDisksDirection(x, y, board, playerNr, "NW").length > 0)
+
                     return true;
             }
             else if (x <= 1 && y > 1 && y < boardSize - 2) { //left edge

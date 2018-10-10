@@ -121,6 +121,7 @@ public class Board {
     //disk flips or placed in an empty square
     public void applyMove(int x, int y)
     {
+
         if(boardGrid[x][y] == 0 && Logic.checkSquareAllowed(x, y, this, currentPlayer))
         {
             int[][] flippedDisks = Logic.getFlippedDisks(x, y, this, currentPlayer);

@@ -158,6 +158,7 @@ public class GameScene extends BorderPane {
             GridPane.setConstraints(discBlackMenuViewSel, boardGrid.length, 3);
             GridPane.setConstraints(discWhiteMenuView, boardGrid.length + 2, 3);
             grid.getChildren().addAll(discBlackMenuViewSel, discWhiteMenuView);
+
         } else {
             GridPane.setConstraints(discBlackMenuView, boardGrid.length, 3);
             GridPane.setConstraints(discWhiteMenuViewSel, boardGrid.length + 2, 3);
