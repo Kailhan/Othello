@@ -180,29 +180,29 @@ public class Logic {
         {
             case "N" :
                 for(int i = 1; y - i >= 0; i++)
-                {
-                    if(boardGrid[x][y - i] == 0)
                     {
-                        return new int[0][2];
-                    }
-                    else if(boardGrid[x][y - i] == playerNr * -1)
-                    {
-                        foundEnemy = true;
-                        int[][] enemyCoordinate = new int[][]{{x, y - i}};
-                        flippedDisks = combine(flippedDisks, enemyCoordinate);
-                    }
-                    else if (boardGrid[x][y - i] == playerNr)
-                    {
-                        if(foundEnemy)
+                        if(boardGrid[x][y - i] == 0)
                         {
-                            return flippedDisks;
+                            return new int[0][2];
                         }
-                        else
+                        else if(boardGrid[x][y - i] == playerNr * -1)
                         {
-                            return new int[0][0];
+                            foundEnemy = true;
+                            int[][] enemyCoordinate = new int[][]{{x, y - i}};
+                            flippedDisks = combine(flippedDisks, enemyCoordinate);
+                        }
+                        else if (boardGrid[x][y - i] == playerNr)
+                        {
+                            if(foundEnemy)
+                            {
+                                return flippedDisks;
+                            }
+                            else
+                            {
+                                return new int[0][0];
+                            }
                         }
                     }
-                }
                 return new int[0][0];
             case "NE" :
                 for(int i = 1; y - i >= 0 && x + i < boardSize; i++)

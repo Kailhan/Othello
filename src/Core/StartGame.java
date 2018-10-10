@@ -20,4 +20,3 @@ public class StartGame extends Application {
         primaryStage.show();
     }
 }
-

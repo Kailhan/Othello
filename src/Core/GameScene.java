@@ -181,7 +181,6 @@ public class GameScene extends BorderPane {
             GridPane.setConstraints(blackDiscs, boardGrid.length, 2);
             Label whiteDiscs = new Label(Integer.toString(board.getNrWhiteSquares()));
             GridPane.setConstraints(whiteDiscs, boardGrid.length + 2, 2);
-
             grid.getChildren().addAll(toAdd);
             grid.getChildren().addAll(goToMenuBut, restartGameBut, blackDiscs, whiteDiscs);
         }
@@ -211,3 +210,4 @@ public class GameScene extends BorderPane {
         return scene;
     }
 }
+

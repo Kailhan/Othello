@@ -44,6 +44,7 @@ public class SettingsScene extends VBox {
         difficulty = new ComboBox<>();
         difficulty.getItems().addAll("Easy", "Medium", "Hard");
         difficulty.setPromptText("Select difficulty level");
+
         difficulty.setOnAction(e -> {
             if (difficulty.getValue() == "Easy") {
                 action_difficultyLevel = Settings.EASY;
@@ -57,6 +58,7 @@ public class SettingsScene extends VBox {
         playerMode = new ComboBox<>();
         playerMode.getItems().addAll("Human vs Human", "Human vs AI", "AI vs AI");
         playerMode.setPromptText("Select game mode");
+
         playerMode.setOnAction(e -> {
             if (playerMode.getValue() == "Human vs Human") {
                 action_gameMode = Settings.HvH;
@@ -66,7 +68,6 @@ public class SettingsScene extends VBox {
                 action_gameMode = Settings.AvA;
             }
         });
-
         size = new ComboBox<>();
         size.getItems().addAll("Small", "Medium", "Large");
         size.setPromptText("Select board size");
@@ -90,5 +91,3 @@ public class SettingsScene extends VBox {
         return scene;
     }
 }
-
-
