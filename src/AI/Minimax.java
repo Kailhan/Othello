@@ -58,7 +58,7 @@ public class Minimax{
         List listChildren = parent.getChildren();
         int minValue = (int)listChildren.get(0);
         for(int i = 0; i<listChildren.size(); i++){
-            if((int)listChildren.get(i)>minValue) minValue=(int)listChildren.get(i);
+            if((int)listChildren.get(i)<minValue) minValue=(int)listChildren.get(i);
         }
         return minValue;
     }
