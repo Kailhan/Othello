@@ -403,14 +403,29 @@ public class Logic {
     {
         int boardSize = board.getSize();
         int nrOfAllowedSquares = 0;
-        for (int i = 0; i < boardSize; i++)
-        {
-            for (int j = 0; j < boardSize; j++)
-                if (checkSquareAllowed(i, j, board, board.getCurrentPlayer()))
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                if (checkSquareAllowed(i, j, board, board.getCurrentPlayer())) {
                     nrOfAllowedSquares++;
-            return nrOfAllowedSquares;
+                }
+            }
         }
-        return 0;
+        return nrOfAllowedSquares;
+    }
+
+    //count the amount of possible moves with manual option to choose the player
+    public static int numberSquaresAllowed(Board board, int player)
+    {
+        int boardSize = board.getSize();
+        int nrOfAllowedSquares = 0;
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                if (checkSquareAllowed(i, j, board, player)) {
+                    nrOfAllowedSquares++;
+                }
+            }
+        }
+        return nrOfAllowedSquares;
     }
 
     public static int[][] combine(int[][] a, int[][] b)

@@ -189,7 +189,7 @@ public class Board {
 
     //number of stable coins without corners
     //to finnish!!!
-    public int[] getnrOfStable(){
+    public int[] getNrOfStable(){
         int[] totalStable = new int[2];
 
 
@@ -222,7 +222,7 @@ public class Board {
     //Stability of the white squares
     public int getStabilityWhite(){
         int totalStability = 0;
-        int stableWhite = getnrOfStable()[0];
+        int stableWhite = getNrOfStable()[0];
         int semiStableWhite  = getNrOfSemiStable()[0];
         int unstableWhite = getNrOfUnStable()[0];
 
@@ -233,7 +233,7 @@ public class Board {
     //stability of the black squares
     public int getStabilityBlack(){
         int totalStability = 0;
-        int stableBlack = getnrOfStable()[1];
+        int stableBlack = getNrOfStable()[1];
         int semiStableBlack = getNrOfSemiStable()[1];
         int unstableBlack = getNrOfUnStable()[1];
 
