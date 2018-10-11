@@ -45,15 +45,15 @@ public class TreeSearch {
         }
         else numberOfMoves = 0;
 
-        if(board.getStabilityBlack() + board.getStabilityWhite() != 0) {
-            stableScore =  ((board.getStabilityBlack() - board.getStabilityWhite()) / (board.getStabilityBlack() + board.getStabilityWhite()));
-        }
-        else stableScore = 0;
-
         if(board.getBlackCorners() + board.getNrWhiteSquares() != 0) {
             numberOfCorners = ((board.getBlackCorners() - board.getNrWhiteSquares()) / (board.getBlackCorners() + board.getNrWhiteSquares()));
         }
         else numberOfCorners = 0;
+
+        if(board.getStabilityBlack() + board.getStabilityWhite() != 0) {
+            stableScore =  ((board.getStabilityBlack() - board.getStabilityWhite()) / (board.getStabilityBlack() + board.getStabilityWhite()));
+        }
+        else stableScore = 0;
 
         return totalscore = WEIGHT1 * numberOfCoins + WEIGHT2 * numberOfCorners + WEIGHT3 * numberOfMoves /*+ WEIGHT4 * stableScore*/;
         //to be checked if its the correct way to add scores. .
@@ -63,7 +63,7 @@ public class TreeSearch {
         this.boardGrid = board.getBoardGrid();
         for(int i = 0; i < boardGrid.length; i++){
             for(int j = 0; j < boardGrid[0].length; j++){
-                if(logic.checkSquareAllowed(i,j,board,1)) {
+                if(logic.checkSquareAllowed(i,j,board,BLACK)) {
                     currentPossibleMoves[moveIndex][0] = i;
                     currentPossibleMoves[moveIndex][1] = j;
                 }
@@ -75,11 +75,12 @@ public class TreeSearch {
             currentNode.setData(currentPossibleMoves[moveIndex]);
             currentNode.setParent(parent);
         }
-
-
     }
 
 }
+
+
+
 
 /*
 A list of possible moves for each turn needs to be created using Core.Logic.checkSquareAllowed

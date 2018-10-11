@@ -167,8 +167,8 @@ public class Board {
     //number of blackSquares in corners
     public int getBlackCorners() {
         int nrBlackCorners = 0;
-        for (int i = 0; i < boardGrid.length; i += boardGrid.length)
-            for (int j = 0; j < boardGrid[i].length; j += boardGrid[i].length)
+        for (int i = 0; i < boardGrid.length; i += boardGrid.length-1)
+            for (int j = 0; j < boardGrid[i].length; j += boardGrid[i].length-1)
                 if (boardGrid[i][j] == BLACK)
                     nrBlackCorners++;
 
@@ -178,8 +178,8 @@ public class Board {
     //number of whiteSquares in corners
     public int getWhiteCorners() {
         int nrWhiteCorners = 0;
-        for (int i = 0; i < boardGrid.length; i += boardGrid.length)
-            for (int j = 0; j < boardGrid[i].length; j += boardGrid[i].length)
+        for (int i = 0; i < boardGrid.length; i += boardGrid.length-1)
+            for (int j = 0; j < boardGrid[i].length; j += boardGrid[i].length-1)
                 if (boardGrid[i][j] == WHITE)
                     nrWhiteCorners++;
 
