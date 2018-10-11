@@ -3,40 +3,37 @@ package Core;
 public class Settings {
 
     //values to return in the class object:
-    private int difficultyLevel;
-    private int gameMode;
-    private int boardSize;
-    public static final int EASY = 0;
-    public static final int MEDIUM = 1;
-    public static final int HARD = 2;
-    public static final int HvH = 0;
-    public static final int HvA = 1;
-    public static final int AvA = 2;
-    public static final int SIZE_SMALL = 4;
-    public static final int SIZE_MEDIUM = 6;
-    public static final int SIZE_LARGE = 8;
-
-
-    public Settings() {
-        this(EASY,HvH,SIZE_LARGE);
-    }
-
-    public Settings(int difficultyLevel, int gameMode, int boardSize) {
-        this.difficultyLevel = difficultyLevel;
-        this.gameMode = gameMode;
-        this.boardSize = boardSize;
-    }
+    private String difficultyLevel;
+    private String gameMode;
+    private String boardSize;
 
     //getters & setters
-
-    public int getDifficultyLevel() {
+    public void setDifficultyLevel(String difficultyLevel){
+        this.difficultyLevel = difficultyLevel;
+    }
+    public void setGameMode (String gameMode) {
+        this.gameMode = gameMode;
+    }
+    public void setBoardSize (String boardSize) {
+        this.boardSize = boardSize;
+    }
+    public String getDifficultyLevel() {
         return difficultyLevel;
     }
-    public int getGameMode() {
+    public String getGameMode() {
         return gameMode;
     }
-    public int getBoardSize() {
+    public String getBoardSize() {
         return boardSize;
     }
-
+    public static Settings getSettings(String gameMode, String boardSize, String difficultyLevel) {
+        Settings settings = new Settings();
+        settings.setGameMode(gameMode);
+        settings.setBoardSize(boardSize);
+        settings.setDifficultyLevel(difficultyLevel);
+        System.out.println(settings.boardSize);
+        System.out.println(settings.difficultyLevel);
+        System.out.println(settings.gameMode);
+        return settings;
+    }
 }
