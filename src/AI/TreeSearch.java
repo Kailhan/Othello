@@ -76,7 +76,41 @@ public class TreeSearch {
             currentNode.setParent(parent);
         }
     }
+    
+    //is not working, but is a beginning
+    public int minimaxMethod(Board board, int depth){
+        int score = Integer.MIN_VALUE;
 
+        if(depth<=0){
+            score = evaluationFunction();
+        } else{
+            board.changePlayer();
+            int oppositePlayer = board.getCurrentPlayer();
+            int result = -minimaxMethod(board, depth-1);
+            if(result > score){
+                score = result;
+            }
+        }
+        return score;
+    }
+
+    public int valueMax(Node parent){
+        List listChildren = parent.getChildren();
+        int maxValue = (int)listChildren.get(0);
+        for(int i = 0; i<listChildren.size(); i++){
+            if((int)listChildren.get(i)>maxValue) maxValue=(int)listChildren.get(i);
+        }
+        return maxValue;
+    }
+
+    public int valueMin(Node parent){
+        List listChildren = parent.getChildren();
+        int minValue = (int)listChildren.get(0);
+        for(int i = 0; i<listChildren.size(); i++){
+            if((int)listChildren.get(i)<minValue) minValue=(int)listChildren.get(i);
+        }
+        return minValue;
+    }
 }
 
 
