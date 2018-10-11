@@ -146,7 +146,7 @@ public class Logic {
                 flippedDisks = combine(flippedDisks, getFlippedDisksDirection(x, y, board, playerNr, "E"));
                 flippedDisks = combine(flippedDisks, getFlippedDisksDirection(x, y, board, playerNr, "SE"));
                 flippedDisks = combine(flippedDisks, getFlippedDisksDirection(x, y, board, playerNr, "S"));
-                    return flippedDisks;
+                return flippedDisks;
             }
             else if (x <= 1 && y >= boardSize - 2) { //bottom left corner
                 flippedDisks = combine(flippedDisks, getFlippedDisksDirection(x, y, board, playerNr, "N"));
