@@ -1,8 +1,9 @@
 package AI;
+import java.util.*;
 
 import Core.*;
 
-public class TreeSearch {
+public class Minimax{
 
     private Logic logic;
     private Board board;
@@ -11,7 +12,7 @@ public class TreeSearch {
     private Node parent;
     private int moveIndex;
 
-    public TreeSearch(){
+    public Minimax(){
         this.logic = new Logic();
         this.board = new Board();
         this.boardGrid = board.getBoardGrid();
@@ -38,6 +39,28 @@ public class TreeSearch {
         }
 
 
+    }
+
+    public void minimaxMethod(Node parent){
+        List listChildren = parent.getChildren();
+    }
+
+    public int valueMax(Node parent){
+        List listChildren = parent.getChildren();
+        int maxValue = (int)listChildren.get(0);
+        for(int i = 0; i<listChildren.size(); i++){
+            if((int)listChildren.get(i)>maxValue) maxValue=(int)listChildren.get(i);
+        }
+        return maxValue;
+    }
+
+    public int valueMin(Node parent){
+        List listChildren = parent.getChildren();
+        int minValue = (int)listChildren.get(0);
+        for(int i = 0; i<listChildren.size(); i++){
+            if((int)listChildren.get(i)>minValue) minValue=(int)listChildren.get(i);
+        }
+        return minValue;
     }
 
 }
