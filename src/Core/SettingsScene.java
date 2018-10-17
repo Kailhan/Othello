@@ -79,7 +79,7 @@ public class SettingsScene extends VBox {
         size.setOnAction(e -> {
             if (size.getValue() == "Small") {
                 action_boardSize = Settings.SIZE_SMALL;
-            } else if (size.getValue() == "MEDIUM") {
+            } else if (size.getValue() == "Medium") {
                 action_boardSize = Settings.SIZE_MEDIUM;
             } else {
                 action_boardSize = Settings.SIZE_LARGE;
