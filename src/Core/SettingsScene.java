@@ -3,11 +3,15 @@ package Core;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+
+import java.io.File;
 
 public class SettingsScene extends VBox {
 
@@ -27,6 +31,7 @@ public class SettingsScene extends VBox {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Othello Game - Core.Settings");
         Label label = new Label("Welcome to the Othello game!");
+        label.setTextFill(Color.web("#FFFFFF"));
 
         submit = new Button("Start");
         submit.setOnAction(e -> {
@@ -84,7 +89,12 @@ public class SettingsScene extends VBox {
         VBox layout = new VBox(20);
         layout.getChildren().addAll(label, difficulty, playerMode, size, submit);
         layout.setAlignment(Pos.CENTER);
-        scene = new Scene(layout, windowSize, windowSize);
+        File backgrFile = new File("src/Assets/Othello.jpg");
+        BackgroundImage myBI= new BackgroundImage(new Image(backgrFile.toURI().toString(),800, 600,true,true),
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        layout.setBackground(new Background(myBI));
+        scene = new Scene(layout, 800, 600);
     }
 
     public Scene getSettingsScene() {
