@@ -1,5 +1,6 @@
 package Core;
 
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -173,8 +174,8 @@ public class GameScene extends BorderPane {
                 grid.getChildren().addAll(discBlackMenuView, discWhiteMenuViewSel);
             }
 
-            GridPane.setConstraints(goToMenuBut, boardGrid.length + 1, 3);
-            GridPane.setConstraints(restartGameBut, boardGrid.length + 1, 4);
+            GridPane.setConstraints(goToMenuBut, boardGrid.length + 2, 3);
+            GridPane.setConstraints(restartGameBut, boardGrid.length, 3);
 
             Label blackDiscs = new Label(Integer.toString(board.getNrBlackSquares()));
             GridPane.setConstraints(blackDiscs, boardGrid.length, 2);
@@ -182,6 +183,10 @@ public class GameScene extends BorderPane {
             GridPane.setConstraints(whiteDiscs, boardGrid.length + 2, 2);
             grid.getChildren().addAll(toAdd);
             grid.getChildren().addAll(goToMenuBut, restartGameBut, blackDiscs, whiteDiscs);
+            for(Node aNode: grid.getChildren()) {
+                GridPane.setHalignment(aNode, HPos.CENTER);
+            }
+
         }
 
     }
