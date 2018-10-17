@@ -8,7 +8,6 @@ public class StartGame extends Application {
 
     private Stage primaryStage;
     private SettingsScene settingsScene;
-    private GameScene gameScene;
 
     @Override
     public void start(Stage primaryStage) throws Exception {

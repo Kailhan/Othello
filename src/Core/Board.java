@@ -9,7 +9,7 @@ public class Board {
     public static final int ONGOING = 0;
     public static final int FINISHED = 1;
 
-    private int gameState = 0;
+    private int gameState = ONGOING;
     private int size;
     private int turn;
     private int currentPlayer;
@@ -18,6 +18,10 @@ public class Board {
         this(8);
     }
 
+    /**
+     * Create board with starting discs in the middle
+     * @param size height & width of board
+     */
     public Board(int size) {
         size = (size < 4) ? 4: size; //enforces minimum size of 4
         size = ((size % 2) == 0) ? size : (size-1); //makes sure board is even
@@ -31,6 +35,9 @@ public class Board {
         currentPlayer = BLACK;
     }
 
+    /**
+     * Prints out the board for diagnostic purposes
+     */
     public void displayBoardGrid() {
         for(int r = 0; r < size; r++) {
             for(int c = 0; c < size; c++) {
@@ -55,6 +62,10 @@ public class Board {
         return size;
     }
 
+    /**
+     * Checks the state of integer array representing the board, if cell contains 0 then this is an empty cell
+     * @return Number of squares that are empty
+     */
     public int getNrEmptySquares()
     {
         int nrEmptySquares = 0;
@@ -67,6 +78,10 @@ public class Board {
         return  nrEmptySquares;
     }
 
+    /**
+     * Checks the state of integer array representing the board, if cell contains 1 then this is a black cell
+     * @return Number of squares that are black
+     */
     public int getNrBlackSquares()
     {
         int nrBlackSquares = 0;
@@ -79,6 +94,10 @@ public class Board {
         return  nrBlackSquares;
     }
 
+    /**
+     * Checks the state of integer array representing the board, if cell contains -1 then this is an white cell
+     * @return Number of squares that are white
+     */
     public int getNrWhiteSquares()
     {
         int nrWhiteSquares = 0;
@@ -118,16 +137,19 @@ public class Board {
         return currentPlayer;
     }
 
-    //disk flips or placed in an empty square
-    public void applyMove(int x, int y)
+    /**
+     * Updates a specific cell based on the current status of the game, top left is 0, 0
+     * @param row specifies row of cell we want to update
+     * @param col specifies column of cell we want to update
+     */
+    public void applyMove(int row, int col)
     {
-        if(boardGrid[x][y] == 0 && Logic.checkSquareAllowed(x, y, this, currentPlayer))
+        if(boardGrid[row][col] == EMPTY && Logic.checkSquareAllowed(row, col, this, currentPlayer))
         {
-            int[][] flippedDisks = Logic.getFlippedDisks(x, y, this, currentPlayer);
-
+            int[][] flippedDisks = Logic.getFlippedDisks(row, col, this, currentPlayer);
             if(currentPlayer == BLACK)
             {
-                boardGrid[x][y] = BLACK;
+                boardGrid[row][col] = BLACK;
                 for(int i = 0; i < flippedDisks.length; i++)
                 {
                     boardGrid[flippedDisks[i][0]][flippedDisks[i][1]] = BLACK;
@@ -135,7 +157,7 @@ public class Board {
             }
             else
             {
-                boardGrid[x][y] = WHITE;
+                boardGrid[row][col] = WHITE;
                 for(int i = 0; i < flippedDisks.length; i++)
                 {
                     boardGrid[flippedDisks[i][0]][flippedDisks[i][1]] = WHITE;
@@ -143,9 +165,9 @@ public class Board {
             }
             changePlayer();
 
-//        if(Core.Logic.checkSquareAllowed(x, y, this, turn))
+//        if(Core.Logic.checkSquareAllowed(row, col, this, turn))
 //        {
-//            if(boardGrid[x][y] == 0)
+//            if(boardGrid[row][col] == 0)
 //            {
 //                if(currentPlayer == BLACK)
 //                {

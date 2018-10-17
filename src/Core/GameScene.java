@@ -25,7 +25,6 @@ public class GameScene extends BorderPane {
     private int[][] boardGrid;
     private GridPane grid = new GridPane();
     private int windowSize = 600;
-    private int gap = 5;
     private int tileSize;
 
     private File discBlack = new File("src/Assets/disc_blackBgr.png");
@@ -66,7 +65,7 @@ public class GameScene extends BorderPane {
         for(int i = 0; i < 9; i++) {
             String fileName = "src/Assets/" + Integer.toString(i+1) + ".png";
             flipped.add(new File(fileName));
-            flippedImg.add(new Image(flipped.get(flipped.size()-1).toURI().toString(), tileSize, tileSize, false,false));
+            flippedImg.add(new Image(flipped.get(flipped.size()-1).toURI().toString(), tileSize, tileSize, false,false)); // Prepares images that show how many disks will be flipped
         }
         this.discBlackMenuImg = new Image(discBlackMenu.toURI().toString(), tileSize, tileSize, false,false);
         this.discWhiteMenuImg = new Image(discWhiteMenu.toURI().toString(), tileSize, tileSize, false,false);
@@ -77,19 +76,19 @@ public class GameScene extends BorderPane {
         this.discBlackMenuViewSel = new ImageView(discBlackMenuImgSel);
         this.discWhiteMenuViewSel = new ImageView(discWhiteMenuImgSel);
         this.goToMenuBut = new Button("Menu");
-        goToMenuBut.setOnAction(e -> {
+        goToMenuBut.setOnAction(e -> { // Switch to settings
             SettingsScene settingsScene = new SettingsScene(primaryStage);
             Node source = (Node)e.getSource();
             Stage stage = (Stage)source.getScene().getWindow();
             stage.close();
             this.primaryStage = new Stage();
-            this.primaryStage.setTitle("Othello Core.Settings");
+            this.primaryStage.setTitle("Othello Settings");
             this.primaryStage.setScene(settingsScene.getSettingsScene());
             this.primaryStage.show();
         });
         this.goToMenuBut.setWrapText(true);
         this.restartGameBut = new Button("Restart Game");
-        restartGameBut.setOnAction(e -> {
+        restartGameBut.setOnAction(e -> { // Create a new game with the same setings
             GameScene gameScene = new GameScene(primaryStage, settings);
             Node source = (Node)e.getSource();
             Stage stage = (Stage)source.getScene().getWindow();
@@ -113,7 +112,7 @@ public class GameScene extends BorderPane {
 
     public void redrawBoard (){
         isMovePossible = false;
-        for (int r = 0; r < boardGrid.length; r++) {
+        for (int r = 0; r < boardGrid.length; r++) { //Check if move is possible for current player
             for (int c = 0; c < boardGrid[r].length; c++) {
                 if (Logic.checkSquareAllowed(r, c, board, board.getCurrentPlayer())) {
                     isMovePossible = true;
@@ -121,7 +120,7 @@ public class GameScene extends BorderPane {
                 }
             }
         }
-        if(!isMovePossible) {
+        if(!isMovePossible) { //if no move is possible increment turn and look if a move is possible for the other player
             board.changePlayer();
             for (int r = 0; r < boardGrid.length; r++) {
                 for (int c = 0; c < boardGrid[r].length; c++) {
@@ -133,7 +132,7 @@ public class GameScene extends BorderPane {
             }
         }
         if(isMovePossible) {
-            board.incrementTurn();
+            board.incrementTurn(); //if a move is actually possible for either player increment turn
             grid.getChildren().clear();
             List<Button> toAdd = new ArrayList<>();
             for (int r = 0; r < boardGrid.length; r++) {
@@ -141,10 +140,10 @@ public class GameScene extends BorderPane {
                     if(boardGrid[r][c] == Board.EMPTY) {
                         if (Logic.checkSquareAllowed(r, c, board, board.getCurrentPlayer())) {
                             int flippedNo = logic.getFlippedDisks(r, c, board, board.getCurrentPlayer()).length;
-                            flippedNo = (flippedNo > 10 ? 10 : flippedNo);
-                            toAdd.add(new Button(null, new ImageView(flippedImg.get(flippedNo-1))));
+                            flippedNo = (flippedNo > 9 ? 10 : flippedNo); // if more than 9 discs can be flipped set flippedNo to 10, because we only have assets up to "9+"
+                            toAdd.add(new Button(null, new ImageView(flippedImg.get(flippedNo-1)))); // Show image corresponding to amount of discs that will be flipped
                         } else {
-                            toAdd.add(new Button(null, new ImageView(bgrImg)));
+                            toAdd.add(new Button(null, new ImageView(bgrImg))); // If we cannot apply a move here just show standard background
                         }
                     }
                     if(boardGrid[r][c] == Board.BLACK) {
@@ -153,18 +152,18 @@ public class GameScene extends BorderPane {
                     if(boardGrid[r][c] == Board.WHITE) {
                         toAdd.add(new Button(null, new ImageView(discWhiteImg)));
                     }
-                    toAdd.get(toAdd.size()-1).setId(r+","+c);
-                    toAdd.get(toAdd.size()-1).setStyle("-fx-background-color: #00CE00; ");
+                    toAdd.get(toAdd.size()-1).setId(r+","+c); // Due to the way we are working with lists where elements (e.g. buttons) don't have explicit names, an ID is set to more easily retrieve which button corresponds ot which spot
+                    toAdd.get(toAdd.size()-1).setStyle("-fx-background-color: #00CE00; "); // Wacky css stuff, because stylesheet has not been properly updated yet
                     toAdd.get(toAdd.size()-1).setStyle("-fx-background-color: #007F3F; ");
                     toAdd.get(toAdd.size()-1).setOnAction((event) -> {
                         Button button = (Button)event.getSource();
-                        updateBoard(button.getId());
+                        updateBoard(button.getId()); // Actual communication with board, says which button has been clicked and thus which board cell needs to be checked
                     });
 
                     GridPane.setConstraints(toAdd.get(toAdd.size()-1), r, c);
                 }
             }
-            if(board.getCurrentPlayer() == board.BLACK) {
+            if(board.getCurrentPlayer() == board.BLACK) { // Updates visual that indicates whose turn it is
                 GridPane.setConstraints(discBlackMenuViewSel, boardGrid.length, 1);
                 GridPane.setConstraints(discWhiteMenuView, boardGrid.length + 2, 1);
                 grid.getChildren().addAll(discBlackMenuViewSel, discWhiteMenuView);
@@ -188,7 +187,7 @@ public class GameScene extends BorderPane {
     }
 
     public void updateBoard(String ID) {
-        int x = Integer.parseInt(ID.split("\\,")[0]);
+        int x = Integer.parseInt(ID.split("\\,")[0]); // "Hacky" way of finding corresponding buttons and board cells
         int y = Integer.parseInt(ID.split("\\,")[1]);
         board.applyMove(x, y);
         redrawBoard();
