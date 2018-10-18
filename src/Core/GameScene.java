@@ -132,8 +132,8 @@ public class GameScene extends BorderPane {
                 }
             }
         }
-        if(isMovePossible) {
-            board.incrementTurn(); //if a move is actually possible for either player increment turn
+
+            board.incrementTurn();
             grid.getChildren().clear();
             List<Button> toAdd = new ArrayList<>();
             for (int r = 0; r < boardGrid.length; r++) {
@@ -186,8 +186,6 @@ public class GameScene extends BorderPane {
             for(Node aNode: grid.getChildren()) {
                 GridPane.setHalignment(aNode, HPos.CENTER);
             }
-
-        }
 
     }
 
