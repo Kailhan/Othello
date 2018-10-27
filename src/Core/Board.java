@@ -1,15 +1,13 @@
 package Core;
 
-public class Board {
+import java.io.Serializable;
+
+public class Board implements Serializable {
 
     private int[][] boardGrid;
     public static final int EMPTY = 0;
     public static final int BLACK = 1;
     public static final int WHITE = -1;
-    public static final int ONGOING = 0;
-    public static final int FINISHED = 1;
-
-    private int gameState = ONGOING;
     private int size;
     private int turn;
     private int currentPlayer;
@@ -142,45 +140,25 @@ public class Board {
      * @param row specifies row of cell we want to update
      * @param col specifies column of cell we want to update
      */
-    public void applyMove(int row, int col)
-    {
-        if(boardGrid[row][col] == EMPTY && Logic.checkSquareAllowed(row, col, this, currentPlayer))
-        {
-            int[][] flippedDisks = Logic.getFlippedDisks(row, col, this, currentPlayer);
-            if(currentPlayer == BLACK)
-            {
-                boardGrid[row][col] = BLACK;
-                for(int i = 0; i < flippedDisks.length; i++)
-                {
-                    boardGrid[flippedDisks[i][0]][flippedDisks[i][1]] = BLACK;
-                }
+    public void applyMove(int row, int col) {
+        int[][] flippedDisks = Logic.getFlippedDisks(row, col, this);
+        if(currentPlayer == BLACK) {
+            boardGrid[row][col] = BLACK;
+            for(int i = 0; i < flippedDisks.length; i++) {
+                boardGrid[flippedDisks[i][0]][flippedDisks[i][1]] = BLACK;
             }
-            else
-            {
-                boardGrid[row][col] = WHITE;
-                for(int i = 0; i < flippedDisks.length; i++)
-                {
-                    boardGrid[flippedDisks[i][0]][flippedDisks[i][1]] = WHITE;
-                }
+        } else {
+            boardGrid[row][col] = WHITE;
+            for(int i = 0; i < flippedDisks.length; i++) {
+                boardGrid[flippedDisks[i][0]][flippedDisks[i][1]] = WHITE;
             }
-            changePlayer();
-
-//        if(Core.Logic.checkSquareAllowed(row, col, this, turn))
-//        {
-//            if(boardGrid[row][col] == 0)
-//            {
-//                if(currentPlayer == BLACK)
-//                {
-//
-//                }
-//            }
-//            if(boardGrid[xCoord][yCoord] == 0 && currentPlayer == BLACK) boardGrid[xCoord][yCoord] = BLACK; //if the square is empty or white and it's black's turn, put a black disc in the square
-//            if(boardGrid[xCoord][yCoord] == 0 && currentPlayer == WHITE) boardGrid[xCoord][yCoord] = WHITE; //if the square is empty or black and it's white's turn, put a white disc in the square
         }
-        else
-        {
-            System.out.println("Move not allowed");
+    }
+    public boolean checkTile(int r, int c, int state) {
+        if(boardGrid[r][c] == state) {
+            return true;
+        } else {
+            return false;
         }
-        incrementTurn();
     }
 }
