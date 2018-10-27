@@ -31,7 +31,6 @@ public class GameScene extends BorderPane {
     private File discBlack = new File("src/Assets/disc_blackBgr.png");
     private File discWhite = new File("src/Assets/disc_whiteBgr.png");
     private File bgr = new File("src/Assets/Bgr.png");
-    private File bgr1 = new File("src/Assets/Bgr1.png");
     private File discBlackMenu = new File("src/Assets/disc_blackMenu.png");
     private File discWhiteMenu = new File("src/Assets/disc_whiteMenu.png");
     private File discBlackMenuSel = new File("src/Assets/disc_blackMenuSel.png");
@@ -112,6 +111,63 @@ public class GameScene extends BorderPane {
     }
 
     public void redrawBoard (){
+        turnCheck();
+        board.incrementTurn();
+        grid.getChildren().clear();
+        List<TileButton> toAdd = new ArrayList<>();
+        for (int r = 0; r < boardGrid.length; r++) {
+            for (int c = 0; c < boardGrid[r].length; c++) {
+                if(boardGrid[r][c] == Board.EMPTY) {
+                    if (Logic.checkSquareAllowed(r, c, board, board.getCurrentPlayer())) {
+                        int flippedNo = logic.getFlippedDisks(r, c, board, board.getCurrentPlayer()).length;
+                        flippedNo = (flippedNo > 9 ? 10 : flippedNo); // if more than 9 discs can be flipped set flippedNo to 10, because we only have assets up to "9+"
+                        toAdd.add(new TileButton(r, c, new ImageView(flippedImg.get(flippedNo-1)))); // Show image corresponding to amount of discs that will be flipped
+                    } else {
+                        toAdd.add(new TileButton(r, c, new ImageView(bgrImg))); // If we cannot apply a move here just show standard background
+                    }
+                }
+                if(boardGrid[r][c] == Board.BLACK) {
+                    toAdd.add(new TileButton(r, c, new ImageView(discBlackImg)));
+                }
+                if(boardGrid[r][c] == Board.WHITE) {
+                    toAdd.add(new TileButton(r, c, new ImageView(discWhiteImg)));
+                }
+                toAdd.get(toAdd.size()-1).setStyle("-fx-background-color: #00CE00; "); // Wacky css stuff, because stylesheet has not been properly updated yet
+                toAdd.get(toAdd.size()-1).setStyle("-fx-background-color: #007F3F; ");
+                toAdd.get(toAdd.size()-1).setOnAction((event) -> {
+                    TileButton button = (TileButton)event.getSource();
+                    //        int x = Integer.parseInt(ID.split("\\,")[0]); // "Hacky" way of finding corresponding buttons and board cells
+//        int y = Integer.parseInt(ID.split("\\,")[1]);
+                    updateBoard(button.getX(), button.getY()); // Actual communication with board, says which button has been clicked and thus which board cell needs to be checked
+                });
+                GridPane.setConstraints(toAdd.get(toAdd.size()-1), r, c);
+            }
+        }
+        if(board.getCurrentPlayer() == board.BLACK) { // Updates visual that indicates whose turn it is
+            GridPane.setConstraints(discBlackMenuViewSel, boardGrid.length, 1);
+            GridPane.setConstraints(discWhiteMenuView, boardGrid.length + 2, 1);
+            grid.getChildren().addAll(discBlackMenuViewSel, discWhiteMenuView);
+        } else {
+            GridPane.setConstraints(discBlackMenuView, boardGrid.length, 1);
+            GridPane.setConstraints(discWhiteMenuViewSel, boardGrid.length + 2, 1);
+            grid.getChildren().addAll(discBlackMenuView, discWhiteMenuViewSel);
+        }
+
+        GridPane.setConstraints(goToMenuBut, boardGrid.length + 2, 3);
+        GridPane.setConstraints(restartGameBut, boardGrid.length, 3);
+
+        Label blackDiscs = new Label(Integer.toString(board.getNrBlackSquares()));
+        GridPane.setConstraints(blackDiscs, boardGrid.length, 2);
+        Label whiteDiscs = new Label(Integer.toString(board.getNrWhiteSquares()));
+        GridPane.setConstraints(whiteDiscs, boardGrid.length + 2, 2);
+        grid.getChildren().addAll(toAdd);
+        grid.getChildren().addAll(goToMenuBut, restartGameBut, blackDiscs, whiteDiscs);
+        for(Node aNode: grid.getChildren()) {
+            GridPane.setHalignment(aNode, HPos.CENTER);
+        }
+    }
+    
+    public void turnCheck() {
         isMovePossible = false;
         for (int r = 0; r < boardGrid.length; r++) { //Check if move is possible for current player
             for (int c = 0; c < boardGrid[r].length; c++) {
@@ -132,66 +188,9 @@ public class GameScene extends BorderPane {
                 }
             }
         }
-
-            board.incrementTurn();
-            grid.getChildren().clear();
-            List<Button> toAdd = new ArrayList<>();
-            for (int r = 0; r < boardGrid.length; r++) {
-                for (int c = 0; c < boardGrid[r].length; c++) {
-                    if(boardGrid[r][c] == Board.EMPTY) {
-                        if (Logic.checkSquareAllowed(r, c, board, board.getCurrentPlayer())) {
-                            int flippedNo = logic.getFlippedDisks(r, c, board, board.getCurrentPlayer()).length;
-                            flippedNo = (flippedNo > 9 ? 10 : flippedNo); // if more than 9 discs can be flipped set flippedNo to 10, because we only have assets up to "9+"
-                            toAdd.add(new Button(null, new ImageView(flippedImg.get(flippedNo-1)))); // Show image corresponding to amount of discs that will be flipped
-                        } else {
-                            toAdd.add(new Button(null, new ImageView(bgrImg))); // If we cannot apply a move here just show standard background
-                        }
-                    }
-                    if(boardGrid[r][c] == Board.BLACK) {
-                        toAdd.add(new Button(null, new ImageView(discBlackImg)));
-                    }
-                    if(boardGrid[r][c] == Board.WHITE) {
-                        toAdd.add(new Button(null, new ImageView(discWhiteImg)));
-                    }
-                    toAdd.get(toAdd.size()-1).setId(r+","+c); // Due to the way we are working with lists where elements (e.g. buttons) don't have explicit names, an ID is set to more easily retrieve which button corresponds ot which spot
-                    toAdd.get(toAdd.size()-1).setStyle("-fx-background-color: #00CE00; "); // Wacky css stuff, because stylesheet has not been properly updated yet
-                    toAdd.get(toAdd.size()-1).setStyle("-fx-background-color: #007F3F; ");
-                    toAdd.get(toAdd.size()-1).setOnAction((event) -> {
-                        Button button = (Button)event.getSource();
-                        updateBoard(button.getId()); // Actual communication with board, says which button has been clicked and thus which board cell needs to be checked
-                    });
-
-                    GridPane.setConstraints(toAdd.get(toAdd.size()-1), r, c);
-                }
-            }
-            if(board.getCurrentPlayer() == board.BLACK) { // Updates visual that indicates whose turn it is
-                GridPane.setConstraints(discBlackMenuViewSel, boardGrid.length, 1);
-                GridPane.setConstraints(discWhiteMenuView, boardGrid.length + 2, 1);
-                grid.getChildren().addAll(discBlackMenuViewSel, discWhiteMenuView);
-            } else {
-                GridPane.setConstraints(discBlackMenuView, boardGrid.length, 1);
-                GridPane.setConstraints(discWhiteMenuViewSel, boardGrid.length + 2, 1);
-                grid.getChildren().addAll(discBlackMenuView, discWhiteMenuViewSel);
-            }
-
-            GridPane.setConstraints(goToMenuBut, boardGrid.length + 2, 3);
-            GridPane.setConstraints(restartGameBut, boardGrid.length, 3);
-
-            Label blackDiscs = new Label(Integer.toString(board.getNrBlackSquares()));
-            GridPane.setConstraints(blackDiscs, boardGrid.length, 2);
-            Label whiteDiscs = new Label(Integer.toString(board.getNrWhiteSquares()));
-            GridPane.setConstraints(whiteDiscs, boardGrid.length + 2, 2);
-            grid.getChildren().addAll(toAdd);
-            grid.getChildren().addAll(goToMenuBut, restartGameBut, blackDiscs, whiteDiscs);
-            for(Node aNode: grid.getChildren()) {
-                GridPane.setHalignment(aNode, HPos.CENTER);
-            }
-
     }
 
-    public void updateBoard(String ID) {
-        int x = Integer.parseInt(ID.split("\\,")[0]); // "Hacky" way of finding corresponding buttons and board cells
-        int y = Integer.parseInt(ID.split("\\,")[1]);
+    public void updateBoard(int x, int y) {
         board.applyMove(x, y);
         redrawBoard();
         if(!isMovePossible) {
