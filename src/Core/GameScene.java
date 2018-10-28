@@ -32,12 +32,12 @@ public class GameScene extends BorderPane {
     private int tileSize;
 
     private File discBlack = new File("src/Assets/disc_blackBgr.png");
-    private File discWhite = new File("src/Assets/disc_whiteBgr.png");
+    private File discWhite = new File("src/Assets/disc_whiteBgrFthr.png");
     private File bgr = new File("src/Assets/Bgr.png");
     private File discBlackMenu = new File("src/Assets/disc_blackMenu.png");
-    private File discWhiteMenu = new File("src/Assets/disc_whiteMenu.png");
+    private File discWhiteMenu = new File("src/Assets/disc_whiteMenuFthr.png");
     private File discBlackMenuSel = new File("src/Assets/disc_blackMenuSel.png");
-    private File discWhiteMenuSel = new File("src/Assets/disc_whiteMenuSel.png");
+    private File discWhiteMenuSel = new File("src/Assets/disc_whiteMenuSelFthr.png");
     private ArrayList<File> flipped = new ArrayList<>();
     private ArrayList<Image> flippedImg = new ArrayList<>();
     private List<TileButton> toAdd = new ArrayList<>();
