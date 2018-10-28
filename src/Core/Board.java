@@ -33,6 +33,18 @@ public class Board implements Serializable {
         currentPlayer = BLACK;
     }
 
+    public Board(Board board) { // properly "deep" copy a board
+            this.size = board.getSize();
+            this.turn = board.getTurn();
+            this.currentPlayer = board.getCurrentPlayer();
+            this.boardGrid = new int[size][size];
+            for(int r = 0; r < size; r++) {
+                for(int c = 0; c < size; c++) {
+                    this.boardGrid[r][c] = board.getBoardGrid()[r][c];
+                }
+            }
+    }
+
     /**
      * Prints out the board for diagnostic purposes
      */

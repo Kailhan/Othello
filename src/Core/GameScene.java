@@ -13,7 +13,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-import java.io.File;
+import javax.naming.Context;
+import javax.swing.*;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,12 +57,14 @@ public class GameScene extends BorderPane {
     private ImageView discWhiteMenuViewSel;
     private Button goToMenuBut;
     private Button restartGameBut;
+    private Button loadBoardBut;
+    private Button saveBoardBut;
     private Logic logic;
     private boolean movePossible;
 
     public GameScene(Stage primaryStage, Settings settings) {
         this.primaryStage = primaryStage;
-        this.board = new Board(settings.getBoardSize());
+        this.board = new Board(settings.getBoard());
         this.tileSize = windowSize/ board.getSize();
         this.discBlackImg = new Image(discBlack.toURI().toString(), tileSize, tileSize, false,false);
         this.discWhiteImg = new Image(discWhite.toURI().toString(), tileSize, tileSize, false,false);
@@ -102,6 +106,24 @@ public class GameScene extends BorderPane {
             this.primaryStage.show();
         });
         this.restartGameBut.setWrapText(true);
+        this.saveBoardBut = new Button("Save this board");
+        saveBoardBut.setOnAction(e -> { // Save current board
+            try {
+                File recordsDir = new File(System.getProperty("user.home"), ".Othello/boards");
+                if (!recordsDir.exists()) {
+                    recordsDir.mkdirs();
+                }
+                String fileName = JOptionPane.showInputDialog(null,"Enter a file name for the current board");
+                FileOutputStream fileOutputStream = new FileOutputStream(new File(System.getProperty("user.home"), ".Othello/boards/" + fileName + ".txt"));
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+                objectOutputStream.writeObject(board);
+                objectOutputStream.flush();
+                objectOutputStream.close();
+            } catch (Exception err) {
+                err.printStackTrace();
+            }
+        });
+        this.saveBoardBut.setWrapText(true);
         this.logic = new Logic();
 
         grid.setGridLinesVisible(false);
@@ -117,24 +139,27 @@ public class GameScene extends BorderPane {
         grid.getChildren().clear();
         createTiles();
         if(board.getCurrentPlayer() == BLACK) { // Updates visual that indicates whose turn it is
-            GridPane.setConstraints(discBlackMenuViewSel, board.getSize(), 1);
-            GridPane.setConstraints(discWhiteMenuView, board.getSize() + 2, 1);
+            GridPane.setConstraints(discBlackMenuViewSel, board.getSize(), 0);
+            GridPane.setConstraints(discWhiteMenuView, board.getSize() + 2, 0);
             grid.getChildren().addAll(discBlackMenuViewSel, discWhiteMenuView);
         } else {
-            GridPane.setConstraints(discBlackMenuView, board.getSize(), 1);
-            GridPane.setConstraints(discWhiteMenuViewSel, board.getSize() + 2, 1);
+            GridPane.setConstraints(discBlackMenuView, board.getSize(), 0);
+            GridPane.setConstraints(discWhiteMenuViewSel, board.getSize() + 2, 0);
             grid.getChildren().addAll(discBlackMenuView, discWhiteMenuViewSel);
         }
 
-        GridPane.setConstraints(goToMenuBut, board.getSize() + 2, 3);
-        GridPane.setConstraints(restartGameBut, board.getSize(), 3);
-
         Label blackDiscs = new Label(Integer.toString(board.getNrBlackSquares()));
-        GridPane.setConstraints(blackDiscs, board.getSize(), 2);
         Label whiteDiscs = new Label(Integer.toString(board.getNrWhiteSquares()));
-        GridPane.setConstraints(whiteDiscs, board.getSize() + 2, 2);
+
+        GridPane.setConstraints(goToMenuBut, board.getSize() + 2, 2);
+        GridPane.setConstraints(restartGameBut, board.getSize(), 2);
+        GridPane.setConstraints(saveBoardBut, board.getSize(), 3);
+
+        GridPane.setConstraints(blackDiscs, board.getSize(), 1);
+        GridPane.setConstraints(whiteDiscs, board.getSize() + 2, 1);
+
         grid.getChildren().addAll(toAdd);
-        grid.getChildren().addAll(goToMenuBut, restartGameBut, blackDiscs, whiteDiscs);
+        grid.getChildren().addAll(goToMenuBut, restartGameBut, saveBoardBut, blackDiscs, whiteDiscs);
         for(Node aNode: grid.getChildren()) {
             GridPane.setHalignment(aNode, HPos.CENTER);
         }
