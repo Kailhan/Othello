@@ -208,10 +208,12 @@ public class GameScene extends BorderPane {
 
     public void updateBoard(int x, int y) {
         if(isMovePossible()) {
-            board.applyMove(x, y);
-            board.incrementTurn();
+            if(Logic.checkSquareAllowed(x, y, board)) {
+                board.applyMove(x, y);
+                board.incrementTurn();
+                board.changePlayer();
+            }
         }
-        board.changePlayer();
         if(!isMovePossible()) {
             board.changePlayer();
             if(!isMovePossible()) { // No moves possible for either player so game has ended
