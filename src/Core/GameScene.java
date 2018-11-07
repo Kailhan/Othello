@@ -177,19 +177,30 @@ public class GameScene extends BorderPane {
         grid.getChildren().addAll(goToMenuBut, restartGameBut, blackDiscs, whiteDiscs);
     }
 
-    public void updateBoard(String ID) {
-        int x = Integer.parseInt(ID.split("\\,")[0]);
-        int y = Integer.parseInt(ID.split("\\,")[1]);
-        board.applyMove(x, y);
-        redrawBoard();
-        if(board.getNrEmptySquares() == 0) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Game Finished");
-            alert.setHeaderText(null);
-            if (board.getNrBlackSquares() > board.getNrWhiteSquares()) {
-                alert.setContentText("BLACK has won!!!");
-            } else {
-                alert.setContentText("WHITE has won!!!");
+    public void updateBoard(int x, int y) {
+        if(isMovePossible()) {
+            if(Logic.checkSquareAllowed(x, y, board)) {
+                board.applyMove(x, y);
+                board.incrementTurn();
+                board.changePlayer();
+            }
+        }
+        if(!isMovePossible()) {
+            board.changePlayer();
+            if(!isMovePossible()) { // No moves possible for either player so game has ended
+                redrawBoard();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Game Finished");
+                alert.setHeaderText(null);
+                if (board.getNrBlackSquares() > board.getNrWhiteSquares()) {
+                    alert.setContentText("BLACK has won!!!");
+                } else if(board.getNrBlackSquares() < board.getNrWhiteSquares()) {
+                    alert.setContentText("WHITE has won!!!");
+                } else {
+                    alert.setContentText("BOTH win :)");
+                }
+                alert.showAndWait();
+                goToMenuBut.fire();
             }
             alert.showAndWait();
             goToMenuBut.fire();
