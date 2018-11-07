@@ -5,15 +5,17 @@ import Core.*;
 
 public class Minimax{
 
+    EvaluationFunction evaluator;
+
     public int minimax(Node<Board> currentNode, int depth){
         if(currentNode.getChildren() == null || depth == 0){
-            int value = currentNode.getData().getBoardEvaluation();
+            int value = evaluator.evaluate();  //currentNode.getData().getBoardEvaluation();
             return value;
         }
         else if (currentNode.getData().getCurrentPlayer() == -1) { //MAXVALUE, AI is player white: -1
             int value = Integer.MIN_VALUE;
             for(Node<Board> currentChild: currentNode.getChildren()){
-                value = Math.max(value, minimax(currentChild, depth-1));
+                value = Math.max(value, minimax(currentChild, depth-1)); //minimaxV.
             }
             return value;
 //            List<Node<Board>> children = currentNode.getChildren();
@@ -24,10 +26,10 @@ public class Minimax{
 //                }
 //            }
         }
-        else{ //MINVALUE, opponent player
+        else { //MINVALUE, opponent player
             int value = Integer.MAX_VALUE;
-            for(Node<Board> currentChild: currentNode.getChildren()){
-                value = Math.min(value, minimax(currentChild, depth-1));
+            for (Node<Board> currentChild : currentNode.getChildren()) {
+                value = Math.min(value, minimax(currentChild, depth - 1)); //minimaxV
             }
             return value;
 
@@ -39,7 +41,7 @@ public class Minimax{
 //                }
 //            }
         }
-        return 0;
+        //return 0;
     }
 
 
