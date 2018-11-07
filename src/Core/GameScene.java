@@ -94,7 +94,7 @@ public class GameScene extends BorderPane {
             stage.close();
             this.primaryStage = new Stage();
             this.primaryStage.setTitle("Othello Game");
-            this.primaryStage.setScene(gameScene.getScene());
+            this.primaryStage.setScene(gameScene.getGameScene());
             this.primaryStage.show();
         });
         this.restartGameBut.setWrapText(true);
@@ -188,32 +188,8 @@ public class GameScene extends BorderPane {
             alert.setHeaderText(null);
             if (board.getNrBlackSquares() > board.getNrWhiteSquares()) {
                 alert.setContentText("BLACK has won!!!");
-            } else {}}}
-
-    public void updateBoard(int x, int y) {
-        if(isMovePossible()) {
-            if(Logic.checkSquareAllowed(x, y, board)) {
-                board.applyMove(x, y);
-                board.incrementTurn();
-                board.changePlayer();
-            }
-        }
-        if(!isMovePossible()) {
-            board.changePlayer();
-            if(!isMovePossible()) { // No moves possible for either player so game has ended
-                redrawBoard();
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Game Finished");
-                alert.setHeaderText(null);
-                if (board.getNrBlackSquares() > board.getNrWhiteSquares()) {
-                    alert.setContentText("BLACK has won!!!");
-                } else if(board.getNrBlackSquares() < board.getNrWhiteSquares()) {
-                    alert.setContentText("WHITE has won!!!");
-                } else {
-                    alert.setContentText("BOTH win :)");
-                }
-                alert.showAndWait();
-                goToMenuBut.fire();
+            } else {
+                alert.setContentText("WHITE has won!!!");
             }
             alert.showAndWait();
             goToMenuBut.fire();
