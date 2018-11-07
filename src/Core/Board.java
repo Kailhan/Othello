@@ -1,17 +1,13 @@
 package Core;
 
-public class Board {
+import java.io.Serializable;
+
+public class Board implements Serializable {
 
     private int[][] boardGrid;
-
     public static final int EMPTY = 0;
     public static final int BLACK = 1;
     public static final int WHITE = -1;
-    public static final int ONGOING = 0;
-    public static final int FINISHED = 1;
-
-
-    private int gameState = 0;
     private int size;
     private int turn;
     private int currentPlayer;
@@ -20,6 +16,10 @@ public class Board {
         this(8);
     }
 
+    /**
+     * Create board with starting discs in the middle
+     * @param size height & width of board
+     */
     public Board(int size) {
         size = (size < 4) ? 4: size; //enforces minimum size of 4
         size = ((size % 2) == 0) ? size : (size-1); //makes sure board is even
@@ -33,6 +33,21 @@ public class Board {
         currentPlayer = BLACK;
     }
 
+    public Board(Board board) { // properly "deep" copy a board
+            this.size = board.getSize();
+            this.turn = board.getTurn();
+            this.currentPlayer = board.getCurrentPlayer();
+            this.boardGrid = new int[size][size];
+            for(int r = 0; r < size; r++) {
+                for(int c = 0; c < size; c++) {
+                    this.boardGrid[r][c] = board.getBoardGrid()[r][c];
+                }
+            }
+    }
+
+    /**
+     * Prints out the board for diagnostic purposes
+     */
     public void displayBoardGrid() {
         for(int r = 0; r < size; r++) {
             for(int c = 0; c < size; c++) {
@@ -57,6 +72,10 @@ public class Board {
         return size;
     }
 
+    /**
+     * Checks the state of integer array representing the board, if cell contains 0 then this is an empty cell
+     * @return Number of squares that are empty
+     */
     public int getNrEmptySquares()
     {
         int nrEmptySquares = 0;
@@ -69,7 +88,37 @@ public class Board {
         return  nrEmptySquares;
     }
 
+    /**
+     * Checks the state of integer array representing the board, if cell contains 1 then this is a black cell
+     * @return Number of squares that are black
+     */
+    public int getNrBlackSquares()
+    {
+        int nrBlackSquares = 0;
 
+        for(int i = 0; i < boardGrid.length; i++)
+            for(int j = 0; j < boardGrid[i].length; j++)
+                if(boardGrid[i][j] == BLACK)
+                    nrBlackSquares++;
+
+        return  nrBlackSquares;
+    }
+
+    /**
+     * Checks the state of integer array representing the board, if cell contains -1 then this is an white cell
+     * @return Number of squares that are white
+     */
+    public int getNrWhiteSquares()
+    {
+        int nrWhiteSquares = 0;
+
+        for(int i = 0; i < boardGrid.length; i++)
+            for(int j = 0; j < boardGrid[i].length; j++)
+                if(boardGrid[i][j] == WHITE)
+                    nrWhiteSquares++;
+
+        return  nrWhiteSquares;
+    }
 
     public void incrementTurn()
     {
@@ -98,71 +147,30 @@ public class Board {
         return currentPlayer;
     }
 
-    //disk flips or placed in an empty square
-    public void applyMove(int x, int y)
-    {
-        if(boardGrid[x][y] == 0 && Logic.checkSquareAllowed(x, y, this, currentPlayer))
-        {
-            int[][] flippedDisks = Logic.getFlippedDisks(x, y, this, currentPlayer);
-
-            if(currentPlayer == BLACK)
-            {
-                boardGrid[x][y] = BLACK;
-                for(int i = 0; i < flippedDisks.length; i++)
-                {
-                    boardGrid[flippedDisks[i][0]][flippedDisks[i][1]] = BLACK;
-                }
+    /**
+     * Updates a specific cell based on the current status of the game, top left is 0, 0
+     * @param row specifies row of cell we want to update
+     * @param col specifies column of cell we want to update
+     */
+    public void applyMove(int row, int col) {
+        int[][] flippedDisks = Logic.getFlippedDisks(row, col, this);
+        if(currentPlayer == BLACK) {
+            boardGrid[row][col] = BLACK;
+            for(int i = 0; i < flippedDisks.length; i++) {
+                boardGrid[flippedDisks[i][0]][flippedDisks[i][1]] = BLACK;
             }
-            else
-            {
-                boardGrid[x][y] = WHITE;
-                for(int i = 0; i < flippedDisks.length; i++)
-                {
-                    boardGrid[flippedDisks[i][0]][flippedDisks[i][1]] = WHITE;
-                }
+        } else {
+            boardGrid[row][col] = WHITE;
+            for(int i = 0; i < flippedDisks.length; i++) {
+                boardGrid[flippedDisks[i][0]][flippedDisks[i][1]] = WHITE;
             }
-            changePlayer();
-
-//        if(Core.Logic.checkSquareAllowed(x, y, this, turn))
-//        {
-//            if(boardGrid[x][y] == 0)
-//            {
-//                if(currentPlayer == BLACK)
-//                {
-//
-//                }
-//            }
-//            if(boardGrid[xCoord][yCoord] == 0 && currentPlayer == BLACK) boardGrid[xCoord][yCoord] = BLACK; //if the square is empty or white and it's black's turn, put a black disc in the square
-//            if(boardGrid[xCoord][yCoord] == 0 && currentPlayer == WHITE) boardGrid[xCoord][yCoord] = WHITE; //if the square is empty or black and it's white's turn, put a white disc in the square
         }
-        else
-        {
-            System.out.println("Move not allowed");
+    }
+    public boolean checkTile(int r, int c, int state) {
+        if(boardGrid[r][c] == state) {
+            return true;
+        } else {
+            return false;
         }
-        incrementTurn();
-    }
-
-    public int getNrBlackSquares()
-    {
-        int nrBlackSquares = 0;
-
-        for(int i = 0; i < boardGrid.length; i++)
-            for(int j = 0; j < boardGrid[i].length; j++)
-                if(boardGrid[i][j] == BLACK)
-                    nrBlackSquares++;
-
-        return  nrBlackSquares;
-    }
-
-    public int getNrWhiteSquares()
-    {
-        int nrWhiteSquares = 0;
-
-        for(int i = 0; i < boardGrid.length; i++)
-            for(int j = 0; j < boardGrid[i].length; j++)
-                if(boardGrid[i][j] == WHITE)
-                    nrWhiteSquares++;
-
-        return  nrWhiteSquares;
     }
 }
