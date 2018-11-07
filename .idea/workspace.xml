@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a184a4f4-bc08-48d2-be6b-7c297d407c20" name="Default" comment="Logic applyMove">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml___jb_tmp___" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AI/EvaluationFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AI/TreeSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AI/TreeSearch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Board.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,8 +20,20 @@
       <file leaf-file-name="TreeSearch.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AI/TreeSearch.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1037">
-              <caret line="85" column="41" selection-start-line="85" selection-start-column="41" selection-end-line="85" selection-end-column="41" />
+            <state relative-caret-position="330">
+              <caret line="26" column="54" selection-start-line="26" selection-start-column="54" selection-end-line="26" selection-end-column="54" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EvaluationFunction.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/AI/EvaluationFunction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-459">
+              <caret line="21" column="31" lean-forward="true" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -44,32 +59,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SettingsScene.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Core/SettingsScene.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="16" selection-start-line="16" selection-end-line="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="GameScene.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Core/GameScene.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2397">
-              <caret line="141" column="17" selection-start-line="141" selection-start-column="17" selection-end-line="141" selection-end-column="17" />
+            <state relative-caret-position="178">
+              <caret line="172" selection-start-line="172" selection-end-line="172" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Board.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Board.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Core/Board.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1428">
-              <caret line="95" column="31" selection-start-line="95" selection-start-column="31" selection-end-line="95" selection-end-column="31" />
+            <state relative-caret-position="500">
+              <caret line="166" column="5" selection-start-line="166" selection-start-column="5" selection-end-line="166" selection-end-column="5" />
               <folding>
-                <element signature="e#2341#2342#0" expanded="true" />
-                <element signature="e#2363#2364#0" expanded="true" />
+                <element signature="method#getNrEmptySquares#0;class#Board#0" />
+                <element signature="method#changePlayer#0;class#Board#0" />
+                <element signature="method#applyMove#0;class#Board#0" />
               </folding>
             </state>
           </provider>
@@ -87,7 +94,7 @@
       <file leaf-file-name="Logic.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Core/Logic.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="500">
+            <state relative-caret-position="1360">
               <caret line="80" column="53" selection-start-line="80" selection-start-column="53" selection-end-line="80" selection-end-column="53" />
               <folding>
                 <element signature="method#combine#0;class#Logic#0" />
@@ -120,6 +127,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -135,6 +143,7 @@
       <find>turn</find>
       <find>get</find>
       <find>appl</find>
+      <find>board.getboardgrid()</find>
     </findStrings>
     <replaceStrings>
       <replace>board</replace>
@@ -161,9 +170,10 @@
         <option value="$PROJECT_DIR$/src/GameScreen.java" />
         <option value="$PROJECT_DIR$/src/Logic.java" />
         <option value="$PROJECT_DIR$/src/Core/Logic.java" />
-        <option value="$PROJECT_DIR$/src/Core/Board.java" />
-        <option value="$PROJECT_DIR$/src/Core/GameScene.java" />
         <option value="$PROJECT_DIR$/src/AI/TreeSearch.java" />
+        <option value="$PROJECT_DIR$/src/Core/GameScene.java" />
+        <option value="$PROJECT_DIR$/src/Core/Board.java" />
+        <option value="$PROJECT_DIR$/src/AI/EvaluationFunction.java" />
       </list>
     </option>
   </component>
@@ -186,6 +196,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -220,7 +231,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="AndroidView" />
     </panes>
   </component>
@@ -332,6 +342,7 @@
       <workItem from="1539797929897" duration="782000" />
       <workItem from="1539864670629" duration="622000" />
       <workItem from="1540987488633" duration="27000" />
+      <workItem from="1541587421250" duration="1647000" />
     </task>
     <task id="LOCAL-00001" summary="SquareState and Turn enums">
       <created>1536661416799</created>
@@ -379,22 +390,23 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33191000" />
+    <option name="totallyTimeSpent" value="34838000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
       <window_info anchor="right" id="Palette" order="10" />
       <window_info anchor="bottom" id="TODO" order="12" />
+      <window_info anchor="bottom" id="Messages" order="0" sideWeight="0.48893228" weight="0.28689656" />
       <window_info anchor="right" id="Palette&#9;" order="13" />
-      <window_info anchor="bottom" id="Event Log" order="14" sideWeight="0.5136719" side_tool="true" visible="true" weight="0.19724138" />
+      <window_info anchor="bottom" id="Event Log" order="14" sideWeight="0.51432294" side_tool="true" visible="true" weight="0.19724138" />
       <window_info anchor="right" id="Maven Projects" order="11" />
       <window_info anchor="bottom" id="Database Changes" order="15" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="15" />
-      <window_info anchor="bottom" id="Run" order="5" sideWeight="0.48632812" weight="0.19724138" />
+      <window_info active="true" anchor="bottom" id="Run" order="5" sideWeight="0.4856771" visible="true" weight="0.19724138" />
       <window_info anchor="bottom" id="Terminal" order="16" />
       <window_info id="Designer" order="9" />
-      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.1686198" />
+      <window_info content_ui="combo" id="Project" order="6" visible="true" weight="0.1686198" />
       <window_info anchor="right" id="Database" order="12" />
       <window_info id="Structure" order="7" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
@@ -412,7 +424,6 @@
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
       <window_info id="Capture Tool" order="8" />
       <window_info anchor="bottom" id="Find" order="3" sideWeight="0.49739584" weight="0.32827586" />
-      <window_info anchor="bottom" id="Messages" order="0" sideWeight="0.48958334" weight="0.28689656" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" id="Palette" order="3" />
@@ -420,12 +431,12 @@
       <window_info anchor="right" id="Capture Analysis" order="7" />
       <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.32952926" />
       <window_info anchor="right" id="Theme Preview" order="8" />
-      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info id="Image Layers" order="5" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -435,7 +446,7 @@
       <window_info anchor="bottom" id="Terminal" order="10" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
-      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info id="Capture Tool" order="2" />
       <window_info anchor="bottom" id="Message" order="1" />
@@ -458,21 +469,10 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="5" />
+      <option name="time" value="6" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Core/Board.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2720">
-          <caret line="160" column="9" selection-start-line="160" selection-start-column="9" selection-end-line="160" selection-end-column="9" />
-          <folding>
-            <element signature="e#2341#2342#0" expanded="true" />
-            <element signature="e#2363#2364#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_171/javafx-src.zip!/javafx/scene/image/Image.java" />
     <entry file="file://$PROJECT_DIR$/src/Core/Settings.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -535,8 +535,9 @@
         <state relative-caret-position="408">
           <caret line="24" column="17" lean-forward="true" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="17" />
           <folding>
-            <element signature="e#2341#2342#0" expanded="true" />
-            <element signature="e#2363#2364#0" expanded="true" />
+            <element signature="method#getNrEmptySquares#0;class#Board#0" />
+            <element signature="method#changePlayer#0;class#Board#0" />
+            <element signature="method#applyMove#0;class#Board#0" />
           </folding>
         </state>
       </provider>
@@ -633,15 +634,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Core/SettingsScene.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
+        <state relative-caret-position="153">
           <caret line="16" selection-start-line="16" selection-end-line="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/GameScene.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2397">
-          <caret line="141" column="17" selection-start-line="141" selection-start-column="17" selection-end-line="141" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -659,17 +653,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AI/Stupid.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AI/Node.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Core/Logic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1360">
+          <caret line="80" column="53" selection-start-line="80" selection-start-column="53" selection-end-line="80" selection-end-column="53" />
+          <folding>
+            <element signature="method#combine#0;class#Logic#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AI/Stupid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -682,31 +686,39 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AI/TreeSearch.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1037">
-          <caret line="85" column="41" selection-start-line="85" selection-start-column="41" selection-end-line="85" selection-end-column="41" />
+        <state relative-caret-position="330">
+          <caret line="26" column="54" selection-start-line="26" selection-start-column="54" selection-end-line="26" selection-end-column="54" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/Logic.java">
+    <entry file="file://$PROJECT_DIR$/src/Core/Board.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="500">
-          <caret line="80" column="53" selection-start-line="80" selection-start-column="53" selection-end-line="80" selection-end-column="53" />
+          <caret line="166" column="5" selection-start-line="166" selection-start-column="5" selection-end-line="166" selection-end-column="5" />
           <folding>
-            <element signature="method#combine#0;class#Logic#0" />
+            <element signature="method#getNrEmptySquares#0;class#Board#0" />
+            <element signature="method#changePlayer#0;class#Board#0" />
+            <element signature="method#applyMove#0;class#Board#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Core/Board.java">
+    <entry file="file://$PROJECT_DIR$/src/Core/GameScene.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1428">
-          <caret line="95" column="31" selection-start-line="95" selection-start-column="31" selection-end-line="95" selection-end-column="31" />
+        <state relative-caret-position="178">
+          <caret line="172" selection-start-line="172" selection-end-line="172" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AI/EvaluationFunction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-459">
+          <caret line="21" column="31" lean-forward="true" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
           <folding>
-            <element signature="e#2341#2342#0" expanded="true" />
-            <element signature="e#2363#2364#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

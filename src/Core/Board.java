@@ -69,29 +69,7 @@ public class Board {
         return  nrEmptySquares;
     }
 
-    public int getNrBlackSquares()
-    {
-        int nrBlackSquares = 0;
 
-        for(int i = 0; i < boardGrid.length; i++)
-            for(int j = 0; j < boardGrid[i].length; j++)
-                if(boardGrid[i][j] == BLACK)
-                    nrBlackSquares++;
-
-        return  nrBlackSquares;
-    }
-
-    public int getNrWhiteSquares()
-    {
-        int nrWhiteSquares = 0;
-
-        for(int i = 0; i < boardGrid.length; i++)
-            for(int j = 0; j < boardGrid[i].length; j++)
-                if(boardGrid[i][j] == WHITE)
-                    nrWhiteSquares++;
-
-        return  nrWhiteSquares;
-    }
 
     public void incrementTurn()
     {
@@ -164,84 +142,27 @@ public class Board {
         incrementTurn();
     }
 
-    //number of blackSquares in corners
-    public int getBlackCorners() {
-        int nrBlackCorners = 0;
-        for (int i = 0; i < boardGrid.length; i += boardGrid.length-1)
-            for (int j = 0; j < boardGrid[i].length; j += boardGrid[i].length-1)
-                if (boardGrid[i][j] == BLACK)
-                    nrBlackCorners++;
+    public int getNrBlackSquares()
+    {
+        int nrBlackSquares = 0;
 
-        return nrBlackCorners;
+        for(int i = 0; i < boardGrid.length; i++)
+            for(int j = 0; j < boardGrid[i].length; j++)
+                if(boardGrid[i][j] == BLACK)
+                    nrBlackSquares++;
+
+        return  nrBlackSquares;
     }
 
-    //number of whiteSquares in corners
-    public int getWhiteCorners() {
-        int nrWhiteCorners = 0;
-        for (int i = 0; i < boardGrid.length; i += boardGrid.length-1)
-            for (int j = 0; j < boardGrid[i].length; j += boardGrid[i].length-1)
-                if (boardGrid[i][j] == WHITE)
-                    nrWhiteCorners++;
+    public int getNrWhiteSquares()
+    {
+        int nrWhiteSquares = 0;
 
-        return nrWhiteCorners;
+        for(int i = 0; i < boardGrid.length; i++)
+            for(int j = 0; j < boardGrid[i].length; j++)
+                if(boardGrid[i][j] == WHITE)
+                    nrWhiteSquares++;
+
+        return  nrWhiteSquares;
     }
-
-
-    //number of stable coins without corners
-    //to finnish!!!
-    public int[] getNrOfStable(){
-        int[] totalStable = new int[2];
-
-
-
-        return totalStable;
-    }
-
-    //number of semistable coins
-    //to finnish!!!
-    public int[] getNrOfSemiStable(){
-        int[] totalSemiStable = new int[2];
-
-
-
-        return totalSemiStable;
-    }
-
-    //number of unStable coins
-    //to finnish!!!
-    public int[] getNrOfUnStable(){
-        int[] totalunStable = new int[2];
-
-
-
-        return totalunStable;
-    }
-
-
-
-    //Stability of the white squares
-    public int getStabilityWhite(){
-        int totalStability = 0;
-        int stableWhite = getNrOfStable()[0];
-        int semiStableWhite  = getNrOfSemiStable()[0];
-        int unstableWhite = getNrOfUnStable()[0];
-
-        totalStability =  stableWhite + semiStableWhite + unstableWhite + getWhiteCorners();
-        return totalStability;
-    }
-
-    //stability of the black squares
-    public int getStabilityBlack(){
-        int totalStability = 0;
-        int stableBlack = getNrOfStable()[1];
-        int semiStableBlack = getNrOfSemiStable()[1];
-        int unstableBlack = getNrOfUnStable()[1];
-
-        totalStability = stableBlack + semiStableBlack + unstableBlack + getBlackCorners();
-        return totalStability;
-    }
-
-
-
-
 }
