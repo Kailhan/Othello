@@ -81,4 +81,14 @@ public class EvaluationFunction {
         return nrWhiteCorners;
     }
 
+    public int getTeritScoreWhite(){
+
+        return 0;
+    }
+
+    public int getTeritScoreBlack(){
+
+        return 0; 
+    }
+
 }
