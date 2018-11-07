@@ -436,6 +436,7 @@ public class Logic {
         return 0;
     }
 
+
     public static int[][] combine(int[][] a, int[][] b)
     {
         int length = a.length + b.length;
