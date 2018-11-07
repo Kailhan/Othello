@@ -10,6 +10,7 @@ import static Core.Board.BLACK;
 import static Core.Board.EMPTY;
 import static Core.Board.WHITE;
 import static java.lang.Integer.MIN_VALUE;
+import static java.lang.Integer.max;
 
 public class MCTS {
 
@@ -29,7 +30,7 @@ public class MCTS {
         this.treeDepth = treeDepth;
     }
 
-    public Board findMove(Board board) {
+    public Board findBoard(Board board) {
         MCTSNode root = new MCTSNode(board);
         nodeQueue.addFirst(root);
         do{
@@ -38,13 +39,33 @@ public class MCTS {
         } while(nodeQueue.size() > 0);
         Board mctsBoard = new Board(board);
         int maxScore = MIN_VALUE;
-        for (MCTSNode node : root.getChildren()) {
+        for (MCTSNode node : root.getChildren(root)) {
             if(node.getScoreTotal()/node.getSimulations() > maxScore) {
                 maxScore = node.getScoreTotal()/node.getSimulations();
                 mctsBoard = node.getBoard();
             }
         }
         return mctsBoard;
+    }
+
+    public MCTSNode findMove(Board board) {
+        MCTSNode root = new MCTSNode(board);
+        nodeQueue.addFirst(root);
+        do{
+            MCTSNode toBeChecked = nodeSelection(nodeQueue);
+            playoutSimulation(toBeChecked);
+        } while(nodeQueue.size() > 0);
+        Board mctsBoard = new Board(board);
+        int maxScore = MIN_VALUE;
+        MCTSNode maxNode = new MCTSNode(board);
+        for (MCTSNode node : root.getChildren(root)) {
+            if(node.getScoreTotal()/node.getSimulations() > maxScore) {
+                maxScore = node.getScoreTotal()/node.getSimulations();
+                mctsBoard = node.getBoard();
+                maxNode = node;
+            }
+        }
+        return maxNode;
     }
 
     public void createChildren(MCTSNode parentNode) {
@@ -54,7 +75,7 @@ public class MCTS {
                 if(Logic.checkSquareAllowed(r, c, board)) {
                     Board tmpCopyBoard =  new Board(board);
                     tmpCopyBoard.applyMove(r, c);
-                    MCTSNode tmpNode = new MCTSNode(tmpCopyBoard);
+                    MCTSNode tmpNode = new MCTSNode(tmpCopyBoard, r, c);
                     parentNode.addChild(tmpNode);
                     nodeQueue.add(tmpNode);
                 }
@@ -81,11 +102,12 @@ public class MCTS {
     }
 
     public void playoutSimulation(MCTSNode node) {
-        Board board = node.getBoard();
+        Board board = new Board(node.getBoard());
         boolean gameFinished = false;
         Random rand = new Random();
         int currentPlayer = board.getCurrentPlayer();
         do{
+            //System.out.print("Performing playout simulation -> game not finished yet");
             if(Logic.isMovePossible(board)) {
                 int x = rand.nextInt(board.getSize());
                 int y = rand.nextInt(board.getSize());

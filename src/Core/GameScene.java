@@ -1,5 +1,7 @@
 package Core;
 
+import AI.MCTS;
+import AI.MCTSNode;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -59,6 +61,7 @@ public class GameScene extends BorderPane {
     private Button restartGameBut;
     private Button loadBoardBut;
     private Button saveBoardBut;
+    private Button playAI;
     private Logic logic;
     private boolean movePossible;
 
@@ -124,6 +127,15 @@ public class GameScene extends BorderPane {
             }
         });
         this.saveBoardBut.setWrapText(true);
+        this.playAI = new Button("Let AI play current turn");
+        playAI.setOnAction(e -> { // Save current board
+            MCTS mcts = new MCTS(10);
+            MCTSNode node = mcts.findMove(board);
+            System.out.println("node.getX(), node.getY())" + node.getX() + " " + node.getY());
+            updateBoard(node.getX(), node.getY());
+            System.out.println("AI calls updateBoard");
+        });
+        this.playAI.setWrapText(true);
         this.logic = new Logic();
 
         grid.setGridLinesVisible(false);
@@ -154,12 +166,13 @@ public class GameScene extends BorderPane {
         GridPane.setConstraints(goToMenuBut, board.getSize() + 2, 2);
         GridPane.setConstraints(restartGameBut, board.getSize(), 2);
         GridPane.setConstraints(saveBoardBut, board.getSize(), 3);
+        GridPane.setConstraints(playAI, board.getSize() + 2, 3);
 
         GridPane.setConstraints(blackDiscs, board.getSize(), 1);
         GridPane.setConstraints(whiteDiscs, board.getSize() + 2, 1);
 
         grid.getChildren().addAll(toAdd);
-        grid.getChildren().addAll(goToMenuBut, restartGameBut, saveBoardBut, blackDiscs, whiteDiscs);
+        grid.getChildren().addAll(goToMenuBut, restartGameBut, saveBoardBut, playAI, blackDiscs, whiteDiscs);
         for(Node aNode: grid.getChildren()) {
             GridPane.setHalignment(aNode, HPos.CENTER);
         }
