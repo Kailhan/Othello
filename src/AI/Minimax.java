@@ -24,15 +24,25 @@ public class Minimax{
     public int minimaxValue(Node<Board> currentNode){
         Board board = currentNode.getData();
         if(currentNode.getChildren() == null){
-            int score = evaluationFunction();
-        } else if (currentNode.getData().getCurrentPlayer() == -1) { //AI is player white: -1
+            int value = evaluationFunction();
+        } else if (currentNode.getData().getCurrentPlayer() == -1) { //MAXVALUE, AI is player white: -1
             List<Node<Board>> children = currentNode.getChildren();
-            int score = children.get(0).evaluationFunction();
-            if(child > score){
-                score = child;
+            int value = children.get(0).evaluationFunction();
+            for(int i = 1; i < children.size(); i++) {
+                if (children.get(i).evaluationFunction() > score) {
+                    value = children.get(i);
+                }
+            }
+        } else{ //MINVALUE, opponent player
+            List<Node<Board>> children = currentNode.getChildren();
+            int value = children.get(0).evaluationFunction();
+            for(int i = 1; i < children.size(); i++) {
+                if (children.get(i).evaluationFunction() < score) {
+                    value = children.get(i);
+                }
             }
         }
-        return score;
+        return value;
     }
 
 
