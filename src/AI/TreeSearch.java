@@ -1,9 +1,11 @@
 package AI;
-import java.util.*;
 
 import Core.*;
+import java.util.*;
 
-public class Minimax{
+public class TreeSearch {
+
+
 
     private Logic logic;
     private Board board;
@@ -11,8 +13,13 @@ public class Minimax{
     private int currentPossibleMoves[][];
     private Node parent;
     private int moveIndex;
+    private final static int BLACK = 1;
+    private final static int WHITE = -1;
+    private EvaluationFunction evalutor;
 
-    public Minimax(){
+
+
+    public TreeSearch(){
         this.logic = new Logic();
         this.board = new Board();
         this.boardGrid = board.getBoardGrid();
@@ -20,11 +27,18 @@ public class Minimax{
         currentPossibleMoves = new int[boardGrid.length][2];
     }
 
+
+
+    //Look at the weights, e.g. number of moves should be as low as possible.
+    //to do: finnish functions in stability
+    //Maybe make room for opening moves (set of the best opening moves)
+
+
     public void createTree(){
         this.boardGrid = board.getBoardGrid();
         for(int i = 0; i < boardGrid.length; i++){
             for(int j = 0; j < boardGrid[0].length; j++){
-                if(logic.checkSquareAllowed(i,j,board)) {
+                if(logic.checkSquareAllowed(i,j,board,BLACK)) {
                     currentPossibleMoves[moveIndex][0] = i;
                     currentPossibleMoves[moveIndex][1] = j;
                 }
@@ -36,12 +50,23 @@ public class Minimax{
             currentNode.setData(currentPossibleMoves[moveIndex]);
             currentNode.setParent(parent);
         }
-
-
     }
+    
+    //is not working, but is a beginning
+    public int minimaxMethod(Board board, int depth){
+        int score = Integer.MIN_VALUE;
 
-    public void minimaxMethod(Node parent){
-        List listChildren = parent.getChildren();
+        if(depth<=0){
+            score = evalutor.evaluate();
+        } else{
+            board.changePlayer();
+            int oppositePlayer = board.getCurrentPlayer();
+            int result = -minimaxMethod(board, depth-1);
+            if(result > score){
+                score = result;
+            }
+        }
+        return score;
     }
 
     public int valueMax(Node parent){
@@ -61,8 +86,10 @@ public class Minimax{
         }
         return minValue;
     }
-
 }
+
+
+
 
 /*
 A list of possible moves for each turn needs to be created using Core.Logic.checkSquareAllowed

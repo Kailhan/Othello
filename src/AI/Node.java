@@ -4,8 +4,11 @@ import java.util.*;
 public class Node<T> implements GenericTree<T> {
 
     private T data = null;
+
     private List<Node<T>> children = new ArrayList<>();
+
     private Node<T> parent = null;
+
     private boolean visited = false;
 
     public Node(T data) {
