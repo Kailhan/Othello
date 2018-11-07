@@ -193,30 +193,19 @@ public class GameScene extends BorderPane {
             }
         }
     }
-    public boolean isMovePossible() {
-        movePossible = false;
-        for (int r = 0; r < board.getSize(); r++) { //Check if move is possible for current player
-            for (int c = 0; c < board.getSize(); c++) {
-                if (Logic.checkSquareAllowed(r, c, board)) {
-                    movePossible = true;
-                    break;
-                }
-            }
-        }
-        return movePossible;
-    }
+
 
     public void updateBoard(int x, int y) {
-        if(isMovePossible()) {
+        if(Logic.isMovePossible(board)) {
             if(Logic.checkSquareAllowed(x, y, board)) {
                 board.applyMove(x, y);
                 board.incrementTurn();
                 board.changePlayer();
             }
         }
-        if(!isMovePossible()) {
+        if(!Logic.isMovePossible(board)) {
             board.changePlayer();
-            if(!isMovePossible()) { // No moves possible for either player so game has ended
+            if(!Logic.isMovePossible(board)) { // No moves possible for either player so game has ended
                 redrawBoard();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Game Finished");
