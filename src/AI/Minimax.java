@@ -6,43 +6,68 @@ import Core.*;
 public class Minimax{
 
     private Logic logic;
-    private Board board;
-    private int[][] boardGrid;
-    private int currentPossibleMoves[][];
     private Node parent;
     private int moveIndex;
+    private int depth;
 
-    public Minimax(){
+    public Minimax(int depth){
         this.logic = new Logic();
-        this.board = new Board();
-        this.boardGrid = board.getBoardGrid();
         this.parent = new Node(new int[2]);
-        currentPossibleMoves = new int[boardGrid.length][2];
+        this.depth = depth;
     }
 
-    public void createTree(){
-        this.boardGrid = board.getBoardGrid();
-        for(int i = 0; i < boardGrid.length; i++){
-            for(int j = 0; j < boardGrid[0].length; j++){
-                if(logic.checkSquareAllowed(i,j,board)) {
-                    currentPossibleMoves[moveIndex][0] = i;
-                    currentPossibleMoves[moveIndex][1] = j;
-                }
+    public Board minimaxDecision(Node<Board> root){
+
+
+    }
+
+    public int minimaxValue(Node<Board> currentNode){
+        Board board = currentNode.getData();
+        if(currentNode.getChildren() == null){
+            int score = evaluationFunction();
+        } else if (currentNode.getData().getCurrentPlayer() == -1) { //AI is player white: -1
+            List<Node<Board>> children = currentNode.getChildren();
+            int score = children.get(0).evaluationFunction();
+            if(child > score){
+                score = child;
             }
         }
+        return score;
+    }
 
-        for(int i = 0; i < moveIndex; i++){
-            Node currentNode = new Node(new int[2]);
-            currentNode.setData(currentPossibleMoves[moveIndex]);
-            currentNode.setParent(parent);
+
+    public Board minimaxDecision(Board board, int depth){
+        int score = Integer.MIN_VALUE;
+
+        if(depth<=0){
+       //     score = evaluationFunction();
+        } else{
+            board.changePlayer();
+            int oppositePlayer = board.getCurrentPlayer();
+           // int result = -minimaxDecision(board, depth-1);
+            if(result > score){
+                score = result;
+            }
         }
-
-
+        return score;
     }
 
-    public void minimaxMethod(Node parent){
+    public int minimaxValue(Node Parent, int depth){
+        if(depth<=0){
+            return evaluationFunction();
+        }
+        else if()
         List listChildren = parent.getChildren();
+        int maxValue = (int)listChildren.get(0);
+        for(int i = 0; i<listChildren.size(); i++){
+            if((int)listChildren.get(i)>maxValue) maxValue=(int)listChildren.get(i);
+        }
+        return maxValue;
+
     }
+
+
+
 
     public int valueMax(Node parent){
         List listChildren = parent.getChildren();
