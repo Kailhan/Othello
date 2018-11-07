@@ -6,7 +6,7 @@ public class Logic {
     {
         int[][] boardGrid = board.getBoardGrid();
         int boardSize = board.getSize();
-        int playerNr = board.getCurrentPlayer(); //which board?????
+        int playerNr = board.getCurrentPlayer();
 
         if (boardGrid[x][y] == 0) //If the square is empty
         {
