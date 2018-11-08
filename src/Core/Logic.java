@@ -2,6 +2,19 @@ package Core;
 
 public class Logic {
 
+    public static boolean isMovePossible(Board board) {
+        boolean movePossible = false;
+        for (int r = 0; r < board.getSize(); r++) { //Check if move is possible for current player
+            for (int c = 0; c < board.getSize(); c++) {
+                if (checkSquareAllowed(r, c, board)) {
+                    movePossible = true;
+                    break;
+                }
+            }
+        }
+        return movePossible;
+    }
+
     public static boolean checkSquareAllowed(int x, int y, Board board) //Returns true if the position clicked would result in disks being flipped
     {
         int[][] boardGrid = board.getBoardGrid();
@@ -417,6 +430,20 @@ public class Logic {
                     nrOfAllowedSquares++;
         return nrOfAllowedSquares;
     }
+
+    public static int getAmountOfPossibleMoves(Board board) {
+        int amountOfPossibleMoves = 0;
+        for (int r = 0; r < board.getSize(); r++) { //Check if move is possible for current player
+            for (int c = 0; c < board.getSize(); c++) {
+                if (checkSquareAllowed(r, c, board)) {
+                    amountOfPossibleMoves++;
+                }
+            }
+        }
+        return amountOfPossibleMoves;
+    }
+
+
 
     public static int[][] combine(int[][] a, int[][] b)
     {

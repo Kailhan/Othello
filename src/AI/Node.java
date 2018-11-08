@@ -4,6 +4,7 @@ import java.util.*;
 public class Node<T> implements GenericTree<T> {
 
     private T data = null;
+    private int depth = 0;
     private List<Node<T>> children = new ArrayList<>();
     private Node<T> parent = null;
     private boolean visited = false;
@@ -25,6 +26,7 @@ public class Node<T> implements GenericTree<T> {
     public Node<T> addChild(Node<T> child) {
         this.children.add(child);
         child.setParent(this); //set parent when adding a child
+        child.depth = this.depth++;
         return child;
     }
 
@@ -64,7 +66,11 @@ public class Node<T> implements GenericTree<T> {
         return visited;
     }
 
+    public int getDepth() {
+        return depth;
+    }
 
-
-
+    public void setDepth(int depth) {
+        this.depth = depth;
+    }
 }
