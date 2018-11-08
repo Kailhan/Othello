@@ -1,4 +1,5 @@
 package AI;
+import Core.Board;
 
 public class Stupid implements AI {
     private int[][] board;
@@ -7,8 +8,9 @@ public class Stupid implements AI {
     public Stupid(int[][] board){
         this.board = board;
     }
-//
-//    public void findMove() {
-//        int moves
-//    }
+
+    public int[] getMoves(Board board)
+    {
+        return new int[2];
+    }
 }
