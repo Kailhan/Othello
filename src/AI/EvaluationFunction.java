@@ -29,7 +29,7 @@ public class EvaluationFunction {
         int blackMoves = 0;
         int whiteMoves = 0;
 
-        int numberOfCoins =  ((board.getNrBlackSquares() - board.getNrWhiteSquares()) / (board.getNrBlackSquares() + board.getNrWhiteSquares()));
+        int numberOfCoins =  ((board.getNrSquares(BLACK) - board.getNrSquares(WHITE)) / (board.getNrSquares(BLACK) + board.getNrSquares(WHITE)));
 
         if(board.getCurrentPlayer() == WHITE){
             whiteMoves = Logic.numberSquaresAllowed(this.board);

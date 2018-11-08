@@ -73,52 +73,68 @@ public class Board implements Serializable {
     }
 
     /**
-     * Checks the state of integer array representing the board, if cell contains 0 then this is an empty cell
-     * @return Number of squares that are empty
+     * Checks the state of integer array representing the board, if cell equals int state then increment counter
+     * @return Number of counted squares
      */
-    public int getNrEmptySquares()
+    public int getNrSquares(int state)
     {
-        int nrEmptySquares = 0;
+        int nrSquares = 0;
 
         for(int i = 0; i < boardGrid.length; i++)
             for(int j = 0; j < boardGrid[i].length; j++)
-                if(boardGrid[i][j] == EMPTY)
-                    nrEmptySquares++;
+                if(boardGrid[i][j] == state)
+                    nrSquares++;
 
-        return  nrEmptySquares;
+        return  nrSquares;
     }
 
-    /**
-     * Checks the state of integer array representing the board, if cell contains 1 then this is a black cell
-     * @return Number of squares that are black
-     */
-    public int getNrBlackSquares()
-    {
-        int nrBlackSquares = 0;
-
-        for(int i = 0; i < boardGrid.length; i++)
-            for(int j = 0; j < boardGrid[i].length; j++)
-                if(boardGrid[i][j] == BLACK)
-                    nrBlackSquares++;
-
-        return  nrBlackSquares;
-    }
-
-    /**
-     * Checks the state of integer array representing the board, if cell contains -1 then this is an white cell
-     * @return Number of squares that are white
-     */
-    public int getNrWhiteSquares()
-    {
-        int nrWhiteSquares = 0;
-
-        for(int i = 0; i < boardGrid.length; i++)
-            for(int j = 0; j < boardGrid[i].length; j++)
-                if(boardGrid[i][j] == WHITE)
-                    nrWhiteSquares++;
-
-        return  nrWhiteSquares;
-    }
+//    /**
+//     * Checks the state of integer array representing the board, if cell contains 0 then this is an empty cell
+//     * @return Number of squares that are empty
+//     */
+//    public int getNrEmptySquares()
+//    {
+//        int nrEmptySquares = 0;
+//
+//        for(int i = 0; i < boardGrid.length; i++)
+//            for(int j = 0; j < boardGrid[i].length; j++)
+//                if(boardGrid[i][j] == EMPTY)
+//                    nrEmptySquares++;
+//
+//        return  nrEmptySquares;
+//    }
+//
+//    /**
+//     * Checks the state of integer array representing the board, if cell contains 1 then this is a black cell
+//     * @return Number of squares that are black
+//     */
+//    public int getNrBlackSquares()
+//    {
+//        int nrBlackSquares = 0;
+//
+//        for(int i = 0; i < boardGrid.length; i++)
+//            for(int j = 0; j < boardGrid[i].length; j++)
+//                if(boardGrid[i][j] == BLACK)
+//                    nrBlackSquares++;
+//
+//        return  nrBlackSquares;
+//    }
+//
+//    /**
+//     * Checks the state of integer array representing the board, if cell contains -1 then this is an white cell
+//     * @return Number of squares that are white
+//     */
+//    public int getNrWhiteSquares()
+//    {
+//        int nrWhiteSquares = 0;
+//
+//        for(int i = 0; i < boardGrid.length; i++)
+//            for(int j = 0; j < boardGrid[i].length; j++)
+//                if(boardGrid[i][j] == WHITE)
+//                    nrWhiteSquares++;
+//
+//        return  nrWhiteSquares;
+//    }
 
     public void incrementTurn()
     {

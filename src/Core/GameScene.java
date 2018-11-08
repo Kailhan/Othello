@@ -156,8 +156,8 @@ public class GameScene extends BorderPane {
             grid.getChildren().addAll(discBlackMenuView, discWhiteMenuViewSel);
         }
 
-        Label blackDiscs = new Label(Integer.toString(board.getNrBlackSquares()));
-        Label whiteDiscs = new Label(Integer.toString(board.getNrWhiteSquares()));
+        Label blackDiscs = new Label(Integer.toString(board.getNrSquares(BLACK)));
+        Label whiteDiscs = new Label(Integer.toString(board.getNrSquares(WHITE)));
 
         GridPane.setConstraints(goToMenuBut, board.getSize() + 2, 2);
         GridPane.setConstraints(restartGameBut, board.getSize(), 2);
@@ -234,9 +234,9 @@ public class GameScene extends BorderPane {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Game Finished");
                 alert.setHeaderText(null);
-                if (board.getNrBlackSquares() > board.getNrWhiteSquares()) {
+                if (board.getNrSquares(BLACK) > board.getNrSquares(WHITE)) {
                     alert.setContentText("BLACK has won!!!");
-                } else if(board.getNrBlackSquares() < board.getNrWhiteSquares()) {
+                } else if(board.getNrSquares(BLACK) < board.getNrSquares(WHITE)) {
                     alert.setContentText("WHITE has won!!!");
                 } else {
                     alert.setContentText("BOTH win :)");

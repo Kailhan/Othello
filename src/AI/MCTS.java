@@ -120,9 +120,9 @@ public class MCTS {
             if(!Logic.checkMovePossible(board)) {
                 board.changePlayer();
                 if(!Logic.checkMovePossible(board)) { // No moves possible for either player so game has ended
-                    if(board.getNrBlackSquares() > board.getNrWhiteSquares()) {
+                    if(board.getNrSquares(BLACK) > board.getNrSquares(WHITE)) {
                         playoutBackpropogation(node, BLACK, currentPlayer);
-                    } else if(board.getNrBlackSquares() < board.getNrWhiteSquares()) {
+                    } else if(board.getNrSquares(BLACK) < board.getNrSquares(WHITE)) {
                         playoutBackpropogation(node, WHITE, currentPlayer);
                     } else {
                         playoutBackpropogation(node, EMPTY, currentPlayer);
