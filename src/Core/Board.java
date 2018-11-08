@@ -133,13 +133,9 @@ public class Board implements Serializable {
     public void changePlayer()
     {
         if (currentPlayer == BLACK)
-        {
             currentPlayer = WHITE;
-        }
         else
-        {
             currentPlayer = BLACK;
-        }
     }
 
     public int getCurrentPlayer()
@@ -154,23 +150,24 @@ public class Board implements Serializable {
      */
     public void applyMove(int row, int col) {
         int[][] flippedDisks = Logic.getFlippedDisks(row, col, this);
-        if(currentPlayer == BLACK) {
-            boardGrid[row][col] = BLACK;
-            for(int i = 0; i < flippedDisks.length; i++) {
-                boardGrid[flippedDisks[i][0]][flippedDisks[i][1]] = BLACK;
-            }
-        } else {
-            boardGrid[row][col] = WHITE;
-            for(int i = 0; i < flippedDisks.length; i++) {
-                boardGrid[flippedDisks[i][0]][flippedDisks[i][1]] = WHITE;
-            }
-        }
+        boardGrid[row][col] = currentPlayer;
+        for (int[] flippedDisk : flippedDisks)
+            boardGrid[flippedDisk[0]][flippedDisk[1]] = currentPlayer;
+
+//        if(currentPlayer == BLACK) {
+//            boardGrid[row][col] = BLACK;
+//            for(int i = 0; i < flippedDisks.length; i++) {
+//                boardGrid[flippedDisks[i][0]][flippedDisks[i][1]] = BLACK;
+//            }
+//        } else {
+//            boardGrid[row][col] = WHITE;
+//            for(int i = 0; i < flippedDisks.length; i++) {
+//                boardGrid[flippedDisks[i][0]][flippedDisks[i][1]] = WHITE;
+//            }
+//        }
     }
+
     public boolean checkTile(int r, int c, int state) {
-        if(boardGrid[r][c] == state) {
-            return true;
-        } else {
-            return false;
-        }
+        return (boardGrid[r][c] == state);
     }
 }

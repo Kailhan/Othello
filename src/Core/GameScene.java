@@ -33,6 +33,9 @@ public class GameScene extends BorderPane {
     private int windowSize = 600;
     private int tileSize;
 
+    private boolean blackIsBot;
+    private boolean whiteIsBot;
+
     private File discBlack = new File("src/Assets/disc_blackBgr.png");
     private File discWhite = new File("src/Assets/disc_whiteBgrFthr.png");
     private File bgr = new File("src/Assets/Bgr.png");
@@ -59,7 +62,7 @@ public class GameScene extends BorderPane {
     private Button restartGameBut;
     private Button loadBoardBut;
     private Button saveBoardBut;
-    private Logic logic;
+//    private Logic logic;
     private boolean movePossible;
 
     public GameScene(Stage primaryStage, Settings settings) {
@@ -124,7 +127,7 @@ public class GameScene extends BorderPane {
             }
         });
         this.saveBoardBut.setWrapText(true);
-        this.logic = new Logic();
+//        this.logic = new Logic();
 
         grid.setGridLinesVisible(false);
         grid.setAlignment(Pos.CENTER);
@@ -170,7 +173,7 @@ public class GameScene extends BorderPane {
             for (int c = 0; c < board.getSize(); c++) {
                 if(board.checkTile(r, c, EMPTY)) {
                     if (Logic.checkSquareAllowed(r, c, board)) {
-                        int flippedNo = logic.getFlippedDisks(r, c, board).length;
+                        int flippedNo = Logic.getFlippedDisks(r, c, board).length;
                         flippedNo = (flippedNo > 9 ? 10 : flippedNo); // if more than 9 discs can be flipped set flippedNo to 10, because we only have assets up to "9+"
                         toAdd.add(new TileButton(r, c, new ImageView(flippedImg.get(flippedNo-1)))); // Show image corresponding to amount of discs that will be flipped
                     } else {
@@ -193,6 +196,35 @@ public class GameScene extends BorderPane {
             }
         }
     }
+
+    public void playerMove(int x, int y)
+    {
+        if((board.getCurrentPlayer() == BLACK && !blackIsBot) || (board.getCurrentPlayer() == WHITE && !whiteIsBot))
+        {
+            if(Logic.checkMovePossible(board))
+            {
+                makeMove(x, y);
+            }
+            else
+            {
+
+            }
+        }
+    }
+
+    public void botMove()
+    {
+
+    }
+
+    public void makeMove(int x, int y)
+    {
+        board.applyMove(x, y);
+        board.incrementTurn();
+        board.changePlayer();
+        redrawBoard();
+    }
+
     public boolean isMovePossible() {
         movePossible = false;
         for (int r = 0; r < board.getSize(); r++) { //Check if move is possible for current player
