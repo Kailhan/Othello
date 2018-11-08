@@ -227,6 +227,7 @@ public class GameScene extends BorderPane {
         board.changePlayer();
         if(!Logic.checkMovePossible(board))
         {
+            board.incrementTurn();
             board.changePlayer();
             if(!Logic.checkMovePossible(board))
             {

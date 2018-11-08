@@ -5,8 +5,6 @@ import Core.Logic;
 
 public class EvaluationFunction {
 
-
-    private Logic logic;
     private Board board;
     private int[][] boardGrid;
 
@@ -19,7 +17,6 @@ public class EvaluationFunction {
 
 
     public EvaluationFunction(){
-        this.logic = new Logic();
         this.board = new Board();
         this.boardGrid = board.getBoardGrid();
     }
