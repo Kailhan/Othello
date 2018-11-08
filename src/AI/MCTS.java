@@ -108,7 +108,7 @@ public class MCTS {
         int currentPlayer = board.getCurrentPlayer();
         do{
             //System.out.print("Performing playout simulation -> game not finished yet");
-            if(Logic.isMovePossible(board)) {
+            if(Logic.checkMovePossible(board)) {
                 int x = rand.nextInt(board.getSize());
                 int y = rand.nextInt(board.getSize());
                 if(Logic.checkSquareAllowed(x, y, board)) {
@@ -117,9 +117,9 @@ public class MCTS {
                     board.changePlayer();
                 }
             }
-            if(!Logic.isMovePossible(board)) {
+            if(!Logic.checkMovePossible(board)) {
                 board.changePlayer();
-                if(!Logic.isMovePossible(board)) { // No moves possible for either player so game has ended
+                if(!Logic.checkMovePossible(board)) { // No moves possible for either player so game has ended
                     if(board.getNrBlackSquares() > board.getNrWhiteSquares()) {
                         playoutBackpropogation(node, BLACK, currentPlayer);
                     } else if(board.getNrBlackSquares() < board.getNrWhiteSquares()) {
