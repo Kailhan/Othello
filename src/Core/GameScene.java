@@ -178,7 +178,7 @@ public class GameScene extends BorderPane {
         for (int r = 0; r < board.getSize(); r++) {
             for (int c = 0; c < board.getSize(); c++) {
                 if(board.checkTile(r, c, EMPTY)) {
-                    if (Logic.checkSquareAllowed(r, c, board)) {
+                    if(Logic.checkSquareAllowed(r, c, board)) {
                         int flippedNo = Logic.getFlippedDisks(r, c, board).length;
                         flippedNo = (flippedNo > 9 ? 10 : flippedNo); // if more than 9 discs can be flipped set flippedNo to 10, because we only have assets up to "9+"
                         toAdd.add(new TileButton(r, c, new ImageView(flippedImg.get(flippedNo-1)))); // Show image corresponding to amount of discs that will be flipped
