@@ -17,7 +17,7 @@ public class EvaluationFunction {
     private Settings settings;
 
     private final static int WEIGHT1 = 100;
-    private final static int WEIGHT2 = 100;
+    private final static int WEIGHT2 = 0;       //set to 0 to disable for a while
     private final static int WEIGHT3 = 100;
     private final static int WEIGHT4 = 100;
     private final static int BLACK = 1;
@@ -27,6 +27,7 @@ public class EvaluationFunction {
     public EvaluationFunction(){
         this.board = new Board();
         this.boardGrid = board.getBoardGrid();
+        this.settings = new Settings();
     }
 
 
@@ -69,8 +70,16 @@ public class EvaluationFunction {
         }
         else territory = 0;
 
+        /*
+        //debug
+        System.out.println("totalscore: " + totalscore);
+        System.out.println("numberOfcoins: " + numberOfCoins);
+        System.out.println("numberOfMoves: " + numberOfMoves);
+        System.out.println("terrScore: " + territory);
+        */
 
         return totalscore = WEIGHT1 * numberOfCoins + WEIGHT2 * numberOfCorners + WEIGHT3 * numberOfMoves + WEIGHT4 * territory;
+
 
     }
 
