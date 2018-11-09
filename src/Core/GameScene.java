@@ -1,5 +1,7 @@
 package Core;
 
+import AI.MCTS;
+import AI.MCTSNode;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -59,8 +61,10 @@ public class GameScene extends BorderPane {
     private Button restartGameBut;
     private Button loadBoardBut;
     private Button saveBoardBut;
-    private Logic logic;
+    private Button playAI;
     private boolean movePossible;
+    private boolean blackIsBot;
+    private boolean whiteIsBot;
 
     public GameScene(Stage primaryStage, Settings settings) {
         this.primaryStage = primaryStage;
@@ -124,7 +128,11 @@ public class GameScene extends BorderPane {
             }
         });
         this.saveBoardBut.setWrapText(true);
-        this.logic = new Logic();
+        this.playAI = new Button("Let AI play current turn");
+        playAI.setOnAction(e -> { // Save current board
+            botMove();
+        });
+        this.playAI.setWrapText(true);
 
         grid.setGridLinesVisible(false);
         grid.setAlignment(Pos.CENTER);
@@ -148,18 +156,19 @@ public class GameScene extends BorderPane {
             grid.getChildren().addAll(discBlackMenuView, discWhiteMenuViewSel);
         }
 
-        Label blackDiscs = new Label(Integer.toString(board.getNrBlackSquares()));
-        Label whiteDiscs = new Label(Integer.toString(board.getNrWhiteSquares()));
+        Label blackDiscs = new Label(Integer.toString(board.getNrSquares(BLACK)));
+        Label whiteDiscs = new Label(Integer.toString(board.getNrSquares(WHITE)));
 
         GridPane.setConstraints(goToMenuBut, board.getSize() + 2, 2);
         GridPane.setConstraints(restartGameBut, board.getSize(), 2);
         GridPane.setConstraints(saveBoardBut, board.getSize(), 3);
+        GridPane.setConstraints(playAI, board.getSize() + 2, 3);
 
         GridPane.setConstraints(blackDiscs, board.getSize(), 1);
         GridPane.setConstraints(whiteDiscs, board.getSize() + 2, 1);
 
         grid.getChildren().addAll(toAdd);
-        grid.getChildren().addAll(goToMenuBut, restartGameBut, saveBoardBut, blackDiscs, whiteDiscs);
+        grid.getChildren().addAll(goToMenuBut, restartGameBut, saveBoardBut, playAI, blackDiscs, whiteDiscs);
         for(Node aNode: grid.getChildren()) {
             GridPane.setHalignment(aNode, HPos.CENTER);
         }
@@ -170,7 +179,7 @@ public class GameScene extends BorderPane {
             for (int c = 0; c < board.getSize(); c++) {
                 if(board.checkTile(r, c, EMPTY)) {
                     if (Logic.checkSquareAllowed(r, c, board)) {
-                        int flippedNo = logic.getFlippedDisks(r, c, board).length;
+                        int flippedNo = Logic.getFlippedDisks(r, c, board).length;
                         flippedNo = (flippedNo > 9 ? 10 : flippedNo); // if more than 9 discs can be flipped set flippedNo to 10, because we only have assets up to "9+"
                         toAdd.add(new TileButton(r, c, new ImageView(flippedImg.get(flippedNo-1)))); // Show image corresponding to amount of discs that will be flipped
                     } else {
@@ -187,43 +196,47 @@ public class GameScene extends BorderPane {
                 toAdd.get(toAdd.size()-1).setStyle("-fx-background-color: #007F3F; ");
                 toAdd.get(toAdd.size()-1).setOnAction((event) -> {
                     TileButton button = (TileButton)event.getSource();
-                    updateBoard(button.getX(), button.getY()); // Actual communication with board, says which button has been clicked and thus which board cell needs to be checked
+                    playerMove(button.getX(), button.getY()); // Actual communication with board, says which button has been clicked and thus which board cell needs to be checked
                 });
                 GridPane.setConstraints(toAdd.get(toAdd.size()-1), r, c);
             }
         }
     }
-    public boolean isMovePossible() {
-        movePossible = false;
-        for (int r = 0; r < board.getSize(); r++) { //Check if move is possible for current player
-            for (int c = 0; c < board.getSize(); c++) {
-                if (Logic.checkSquareAllowed(r, c, board)) {
-                    movePossible = true;
-                    break;
-                }
-            }
+
+    public void playerMove(int x, int y)
+    {
+        if(Logic.checkSquareAllowed(x, y, board))
+        {
+            updateBoard(x, y);
         }
-        return movePossible;
     }
 
-    public void updateBoard(int x, int y) {
-        if(isMovePossible()) {
-            if(Logic.checkSquareAllowed(x, y, board)) {
-                board.applyMove(x, y);
-                board.incrementTurn();
-                board.changePlayer();
-            }
-        }
-        if(!isMovePossible()) {
+    public void botMove()
+    {
+        MCTS mcts = new MCTS(10);
+        MCTSNode node = mcts.findMove(board);
+        System.out.println("node.getX(), node.getY())" + node.getX() + " " + node.getY());
+        updateBoard(node.getX(), node.getY());
+        System.out.println("AI calls updateBoard");
+    }
+
+    public void updateBoard(int x, int y)
+    {
+        board.applyMove(x, y);
+        board.incrementTurn();
+        board.changePlayer();
+        if(!Logic.checkMovePossible(board))
+        {
+            board.incrementTurn();
             board.changePlayer();
-            if(!isMovePossible()) { // No moves possible for either player so game has ended
-                redrawBoard();
+            if(!Logic.checkMovePossible(board))
+            {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Game Finished");
                 alert.setHeaderText(null);
-                if (board.getNrBlackSquares() > board.getNrWhiteSquares()) {
+                if (board.getNrSquares(BLACK) > board.getNrSquares(WHITE)) {
                     alert.setContentText("BLACK has won!!!");
-                } else if(board.getNrBlackSquares() < board.getNrWhiteSquares()) {
+                } else if(board.getNrSquares(BLACK) < board.getNrSquares(WHITE)) {
                     alert.setContentText("WHITE has won!!!");
                 } else {
                     alert.setContentText("BOTH win :)");

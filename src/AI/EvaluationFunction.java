@@ -5,8 +5,6 @@ import Core.Logic;
 
 public class EvaluationFunction {
 
-
-    private Logic logic;
     private Board board;
     private int[][] boardGrid;
 
@@ -19,7 +17,6 @@ public class EvaluationFunction {
 
 
     public EvaluationFunction(){
-        this.logic = new Logic();
         this.board = new Board();
         this.boardGrid = board.getBoardGrid();
     }
@@ -33,7 +30,7 @@ public class EvaluationFunction {
         int whiteMoves = 0;
         int territory;
 
-        int numberOfCoins =  ((board.getNrBlackSquares() - board.getNrWhiteSquares()) / (board.getNrBlackSquares() + board.getNrWhiteSquares()));
+        int numberOfCoins =  ((board.getNrSquares(BLACK) - board.getNrSquares(WHITE)) / (board.getNrSquares(BLACK) + board.getNrSquares(WHITE)));
 
         if(board.getCurrentPlayer() == WHITE){
             whiteMoves = Logic.numberSquaresAllowed(this.board);
