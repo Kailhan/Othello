@@ -396,13 +396,15 @@ public class Logic {
         return new int[0][0];
     }
 
-    public static boolean checkMovePossible(Board board)
-    {
+    public static boolean checkMovePossible(Board board) {
         int boardSize = board.getSize();
-        for (int i = 0; i < boardSize; i++)
-            for (int j = 0; j < boardSize; j++)
-                if (checkSquareAllowed(i, j, board))
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                if (checkSquareAllowed(i, j, board)) {
                     return true;
+                }
+            }
+        }
         return false;
     }
 

@@ -3,6 +3,7 @@ package AI;
 import Core.Board;
 import Core.Logic;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -30,24 +31,6 @@ public class MCTS {
         this.treeDepth = treeDepth;
     }
 
-    public Board findBoard(Board board) {
-        MCTSNode root = new MCTSNode(board);
-        nodeQueue.addFirst(root);
-        do{
-            MCTSNode toBeChecked = nodeSelection(nodeQueue);
-            playoutSimulation(toBeChecked);
-        } while(nodeQueue.size() > 0);
-        Board mctsBoard = new Board(board);
-        int maxScore = MIN_VALUE;
-        for (MCTSNode node : root.getChildren(root)) {
-            if(node.getScoreTotal()/node.getSimulations() > maxScore) {
-                maxScore = node.getScoreTotal()/node.getSimulations();
-                mctsBoard = node.getBoard();
-            }
-        }
-        return mctsBoard;
-    }
-
     public MCTSNode findMove(Board board) {
         MCTSNode root = new MCTSNode(board);
         nodeQueue.addFirst(root);
@@ -55,17 +38,21 @@ public class MCTS {
             MCTSNode toBeChecked = nodeSelection(nodeQueue);
             playoutSimulation(toBeChecked);
         } while(nodeQueue.size() > 0);
-        Board mctsBoard = new Board(board);
         int maxScore = MIN_VALUE;
-        MCTSNode maxNode = new MCTSNode(board);
+        ArrayList<MCTSNode> potentialNodes = new ArrayList<MCTSNode>();
         for (MCTSNode node : root.getChildren(root)) {
+            //System.out.println("scores of children of roots (possible moves");
+            //System.out.println(node.getScoreTotal()/node.getSimulations());
             if(node.getScoreTotal()/node.getSimulations() > maxScore) {
                 maxScore = node.getScoreTotal()/node.getSimulations();
-                mctsBoard = node.getBoard();
-                maxNode = node;
             }
         }
-        return maxNode;
+        for (MCTSNode node : root.getChildren(root)) {
+            if(node.getScoreTotal()/node.getSimulations() >= maxScore) {
+                potentialNodes.add(node);
+            }
+        }
+        return potentialNodes.get(new Random().nextInt(potentialNodes.size())); //makes sure we pick a random node instead of for example the last one that has a highest score
     }
 
     public void createChildren(MCTSNode parentNode) {
