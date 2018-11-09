@@ -31,6 +31,7 @@ public class EvaluationFunction {
         int numberOfMoves;
         int blackMoves = 0;
         int whiteMoves = 0;
+        int territory;
 
         int numberOfCoins =  ((board.getNrBlackSquares() - board.getNrWhiteSquares()) / (board.getNrBlackSquares() + board.getNrWhiteSquares()));
 
@@ -55,7 +56,13 @@ public class EvaluationFunction {
         }
         else numberOfCorners = 0;
 
-        return totalscore = WEIGHT1 * numberOfCoins + WEIGHT2 * numberOfCorners + WEIGHT3 * numberOfMoves /*+ WEIGHT4 * Teritoryscore*/;
+        if (getTerritScoreBlack() + getTerritScoreWhite() !=0){
+            territory = (getTerritScoreBlack()-getTerritScoreWhite()) / ((getTerritScoreBlack() + getTerritScoreWhite()));
+        }
+        else territory = 0;
+
+
+        return totalscore = WEIGHT1 * numberOfCoins + WEIGHT2 * numberOfCorners + WEIGHT3 * numberOfMoves + WEIGHT4 * territory;
         //to be checked if its the correct way to add scores. .
     }
 
@@ -81,14 +88,14 @@ public class EvaluationFunction {
         return nrWhiteCorners;
     }
 
-    public int getTeritScoreWhite(){
+    public int getTerritScoreWhite(){
 
         return 0;
     }
 
-    public int getTeritScoreBlack(){
+    public int getTerritScoreBlack(){
 
-        return 0; 
+        return 0;
     }
 
 }
