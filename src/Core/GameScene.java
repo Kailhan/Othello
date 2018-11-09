@@ -231,6 +231,7 @@ public class GameScene extends BorderPane {
             board.changePlayer();
             if(!Logic.checkMovePossible(board))
             {
+                redrawBoard();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Game Finished");
                 alert.setHeaderText(null);
