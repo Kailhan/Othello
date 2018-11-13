@@ -6,7 +6,7 @@ public class Logic {
     {
         int[][] boardGrid = board.getBoardGrid();
         int boardSize = board.getSize();
-        int playerNr = board.getCurrentPlayer(); //which board?????
+        int playerNr = board.getCurrentPlayer();
 
         if (boardGrid[x][y] == 0) //If the square is empty
         {
@@ -396,19 +396,28 @@ public class Logic {
         return new int[0][0];
     }
 
+    public static boolean checkMovePossible(Board board) {
+        int boardSize = board.getSize();
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                if (checkSquareAllowed(i, j, board)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     //counts the amount of possible moves
     public static int numberSquaresAllowed(Board board)
     {
         int boardSize = board.getSize();
         int nrOfAllowedSquares = 0;
         for (int i = 0; i < boardSize; i++)
-        {
             for (int j = 0; j < boardSize; j++)
                 if (checkSquareAllowed(i, j, board))
                     nrOfAllowedSquares++;
-            return nrOfAllowedSquares;
-        }
-        return 0;
+        return nrOfAllowedSquares;
     }
 
     public static int[][] combine(int[][] a, int[][] b)

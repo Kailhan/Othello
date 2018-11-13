@@ -51,9 +51,9 @@ public class Board implements Serializable {
     public void displayBoardGrid() {
         for(int r = 0; r < size; r++) {
             for(int c = 0; c < size; c++) {
-                System.out.print(boardGrid[r][c] + " ");
-                System.out.println();
+                System.out.printf("%3d", boardGrid[r][c]);
             }
+            System.out.println();
         }
     }
 
@@ -73,52 +73,68 @@ public class Board implements Serializable {
     }
 
     /**
-     * Checks the state of integer array representing the board, if cell contains 0 then this is an empty cell
-     * @return Number of squares that are empty
+     * Checks the state of integer array representing the board, if cell equals int state then increment counter
+     * @return Number of counted squares
      */
-    public int getNrEmptySquares()
+    public int getNrSquares(int state)
     {
-        int nrEmptySquares = 0;
+        int nrSquares = 0;
 
         for(int i = 0; i < boardGrid.length; i++)
             for(int j = 0; j < boardGrid[i].length; j++)
-                if(boardGrid[i][j] == EMPTY)
-                    nrEmptySquares++;
+                if(boardGrid[i][j] == state)
+                    nrSquares++;
 
-        return  nrEmptySquares;
+        return  nrSquares;
     }
 
-    /**
-     * Checks the state of integer array representing the board, if cell contains 1 then this is a black cell
-     * @return Number of squares that are black
-     */
-    public int getNrBlackSquares()
-    {
-        int nrBlackSquares = 0;
-
-        for(int i = 0; i < boardGrid.length; i++)
-            for(int j = 0; j < boardGrid[i].length; j++)
-                if(boardGrid[i][j] == BLACK)
-                    nrBlackSquares++;
-
-        return  nrBlackSquares;
-    }
-
-    /**
-     * Checks the state of integer array representing the board, if cell contains -1 then this is an white cell
-     * @return Number of squares that are white
-     */
-    public int getNrWhiteSquares()
-    {
-        int nrWhiteSquares = 0;
-
-        for(int i = 0; i < boardGrid.length; i++)
-            for(int j = 0; j < boardGrid[i].length; j++)
-                if(boardGrid[i][j] == WHITE)
-                    nrWhiteSquares++;
-
-        return  nrWhiteSquares;
-    }
+//    /**
+//     * Checks the state of integer array representing the board, if cell contains 0 then this is an empty cell
+//     * @return Number of squares that are empty
+//     */
+//    public int getNrEmptySquares()
+//    {
+//        int nrEmptySquares = 0;
+//
+//        for(int i = 0; i < boardGrid.length; i++)
+//            for(int j = 0; j < boardGrid[i].length; j++)
+//                if(boardGrid[i][j] == EMPTY)
+//                    nrEmptySquares++;
+//
+//        return  nrEmptySquares;
+//    }
+//
+//    /**
+//     * Checks the state of integer array representing the board, if cell contains 1 then this is a black cell
+//     * @return Number of squares that are black
+//     */
+//    public int getNrBlackSquares()
+//    {
+//        int nrBlackSquares = 0;
+//
+//        for(int i = 0; i < boardGrid.length; i++)
+//            for(int j = 0; j < boardGrid[i].length; j++)
+//                if(boardGrid[i][j] == BLACK)
+//                    nrBlackSquares++;
+//
+//        return  nrBlackSquares;
+//    }
+//
+//    /**
+//     * Checks the state of integer array representing the board, if cell contains -1 then this is an white cell
+//     * @return Number of squares that are white
+//     */
+//    public int getNrWhiteSquares()
+//    {
+//        int nrWhiteSquares = 0;
+//
+//        for(int i = 0; i < boardGrid.length; i++)
+//            for(int j = 0; j < boardGrid[i].length; j++)
+//                if(boardGrid[i][j] == WHITE)
+//                    nrWhiteSquares++;
+//
+//        return  nrWhiteSquares;
+//    }
 
     public void incrementTurn()
     {
@@ -133,13 +149,9 @@ public class Board implements Serializable {
     public void changePlayer()
     {
         if (currentPlayer == BLACK)
-        {
             currentPlayer = WHITE;
-        }
         else
-        {
             currentPlayer = BLACK;
-        }
     }
 
     public int getCurrentPlayer()
@@ -154,23 +166,12 @@ public class Board implements Serializable {
      */
     public void applyMove(int row, int col) {
         int[][] flippedDisks = Logic.getFlippedDisks(row, col, this);
-        if(currentPlayer == BLACK) {
-            boardGrid[row][col] = BLACK;
-            for(int i = 0; i < flippedDisks.length; i++) {
-                boardGrid[flippedDisks[i][0]][flippedDisks[i][1]] = BLACK;
-            }
-        } else {
-            boardGrid[row][col] = WHITE;
-            for(int i = 0; i < flippedDisks.length; i++) {
-                boardGrid[flippedDisks[i][0]][flippedDisks[i][1]] = WHITE;
-            }
-        }
+        boardGrid[row][col] = currentPlayer;
+        for (int[] flippedDisk : flippedDisks)
+            boardGrid[flippedDisk[0]][flippedDisk[1]] = currentPlayer;
     }
+
     public boolean checkTile(int r, int c, int state) {
-        if(boardGrid[r][c] == state) {
-            return true;
-        } else {
-            return false;
-        }
+        return (boardGrid[r][c] == state);
     }
 }
