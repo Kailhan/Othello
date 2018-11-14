@@ -1,10 +1,12 @@
 package Core;
 
+import AI.EvaluationFunction;
+
 import java.io.Serializable;
 
 public class Board implements Serializable {
 
-    private int[][] boardGrid;
+    public int[][] boardGrid;
     public static final int EMPTY = 0;
     public static final int BLACK = 1;
     public static final int WHITE = -1;
@@ -165,6 +167,8 @@ public class Board implements Serializable {
      * @param col specifies column of cell we want to update
      */
     public void applyMove(int row, int col) {
+//        EvaluationFunction evaluator = new EvaluationFunction(this, getBoardGrid());
+//        System.out.println(evaluator.evaluate());
         int[][] flippedDisks = Logic.getFlippedDisks(row, col, this);
         boardGrid[row][col] = currentPlayer;
         for (int[] flippedDisk : flippedDisks)

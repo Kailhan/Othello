@@ -4,12 +4,6 @@ import Core.Board;
 import Core.Logic;
 import Core.Settings;
 
-
-import java.awt.*;
-
-import java.util.ArrayList;
-import java.util.Collections;
-
 public class EvaluationFunction {
 
     private Board board;
@@ -23,6 +17,12 @@ public class EvaluationFunction {
     private final static int BLACK = 1;
     private final static int WHITE = -1;
     private int score;
+
+    public EvaluationFunction(Board CBoard, int[][] boardGrid){
+        this.board = CBoard;
+        this.boardGrid = boardGrid;
+        this.settings = new Settings();
+    }
 
     public EvaluationFunction(){
         this.board = new Board();
@@ -38,6 +38,7 @@ public class EvaluationFunction {
         int blackMoves = 0;
         int whiteMoves = 0;
         int territory;
+
 
         int numberOfCoins =  ((board.getNrSquares(BLACK) - board.getNrSquares(WHITE)) / (board.getNrSquares(BLACK) + board.getNrSquares(WHITE)));
         
@@ -86,8 +87,8 @@ public class EvaluationFunction {
         int whiteMoves = 0;
         int territory;
 
-        int numberOfCoins =  ((cBoard.getNrSquares(BLACK) - cBoard.getNrSquares(WHITE)) / (cBoard.getNrSquares(BLACK) + cBoard.getNrSquares(WHITE)));
 
+        int numberOfCoins =  ((cBoard.getNrSquares(BLACK) - cBoard.getNrSquares(WHITE)) / (cBoard.getNrSquares(BLACK) + cBoard.getNrSquares(WHITE)));
 
         if(cBoard.getCurrentPlayer() == WHITE){
             whiteMoves = Logic.numberSquaresAllowed(cBoard);
@@ -105,13 +106,13 @@ public class EvaluationFunction {
         }
         else numberOfMoves = 0;
 
-        if(getBlackCorners() + getWhiteCorners() != 0) {
-            numberOfCorners = ((getBlackCorners() - getWhiteCorners()) / (getBlackCorners() + getWhiteCorners()));
+        if(getBlackCorners(cBoard) + getWhiteCorners(cBoard) != 0) {
+            numberOfCorners = ((getBlackCorners(cBoard) - getWhiteCorners(cBoard)) / (getBlackCorners(cBoard) + getWhiteCorners(cBoard)));
         }
         else numberOfCorners = 0;
 
-        if (getTerritoryScore(BLACK) + getTerritoryScore(WHITE) !=0 ){
-            territory = (getTerritoryScore(BLACK) - getTerritoryScore(WHITE))/ (getTerritoryScore(BLACK) + getTerritoryScore(WHITE));
+        if (getTerritoryScore(BLACK, cBoard) + getTerritoryScore(WHITE, cBoard) !=0 ){
+            territory = (getTerritoryScore(BLACK, cBoard) - getTerritoryScore(WHITE,cBoard))/ (getTerritoryScore(BLACK,cBoard) + getTerritoryScore(WHITE,cBoard));
         }
         else territory = 0;
 
@@ -126,7 +127,6 @@ public class EvaluationFunction {
 
     }
 
-    //number of blackSquares in corners
     public int getBlackCorners() {
         int nrBlackCorners = 0;
         for (int i = 0; i < boardGrid.length; i += boardGrid.length-1)
@@ -137,7 +137,16 @@ public class EvaluationFunction {
         return nrBlackCorners;
     }
 
-    //number of whiteSquares in corners
+    public int getBlackCorners(Board cBoard) {
+        int nrBlackCorners = 0;
+        for (int i = 0; i < cBoard.getBoardGrid().length; i += cBoard.getBoardGrid().length-1)
+            for (int j = 0; j < cBoard.getBoardGrid()[i].length; j += cBoard.getBoardGrid().length-1)
+                if (cBoard.getBoardGrid()[i][j] == BLACK)
+                    nrBlackCorners++;
+
+        return nrBlackCorners;
+    }
+
     public int getWhiteCorners() {
         int nrWhiteCorners = 0;
         for (int i = 0; i < boardGrid.length; i += boardGrid.length-1)
@@ -147,7 +156,17 @@ public class EvaluationFunction {
 
         return nrWhiteCorners;
     }
-    
+
+    public int getWhiteCorners(Board cBoard) {
+        int nrWhiteCorners = 0;
+        for (int i = 0; i < cBoard.getBoardGrid().length; i += cBoard.getBoardGrid().length-1)
+            for (int j = 0; j < cBoard.getBoardGrid()[i].length; j += cBoard.getBoardGrid().length-1)
+                if (cBoard.getBoardGrid()[i][j] == WHITE)
+                    nrWhiteCorners++;
+
+        return nrWhiteCorners;
+    }
+
     public int[][] setTerritory(int j){
         
         int[][] small = new int[4][4];
@@ -287,7 +306,6 @@ public class EvaluationFunction {
         return null;
     }
 
-    //gets the terScore for white
     public int getTerritoryScore(int player){
         this.score = 0;
 
@@ -301,6 +319,16 @@ public class EvaluationFunction {
         return score;
     }
 
+    public int getTerritoryScore(int player, Board cBoard){
+        this.score = 0;
 
-
+        for (int i = 0; i < cBoard.getBoardGrid().length; i++) {
+            for (int j = 0; j < cBoard.getBoardGrid()[i].length; j++) {
+                if (cBoard.getBoardGrid()[i][j] == player) {
+                    score += setTerritory(cBoard.getSize())[i][j];
+                }
+            }
+        }
+        return score;
+    }
 }
