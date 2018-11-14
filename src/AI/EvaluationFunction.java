@@ -65,21 +65,19 @@ public class EvaluationFunction {
         }
         else numberOfCorners = 0;
 
-        if (getTerritScoreBlack() + getTerritScoreWhite() !=0 ){
-            territory = (getTerritScoreBlack()-getTerritScoreWhite()) / ((getTerritScoreBlack() + getTerritScoreWhite()));
+        if (getTerritScore(BLACK) + getTerritScore(WHITE) !=0 ){
+            territory = (getTerritScore(BLACK) - getTerritScore(WHITE))/ (getTerritScore(BLACK) + getTerritScore(WHITE));
         }
         else territory = 0;
 
-        /*
-        //debug
+
         System.out.println("totalscore: " + totalscore);
         System.out.println("numberOfcoins: " + numberOfCoins);
         System.out.println("numberOfMoves: " + numberOfMoves);
         System.out.println("terrScore: " + territory);
-        */
+
 
         return totalscore = WEIGHT1 * numberOfCoins + WEIGHT2 * numberOfCorners + WEIGHT3 * numberOfMoves + WEIGHT4 * territory;
-
 
     }
 
@@ -106,19 +104,14 @@ public class EvaluationFunction {
     }
 
 
+    public int[][] setTerritory(int j){
 
-    //creates arraylists with the coordinates and the terValue
-    public ArrayList createArraylists(int x, int j){
 
-        ArrayList<Point> eight = new ArrayList<>();
-        ArrayList<Point> seven  = new ArrayList<>();
-        ArrayList<Point> six  = new ArrayList<>();
-        ArrayList<Point> five  = new ArrayList<>();
         int[][] small = new int[4][4];
         int[][] medium = new int[6][6];
         int[][] large = new int[8][8];
 
-        if(j == 1){
+        if(j == 4){
 
             small[0][0]  = 10;
             small[3][3]  = 10;
@@ -133,9 +126,11 @@ public class EvaluationFunction {
             small[3][2]  = 5;
             small[2][3]  = 5;
             small[1][3]  = 5;
+
+            return small;
         }
 
-        if(j == 2) {
+        if(j == 6) {
 
             medium[0][0] = 10;
             medium[5][5] = 10;
@@ -172,9 +167,11 @@ public class EvaluationFunction {
             medium[3][5] = 8;
             medium[5][2] = 8;
             medium[5][3] = 8;
+
+            return medium;
         }
 
-        if(j == 3){
+        if(j == 8){
 
             large[0][0] = 10;
             large[7][7] = 10;
@@ -211,164 +208,57 @@ public class EvaluationFunction {
             large[6][4] = 6;
             large[6][5] = 6;
 
+            large[2][2] = 7;
+            large[2][3] = 7;
+            large[2][4] = 7;
+            large[2][5] = 7;
+            large[5][2] = 7;
+            large[5][3] = 7;
+            large[5][4] = 7;
+            large[5][5] = 7;
+            large[3][2] = 7;
+            large[4][2] = 7;
+            large[3][5] = 7;
+            large[4][5] = 7;
 
-            six.add(createPoint(2,1));
-            six.add(createPoint(3,1));
-            six.add(createPoint(4,1));
-            six.add(createPoint(5,1));
-            six.add(createPoint(1,2));
-            six.add(createPoint(1,3));
-            six.add(createPoint(1,4));
-            six.add(createPoint(1,5));
-            six.add(createPoint(2,6));
-            six.add(createPoint(3,6));
-            six.add(createPoint(4,6));
-            six.add(createPoint(5,6));
-            six.add(createPoint(6,2));
-            six.add(createPoint(6,3));
-            six.add(createPoint(6,4));
-            six.add(createPoint(6,5));
+            large[2][0] = 8;
+            large[3][0] = 8;
+            large[4][0] = 8;
+            large[5][0] = 8;
+            large[0][2] = 8;
+            large[0][3] = 8;
+            large[0][4] = 8;
+            large[0][5] = 8;
+            large[2][7] = 8;
+            large[3][7] = 8;
+            large[4][7] = 8;
+            large[5][7] = 8;
+            large[7][2] = 8;
+            large[7][3] = 8;
+            large[7][4] = 8;
+            large[7][5] = 8;
 
-            seven.add(createPoint(2,2));
-            seven.add(createPoint(2,3));
-            seven.add(createPoint(2,4));
-            seven.add(createPoint(2,5));
-            seven.add(createPoint(5,2));
-            seven.add(createPoint(5,3));
-            seven.add(createPoint(5,4));
-            seven.add(createPoint(5,5));
-            seven.add(createPoint(3,2));
-            seven.add(createPoint(4,2));
-            seven.add(createPoint(3,5));
-            seven.add(createPoint(4,5));
-
-            eight.add(createPoint(2,0));
-            eight.add(createPoint(3,0));
-            eight.add(createPoint(4,0));
-            eight.add(createPoint(5,0));
-            eight.add(createPoint(0,2));
-            eight.add(createPoint(0,3));
-            eight.add(createPoint(0,4));
-            eight.add(createPoint(0,5));
-            eight.add(createPoint(2,7));
-            eight.add(createPoint(3,7));
-            eight.add(createPoint(4,7));
-            eight.add(createPoint(5,7));
-            eight.add(createPoint(7,2));
-            eight.add(createPoint(7,3));
-            eight.add(createPoint(7,4));
-            eight.add(createPoint(7,5));
+            return large;
         }
 
-
-
-        switch(x){
-            case 5: return five;
-            case 6: return six;
-            case 7: return seven;
-            case 8: return eight;
-        }
 
         return null;
     }
 
     //gets the terScore for white
-    public int getTerritScoreWhite(){
+    public int getTerritScore(int player){
         this.score = 0;
 
-        ArrayList<Point> actualPoints = new ArrayList<>();
         for (int i = 0; i < boardGrid.length; i++) {
             for (int j = 0; j < boardGrid[i].length; j++) {
-                if (boardGrid[i][j] == WHITE) {
-                    actualPoints.add(createPoint(i, j));
+                if (boardGrid[i][j] == player) {
+                    score += setTerritory(settings.getBoardSize())[i][j];
                 }
             }
         }
-
-        if(settings.getBoardSize() == 4){    //for small map
-
-            int occur5 = Collections.frequency(createArraylists(5, "small"), actualPoints);
-            int occur6 = Collections.frequency(createArraylists(6, "small"), actualPoints);
-            int occur7 = Collections.frequency(createArraylists(7, "small"), actualPoints);
-            int occur8 = Collections.frequency(createArraylists(8, "small"), actualPoints);
-
-            this.score = 5*occur5 + 6*occur6 + 7*occur7 + 8*occur8 + 10*getWhiteCorners();
-            return score;
-
-        }
-
-        if(settings.getBoardSize() == 6) { //for medium map
-
-            int occur5 = Collections.frequency(createArraylists(5, "medium"), actualPoints);
-            int occur6 = Collections.frequency(createArraylists(6, "medium"), actualPoints);
-            int occur7 = Collections.frequency(createArraylists(7, "medium"), actualPoints);
-            int occur8 = Collections.frequency(createArraylists(8, "medium"), actualPoints);
-
-            this.score = 5 * occur5 + 6 * occur6 + 7 * occur7 + 8 * occur8 + 10 * getWhiteCorners();
-            return score;
-        }
-
-        if(settings.getBoardSize() == 8) { //for large map
-
-            int occur5 = Collections.frequency(createArraylists(5, "large"), actualPoints);
-            int occur6 = Collections.frequency(createArraylists(6, "large"), actualPoints);
-            int occur7 = Collections.frequency(createArraylists(7, "large"), actualPoints);
-            int occur8 = Collections.frequency(createArraylists(8, "large"), actualPoints);
-
-            this.score = 5 * occur5 + 6 * occur6 + 7 * occur7 + 8 * occur8 + 10 * getWhiteCorners();
-            return score;
-        }
-
-        return 0;
+        return score;
     }
 
 
-    //gets the terScore for black
-    public int getTerritScoreBlack(){
-        this.score = 0;
-
-        ArrayList<Point> actualPoints = new ArrayList<>();
-        for (int i = 0; i < boardGrid.length; i++) {
-            for (int j = 0; j < boardGrid[i].length; j++) {
-                if (boardGrid[i][j] == BLACK) {
-                    actualPoints.add(createPoint(i, j));
-                }
-            }
-        }
-
-        if(settings.getBoardSize() == 4){    //for small map
-
-            int occur5 = Collections.frequency(createArraylists(5, "small"), actualPoints);
-            int occur6 = Collections.frequency(createArraylists(6, "small"), actualPoints);
-            int occur7 = Collections.frequency(createArraylists(7, "small"), actualPoints);
-            int occur8 = Collections.frequency(createArraylists(8, "small"), actualPoints);
-
-            this.score = 5*occur5 + 6*occur6 + 7*occur7 + 8*occur8 + 10*getBlackCorners();
-            return score;
-        }
-
-        if(settings.getBoardSize() == 6) { //for medium map
-
-            int occur5 = Collections.frequency(createArraylists(5, "medium"), actualPoints);
-            int occur6 = Collections.frequency(createArraylists(6, "medium"), actualPoints);
-            int occur7 = Collections.frequency(createArraylists(7, "medium"), actualPoints);
-            int occur8 = Collections.frequency(createArraylists(8, "medium"), actualPoints);
-
-            this.score = 5 * occur5 + 6 * occur6 + 7 * occur7 + 8 * occur8 + 10 * getBlackCorners();
-            return score;
-        }
-
-        if(settings.getBoardSize() == 8) { //for large map
-
-            int occur5 = Collections.frequency(createArraylists(5, "large"), actualPoints);
-            int occur6 = Collections.frequency(createArraylists(6, "large"), actualPoints);
-            int occur7 = Collections.frequency(createArraylists(7, "large"), actualPoints);
-            int occur8 = Collections.frequency(createArraylists(8, "large"), actualPoints);
-
-            this.score = 5 * occur5 + 6 * occur6 + 7 * occur7 + 8 * occur8 + 10 * getBlackCorners();
-            return score;
-        }
-            return 0;
-    }
 
 }
