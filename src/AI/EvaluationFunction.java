@@ -105,81 +105,112 @@ public class EvaluationFunction {
         return nrWhiteCorners;
     }
 
-    //creates a point in the grid
-    public Point createPoint(int x, int y){
-            Point point = new Point();
-            point.x = x;
-            point.y = y;
-            return point;
-    }
+
 
     //creates arraylists with the coordinates and the terValue
-    public ArrayList createArraylists(int x, String j){
+    public ArrayList createArraylists(int x, int j){
 
         ArrayList<Point> eight = new ArrayList<>();
         ArrayList<Point> seven  = new ArrayList<>();
         ArrayList<Point> six  = new ArrayList<>();
         ArrayList<Point> five  = new ArrayList<>();
+        int[][] small = new int[4][4];
+        int[][] medium = new int[6][6];
+        int[][] large = new int[8][8];
 
-        if(j == "small"){
-            five.add(createPoint(0, 1));
-            five.add(createPoint(0,2));
-            five.add(createPoint(1, 0));
-            five.add(createPoint(2,0));
-            five.add(createPoint(3,1));
-            five.add(createPoint(3, 2));
-            five.add(createPoint(2,3));
-            five.add(createPoint(1, 3));
+        if(j == 1){
+
+            small[0][0]  = 10;
+            small[3][3]  = 10;
+            small[3][0]  = 10;
+            small[0][3]  = 10;
+
+            small[0][1]  = 5;
+            small[0][2]  = 5;
+            small[1][0]  = 5;
+            small[2][0]  = 5;
+            small[3][1]  = 5;
+            small[3][2]  = 5;
+            small[2][3]  = 5;
+            small[1][3]  = 5;
         }
 
-        if(j == "medium") {
-            five.add(createPoint(0,1));
-            five.add(createPoint(1,1));
-            five.add(createPoint(1,0));
-            five.add(createPoint(0,4));
-            five.add(createPoint(1,4));
-            five.add(createPoint(1,5));
-            five.add(createPoint(4,0));
-            five.add(createPoint(4,1));
-            five.add(createPoint(5,1));
-            five.add(createPoint(5,4));
-            five.add(createPoint(4,4));
-            five.add(createPoint(4,5));
+        if(j == 2) {
 
+            medium[0][0] = 10;
+            medium[5][5] = 10;
+            medium[0][5] = 10;
+            medium[5][0] = 10;
 
-            six.add(createPoint(1,2));
-            six.add(createPoint(1,3));
-            six.add(createPoint(2,1));
-            six.add(createPoint(3,1));
-            six.add(createPoint(4,2));
-            six.add(createPoint(4,3));
-            six.add(createPoint(2,4));
-            six.add(createPoint(3,4));
+            medium[0][1] = 5;
+            medium[1][1] = 5;
+            medium[1][0] = 5;
+            medium[0][4] = 5;
+            medium[1][4] = 5;
+            medium[1][5] = 5;
+            medium[4][0] = 5;
+            medium[4][1] = 5;
+            medium[5][1] = 5;
+            medium[5][4] = 5;
+            medium[4][4] = 5;
+            medium[4][5] = 5;
 
+            medium[1][2] = 6;
+            medium[1][3] = 6;
+            medium[2][1] = 6;
+            medium[3][1] = 6;
+            medium[4][2] = 6;
+            medium[4][3] = 6;
+            medium[2][4] = 6;
+            medium[3][4] = 6;
 
-            eight.add(createPoint(2,0));
-            eight.add(createPoint(3,0));
-            eight.add(createPoint(0,2));
-            eight.add(createPoint(0,3));
-            eight.add(createPoint(2,5));
-            eight.add(createPoint(3,5));
-            eight.add(createPoint(5,2));
-            eight.add(createPoint(5,3));
+            medium[2][0] = 8;
+            medium[3][0] = 8;
+            medium[0][2] = 8;
+            medium[0][3] = 8;
+            medium[2][5] = 8;
+            medium[3][5] = 8;
+            medium[5][2] = 8;
+            medium[5][3] = 8;
         }
 
-        if(j == "large"){
-            five.add(createPoint(0,1));
-            five.add(createPoint(1,1));
-            five.add(createPoint(1,0));
-            five.add(createPoint(0,4));
-            five.add(createPoint(1,4));
-            five.add(createPoint(1,5));
-            five.add(createPoint(6,0));
-            five.add(createPoint(6,1));
-            five.add(createPoint(7,1));
-            five.add(createPoint(7,6));
-            five.add(createPoint(6,6));
-            five.add(createPoint(6,7));
+        if(j == 3){
+
+            large[0][0] = 10;
+            large[7][7] = 10;
+            large[0][7] = 10;
+            large[7][0] = 10;
+
+            large[0][1] = 5;
+            large[1][1] = 5;
+            large[1][0] = 5;
+            large[0][4] = 5;
+            large[1][4] = 5;
+            large[1][5] = 5;
+            large[6][0] = 5;
+            large[6][1] = 5;
+            large[7][1] = 5;
+            large[7][6] = 5;
+            large[6][6] = 5;
+            large[6][7] = 5;
+            
+            large[2][1] = 6;
+            large[3][1] = 6;
+            large[4][1] = 6;
+            large[5][1] = 6;
+            large[1][2] = 6;
+            large[1][3] = 6;
+            large[1][4] = 6;
+            large[1][5] = 6;
+            large[2][6] = 6;
+            large[3][6] = 6;
+            large[4][6] = 6;
+            large[5][6] = 6;
+            large[6][2] = 6;
+            large[6][3] = 6;
+            large[6][4] = 6;
+            large[6][5] = 6;
+
 
             six.add(createPoint(2,1));
             six.add(createPoint(3,1));
@@ -254,7 +285,7 @@ public class EvaluationFunction {
             }
         }
 
-        if(settings.getGameMode() == 4){    //for small map
+        if(settings.getBoardSize() == 4){    //for small map
 
             int occur5 = Collections.frequency(createArraylists(5, "small"), actualPoints);
             int occur6 = Collections.frequency(createArraylists(6, "small"), actualPoints);
@@ -266,7 +297,7 @@ public class EvaluationFunction {
 
         }
 
-        if(settings.getGameMode() == 6) { //for medium map
+        if(settings.getBoardSize() == 6) { //for medium map
 
             int occur5 = Collections.frequency(createArraylists(5, "medium"), actualPoints);
             int occur6 = Collections.frequency(createArraylists(6, "medium"), actualPoints);
@@ -277,7 +308,7 @@ public class EvaluationFunction {
             return score;
         }
 
-        if(settings.getGameMode() == 8) { //for large map
+        if(settings.getBoardSize() == 8) { //for large map
 
             int occur5 = Collections.frequency(createArraylists(5, "large"), actualPoints);
             int occur6 = Collections.frequency(createArraylists(6, "large"), actualPoints);
@@ -305,7 +336,7 @@ public class EvaluationFunction {
             }
         }
 
-        if(settings.getGameMode() == 4){    //for small map
+        if(settings.getBoardSize() == 4){    //for small map
 
             int occur5 = Collections.frequency(createArraylists(5, "small"), actualPoints);
             int occur6 = Collections.frequency(createArraylists(6, "small"), actualPoints);
@@ -316,7 +347,7 @@ public class EvaluationFunction {
             return score;
         }
 
-        if(settings.getGameMode() == 6) { //for medium map
+        if(settings.getBoardSize() == 6) { //for medium map
 
             int occur5 = Collections.frequency(createArraylists(5, "medium"), actualPoints);
             int occur6 = Collections.frequency(createArraylists(6, "medium"), actualPoints);
@@ -327,7 +358,7 @@ public class EvaluationFunction {
             return score;
         }
 
-        if(settings.getGameMode() == 8) { //for large map
+        if(settings.getBoardSize() == 8) { //for large map
 
             int occur5 = Collections.frequency(createArraylists(5, "large"), actualPoints);
             int occur6 = Collections.frequency(createArraylists(6, "large"), actualPoints);
