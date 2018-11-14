@@ -75,31 +75,39 @@ public class Node<T> implements GenericTree<T> {
         this.depth = depth;
     }
 
-    public int getX() {
-        int x = -1; //makes sure we throw an error if we have not updated our coordinate
-        Board parentBoard = (Board)this.getParent().getData();
+    public int getRow() {
+        int row = -1; //makes sure we throw an error if we have not updated our coordinate
+        Board parentBoard = (Board)getParent().getData();
         int[][] parentBoardGrid = parentBoard.getBoardGrid();
-        Board currentBoard = (Board)this.getData();
+        Board currentBoard = (Board)getData();
         int[][] currentBoardGrid = currentBoard.getBoardGrid();
+        System.out.println("getX parentBoard");
+        parentBoard.displayBoardGrid();
+        System.out.println("getX currentBoard");
+        currentBoard.displayBoardGrid();
         for(int r = 0; r < parentBoardGrid.length; r++) {
             for(int c = 0; c < parentBoardGrid.length; c++) {
-                if(parentBoardGrid[r][c] == 0 && currentBoardGrid[r][c] != 0) x = c;
+                if(parentBoardGrid[r][c] == 0 && currentBoardGrid[r][c] != 0) row = r;
             }
         }
-        return x;
+        return row;
     }
 
-    public int getY() {
-        int y = -1; //makes sure we throw an error if we have not updated our coordinate
-        Board parentBoard = (Board)this.getParent().getData();
+    public int getColumn() {
+        int column = -1; //makes sure we throw an error if we have not updated our coordinate
+        Board parentBoard = (Board)getParent().getData();
         int[][] parentBoardGrid = parentBoard.getBoardGrid();
-        Board currentBoard = (Board)this.getData();
+        Board currentBoard = (Board)getData();
         int[][] currentBoardGrid = currentBoard.getBoardGrid();
+        System.out.println("getY parentBoard");
+        parentBoard.displayBoardGrid();
+        System.out.println("getY currentBoard");
+        currentBoard.displayBoardGrid();
         for(int r = 0; r < parentBoardGrid.length; r++) {
             for(int c = 0; c < parentBoardGrid.length; c++) {
-                if(parentBoardGrid[r][c] == 0 && currentBoardGrid[r][c] != 0) y = r;
+                if(parentBoardGrid[r][c] == 0 && currentBoardGrid[r][c] != 0) column = c;
             }
         }
-        return y;
+        return column;
     }
 }

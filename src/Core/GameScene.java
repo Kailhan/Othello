@@ -215,8 +215,8 @@ public class GameScene extends BorderPane {
     public void botMove() {
         MCTS mcts = new MCTS(10);
         MCTSNode node = mcts.findMove(board);
-        System.out.println("node.getX(), node.getY())" + node.getX() + " " + node.getY());
-        updateBoard(node.getX(), node.getY());
+        System.out.println("node.getRow(), node.getColumn())" + node.getRow() + " " + node.getColumn());
+        updateBoard(node.getRow(), node.getColumn());
         System.out.println("AI calls updateBoard");
     }
 
