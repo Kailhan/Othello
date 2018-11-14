@@ -261,7 +261,6 @@ public class GameScene extends BorderPane {
         redrawBoard();
     }
 
-
     public Scene getGameScene() {
         return scene;
     }

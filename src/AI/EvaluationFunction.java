@@ -17,12 +17,12 @@ public class EvaluationFunction {
 
 
     public EvaluationFunction(){
-        this.board = new Board();
-        this.boardGrid = board.getBoardGrid();
+        //this.board = new Board();
+        //this.boardGrid = board.getBoardGrid();
     }
 
 
-    public int evaluate(){
+    public int evaluate(Board board){
         int totalscore = 0;
         int numberOfCorners;
         int numberOfMoves;
