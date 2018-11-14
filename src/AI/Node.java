@@ -1,4 +1,6 @@
 package AI;
+import Core.Board;
+
 import java.util.*;
 
 public class Node<T> implements GenericTree<T> {
@@ -16,8 +18,7 @@ public class Node<T> implements GenericTree<T> {
     public Node<T> getRoot() {
         Node<T> currentNode;
         currentNode = this;
-        while(currentNode.parent != null)
-        {
+        while(currentNode.parent != null) {
             currentNode = this.parent;
         }
         return currentNode;
@@ -72,5 +73,41 @@ public class Node<T> implements GenericTree<T> {
 
     public void setDepth(int depth) {
         this.depth = depth;
+    }
+
+    public int getRow() {
+        int row = -1; //makes sure we throw an error if we have not updated our coordinate
+        Board parentBoard = (Board)getParent().getData();
+        int[][] parentBoardGrid = parentBoard.getBoardGrid();
+        Board currentBoard = (Board)getData();
+        int[][] currentBoardGrid = currentBoard.getBoardGrid();
+        System.out.println("getX parentBoard");
+        parentBoard.displayBoardGrid();
+        System.out.println("getX currentBoard");
+        currentBoard.displayBoardGrid();
+        for(int r = 0; r < parentBoardGrid.length; r++) {
+            for(int c = 0; c < parentBoardGrid.length; c++) {
+                if(parentBoardGrid[r][c] == 0 && currentBoardGrid[r][c] != 0) row = r;
+            }
+        }
+        return row;
+    }
+
+    public int getColumn() {
+        int column = -1; //makes sure we throw an error if we have not updated our coordinate
+        Board parentBoard = (Board)getParent().getData();
+        int[][] parentBoardGrid = parentBoard.getBoardGrid();
+        Board currentBoard = (Board)getData();
+        int[][] currentBoardGrid = currentBoard.getBoardGrid();
+        System.out.println("getY parentBoard");
+        parentBoard.displayBoardGrid();
+        System.out.println("getY currentBoard");
+        currentBoard.displayBoardGrid();
+        for(int r = 0; r < parentBoardGrid.length; r++) {
+            for(int c = 0; c < parentBoardGrid.length; c++) {
+                if(parentBoardGrid[r][c] == 0 && currentBoardGrid[r][c] != 0) column = c;
+            }
+        }
+        return column;
     }
 }
