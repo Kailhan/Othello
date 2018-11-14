@@ -51,9 +51,9 @@ public class Board implements Serializable {
     public void displayBoardGrid() {
         for(int r = 0; r < size; r++) {
             for(int c = 0; c < size; c++) {
-                System.out.printf("%3d", boardGrid[r][c]);
+                System.out.print(boardGrid[r][c] + " ");
+                System.out.println();
             }
-            System.out.println();
         }
     }
 

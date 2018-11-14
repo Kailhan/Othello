@@ -74,16 +74,16 @@ public class SettingsScene extends VBox {
         });
 
         difficulty = new ComboBox<>();
-        difficulty.getItems().addAll("Mcts", "Stupid", "Minmax");
+        difficulty.getItems().addAll("Easy", "Medium", "Hard");
         difficulty.setPromptText("Select difficulty level");
 
         difficulty.setOnAction(e -> {
-            if (difficulty.getValue() == "Mcts") {
-                action_difficultyLevel = Settings.MCTS;
-            } else if (difficulty.getValue() == "Stupid") {
-                action_difficultyLevel = Settings.STUPID;
-            } else if (difficulty.getValue() == "Minmax") {
-                action_difficultyLevel = Settings.MINMAX;
+            if (difficulty.getValue() == "Easy") {
+                action_difficultyLevel = Settings.EASY;
+            } else if (difficulty.getValue() == "Medium") {
+                action_difficultyLevel = Settings.MEDIUM;
+            } else {
+                action_difficultyLevel = Settings.HARD;
             }
         });
 

@@ -3,7 +3,6 @@ package AI;
 import Core.Board;
 import Core.Logic;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -13,10 +12,13 @@ import static Core.Board.WHITE;
 import static java.lang.Integer.MIN_VALUE;
 import static java.lang.Integer.max;
 
-public class MCTS implements AI {
+public class MCTS {
 
+    private Board board;
+    private GameTree gt;
+    private int mctsMode;
+    private int maxTurnsSimulated;
     private int treeDepth;
-    private Random rand = new Random();
     private LinkedList<MCTSNode> nodeQueue = new LinkedList<MCTSNode>();
     public static final int DUMB = 0;
     public static final int WIN = 100;
@@ -28,13 +30,24 @@ public class MCTS implements AI {
         this.treeDepth = treeDepth;
     }
 
-    public int[] getMoves(Board board) {
-        int[] move = new int[2];
-        MCTSNode node = findMove(board);
-        move[1] = node.getRow();
-        move[2] = node.getColumn();
-        return move;
+    public Board findBoard(Board board) {
+        MCTSNode root = new MCTSNode(board);
+        nodeQueue.addFirst(root);
+        do{
+            MCTSNode toBeChecked = nodeSelection(nodeQueue);
+            playoutSimulation(toBeChecked);
+        } while(nodeQueue.size() > 0);
+        Board mctsBoard = new Board(board);
+        int maxScore = MIN_VALUE;
+        for (MCTSNode node : root.getChildren(root)) {
+            if(node.getScoreTotal()/node.getSimulations() > maxScore) {
+                maxScore = node.getScoreTotal()/node.getSimulations();
+                mctsBoard = node.getBoard();
+            }
+        }
+        return mctsBoard;
     }
+
     public MCTSNode findMove(Board board) {
         MCTSNode root = new MCTSNode(board);
         nodeQueue.addFirst(root);
@@ -42,21 +55,17 @@ public class MCTS implements AI {
             MCTSNode toBeChecked = nodeSelection(nodeQueue);
             playoutSimulation(toBeChecked);
         } while(nodeQueue.size() > 0);
+        Board mctsBoard = new Board(board);
         int maxScore = MIN_VALUE;
-        ArrayList<MCTSNode> potentialNodes = new ArrayList<MCTSNode>();
+        MCTSNode maxNode = new MCTSNode(board);
         for (MCTSNode node : root.getChildren(root)) {
-            //System.out.println("scores of children of roots (possible moves");
-            //System.out.println(node.getScoreTotal()/node.getSimulations());
             if(node.getScoreTotal()/node.getSimulations() > maxScore) {
                 maxScore = node.getScoreTotal()/node.getSimulations();
+                mctsBoard = node.getBoard();
+                maxNode = node;
             }
         }
-        for (MCTSNode node : root.getChildren(root)) {
-            if(node.getScoreTotal()/node.getSimulations() >= maxScore) {
-                potentialNodes.add(node);
-            }
-        }
-        return potentialNodes.get(rand.nextInt(potentialNodes.size())); //makes sure we pick a random node instead of for example the last one that has a highest score
+        return maxNode;
     }
 
     public void createChildren(MCTSNode parentNode) {
@@ -95,6 +104,7 @@ public class MCTS implements AI {
     public void playoutSimulation(MCTSNode node) {
         Board board = new Board(node.getBoard());
         boolean gameFinished = false;
+        Random rand = new Random();
         int currentPlayer = board.getCurrentPlayer();
         do{
             //System.out.print("Performing playout simulation -> game not finished yet");

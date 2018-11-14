@@ -25,7 +25,6 @@ public class EvaluationFunction {
     private int score;
 
     public EvaluationFunction(){
-<<<<<<< HEAD
         this.board = new Board();
         this.boardGrid = board.getBoardGrid();
         this.settings = new Settings();
@@ -35,14 +34,6 @@ public class EvaluationFunction {
 
     //check what to do with the corners, they are also implemented for the territory function
     public int evaluate(){
-=======
-        //this.board = new Board();
-        //this.boardGrid = board.getBoardGrid();
-    }
-
-
-    public int evaluate(Board board){
->>>>>>> master
         int totalscore = 0;
         int numberOfCorners;
         int numberOfMoves;

@@ -7,9 +7,9 @@ public class Settings {
     private int gameMode;
     private int boardSize;
     private Board board;
-    public static final int MCTS = 0;
-    public static final int STUPID = 1;
-    public static final int MINMAX = 2;
+    public static final int EASY = 0;
+    public static final int MEDIUM = 1;
+    public static final int HARD = 2;
     public static final int HvH = 0;
     public static final int HvA = 1;
     public static final int AvA = 2;
@@ -19,7 +19,7 @@ public class Settings {
 
 
     public Settings() {
-        this(MCTS,HvH,SIZE_LARGE);
+        this(EASY,HvH,SIZE_LARGE);
     }
 
     public Settings(int difficultyLevel, int gameMode, int boardSize) {

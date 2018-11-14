@@ -11,11 +11,14 @@ public class MCTSNode extends Node {
 
     private int scoreTotal;
     private int simulations;
+    private int x;
+    private int y;
     private Board board;
-
     public MCTSNode(Board board, int x, int y) {
         super(board);
         this.board = board;
+        this.x = x;
+        this.y = y;
     }
 
     public MCTSNode(Board board) {
@@ -48,5 +51,21 @@ public class MCTSNode extends Node {
             mctsNodeList.add((MCTSNode)child);
         }
         return mctsNodeList;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }
