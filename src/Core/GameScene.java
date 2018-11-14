@@ -2,6 +2,7 @@ package Core;
 
 import AI.MCTS;
 import AI.MCTSNode;
+import AI.Stupid;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -34,6 +35,7 @@ public class GameScene extends BorderPane {
     private GridPane grid = new GridPane();
     private int windowSize = 600;
     private int tileSize;
+    private int difficultyLevel;
 
     private File discBlack = new File("src/Assets/disc_blackBgr.png");
     private File discWhite = new File("src/Assets/disc_whiteBgrFthr.png");
@@ -70,6 +72,7 @@ public class GameScene extends BorderPane {
         this.primaryStage = primaryStage;
         this.board = new Board(settings.getBoard());
         this.tileSize = windowSize/ board.getSize();
+        this.difficultyLevel = settings.getDifficultyLevel();
         this.discBlackImg = new Image(discBlack.toURI().toString(), tileSize, tileSize, false,false);
         this.discWhiteImg = new Image(discWhite.toURI().toString(), tileSize, tileSize, false,false);
         this.bgrImg = new Image(bgr.toURI().toString(), tileSize, tileSize, false,false);
@@ -206,18 +209,27 @@ public class GameScene extends BorderPane {
     public void playerMove(int x, int y)
     {
         if(Logic.checkSquareAllowed(x, y, board))
-        {
             updateBoard(x, y);
-        }
     }
 
     public void botMove()
     {
-        MCTS mcts = new MCTS(10);
-        MCTSNode node = mcts.findMove(board);
-        System.out.println("node.getX(), node.getY())" + node.getX() + " " + node.getY());
-        updateBoard(node.getX(), node.getY());
-        System.out.println("AI calls updateBoard");
+        switch(difficultyLevel)
+        {
+            case 0:
+                MCTS mcts = new MCTS(10);
+                MCTSNode node = mcts.findMove(board);
+                System.out.println("node.getX(), node.getY())" + node.getX() + " " + node.getY());
+                updateBoard(node.getX(), node.getY());
+                System.out.println("AI calls updateBoard");
+
+            case 1:
+                int[] move = Stupid.getBestMove(board);
+                updateBoard(move[0], move[1]);
+            case 2:
+                //int[] move = minmax.getBestMove(board);
+                //updateBoard(move[0], move[1]);
+        }
     }
 
     public void updateBoard(int x, int y)

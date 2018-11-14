@@ -2,5 +2,7 @@ package AI;
 import Core.Board;
 
 public interface AI {
-    int[] getMoves(Board board);
+    static int[] getBestMove(Board board) {
+        return null;
+    }
 }
