@@ -1,4 +1,6 @@
 package AI;
+import Core.Board;
+
 import java.util.*;
 
 public class Node<T> implements GenericTree<T> {
@@ -16,8 +18,7 @@ public class Node<T> implements GenericTree<T> {
     public Node<T> getRoot() {
         Node<T> currentNode;
         currentNode = this;
-        while(currentNode.parent != null)
-        {
+        while(currentNode.parent != null) {
             currentNode = this.parent;
         }
         return currentNode;
@@ -72,5 +73,33 @@ public class Node<T> implements GenericTree<T> {
 
     public void setDepth(int depth) {
         this.depth = depth;
+    }
+
+    public int getX() {
+        int x = -1; //makes sure we throw an error if we have not updated our coordinate
+        Board parentBoard = (Board)this.getParent().getData();
+        int[][] parentBoardGrid = parentBoard.getBoardGrid();
+        Board currentBoard = (Board)this.getData();
+        int[][] currentBoardGrid = currentBoard.getBoardGrid();
+        for(int r = 0; r < parentBoardGrid.length; r++) {
+            for(int c = 0; c < parentBoardGrid.length; c++) {
+                if(parentBoardGrid[r][c] == 0 && currentBoardGrid[r][c] != 0) x = c;
+            }
+        }
+        return x;
+    }
+
+    public int getY() {
+        int y = -1; //makes sure we throw an error if we have not updated our coordinate
+        Board parentBoard = (Board)this.getParent().getData();
+        int[][] parentBoardGrid = parentBoard.getBoardGrid();
+        Board currentBoard = (Board)this.getData();
+        int[][] currentBoardGrid = currentBoard.getBoardGrid();
+        for(int r = 0; r < parentBoardGrid.length; r++) {
+            for(int c = 0; c < parentBoardGrid.length; c++) {
+                if(parentBoardGrid[r][c] == 0 && currentBoardGrid[r][c] != 0) y = r;
+            }
+        }
+        return y;
     }
 }

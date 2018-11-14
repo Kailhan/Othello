@@ -211,8 +211,8 @@ public class GameScene extends BorderPane {
         }
     }
 
-    public void botMove()
-    {
+
+    public void botMove() {
         MCTS mcts = new MCTS(10);
         MCTSNode node = mcts.findMove(board);
         System.out.println("node.getX(), node.getY())" + node.getX() + " " + node.getY());
@@ -221,7 +221,7 @@ public class GameScene extends BorderPane {
     }
 
     public void updateBoard(int x, int y)
-    {
+     {
         board.applyMove(x, y);
         board.incrementTurn();
         board.changePlayer();
