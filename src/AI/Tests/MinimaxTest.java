@@ -13,10 +13,11 @@ public class MinimaxTest {
     public static void main(String[] args) {
 
         EvaluationFunction evaluator = new EvaluationFunction();
-        Minimax minimax = new Minimax(evaluator);
+        Board board = new Board();
+        Minimax minimax = new Minimax(evaluator, board);
         GameTree gameTree = new GameTree(DEPTH);
         Node<Board> root = gameTree.createTree();
-        minimax.minimaxAlg(root);
+        minimax.minimaxAlg(root, -1);
         minimax.getBestNode().getData().displayBoardGrid();
 
 
