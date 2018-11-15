@@ -1,5 +1,6 @@
 package AI.Tests;
 
+import AI.EvaluationFunction;
 import AI.MCTS;
 import AI.MCTSNode;
 import Core.Board;
@@ -31,6 +32,7 @@ public class MCTSTest {
 
         Board board = new Board(size);
         MCTSNode node = new MCTSNode(board);
+        EvaluationFunction evaluator = new EvaluationFunction();
         int mcts1Wins = 0;
         int mcts2Wins = 0;
         int draws = 0;
@@ -54,6 +56,7 @@ public class MCTSTest {
                 board.changePlayer();
                 if(!Logic.checkMovePossible(board)) {
                     //System.out.println("!Logic.checkMovePossible(board)");
+                    //evaluator.evaluate(board);
                     board.incrementTurn();
                     board.changePlayer();
                     if(!Logic.checkMovePossible(board)) {
