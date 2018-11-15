@@ -30,7 +30,7 @@ public class EvaluationFunction {
         this.settings = new Settings();
     }
 
-    public double evaluate(){
+    public int evaluate(){
         int totalScore;
         int blackMoves;
         int whiteMoves;
@@ -38,8 +38,6 @@ public class EvaluationFunction {
         double numberOfMoves;
         double numberOfCoins;
         double territory;
-
-
 
         numberOfCoins =  (double) (this.board.getNrSquares(BLACK) - this.board.getNrSquares(WHITE)) / (this.board.getNrSquares(BLACK) + this.board.getNrSquares(WHITE));
 
@@ -59,8 +57,8 @@ public class EvaluationFunction {
         }
         else numberOfMoves = 0;
 
-        if(getBlackCorners(this.board) + getWhiteCorners(this.board) != 0) {
-            numberOfCorners = (double) ((getBlackCorners(this.board) - getWhiteCorners(this.board)) / (getBlackCorners(this.board) + getWhiteCorners(this.board)));
+        if(getCorners(BLACK) + getCorners(WHITE) != 0) {
+            numberOfCorners = (double) ((getCorners(BLACK) - getCorners(WHITE)) / (getCorners(BLACK) + getCorners(WHITE)));
         }
         else numberOfCorners = 0;
 
@@ -95,7 +93,7 @@ public class EvaluationFunction {
         return totalScore;
     }
 
-    public double evaluate(Board cBoard) {
+    public int evaluate(Board cBoard) {
         int totalScore = 0;
         double numberOfCorners;
         double numberOfMoves;
@@ -103,7 +101,6 @@ public class EvaluationFunction {
         int blackMoves = 0;
         int whiteMoves = 0;
         double territory;
-
 
         numberOfCoins = (double) (cBoard.getNrSquares(BLACK) - cBoard.getNrSquares(WHITE)) / (cBoard.getNrSquares(BLACK) + cBoard.getNrSquares(WHITE));
 
@@ -121,8 +118,8 @@ public class EvaluationFunction {
             numberOfMoves = (double) ((blackMoves - whiteMoves) / (blackMoves + whiteMoves));
         } else numberOfMoves = 0;
 
-        if (getBlackCorners(cBoard) + getWhiteCorners(cBoard) != 0) {
-            numberOfCorners = (double) ((getBlackCorners(cBoard) - getWhiteCorners(cBoard)) / (getBlackCorners(cBoard) + getWhiteCorners(cBoard)));
+        if (getCorners(cBoard, BLACK) + getCorners(cBoard, WHITE) != 0) {
+            numberOfCorners = (double) ((getCorners(cBoard, BLACK) - getCorners(cBoard, WHITE)) / (getCorners(cBoard, BLACK) + getCorners(cBoard, WHITE)));
         } else numberOfCorners = 0;
 
         if (getTerritoryScore(BLACK, cBoard) + getTerritoryScore(WHITE, cBoard) != 0) {
@@ -157,44 +154,24 @@ public class EvaluationFunction {
         return totalScore;
     }
 
-    public int getBlackCorners() {
-        int nrBlackCorners = 0;
-        for (int i = 0; i < boardGrid.length; i += boardGrid.length-1)
-            for (int j = 0; j < boardGrid[i].length; j += boardGrid.length-1)
-                if (boardGrid[i][j] == BLACK)
-                    nrBlackCorners++;
-
-        return nrBlackCorners;
-    }
-
-    public int getBlackCorners(Board cBoard) {
-        int nrBlackCorners = 0;
-        for (int i = 0; i < cBoard.getBoardGrid().length; i += cBoard.getBoardGrid().length-1)
-            for (int j = 0; j < cBoard.getBoardGrid()[i].length; j += cBoard.getBoardGrid().length-1)
-                if (cBoard.getBoardGrid()[i][j] == BLACK)
-                    nrBlackCorners++;
-
-        return nrBlackCorners;
-    }
-
-    public int getWhiteCorners() {
-        int nrWhiteCorners = 0;
+    public int getCorners(int player) {
+        int nrCorners = 0;
         for (int i = 0; i < boardGrid.length; i += boardGrid.length-1)
             for (int j = 0; j < boardGrid[i].length; j += boardGrid[i].length-1)
-                if (boardGrid[i][j] == WHITE)
-                    nrWhiteCorners++;
+                if (boardGrid[i][j] == player)
+                    nrCorners++;
 
-        return nrWhiteCorners;
+        return nrCorners;
     }
 
-    public int getWhiteCorners(Board cBoard) {
-        int nrWhiteCorners = 0;
+    public int getCorners(Board cBoard, int player) {
+        int nrCorners = 0;
         for (int i = 0; i < cBoard.getBoardGrid().length; i += cBoard.getBoardGrid().length-1)
-            for (int j = 0; j < cBoard.getBoardGrid()[i].length; j += cBoard.getBoardGrid().length-1)
-                if (cBoard.getBoardGrid()[i][j] == WHITE)
-                    nrWhiteCorners++;
+            for (int j = 0; j < cBoard.getBoardGrid()[i].length; j += cBoard.getBoardGrid()[i].length-1)
+                if (cBoard.getBoardGrid()[i][j] == player)
+                    nrCorners++;
 
-        return nrWhiteCorners;
+        return nrCorners;
     }
 
     public int[][] setTerritory(int j){
