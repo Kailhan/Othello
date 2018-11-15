@@ -10,35 +10,39 @@ public class Minimax{
     Node<Board> bestNode;
     int maxValue;
 
-
-
     public Minimax(EvaluationFunction evaluator, Board board){
         this.evaluator = evaluator;
         this.board = board;
-        Node<Board> bestNode = new Node<Board>(board);
+        this.bestNode = new Node<Board>(board);
     }
 
     public int minimaxAlg(Node<Board> currentNode, int startingPlayer){
-        if(currentNode.getChildren() == null){
+        if(currentNode.getChildren() == null){ //komt hier nooit
             int value = evaluator.evaluate(currentNode.getData());
+            System.out.println("print evaluation value2: " + evaluator.evaluate(currentNode.getData()));
             getMaxBoard();
             //if(value > maxValue){
                 maxValue = value;
-                if(currentNode.getData() != null) bestNode = currentNode;
+                if(currentNode.getData() != null) this.bestNode = currentNode;
            // }
             return value;
         }
-        else if (currentNode.getData().getCurrentPlayer() == startingPlayer) { //MAXVALUE, AI is player white: -1
+
+
+        if (currentNode.getData().getCurrentPlayer() == startingPlayer) { //MAXVALUE, AI is player white: -1
             int value = Integer.MIN_VALUE;
             for(Node<Board> currentChild: currentNode.getChildren()){
                 value = Math.max(value, minimaxAlg(currentChild, -1 * startingPlayer));
+                System.out.println("print evaluation value1: " + evaluator.evaluate(currentNode.getData()));
             }
             return value;
         }
         else { //MINVALUE, opponent player
             int value = Integer.MAX_VALUE;
+            //System.out.println("current player: " + currentNode.getData().getCurrentPlayer());
             for (Node<Board> currentChild : currentNode.getChildren()) {
                 value = Math.min(value, minimaxAlg(currentChild, -1 * startingPlayer));
+                System.out.println("print evaluation value3: " + evaluator.evaluate(currentNode.getData()));
             }
             return value;
         }

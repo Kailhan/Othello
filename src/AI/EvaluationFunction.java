@@ -18,8 +18,8 @@ public class EvaluationFunction {
     private final static int WHITE = -1;
     private int score;
 
-    public EvaluationFunction(Board CBoard, int[][] boardGrid){
-        this.board = CBoard;
+    public EvaluationFunction(Board cBoard, int[][] boardGrid){
+        this.board = cBoard;
         this.boardGrid = boardGrid;
         this.settings = new Settings();
     }
@@ -143,13 +143,13 @@ public class EvaluationFunction {
 
         totalScore = (int) (w1 * numberOfCoins + w2 * numberOfCorners + w3 * numberOfMoves + w4 * territory);
 
-        System.out.println("numberOfcoins: " + numberOfCoins);
-        System.out.println("numberOfMoves: " + numberOfMoves);
-        System.out.println("territoryScoreWhite: " + getTerritoryScore(WHITE, cBoard));
-        System.out.println("territoryScoreBlack: " + getTerritoryScore(BLACK, cBoard));
-        System.out.println("terrScore: " + territory);
-        System.out.println("turn: " + cBoard.getTurn());
-        System.out.println("totalscore: " + totalScore);
+//        System.out.println("numberOfcoins: " + numberOfCoins);
+//        System.out.println("numberOfMoves: " + numberOfMoves);
+//        System.out.println("territoryScoreWhite: " + getTerritoryScore(WHITE, cBoard));
+//        System.out.println("territoryScoreBlack: " + getTerritoryScore(BLACK, cBoard));
+//        System.out.println("terrScore: " + territory);
+//        System.out.println("turn: " + cBoard.getTurn());
+//        System.out.println("totalscore: " + totalScore);
 
         return totalScore;
     }
