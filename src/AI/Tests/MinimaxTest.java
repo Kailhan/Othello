@@ -16,7 +16,7 @@ public class MinimaxTest {
         Minimax minimax = new Minimax(evaluator);
         GameTree gameTree = new GameTree(DEPTH);
         Node<Board> root = gameTree.createTree();
-        minimax.minimaxAlg(root, 2);
+        minimax.minimaxAlg(root);
         minimax.getBestNode().getData().displayBoardGrid();
 
 
