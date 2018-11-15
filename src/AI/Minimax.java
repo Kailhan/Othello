@@ -28,8 +28,7 @@ public class Minimax{
             return value;
         }
 
-
-        if (currentNode.getData().getCurrentPlayer() == startingPlayer) { //MAXVALUE, AI is player white: -1
+        else if (currentNode.getData().getCurrentPlayer() == startingPlayer) { //MAXVALUE, AI is player white: -1
             int value = Integer.MIN_VALUE;
             for(Node<Board> currentChild: currentNode.getChildren()){
                 value = Math.max(value, minimaxAlg(currentChild, -1 * startingPlayer));
@@ -37,6 +36,7 @@ public class Minimax{
             }
             return value;
         }
+
         else { //MINVALUE, opponent player
             int value = Integer.MAX_VALUE;
             //System.out.println("current player: " + currentNode.getData().getCurrentPlayer());
@@ -47,8 +47,6 @@ public class Minimax{
             return value;
         }
     }
-
-    //
 
     public Node<Board> getMaxBoard(){
         while(bestNode.getParent().getDepth() != 1){
