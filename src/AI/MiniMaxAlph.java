@@ -28,7 +28,9 @@ public class MiniMaxAlph {
     public int search(Node<Board> currentNode, int alpha, int beta, int player) {
 
         if (currentNode.getChildren().size() == 0) {
-            System.out.println("finnished");
+            System.out.println("finished");
+            this.bestNode = currentNode;
+            System.out.println("Score :" + evaluator.evaluate(currentNode.getData()));
             return evaluator.evaluate(currentNode.getData());
         }
 
@@ -44,7 +46,7 @@ public class MiniMaxAlph {
                 return value;
             }
 
-        } else { //minimizing black
+        } else {    //minimizing black
             System.out.println("min");
             int value = Integer.MAX_VALUE;
             for (Node<Board> child : currentNode.getChildren()) {

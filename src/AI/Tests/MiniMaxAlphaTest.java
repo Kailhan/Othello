@@ -14,8 +14,8 @@ public class MiniMaxAlphaTest {
         MiniMaxAlph minimax = new MiniMaxAlph(evaluator, board);
         GameTree gameTree = new GameTree(DEPTH);
         Node<Board> root = gameTree.createTree();
-        System.out.println(minimax.search(root,Integer.MIN_VALUE,Integer.MAX_VALUE, -1));
-
+        minimax.search(root,Integer.MIN_VALUE,Integer.MAX_VALUE, -1);
+        minimax.getBestNode().getData().displayBoardGrid();
 
     }
 }
