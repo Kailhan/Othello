@@ -25,8 +25,7 @@ public class MiniMaxAlph {
     }
 
 
-    public int search(Node<Board> currentNode, int alpha, int beta, int player) {
-
+    public int search(Node<Board> currentNode, int alpha, int beta) {
         if (currentNode.getChildren().size() == 0) {
             System.out.println("finished");
             this.bestNode = currentNode;
@@ -34,15 +33,15 @@ public class MiniMaxAlph {
             return evaluator.evaluate(currentNode.getData());
         }
 
-        if (player == -1) { //maximizing white
+        if (currentNode.getData().getCurrentPlayer() == -1) { //maximizing white
             System.out.println("max");
-            int value = Integer.MIN_VALUE;
+            int value = alpha;
             for (Node<Board> child : currentNode.getChildren()) {
-                value = Math.max(value, search(child, alpha, beta, player * -1));
+                System.out.println("valueMAX" + evaluator.evaluate(child.getData()));
+                value = Math.max(value, search(child, alpha, beta));
                 alpha = Math.max(alpha, value);
-                if (alpha >= beta) {
+                if (alpha >= beta)
                     break;
-                }
                 return value;
             }
 
@@ -50,11 +49,11 @@ public class MiniMaxAlph {
             System.out.println("min");
             int value = Integer.MAX_VALUE;
             for (Node<Board> child : currentNode.getChildren()) {
-                value = Math.min(value, search(child, alpha, beta, player *-1));
+                System.out.println("valueMIN" + evaluator.evaluate(child.getData()));
+                value = Math.min(value, search(child, alpha, beta));
                 beta = Math.min(beta, value);
-                if (alpha >= beta) {
+                if (alpha >= beta)
                     break;
-                }
                 return value;
             }
         }
