@@ -17,4 +17,5 @@ public class Stupid implements AI {
         int rand = (int)(Math.random() * moves.length);
         return moves[rand];
     }
+
 }

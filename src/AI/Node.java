@@ -7,6 +7,7 @@ public class Node<T> implements GenericTree<T> {
 
     private T data = null;
     private int depth = 0;
+    private int value;
     private List<Node<T>> children = new ArrayList<>();
     private Node<T> parent = null;
     private boolean visited = false;
@@ -74,6 +75,10 @@ public class Node<T> implements GenericTree<T> {
     public void setDepth(int depth) {
         this.depth = depth;
     }
+
+    public int getValue() { return value; }
+
+    public void setValue(int value) { this.value = value; }
 
     public int getRow() {
         int row = -1; //makes sure we throw an error if we have not updated our coordinate

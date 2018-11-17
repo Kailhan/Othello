@@ -14,11 +14,23 @@ public class MinimaxTest {
 
         EvaluationFunction evaluator = new EvaluationFunction();
         Board board = new Board();
-        Minimax minimax = new Minimax(evaluator, board);
+        Minimax minimax = new Minimax(3, board);
         GameTree gameTree = new GameTree(DEPTH);
         Node<Board> root = gameTree.createTree();
-        minimax.minimaxAlg(root, -1);
-        minimax.getBestNode().getData().displayBoardGrid();
+
+        minimax.minimaxAlg2(root);
+        Node<Board> child1 = minimax.selectMove(root);
+        child1.getData().displayBoardGrid();
+
+        minimax.minimaxAlg2(child1);
+        Node<Board> child2 = minimax.selectMove(child1);
+        child2.getData().displayBoardGrid();
+
+
+
+        //minimax.minimaxAlg(root, -1);
+        //minimax.getBestNode().getData().displayBoardGrid();
+
 
 
     }

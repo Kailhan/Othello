@@ -2,6 +2,7 @@ package Core;
 
 import AI.MCTS;
 import AI.MCTSNode;
+import AI.Minimax;
 import AI.Stupid;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
@@ -229,6 +230,10 @@ public class GameScene extends BorderPane {
             case 2:
                 //int[] move = minmax.getBestMove(board);
                 //updateBoard(move[0], move[1]);
+                Minimax minimax = new Minimax(3, board);
+                minimax.minimaxAlg2(minimax.getRoot());
+                updateBoard(minimax.selectMove(minimax.getRoot()).getData());
+                board.changePlayer();
         }
     }
 
@@ -259,6 +264,35 @@ public class GameScene extends BorderPane {
             }
         }
         redrawBoard();
+    }
+
+    public void updateBoard(Board board){
+        this.board = board;
+        board.incrementTurn();
+        board.changePlayer();
+        if(!Logic.checkMovePossible(board))
+        {
+            board.incrementTurn();
+            board.changePlayer();
+            if(!Logic.checkMovePossible(board))
+            {
+                redrawBoard();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Game Finished");
+                alert.setHeaderText(null);
+                if (board.getNrSquares(BLACK) > board.getNrSquares(WHITE)) {
+                    alert.setContentText("BLACK has won!!!");
+                } else if(board.getNrSquares(BLACK) < board.getNrSquares(WHITE)) {
+                    alert.setContentText("WHITE has won!!!");
+                } else {
+                    alert.setContentText("BOTH win :)");
+                }
+                alert.showAndWait();
+                goToMenuBut.fire();
+            }
+        }
+        redrawBoard();
+
     }
 
     public Scene getGameScene() {

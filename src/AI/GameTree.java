@@ -22,7 +22,7 @@ public class GameTree {
 
     public GameTree(int treeDepth, Board board) {
         this.logic = new Logic();
-        this.board = new Board();
+        this.board = board;
         this.boardGrid = board.getBoardGrid();
         this.treeDepth = treeDepth;
     }
