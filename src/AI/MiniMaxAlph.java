@@ -25,75 +25,40 @@ public class MiniMaxAlph {
     }
 
 
-    public void search(Node<Board> currentNode,int player) {
-        currentPlayer = player;
+    public int search(Node<Board> currentNode, int alpha, int beta, int player) {
 
         if (currentNode.getChildren().size() == 0) {
-            int value = evaluator.evaluate(currentNode.getData());
-            getMaxBoard();
-            maxValue = value;
-            if (currentNode.getData() != null) this.bestNode = currentNode;
-
-
-        } else {
-            if (currentPlayer == 1) { //for max
-
-                for (Node<Board> child : currentNode.getChildren()) {
-                    this.move.add(child);
-                }
-
-                this.indexes = new int[currentNode.getChildren().size()];
-                for (int i = 0; i < currentNode.getChildren().size(); i++) {
-                    this.indexes[i] = evaluator.evaluate(move.get(i).getData());
-                }
-
-                this.maximum = Integer.MIN_VALUE;
-
-                for (int i = 0; i < indexes.length; i++) {
-                    if (indexes[i] > maximum) {
-                        this.maximum = this.indexes[i];
-                        this.bestNode = this.move.get(i);
-                    }
-                }
-
-
-                currentPlayer = -1 * currentPlayer;
-                this.move.clear();
-                search(bestNode, currentPlayer); //check if the score has to be processed.
-            }
-
-            if (currentPlayer == -1) { //for min
-
-                for (Node<Board> child : currentNode.getChildren()) {
-                    this.move.add(child);
-                }
-
-                this.indexes = new int[currentNode.getChildren().size()];
-                for (int i = 0; i < currentNode.getChildren().size(); i++) {
-                    this.indexes[i] = evaluator.evaluate(this.move.get(i).getData());//store all the move values for the children
-                }
-            }
-
-            this.minimum = Integer.MAX_VALUE;
-
-            //Error hier maar geen idee waarom...
-            for (int i = 0; i < indexes.length; i++) {
-                // //System.out.println("all values min: " + indexes[i]);
-                if (indexes[i] < minimum) {
-                    this.minimum = this.indexes[i];
-                    this.bestNode = this.move.get(i);
-                }
-            }
-
-
-            currentPlayer = -1 * currentPlayer;
-            //this.move.clear();
-            //this.indexes = null;
-            search(bestNode, currentPlayer); //check if the score has to be processed.
-
-
+            System.out.println("finnished");
+            return evaluator.evaluate(currentNode.getData());
         }
+
+        if (player == -1) { //maximizing white
+            System.out.println("max");
+            int value = Integer.MIN_VALUE;
+            for (Node<Board> child : currentNode.getChildren()) {
+                value = Math.max(value, search(child, alpha, beta, player * -1));
+                alpha = Math.max(alpha, value);
+                if (alpha >= beta) {
+                    break;
+                }
+                return value;
+            }
+
+        } else { //minimizing black
+            System.out.println("min");
+            int value = Integer.MAX_VALUE;
+            for (Node<Board> child : currentNode.getChildren()) {
+                value = Math.min(value, search(child, alpha, beta, player *-1));
+                beta = Math.min(beta, value);
+                if (alpha >= beta) {
+                    break;
+                }
+                return value;
+            }
+        }
+        return 0;
     }
+
 
     public Node<Board> getMaxBoard(){
         while(this.bestNode.getParent() != null && this.bestNode.getParent().getDepth() > 1){
