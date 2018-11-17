@@ -10,64 +10,88 @@ public class MiniMaxAlph {
     EvaluationFunction evaluator;
     Board board;
     Node<Board> bestNode;
-    int maxValue;
-    int finalScore;
-    int[] indexes;
-    int currentPlayer;
-    int maximum;
-    int minimum;
-    ArrayList<Node<Board>> move = new ArrayList<Node<Board>>();
+    private int pruned = 0;
 
-    public MiniMaxAlph(EvaluationFunction evaluator, Board board){
+    public MiniMaxAlph(EvaluationFunction evaluator, Board board) {
         this.evaluator = evaluator;
         this.board = board;
         this.bestNode = new Node<Board>(board);
     }
 
-
     public int search(Node<Board> currentNode, int alpha, int beta) {
         if (currentNode.getChildren().size() == 0) {
-            System.out.println("finished");
-            this.bestNode = currentNode;
-            System.out.println("Score :" + evaluator.evaluate(currentNode.getData()));
-            return evaluator.evaluate(currentNode.getData());
-        }
-
-        if (currentNode.getData().getCurrentPlayer() == -1) { //maximizing white
-            System.out.println("max");
-            int value = alpha;
-            for (Node<Board> child : currentNode.getChildren()) {
-                System.out.println("valueMAX" + evaluator.evaluate(child.getData()));
-                value = Math.max(value, search(child, alpha, beta));
-                alpha = Math.max(alpha, value);
-                if (alpha >= beta)
+            int value = evaluator.evaluate(currentNode.getData());
+            currentNode.setValue(value);
+            return value;
+        } else if (currentNode.getData().getCurrentPlayer() == -1) {
+            int value = Integer.MIN_VALUE;
+            for (Node<Board> currentChild : currentNode.getChildren()) {
+                value = Math.max(value, search(currentChild, alpha, beta));
+                alpha = Math.max(value, alpha);
+                if (alpha >= beta) {
+                    System.out.println("pruned");
                     break;
-                return value;
+                }
             }
-
-        } else {    //minimizing black
-            System.out.println("min");
+            currentNode.setValue(value);
+            return value;
+        } else { //MINVALUE, opponent player
             int value = Integer.MAX_VALUE;
-            for (Node<Board> child : currentNode.getChildren()) {
-                System.out.println("valueMIN" + evaluator.evaluate(child.getData()));
-                value = Math.min(value, search(child, alpha, beta));
-                beta = Math.min(beta, value);
-                if (alpha >= beta)
+            for (Node<Board> currentChild : currentNode.getChildren()) {
+                value = Math.min(value, search(currentChild, alpha, beta));
+                beta = Math.min(value, beta);
+                if (alpha >= beta) {
+                    System.out.println("pruned");
                     break;
-                return value;
+                }
             }
+            currentNode.setValue(value);
+            return value;
         }
-        return 0;
     }
 
 
-    public Node<Board> getMaxBoard(){
-        while(this.bestNode.getParent() != null && this.bestNode.getParent().getDepth() > 1){
-            this.bestNode = bestNode.getParent();
+    public Node<Board> selectMove(Node<Board> root) {
+        for (Node<Board> currentChild : root.getChildren()) {
+            if (currentChild.getValue() == root.getValue()) return currentChild;
         }
-        return bestNode;
+        return null;
     }
-
-    public Node<Board> getBestNode(){return bestNode;}
 
 }
+//          never gets pruned... gives other values then the search so possibly wrong
+//    public int search2(Node<Board> currentNode, int alpha, int beta) {
+//        if (currentNode.getChildren().size() == 0) {
+//            System.out.println("finished");
+//            this.bestNode = currentNode;
+//            System.out.println("Score :" + evaluator.evaluate(currentNode.getData()));
+//            return evaluator.evaluate(currentNode.getData());
+//        }
+//
+//        if (currentNode.getData().getCurrentPlayer() == -1) { //maximizing white
+//            System.out.println("max");
+//            int value = alpha;
+//            for (Node<Board> child : currentNode.getChildren()) {
+//                value = Math.max(value, search(child, alpha, beta));
+//                alpha = Math.max(alpha, value);
+//                if (alpha >= beta){
+//                    break;}
+//                    currentNode.setValue(value);
+//                return value;
+//            }
+//
+//        } else {    //minimizing black
+//            System.out.println("min");
+//            int value = Integer.MAX_VALUE;
+//            for (Node<Board> child : currentNode.getChildren()) {
+//                value = Math.min(value, search(child, alpha, beta));
+//                beta = Math.min(beta, value);
+//                if (alpha >= beta) {
+//                    break;
+//                }
+//                currentNode.setValue(value);
+//                return value;
+//            }
+//        }
+//        return 0;
+//    }

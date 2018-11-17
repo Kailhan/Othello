@@ -5,7 +5,7 @@ import Core.Board;
 
 public class MiniMaxAlphaTest {
 
-    final static int DEPTH = 5;
+    final static int DEPTH = 7;
 
     public static void main(String[] args) {
 
@@ -14,8 +14,11 @@ public class MiniMaxAlphaTest {
         MiniMaxAlph minimax = new MiniMaxAlph(evaluator, board);
         GameTree gameTree = new GameTree(DEPTH);
         Node<Board> root = gameTree.createTree();
-        minimax.search(root,Integer.MIN_VALUE, Integer.MAX_VALUE);
-        minimax.getBestNode().getData().displayBoardGrid();
+        System.out.println(minimax.search(root,Integer.MIN_VALUE, Integer.MAX_VALUE));
+        Node<Board> child1 = minimax.selectMove(root);
+        child1.getData().displayBoardGrid();
+
+        //System.out.println(minimax.search2(root,Integer.MIN_VALUE, Integer.MAX_VALUE));
 
     }
 }

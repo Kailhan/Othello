@@ -8,7 +8,7 @@ import Core.Board;
 
 public class MinimaxTest {
 
-    final static int DEPTH = 5;
+    final static int DEPTH = 6;
     public static void main(String[] args) {
 
         EvaluationFunction evaluator = new EvaluationFunction();
