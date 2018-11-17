@@ -11,10 +11,11 @@ public class MiniMaxAlphaTest {
 
         EvaluationFunction evaluator = new EvaluationFunction();
         Board board = new Board();
-        MiniMaxAlph minimax = new MiniMaxAlph(evaluator, board);
+        MiniMaxAlph minimax = new MiniMaxAlph(DEPTH,board);
         GameTree gameTree = new GameTree(DEPTH);
         Node<Board> root = gameTree.createTree();
         System.out.println(minimax.search(root,Integer.MIN_VALUE, Integer.MAX_VALUE));
+
         Node<Board> child1 = minimax.selectMove(root);
         child1.getData().displayBoardGrid();
 

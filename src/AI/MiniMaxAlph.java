@@ -8,14 +8,14 @@ import java.util.HashSet;
 public class MiniMaxAlph {
 
     EvaluationFunction evaluator;
-    Board board;
-    Node<Board> bestNode;
-    private int pruned = 0;
+    private GameTree gameTree;
+    private Node<Board> root;
 
-    public MiniMaxAlph(EvaluationFunction evaluator, Board board) {
-        this.evaluator = evaluator;
-        this.board = board;
-        this.bestNode = new Node<Board>(board);
+
+    public MiniMaxAlph(int depth , Board board) {
+        this.gameTree = new GameTree(depth, board);
+        this.evaluator = new EvaluationFunction();
+        this.root = gameTree.createTree();
     }
 
     public int search(Node<Board> currentNode, int alpha, int beta) {
