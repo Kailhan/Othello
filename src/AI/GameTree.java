@@ -122,4 +122,7 @@ public class GameTree {
     }
     */
 
+    public int getTreeDepth() {
+        return treeDepth;
+    }
 }

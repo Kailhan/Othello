@@ -61,7 +61,7 @@ public class Minimax {
 
     /*
     public int minimaxAlg(Node<Board> currentNode, int startingPlayer){
-        if(currentNode.getChildren() == null){ //komt hier nooit
+        if(currentNode.getChildren().size() == 0){ //komt hier nooit
             int value = evaluator.evaluate(currentNode.getData());
             System.out.println("print evaluation value2: " + evaluator.evaluate(currentNode.getData()));
             //getMaxBoard();
