@@ -58,6 +58,10 @@ public class MiniMaxAlph {
         return null;
     }
 
+    public Node<Board> getRoot() {
+        return root;
+    }
+
 }
 //          never gets pruned... gives other values then the search so possibly wrong
 //    public int search2(Node<Board> currentNode, int alpha, int beta) {
