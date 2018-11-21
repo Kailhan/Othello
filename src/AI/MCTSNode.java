@@ -57,7 +57,8 @@ public class MCTSNode extends Node {
             node = (MCTSNode)node.getParent();
         }
         int totalSims = node.getSimulations();
-        double score = scoreTotal/simulations + (explorationParameter * Math.sqrt(Math.log(totalSims)/simulations));
+        //double score = scoreTotal/simulations + (explorationParameter * Math.sqrt(Math.log(totalSims)/simulations));
+        double score = scoreTotal/simulations + (explorationParameter * 0.5 * ((totalSims)/simulations));
         return score;
     }
 }

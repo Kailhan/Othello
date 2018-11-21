@@ -86,10 +86,10 @@ public class Node<T> implements GenericTree<T> {
         int[][] parentBoardGrid = parentBoard.getBoardGrid();
         Board currentBoard = (Board)getData();
         int[][] currentBoardGrid = currentBoard.getBoardGrid();
-        System.out.println("getX parentBoard");
-        parentBoard.displayBoardGrid();
-        System.out.println("getX currentBoard");
-        currentBoard.displayBoardGrid();
+//        System.out.println("getX parentBoard");
+//        parentBoard.displayBoardGrid();
+//        System.out.println("getX currentBoard");
+//        currentBoard.displayBoardGrid();
         for(int r = 0; r < parentBoardGrid.length; r++) {
             for(int c = 0; c < parentBoardGrid.length; c++) {
                 if(parentBoardGrid[r][c] == 0 && currentBoardGrid[r][c] != 0) row = r;
@@ -104,10 +104,10 @@ public class Node<T> implements GenericTree<T> {
         int[][] parentBoardGrid = parentBoard.getBoardGrid();
         Board currentBoard = (Board)getData();
         int[][] currentBoardGrid = currentBoard.getBoardGrid();
-        System.out.println("getY parentBoard");
-        parentBoard.displayBoardGrid();
-        System.out.println("getY currentBoard");
-        currentBoard.displayBoardGrid();
+        //System.out.println("getY parentBoard");
+        //parentBoard.displayBoardGrid();
+        //System.out.println("getY currentBoard");
+        //currentBoard.displayBoardGrid();
         for(int r = 0; r < parentBoardGrid.length; r++) {
             for(int c = 0; c < parentBoardGrid.length; c++) {
                 if(parentBoardGrid[r][c] == 0 && currentBoardGrid[r][c] != 0) column = c;

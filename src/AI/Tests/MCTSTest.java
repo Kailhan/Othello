@@ -13,22 +13,22 @@ import static Core.Board.WHITE;
 
 public class MCTSTest {
     public static void main(String[] args) {
-        System.out.println("Enter tree depth of MCTS 1");
+        System.out.println("Enter totalSims of MCTS 1");
         Scanner scanner = new Scanner(System.in);
-        int depth1 = scanner.nextInt();
-        System.out.println("Enter tree depth of MCTS 2");
+        int totalSims1 = scanner.nextInt();
+        System.out.println("Enter totalSims of MCTS 2");
         scanner = new Scanner(System.in);
-        int depth2 = scanner.nextInt();
+        int totalSims2 = scanner.nextInt();
         //System.out.println("Amount of games to be simulated");
         //scanner = new Scanner(System.in);
         //int games = scanner.nextInt();
-        int games = 1;
+        int games = 1000;
         System.out.println("board size");
         scanner = new Scanner(System.in);
         int size = scanner.nextInt();
 
-        MCTS mcts1 = new MCTS(depth1);
-        MCTS mcts2 = new MCTS(depth2);
+        MCTS mcts1 = new MCTS(totalSims1);
+        MCTS mcts2 = new MCTS(totalSims2);
 
         Board board = new Board(size);
         MCTSNode node = new MCTSNode(board);
@@ -39,18 +39,18 @@ public class MCTSTest {
 
         for (int i = 0; i < games; i++) {
             boolean gameFinished = false;
+            board = new Board(size);
             while (!gameFinished) {
                 if (board.getCurrentPlayer() == BLACK) {
                     node = mcts1.findMove(board);
-                    System.out.println("mcts1 turn");
+                    //System.out.println("mcts1 turn");
                 }
                 if (board.getCurrentPlayer() == WHITE) {
                     node = mcts2.findMove(board);
-                    System.out.println("mcts2 turn");
+                    //System.out.println("mcts2 turn");
                 }
-
                 board.setBoardGrid(node.getBoard().getBoardGrid());
-                board.displayBoardGrid();
+                //board.displayBoardGrid();
                 board.incrementTurn();
                 //System.out.println("Turn: " + board.getTurn());
                 board.changePlayer();
@@ -73,7 +73,10 @@ public class MCTSTest {
                     }
                 }
             }
-            board.displayBoardGrid();
+            //System.out.println("Board at end of test cycle");
+            //board.displayBoardGrid();
+            //System.out.println("Game finished: " + gameFinished);
+            System.out.println("Games simulated: " + i);
         }
         System.out.println("MCTS1 wins: " + mcts1Wins);
         System.out.println("MCTS2 wins: " + mcts2Wins);

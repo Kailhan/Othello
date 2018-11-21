@@ -37,14 +37,17 @@ public class MCTS implements AI {
         move[2] = node.getColumn();
         return move;
     }
+
     public MCTSNode findMove(Board board) {
         MCTSNode root = new MCTSNode(board);
+        //System.out.println("Board in MCTS findMove");
+        //board.displayBoardGrid();
         nodeQueue.addFirst(root);
-        do{
+        while(nodeQueue.size() > 0) {
             MCTSNode toBeChecked = nodeSelection(nodeQueue);
             playoutSimulation(toBeChecked);
-            System.out.println("nodequeueueuesize: " + nodeQueue.size());
-        } while(nodeQueue.size() > 0);
+            //System.out.println("nodequeueueuesize: " + nodeQueue.size());
+        }
         int maxScore = MIN_VALUE;
         ArrayList<MCTSNode> potentialNodes = new ArrayList<MCTSNode>();
         for (MCTSNode node : root.getChildren(root)) {
@@ -60,7 +63,6 @@ public class MCTS implements AI {
             }
         }
         simsCounter = 0;
-        System.out.println("potentialnodessize: " + potentialNodes.size());
         return potentialNodes.get(rand.nextInt(potentialNodes.size())); //makes sure we pick a random node instead of for example the last one that has a highest score
     }
 
@@ -94,9 +96,10 @@ public class MCTS implements AI {
         nodeQueue.remove((Object) toBeChecked);
 //        MCTSNode toBeChecked = (MCTSNode)nodeQueue.poll(); //retrieves and removes the first element of this list or returns null if this list is empty
 //        if(toBeChecked.getDepth() < treeDepth) createChildren(toBeChecked);
-        if(simsCounter < totalSims) createChildren(toBeChecked);
+        if(nodeQueue.size() < totalSims) createChildren(toBeChecked);
+        //if(simsCounter < totalSims) createChildren(toBeChecked);
         simsCounter++;
-        System.out.println("simsCounter: " + simsCounter);
+        //System.out.println("simsCounter: " + simsCounter);
         return toBeChecked;
     }
 
