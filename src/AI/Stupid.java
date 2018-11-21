@@ -6,12 +6,9 @@ public class Stupid implements AI {
     private int[][] board;
     private int[][] move;
 
-    public Stupid(int[][] board)
-    {
-        this.board = board;
-    }
+    public Stupid(){}
 
-    public static int[] getBestMove(Board board)
+    public int[] getBestMove(Board board)
     {
         int[][] moves = Logic.getPossibleMoves(board);
         int rand = (int)(Math.random() * moves.length);

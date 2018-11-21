@@ -13,7 +13,6 @@ public class StartGame extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         primaryStage.setTitle("Othello Game - Settings");
-        //gameScene = new Core.GameScene(primaryStage);
         settingsScene = new SettingsScene(primaryStage);
         primaryStage.setScene(settingsScene.getSettingsScene());
         primaryStage.show();

@@ -3,32 +3,27 @@ package Core;
 public class Settings {
 
     //values to return in the class object:
-    private int difficultyLevel;
-    private int gameMode;
+    private int AI1Level;
+    private int AI2Level;
     private int boardSize;
     private Board board;
-    public static final int MCTS = 0;
-    public static final int STUPID = 1;
-    public static final int MINMAX = 2;
-    public static final int HvH = 0;
-    public static final int HvA = 1;
-    public static final int AvA = 2;
+    private static String[] AIs = new String[]{"Mcts", "Stupid", "Minmax"};
     public static final int SIZE_SMALL = 4;
     public static final int SIZE_MEDIUM = 6;
     public static final int SIZE_LARGE = 8;
 
 
     public Settings() {
-        this(MCTS,HvH,SIZE_LARGE);
+        this(1,1,SIZE_LARGE);
     }
 
-    public Settings(int difficultyLevel, int gameMode, int boardSize) {
-        this(difficultyLevel, gameMode, boardSize, new Board(boardSize));
+    public Settings(int AI1Level, int AI2Level, int boardSize) {
+        this(AI1Level, AI2Level, boardSize, new Board(boardSize));
     }
 
-    public Settings(int difficultyLevel, int gameMode, int boardSize, Board board) {
-        this.difficultyLevel = difficultyLevel;
-        this.gameMode = gameMode;
+    public Settings(int AI1Level, int AI2Level, int boardSize, Board board) {
+        this.AI1Level = AI1Level;
+        this.AI2Level = AI2Level;
         this.boardSize = boardSize;
         if(board == null) {
             this.board = new Board(boardSize);
@@ -39,17 +34,26 @@ public class Settings {
 
     //getters & setters
 
-    public int getDifficultyLevel() {
-        return difficultyLevel;
+    public int getAI1Level() {
+        return AI1Level;
     }
-    public int getGameMode() {
-        return gameMode;
+    public void setAI1Level(int AI1Level){
+        this.AI1Level = AI1Level;
+    }
+    public int getAI2Level() {
+        return AI2Level;
+    }
+    public void setAI2Level(int AI2Level){
+        this.AI2Level = AI2Level;
     }
     public int getBoardSize() {
         return boardSize;
     }
     public Board getBoard() {
         return board;
+    }
+    public static String[] getAIs(){
+        return AIs;
     }
 
 }

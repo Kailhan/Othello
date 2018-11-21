@@ -23,12 +23,13 @@ public class SettingsScene extends VBox {
     private Scene scene;
     private Button submit;
     private Button loadBoard;
-    private ComboBox<String> difficulty;
-    private ComboBox<String> playerMode;
+    private ComboBox<String> AI1;
+    private ComboBox<String> AI2;
     private ComboBox<String> size;
 
-    private static int action_difficultyLevel;
-    private static int action_gameMode;
+    private static String[] AIs;
+    private static int AI1Level;
+    private static int AI2level;
     private static int action_boardSize;
     private static Board action_Board;
     private int windowSize = 800;
@@ -38,10 +39,11 @@ public class SettingsScene extends VBox {
         this.primaryStage.setTitle("Othello Game - Settings");
         Label label = new Label("Welcome to the Othello game!");
         label.setTextFill(Color.web("#FFFFFF"));
+        this.AIs = Settings.getAIs();
 
         submit = new Button("Start");
         submit.setOnAction(e -> {
-            Settings settings = new Settings(action_difficultyLevel, action_gameMode, action_boardSize, action_Board);    //instantiating the settings object with the int values
+            Settings settings = new Settings(AI1Level, AI2level, action_boardSize, action_Board);    //instantiating the settings object with the int values
             GameScene gameScene = new GameScene(primaryStage, settings);
             Node source = (Node) e.getSource();
             Stage stage = (Stage) source.getScene().getWindow();
@@ -51,6 +53,7 @@ public class SettingsScene extends VBox {
             this.primaryStage.setScene(gameScene.getGameScene());
             this.primaryStage.show();
         });
+
         loadBoard = new Button("Load a custom board");
         loadBoard.setOnAction(e -> {
             File recordsDir = new File(System.getProperty("user.home"), ".Othello/boards");
@@ -73,33 +76,30 @@ public class SettingsScene extends VBox {
             }
         });
 
-        difficulty = new ComboBox<>();
-        difficulty.getItems().addAll("Mcts", "Stupid", "Minmax");
-        difficulty.setPromptText("Select difficulty level");
+        AI1 = new ComboBox<>();
+        AI1.getItems().addAll(AIs);
+        AI1.setPromptText("Select first AI");
 
-        difficulty.setOnAction(e -> {
-            if (difficulty.getValue() == "Mcts") {
-                action_difficultyLevel = Settings.MCTS;
-            } else if (difficulty.getValue() == "Stupid") {
-                action_difficultyLevel = Settings.STUPID;
-            } else if (difficulty.getValue() == "Minmax") {
-                action_difficultyLevel = Settings.MINMAX;
+        AI1.setOnAction(e -> {
+            for (int i = 0; i < AIs.length; i++){
+                if (AI1.getValue() == AIs[i]){
+                    AI1Level = i;
+                }
             }
         });
 
-        playerMode = new ComboBox<>();
-        playerMode.getItems().addAll("Human vs Human", "Human vs AI", "AI vs AI");
-        playerMode.setPromptText("Select game mode");
+        AI2 = new ComboBox<>();
+        AI2.getItems().addAll(AIs);
+        AI2.setPromptText("Select second AI");
 
-        playerMode.setOnAction(e -> {
-            if (playerMode.getValue() == "Human vs Human") {
-                action_gameMode = Settings.HvH;
-            } else if (playerMode.getValue() == "Human vs AI") {
-                action_gameMode = Settings.HvA;
-            } else {
-                action_gameMode = Settings.AvA;
+        AI2.setOnAction(e -> {
+            for (int i = 0; i < AIs.length; i++){
+                if (AI2.getValue() == AIs[i]){
+                    AI2level = i;
+                }
             }
         });
+
         size = new ComboBox<>();
         size.getItems().addAll("Small", "Medium", "Large");
         size.setPromptText("Select board size");
@@ -114,7 +114,7 @@ public class SettingsScene extends VBox {
         });
 
         VBox layout = new VBox(20);
-        layout.getChildren().addAll(label, difficulty, playerMode, size, loadBoard, submit);
+        layout.getChildren().addAll(label, AI1, AI2, size, loadBoard, submit);
         layout.setAlignment(Pos.CENTER);
         File backgrFile = new File("src/Assets/Othello.jpg");
         BackgroundImage myBI= new BackgroundImage(new Image(backgrFile.toURI().toString(),800, 600,true,true),

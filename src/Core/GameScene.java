@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -36,7 +37,9 @@ public class GameScene extends BorderPane {
     private GridPane grid = new GridPane();
     private int windowSize = 600;
     private int tileSize;
-    private int difficultyLevel;
+    private int AI1Level;
+    private int AI2Level;
+    private static String[] AIs;
 
     private File discBlack = new File("src/Assets/disc_blackBgr.png");
     private File discWhite = new File("src/Assets/disc_whiteBgrFthr.png");
@@ -65,15 +68,19 @@ public class GameScene extends BorderPane {
     private Button loadBoardBut;
     private Button saveBoardBut;
     private Button playAI;
+    private ComboBox<String> AI1;
+    private ComboBox<String> AI2;
     private boolean movePossible;
     private boolean blackIsBot;
     private boolean whiteIsBot;
 
     public GameScene(Stage primaryStage, Settings settings) {
+        this.settings = settings;
         this.primaryStage = primaryStage;
         this.board = new Board(settings.getBoard());
         this.tileSize = windowSize/ board.getSize();
-        this.difficultyLevel = settings.getDifficultyLevel();
+        this.AIs = settings.getAIs();
+
         this.discBlackImg = new Image(discBlack.toURI().toString(), tileSize, tileSize, false,false);
         this.discWhiteImg = new Image(discWhite.toURI().toString(), tileSize, tileSize, false,false);
         this.bgrImg = new Image(bgr.toURI().toString(), tileSize, tileSize, false,false);
@@ -90,6 +97,7 @@ public class GameScene extends BorderPane {
         this.discWhiteMenuImgSel = new Image(discWhiteMenuSel.toURI().toString(), tileSize, tileSize, false,false);
         this.discBlackMenuViewSel = new ImageView(discBlackMenuImgSel);
         this.discWhiteMenuViewSel = new ImageView(discWhiteMenuImgSel);
+
         this.goToMenuBut = new Button("Menu");
         goToMenuBut.setOnAction(e -> { // Switch to settings
             SettingsScene settingsScene = new SettingsScene(primaryStage);
@@ -102,6 +110,7 @@ public class GameScene extends BorderPane {
             this.primaryStage.show();
         });
         this.goToMenuBut.setWrapText(true);
+
         this.restartGameBut = new Button("Restart Game");
         restartGameBut.setOnAction(e -> { // Create a new game with the same setings
             GameScene gameScene = new GameScene(primaryStage, settings);
@@ -114,6 +123,7 @@ public class GameScene extends BorderPane {
             this.primaryStage.show();
         });
         this.restartGameBut.setWrapText(true);
+
         this.saveBoardBut = new Button("Save this board");
         saveBoardBut.setOnAction(e -> { // Save current board
             try {
@@ -132,11 +142,37 @@ public class GameScene extends BorderPane {
             }
         });
         this.saveBoardBut.setWrapText(true);
+
         this.playAI = new Button("Let AI play current turn");
-        playAI.setOnAction(e -> { // Save current board
+        playAI.setOnAction(e -> {
             botMove();
         });
         this.playAI.setWrapText(true);
+
+        AI1 = new ComboBox<>();
+        AI1.getItems().addAll(AIs);
+        AI1.setPromptText("Change first AI");
+
+        AI1.setOnAction(e -> {
+            for (int i = 0; i < AIs.length; i++){
+                if (AI1.getValue() == AIs[i]){
+                    settings.setAI1Level(i);
+                }
+            }
+        });
+
+        AI2 = new ComboBox<>();
+        AI2.getItems().addAll(AIs);
+        AI2.setPromptText("Change second AI");
+
+        AI2.setOnAction(e -> {
+            for (int i = 0; i < AIs.length; i++){
+                if (AI2.getValue() == AIs[i]){
+                    settings.setAI2Level(i);
+                }
+            }
+        });
+
 
         grid.setGridLinesVisible(false);
         grid.setAlignment(Pos.CENTER);
@@ -165,18 +201,21 @@ public class GameScene extends BorderPane {
 
         GridPane.setConstraints(goToMenuBut, board.getSize() + 2, 2);
         GridPane.setConstraints(restartGameBut, board.getSize(), 2);
-        GridPane.setConstraints(saveBoardBut, board.getSize(), 3);
-        GridPane.setConstraints(playAI, board.getSize() + 2, 3);
+        GridPane.setConstraints(AI1, board.getSize(), 3);
+        GridPane.setConstraints(AI2, board.getSize() + 2, 3);
+        GridPane.setConstraints(saveBoardBut, board.getSize(), 4);
+        GridPane.setConstraints(playAI, board.getSize() + 2, 4);
 
         GridPane.setConstraints(blackDiscs, board.getSize(), 1);
         GridPane.setConstraints(whiteDiscs, board.getSize() + 2, 1);
 
         grid.getChildren().addAll(toAdd);
-        grid.getChildren().addAll(goToMenuBut, restartGameBut, saveBoardBut, playAI, blackDiscs, whiteDiscs);
+        grid.getChildren().addAll(goToMenuBut, restartGameBut, saveBoardBut, playAI, AI1, AI2, blackDiscs, whiteDiscs);
         for(Node aNode: grid.getChildren()) {
             GridPane.setHalignment(aNode, HPos.CENTER);
         }
     }
+
     public void createTiles(){
         toAdd.clear();
         for (int r = 0; r < board.getSize(); r++) {
@@ -215,17 +254,20 @@ public class GameScene extends BorderPane {
 
     public void botMove()
     {
-        switch(difficultyLevel)
+        int AILevel;
+        AILevel = settings.getAI1Level();
+        if (board.getCurrentPlayer() == WHITE)
+            AILevel = settings.getAI2Level();
+        switch(AILevel)
         {
             case 0:
                 MCTS mcts = new MCTS(100);
                 MCTSNode node = mcts.findMove(board);
-                System.out.println("node.getX(), node.getY())" + node.getRow() + " " + node.getColumn());
                 updateBoard(node.getRow(), node.getColumn());
-                System.out.println("AI calls updateBoard");
 
             case 1:
-                int[] move = Stupid.getBestMove(board);
+                Stupid stupid = new Stupid();
+                int[] move = stupid.getBestMove(board);
                 updateBoard(move[0], move[1]);
             case 2:
                 //int[] move = minmax.getBestMove(board);
@@ -233,13 +275,12 @@ public class GameScene extends BorderPane {
                 Minimax minimax = new Minimax(3, board);
                 minimax.minimaxAlg2(minimax.getRoot());
                 updateBoard(minimax.selectMove(minimax.getRoot()).getData());
-                board.changePlayer();
         }
     }
 
-    public void updateBoard(int x, int y)
+    public void updateBoard(int r, int c)
     {
-        board.applyMove(x, y);
+        board.applyMove(r, c);
         board.incrementTurn();
         board.changePlayer();
         if(!Logic.checkMovePossible(board))
@@ -268,12 +309,12 @@ public class GameScene extends BorderPane {
 
     public void updateBoard(Board board){
         this.board = board;
-        board.incrementTurn();
-        board.changePlayer();
+        this.board.incrementTurn();
+        this.board.changePlayer();
         if(!Logic.checkMovePossible(board))
         {
-            board.incrementTurn();
-            board.changePlayer();
+            this.board.incrementTurn();
+            this.board.changePlayer();
             if(!Logic.checkMovePossible(board))
             {
                 redrawBoard();
