@@ -233,7 +233,6 @@ public class GameScene extends BorderPane {
                 Minimax minimax = new Minimax(3, board);
                 minimax.minimaxAlg2(minimax.getRoot());
                 updateBoard(minimax.selectMove(minimax.getRoot()).getData());
-                board.changePlayer();
         }
     }
 
@@ -269,11 +268,11 @@ public class GameScene extends BorderPane {
     public void updateBoard(Board board){
         this.board = board;
         board.incrementTurn();
-        board.changePlayer();
+        //board.changePlayer();
         if(!Logic.checkMovePossible(board))
         {
-            board.incrementTurn();
-            board.changePlayer();
+            this.board.incrementTurn();
+            this.board.changePlayer();
             if(!Logic.checkMovePossible(board))
             {
                 redrawBoard();
