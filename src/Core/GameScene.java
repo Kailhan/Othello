@@ -310,7 +310,7 @@ public class GameScene extends BorderPane {
     public void updateBoard(Board board){
         this.board = board;
         this.board.incrementTurn();
-        this.board.changePlayer();
+//        this.board.changePlayer();
         if(!Logic.checkMovePossible(board))
         {
             this.board.incrementTurn();

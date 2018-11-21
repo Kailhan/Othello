@@ -30,7 +30,7 @@ public class MCTS implements AI {
         this.totalSims = totalSims;
     }
 
-    public int[] getMoves(Board board) {
+    public int[] getBestMove(Board board) {
         int[] move = new int[2];
         MCTSNode node = findMove(board);
         move[1] = node.getRow();
