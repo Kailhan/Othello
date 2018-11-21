@@ -218,7 +218,7 @@ public class GameScene extends BorderPane {
         switch(difficultyLevel)
         {
             case 0:
-                MCTS mcts = new MCTS(10);
+                MCTS mcts = new MCTS(100);
                 MCTSNode node = mcts.findMove(board);
                 System.out.println("node.getX(), node.getY())" + node.getRow() + " " + node.getColumn());
                 updateBoard(node.getRow(), node.getColumn());

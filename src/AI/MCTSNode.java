@@ -9,8 +9,9 @@ import static java.lang.Integer.MIN_VALUE;
 
 public class MCTSNode extends Node {
 
+    public static final double explorationParameter = 1.414;
     private int scoreTotal;
-    private int simulations;
+    private int simulations = 1; //otherwise divide by zero when calculating node score might need to change the order/def of method
     private Board board;
 
     public MCTSNode(Board board, int x, int y) {
@@ -48,5 +49,15 @@ public class MCTSNode extends Node {
             mctsNodeList.add((MCTSNode)child);
         }
         return mctsNodeList;
+    }
+
+    public double getNodeScore() {
+        MCTSNode node = this;
+        while(node.getParent() != null) {
+            node = (MCTSNode)node.getParent();
+        }
+        int totalSims = node.getSimulations();
+        double score = scoreTotal/simulations + (explorationParameter * Math.sqrt(Math.log(totalSims)/simulations));
+        return score;
     }
 }

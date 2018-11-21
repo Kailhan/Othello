@@ -16,6 +16,8 @@ import static java.lang.Integer.max;
 public class MCTS implements AI {
 
     private int treeDepth;
+    private int totalSims;
+    private int simsCounter = 0;
     private Random rand = new Random();
     private LinkedList<MCTSNode> nodeQueue = new LinkedList<MCTSNode>();
     public static final int DUMB = 0;
@@ -24,8 +26,8 @@ public class MCTS implements AI {
     public static final int LOSS = 0;
 
 
-    public MCTS(int treeDepth) {
-        this.treeDepth = treeDepth;
+    public MCTS(int totalSims) {
+        this.totalSims = totalSims;
     }
 
     public int[] getMoves(Board board) {
@@ -41,6 +43,7 @@ public class MCTS implements AI {
         do{
             MCTSNode toBeChecked = nodeSelection(nodeQueue);
             playoutSimulation(toBeChecked);
+            System.out.println("nodequeueueuesize: " + nodeQueue.size());
         } while(nodeQueue.size() > 0);
         int maxScore = MIN_VALUE;
         ArrayList<MCTSNode> potentialNodes = new ArrayList<MCTSNode>();
@@ -56,6 +59,8 @@ public class MCTS implements AI {
                 potentialNodes.add(node);
             }
         }
+        simsCounter = 0;
+        System.out.println("potentialnodessize: " + potentialNodes.size());
         return potentialNodes.get(rand.nextInt(potentialNodes.size())); //makes sure we pick a random node instead of for example the last one that has a highest score
     }
 
@@ -75,8 +80,23 @@ public class MCTS implements AI {
     }
 
     public MCTSNode nodeSelection(LinkedList nodeQueue) {
-        MCTSNode toBeChecked = (MCTSNode)nodeQueue.poll(); //retrieves and removes the first element of this list or returns null if this list is empty
-        if(toBeChecked.getDepth() < treeDepth) createChildren(toBeChecked);
+        double nodeScore = -1;
+
+        ArrayList<MCTSNode> potentialNodes = new ArrayList<MCTSNode>();
+        for(Object node : nodeQueue) {
+            MCTSNode tmpNode = (MCTSNode) node;
+            if(tmpNode.getNodeScore() > nodeScore) {
+                nodeScore = tmpNode.getNodeScore();
+                potentialNodes.add(tmpNode);
+            }
+        }
+        MCTSNode toBeChecked = potentialNodes.get(rand.nextInt(potentialNodes.size()));
+        nodeQueue.remove((Object) toBeChecked);
+//        MCTSNode toBeChecked = (MCTSNode)nodeQueue.poll(); //retrieves and removes the first element of this list or returns null if this list is empty
+//        if(toBeChecked.getDepth() < treeDepth) createChildren(toBeChecked);
+        if(simsCounter < totalSims) createChildren(toBeChecked);
+        simsCounter++;
+        System.out.println("simsCounter: " + simsCounter);
         return toBeChecked;
     }
 
