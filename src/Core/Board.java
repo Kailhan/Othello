@@ -1,7 +1,5 @@
 package Core;
 
-import AI.EvaluationFunction;
-
 import java.io.Serializable;
 
 public class Board implements Serializable {
@@ -167,7 +165,7 @@ public class Board implements Serializable {
      * @param col specifies column of cell we want to update
      */
     public void applyMove(int row, int col) {
-//        EvaluationFunction evaluator = new EvaluationFunction(this, getBoardGrid());
+//        EvalFunc_FixedTerr evaluator = new EvalFunc_FixedTerr(this, getBoardGrid());
 //        System.out.println(evaluator.evaluate());
         int[][] flippedDisks = Logic.getFlippedDisks(row, col, this);
         boardGrid[row][col] = currentPlayer;
