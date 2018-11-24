@@ -10,10 +10,22 @@ public class EvaluationFunction {
     private int[][] boardGrid;
     private Settings settings;
 
-    private int w1 = 100;
-    private int w2 = 0;       //set to 0 to disable for a while
-    private int w3 = 100;
-    private int w4 = 100;
+    private double coinWeightPoly0 = 100;
+    private double coinWeightPoly1 = 0;
+    private double coinWeightPoly2 = 0;
+    private double coinWeightPoly3 = 0;
+    private double cornerWeightPoly0 = 0;       //set to 0 to disable for a while
+    private double cornerWeightPoly1 = 0;
+    private double cornerWeightPoly2 = 0;
+    private double cornerWeightPoly3 = 0;
+    private double moveWeightPoly0 = 100;
+    private double moveWeightPoly1 = 0;
+    private double moveWeightPoly2 = 0;
+    private double moveWeightPoly3 = 0;
+    private double territoryWeightPoly0 = 100;
+    private double territoryWeightPoly1 = 0;
+    private double territoryWeightPoly2 = 0;
+    private double territoryWeightPoly3 = 0;
     private final static int BLACK = 1;
     private final static int WHITE = -1;
     private int score;
@@ -46,7 +58,7 @@ public class EvaluationFunction {
             this.board.changePlayer();
             blackMoves = Logic.numberSquaresAllowed(this.board);
         }
-        else{
+        else {
             blackMoves = Logic.numberSquaresAllowed(this.board);
             this.board.changePlayer();
             whiteMoves = Logic.numberSquaresAllowed(this.board);
@@ -54,34 +66,32 @@ public class EvaluationFunction {
 
         if(blackMoves + whiteMoves != 0){
             numberOfMoves =  (double) ((blackMoves - whiteMoves) / (blackMoves + whiteMoves));
-        }
-        else numberOfMoves = 0;
+        } else numberOfMoves = 0;
 
         if(getCorners(BLACK) + getCorners(WHITE) != 0) {
             numberOfCorners = (double) ((getCorners(BLACK) - getCorners(WHITE)) / (getCorners(BLACK) + getCorners(WHITE)));
-        }
-        else numberOfCorners = 0;
+        } else numberOfCorners = 0;
 
         if (getTerritoryScore(BLACK) + getTerritoryScore(WHITE) !=0 ){
             territory = (double) (getTerritoryScore(BLACK) - getTerritoryScore(WHITE))/ (getTerritoryScore(BLACK) + getTerritoryScore(WHITE));
-        }
-        else territory = 0;
+        } else territory = 0;
         
 //        if (this.board.getTurn() > 10 && this.board.getTurn() < 20) { //even kijken wat de beste strategie is, ook rekening houden met de grote van de borden
-//            this.w1 = 50;
-//            this.w2 = 50;
-//            this.w3 = 50;
-//            this.w4 = 50;
+//            this.coinWeight = 50;
+//            this.cornerWeightPoly0 = 50;
+//            this.moveWeightPoly0 = 50;
+//            this.territoryWeightPoly0 = 50;
 //        }
 //
 //        if (this.board.getTurn() > 20 && this.board.getTurn() < 32) { //even kijken wat de beste strategie is, ook rekening houden met de grote van de borden
-//            this.w1 = 50;
-//            this.w2 = 50;
-//            this.w3 = 50;
-//            this.w4 = 50;
+//            this.coinWeight = 50;
+//            this.cornerWeightPoly0 = 50;
+//            this.moveWeightPoly0 = 50;
+//            this.territoryWeightPoly0 = 50;
 //        }
 
-        totalScore = (int) (w1 * numberOfCoins + w2 * numberOfCorners + w3 * numberOfMoves + w4 * territory);
+        totalScore = (int) (calcCoinWeight(board.getTurn()) * numberOfCoins + calcCornerWeight(board.getTurn()) * numberOfCorners +
+                calcMoveWeight(board.getTurn()) * numberOfMoves + calcTerritoryWeight(board.getTurn()) * territory);
 
         System.out.println("numberOfcoins: " + numberOfCoins);
         System.out.println("numberOfMoves: " + numberOfMoves);
@@ -128,20 +138,20 @@ public class EvaluationFunction {
 
 
 //        if (cBoard.getTurn() > 10 && cBoard.getTurn() < 20) { //even kijken wat de beste strategie is, ook rekening houden met de grote van de borden
-//            this.w1 = 50;
-//            this.w2 = 50;
-//            this.w3 = 50;
-//            this.w4 = 50;
+//            this.coinWeight = 50;
+//            this.cornerWeightPoly0 = 50;
+//            this.moveWeightPoly0 = 50;
+//            this.territoryWeightPoly0 = 50;
 //        }
 //
 //        if (cBoard.getTurn() > 20 && cBoard.getTurn() < 32) { //even kijken wat de beste strategie is, ook rekening houden met de grote van de borden
-//            this.w1 = 50;
-//            this.w2 = 50;
-//            this.w3 = 50;
-//            this.w4 = 50;
+//            this.coinWeight = 50;
+//            this.cornerWeightPoly0 = 50;
+//            this.moveWeightPoly0 = 50;
+//            this.territoryWeightPoly0 = 50;
 //        }
 
-        totalScore = (int) (w1 * numberOfCoins + w2 * numberOfCorners + w3 * numberOfMoves + w4 * territory);
+        totalScore = (int) (coinWeightPoly0 * numberOfCoins + cornerWeightPoly0 * numberOfCorners + moveWeightPoly0 * numberOfMoves + territoryWeightPoly0 * territory);
 
 //        System.out.println("numberOfcoins: " + numberOfCoins);
 //        System.out.println("numberOfMoves: " + numberOfMoves);
@@ -338,4 +348,25 @@ public class EvaluationFunction {
         }
         return score;
     }
+
+    public double calcCoinWeight(int turn) {
+        double coinWeight = coinWeightPoly0 + (coinWeightPoly1 * turn) + (coinWeightPoly2 * turn * turn) + (coinWeightPoly3 * turn * turn * turn);
+        return coinWeight;
+    }
+
+    public double calcCornerWeight(int turn) {
+        double cornerWeight = cornerWeightPoly0 + (cornerWeightPoly1 * turn) + (cornerWeightPoly2 * turn * turn) + (cornerWeightPoly3 * turn * turn * turn);
+        return cornerWeight;
+    }
+
+    public double calcMoveWeight(int turn) {
+        double moveWeight = moveWeightPoly0 + (moveWeightPoly1 * turn) + (moveWeightPoly2 * turn * turn) + (moveWeightPoly3 * turn * turn * turn);
+        return moveWeight;
+    }
+
+    public double calcTerritoryWeight(int turn) {
+        double territoryWeight = territoryWeightPoly0 + (territoryWeightPoly1 * turn) + (territoryWeightPoly2 * turn * turn) + (territoryWeightPoly3 * turn * turn * turn);
+        return territoryWeight;
+    }
+
 }
