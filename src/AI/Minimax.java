@@ -1,5 +1,6 @@
 package AI;
 
+import AI.EvaluationFunctions.EvalFunc_FixedTerr;
 import Core.*;
 
 public class Minimax {

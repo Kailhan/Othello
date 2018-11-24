@@ -1,5 +1,6 @@
-package AI;
+package AI.EvaluationFunctions;
 
+import AI.AI;
 import Core.Board;
 import Core.Logic;
 import Core.Settings;
@@ -10,6 +11,17 @@ public class EvalFunc_FixedTerr extends EvaluationFunction {
     private int[][] medium;
     private int[][] large;
 
+    public EvalFunc_FixedTerr(Board cBoard){
+        this.board = cBoard;
+        this.boardGrid = cBoard.getBoardGrid();
+        this.settings = new Settings();
+    }
+
+    public EvalFunc_FixedTerr(){
+        this.board = new Board();
+        this.boardGrid = board.getBoardGrid();
+        this.settings = new Settings();
+    }
     public int[][] setTerritory(int j){
 
         small = new int[4][4];

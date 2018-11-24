@@ -2,7 +2,7 @@ package AI.Genetic_Algorithm;
 
 import AI.AI;
 
-public class GeneticAlg_Eval {
+public class GA_Eval {
 
     public static void main(String[] args) {
 //        START

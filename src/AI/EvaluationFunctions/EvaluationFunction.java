@@ -1,39 +1,40 @@
-package AI;
+package AI.EvaluationFunctions;
 
+import AI.AI;
 import Core.Board;
 import Core.Logic;
 import Core.Settings;
 
 public abstract class EvaluationFunction {
 
-    private Board board;
-    private int[][] boardGrid;
-    private Settings settings;
+    protected Board board;
+    protected int[][] boardGrid;
+    protected Settings settings;
 
-    private double coinWeightPoly0 = 100;
-    private double coinWeightPoly1 = 0;
-    private double coinWeightPoly2 = 0;
-    private double coinWeightPoly3 = 0;
-    private double cornerWeightPoly0 = 0;       //set to 0 to disable for a while
-    private double cornerWeightPoly1 = 0;
-    private double cornerWeightPoly2 = 0;
-    private double cornerWeightPoly3 = 0;
-    private double moveWeightPoly0 = 100;
-    private double moveWeightPoly1 = 0;
-    private double moveWeightPoly2 = 0;
-    private double moveWeightPoly3 = 0;
-    private double territoryWeightPoly0 = 100;
-    private double territoryWeightPoly1 = 0;
-    private double territoryWeightPoly2 = 0;
-    private double territoryWeightPoly3 = 0;
+    protected double coinWeightPoly0 = 100;
+    protected double coinWeightPoly1 = 0;
+    protected double coinWeightPoly2 = 0;
+    protected double coinWeightPoly3 = 0;
+    protected double cornerWeightPoly0 = 0;       //set to 0 to disable for a while
+    protected double cornerWeightPoly1 = 0;
+    protected double cornerWeightPoly2 = 0;
+    protected double cornerWeightPoly3 = 0;
+    protected double moveWeightPoly0 = 100;
+    protected double moveWeightPoly1 = 0;
+    protected double moveWeightPoly2 = 0;
+    protected double moveWeightPoly3 = 0;
+    protected double territoryWeightPoly0 = 100;
+    protected double territoryWeightPoly1 = 0;
+    protected double territoryWeightPoly2 = 0;
+    protected double territoryWeightPoly3 = 0;
 
-    private final static int BLACK = 1;
-    private final static int WHITE = -1;
-    private int score;
+    protected final static int BLACK = 1;
+    protected final static int WHITE = -1;
+    protected int score;
 
-    public EvaluationFunction(Board cBoard, int[][] boardGrid){
+    public EvaluationFunction(Board cBoard){
         this.board = cBoard;
-        this.boardGrid = boardGrid;
+        this.boardGrid = cBoard.getBoardGrid();
         this.settings = new Settings();
     }
 

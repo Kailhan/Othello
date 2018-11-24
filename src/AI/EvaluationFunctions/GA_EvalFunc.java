@@ -1,9 +1,8 @@
-package AI.Genetic_Algorithm;
+package AI.EvaluationFunctions;
 
-import AI.EvalFunc_FixedTerr;
-import AI.EvaluationFunction;
+import AI.EvaluationFunctions.EvaluationFunction;
 
-public class GeneticAlg_EvalFunc extends EvaluationFunction {
+public class GA_EvalFunc extends EvaluationFunction {
 
     private int[][] small;
     private int[][] medium;
