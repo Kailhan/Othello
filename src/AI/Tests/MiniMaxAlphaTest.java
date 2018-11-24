@@ -9,7 +9,7 @@ public class MiniMaxAlphaTest {
 
     public static void main(String[] args) {
 
-        EvaluationFunction evaluator = new EvaluationFunction();
+        EvalFunc_FixedTerr evaluator = new EvalFunc_FixedTerr();
         Board board = new Board();
         MiniMaxAlph minimax = new MiniMaxAlph(DEPTH,board);
         GameTree gameTree = new GameTree(DEPTH);

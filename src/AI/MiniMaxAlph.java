@@ -2,19 +2,16 @@ package AI;
 
 import Core.Board;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-
 public class MiniMaxAlph {
 
-    EvaluationFunction evaluator;
+    EvalFunc_FixedTerr evaluator;
     private GameTree gameTree;
     private Node<Board> root;
 
 
     public MiniMaxAlph(int depth , Board board) {
         this.gameTree = new GameTree(depth, board);
-        this.evaluator = new EvaluationFunction();
+        this.evaluator = new EvalFunc_FixedTerr();
         this.root = gameTree.createTree();
     }
 

@@ -1,5 +1,4 @@
 package AI;
-import java.util.*;
 
 import Core.*;
 
@@ -8,7 +7,7 @@ public class Minimax {
 
     int depth;
     private GameTree gameTree;
-    private EvaluationFunction evaluator;
+    private EvalFunc_FixedTerr evaluator;
     private Node<Board> root;
 
     //Board board;
@@ -18,7 +17,7 @@ public class Minimax {
     public Minimax(int depth, Board board) {
         this.depth = depth;
         this.gameTree = new GameTree(depth, board);
-        this.evaluator = new EvaluationFunction();
+        this.evaluator = new EvalFunc_FixedTerr();
         this.root = gameTree.createTree();
         //this.board = board;
         //this.bestNode = new Node<Board>(board);
