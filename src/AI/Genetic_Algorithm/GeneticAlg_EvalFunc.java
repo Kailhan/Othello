@@ -13,5 +13,6 @@ public class GeneticAlg_EvalFunc extends EvaluationFunction {
         small = new int[4][4];
         medium = new int[6][6];
         large = new int[8][8];
+        return null;
     }
 }
