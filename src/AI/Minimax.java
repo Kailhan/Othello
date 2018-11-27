@@ -2,7 +2,7 @@ package AI;
 
 import Core.*;
 
-public class Minimax {
+public class Minimax implements AI {
 
 
     int depth;
@@ -13,6 +13,13 @@ public class Minimax {
     //Board board;
     //Node<Board> bestNode;
     //int maxValue;
+
+    public int[] getBestMove(Board board) {
+        int[] bestMove = new int[2];
+        bestMove[0] = selectMove(root).getRow();
+        bestMove[1] = selectMove(root).getColumn();
+        return bestMove;
+    }
 
     public Minimax(int depth, Board board) {
         this.depth = depth;

@@ -35,6 +35,7 @@ public class EvaluationFunction {
     public EvaluationFunction(Board cBoard){
         this.cBoard = cBoard;
         this.boardGrid = cBoard.getBoardGrid();
+        setTerritory();
     }
 
     public EvaluationFunction(){

@@ -2,7 +2,7 @@ package AI;
 
 import Core.Board;
 
-public class MiniMaxAlph {
+public class MiniMaxAlph implements AI {
 
     private EvaluationFunction evaluator;
     private GameTree gameTree;
@@ -12,6 +12,13 @@ public class MiniMaxAlph {
         this.gameTree = new GameTree(depth, board);
         this.evaluator = new EvaluationFunction();
         this.root = gameTree.createTree();
+    }
+
+    public int[] getBestMove(Board board) {
+        int[] bestMove = new int[2];
+        bestMove[0] = selectMove(root).getRow();
+        bestMove[1] = selectMove(root).getColumn();
+        return bestMove;
     }
 
     public int search(Node<Board> currentNode, int alpha, int beta) {
