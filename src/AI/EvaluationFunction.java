@@ -10,23 +10,7 @@ public class EvaluationFunction {
     private Board cBoard;
     private int[][] boardGrid;
     private double[][] cellValues;
-
-    private double coinWeightPoly0 = 100;
-    private double coinWeightPoly1 = 0;
-    private double coinWeightPoly2 = 0;
-    private double coinWeightPoly3 = 0;
-    private double cornerWeightPoly0 = 0;       //set to 0 to disable for a while
-    private double cornerWeightPoly1 = 0;
-    private double cornerWeightPoly2 = 0;
-    private double cornerWeightPoly3 = 0;
-    private double moveWeightPoly0 = 100;
-    private double moveWeightPoly1 = 0;
-    private double moveWeightPoly2 = 0;
-    private double moveWeightPoly3 = 0;
-    private double territoryWeightPoly0 = 100;
-    private double territoryWeightPoly1 = 0;
-    private double territoryWeightPoly2 = 0;
-    private double territoryWeightPoly3 = 0;
+    private double[] weightPoly;
 
     private final static int BLACK = 1;
     private final static int WHITE = -1;
@@ -35,11 +19,39 @@ public class EvaluationFunction {
     public EvaluationFunction(Board cBoard){
         this.cBoard = cBoard;
         this.boardGrid = cBoard.getBoardGrid();
+        setWeightPoly();
         setTerritory();
     }
 
     public EvaluationFunction(){
         this(new Board());
+    }
+
+    public void setWeightPoly() {
+        this.weightPoly = new double[16];
+        this.weightPoly[0] = 100;  //coinWeightPoly0 = 100;
+        this.weightPoly[1] = 0; //coinWeightPoly1 = 0;
+        this.weightPoly[2] = 0; //coinWeightPoly2 = 0;
+        this.weightPoly[3] = 0; //coinWeightPoly3 = 0;
+        this.weightPoly[4] = 0; //cornerWeightPoly0 = 0;       //set to 0 to disable for a while
+        this.weightPoly[5] = 0; //cornerWeightPoly1 = 0;
+        this.weightPoly[6] = 0; //cornerWeightPoly2 = 0;
+        this.weightPoly[7] = 0; //cornerWeightPoly3 = 0;
+        this.weightPoly[8] = 100; //moveWeightPoly0 = 100;
+        this.weightPoly[9] = 0; //moveWeightPoly1 = 0;
+        this.weightPoly[10] = 0; //moveWeightPoly2 = 0;
+        this.weightPoly[11] = 0; //moveWeightPoly3 = 0;
+        this.weightPoly[12] = 100; //territoryWeightPoly0 = 100;
+        this.weightPoly[13] = 0; //territoryWeightPoly1 = 0;
+        this.weightPoly[14] = 0; //territoryWeightPoly2 = 0;
+        this.weightPoly[15] = 0; //territoryWeightPoly3 = 0;
+    }
+
+    public void setWeightPoly(double[] weightPoly) {
+        this.weightPoly = new double[16];
+        for(int i = 0; i < weightPoly.length; i++) {
+            this.weightPoly[i] = weightPoly[i];
+        }
     }
 
     public int evaluate(Board cBoard){
@@ -126,7 +138,11 @@ public class EvaluationFunction {
     }
 
     public void setTerritory(double[][] cellValues) {
-        this.cellValues = cellValues;
+        for(int i = 0; i < cBoard.getSize(); i++) {
+            for(int j = 0; j < cBoard.getSize(); j++) {
+                this.cellValues[i][j] = cellValues[i][j];
+            }
+        }
     }
 
     public void setTerritory(){
@@ -269,23 +285,59 @@ public class EvaluationFunction {
         return score;
     }
 
+    public double[] coinWeightPoly() {
+        double[] coinWeightPoly = new double[4];
+        coinWeightPoly[0] = weightPoly[0];
+        coinWeightPoly[1] = weightPoly[1];
+        coinWeightPoly[2] = weightPoly[2];
+        coinWeightPoly[3] = weightPoly[3];
+        return coinWeightPoly;
+    }
+
+    public double[] cornerWeightPoly() {
+        double[] cornerWeightPoly = new double[4];
+        cornerWeightPoly[0] = weightPoly[4];
+        cornerWeightPoly[1] = weightPoly[5];
+        cornerWeightPoly[2] = weightPoly[6];
+        cornerWeightPoly[3] = weightPoly[7];
+        return cornerWeightPoly;
+    }
+
+    public double[] moveWeightPoly() {
+        double[] moveWeightPoly = new double[4];
+        moveWeightPoly[0] = weightPoly[8];
+        moveWeightPoly[1] = weightPoly[9];
+        moveWeightPoly[2] = weightPoly[10];
+        moveWeightPoly[3] = weightPoly[11];
+        return moveWeightPoly;
+    }
+
+    public double[] territoryWeightPoly() {
+        double[] territoryWeightPoly = new double[4];
+        territoryWeightPoly[0] = weightPoly[12];
+        territoryWeightPoly[1] = weightPoly[13];
+        territoryWeightPoly[2] = weightPoly[14];
+        territoryWeightPoly[3] = weightPoly[15];
+        return territoryWeightPoly;
+    }
+
     public double calcCoinWeight(int turn) {
-        double coinWeight = coinWeightPoly0 + (coinWeightPoly1 * turn) + (coinWeightPoly2 * turn * turn) + (coinWeightPoly3 * turn * turn * turn);
+        double coinWeight = coinWeightPoly()[0] + (coinWeightPoly()[1] * turn) + (coinWeightPoly()[2] * turn * turn) + (coinWeightPoly()[3] * turn * turn * turn);
         return coinWeight;
     }
 
     public double calcCornerWeight(int turn) {
-        double cornerWeight = cornerWeightPoly0 + (cornerWeightPoly1 * turn) + (cornerWeightPoly2 * turn * turn) + (cornerWeightPoly3 * turn * turn * turn);
+        double cornerWeight = cornerWeightPoly()[0] + (cornerWeightPoly()[1] * turn) + (cornerWeightPoly()[2] * turn * turn) + (cornerWeightPoly()[3] * turn * turn * turn);
         return cornerWeight;
     }
 
     public double calcMoveWeight(int turn) {
-        double moveWeight = moveWeightPoly0 + (moveWeightPoly1 * turn) + (moveWeightPoly2 * turn * turn) + (moveWeightPoly3 * turn * turn * turn);
+        double moveWeight = moveWeightPoly()[0] + (moveWeightPoly()[1] * turn) + (moveWeightPoly()[2] * turn * turn) + (moveWeightPoly()[3] * turn * turn * turn);
         return moveWeight;
     }
 
     public double calcTerritoryWeight(int turn) {
-        double territoryWeight = territoryWeightPoly0 + (territoryWeightPoly1 * turn) + (territoryWeightPoly2 * turn * turn) + (territoryWeightPoly3 * turn * turn * turn);
+        double territoryWeight = territoryWeightPoly()[0] + (territoryWeightPoly()[1] * turn) + (territoryWeightPoly()[2] * turn * turn) + (territoryWeightPoly()[3] * turn * turn * turn);
         return territoryWeight;
     }
 
