@@ -1,17 +1,14 @@
 package AI;
 
-import AI.AI;
 import Core.Board;
 import Core.Logic;
-import Core.Settings;
 
 import java.util.Random;
 
 public class EvaluationFunction {
 
-    private Board board;
+    private Board cBoard;
     private int[][] boardGrid;
-    private Settings settings;
     private double[][] cellValues;
 
     private double coinWeightPoly0 = 100;
@@ -36,16 +33,16 @@ public class EvaluationFunction {
     private int score;
 
     public EvaluationFunction(Board cBoard){
-        this.board = cBoard;
+        this.cBoard = cBoard;
         this.boardGrid = cBoard.getBoardGrid();
-        this.settings = new Settings();
     }
 
     public EvaluationFunction(){
         this(new Board());
     }
 
-    public int evaluate(){
+    public int evaluate(Board cBoard){
+        this.cBoard = cBoard;
         int totalScore;
         int blackMoves;
         int whiteMoves;
@@ -54,17 +51,17 @@ public class EvaluationFunction {
         double numberOfCoins;
         double territory;
 
-        numberOfCoins = (double) (this.board.getNrSquares(BLACK) - this.board.getNrSquares(WHITE)) / (this.board.getNrSquares(BLACK) + this.board.getNrSquares(WHITE));
+        numberOfCoins = (double) (this.cBoard.getNrSquares(BLACK) - this.cBoard.getNrSquares(WHITE)) / (this.cBoard.getNrSquares(BLACK) + this.cBoard.getNrSquares(WHITE));
 
-        if(this.board.getCurrentPlayer() == WHITE){
-            whiteMoves = Logic.numberSquaresAllowed(this.board);
-            this.board.changePlayer();
-            blackMoves = Logic.numberSquaresAllowed(this.board);
+        if(this.cBoard.getCurrentPlayer() == WHITE){
+            whiteMoves = Logic.numberSquaresAllowed(this.cBoard);
+            this.cBoard.changePlayer();
+            blackMoves = Logic.numberSquaresAllowed(this.cBoard);
         }
         else {
-            blackMoves = Logic.numberSquaresAllowed(this.board);
-            this.board.changePlayer();
-            whiteMoves = Logic.numberSquaresAllowed(this.board);
+            blackMoves = Logic.numberSquaresAllowed(this.cBoard);
+            this.cBoard.changePlayer();
+            whiteMoves = Logic.numberSquaresAllowed(this.cBoard);
         }
 
         if(blackMoves + whiteMoves != 0){
@@ -79,22 +76,22 @@ public class EvaluationFunction {
             territory = (double) (getTerritoryScore(BLACK) - getTerritoryScore(WHITE))/ (getTerritoryScore(BLACK) + getTerritoryScore(WHITE));
         } else territory = 0;
 
-//        if (this.board.getTurn() > 10 && this.board.getTurn() < 20) { //even kijken wat de beste strategie is, ook rekening houden met de grote van de borden
+//        if (this.cBoard.getTurn() > 10 && this.cBoard.getTurn() < 20) { //even kijken wat de beste strategie is, ook rekening houden met de grote van de borden
 //            this.coinWeight = 50;
 //            this.cornerWeightPoly0 = 50;
 //            this.moveWeightPoly0 = 50;
 //            this.territoryWeightPoly0 = 50;
 //        }
 //
-//        if (this.board.getTurn() > 20 && this.board.getTurn() < 32) { //even kijken wat de beste strategie is, ook rekening houden met de grote van de borden
+//        if (this.cBoard.getTurn() > 20 && this.cBoard.getTurn() < 32) { //even kijken wat de beste strategie is, ook rekening houden met de grote van de borden
 //            this.coinWeight = 50;
 //            this.cornerWeightPoly0 = 50;
 //            this.moveWeightPoly0 = 50;
 //            this.territoryWeightPoly0 = 50;
 //        }
 
-        totalScore = (int) (calcCoinWeight(board.getTurn()) * numberOfCoins + calcCornerWeight(board.getTurn()) * numberOfCorners +
-                calcMoveWeight(board.getTurn()) * numberOfMoves + calcTerritoryWeight(board.getTurn()) * territory);
+        totalScore = (int) (calcCoinWeight(cBoard.getTurn()) * numberOfCoins + calcCornerWeight(cBoard.getTurn()) * numberOfCorners +
+                calcMoveWeight(cBoard.getTurn()) * numberOfMoves + calcTerritoryWeight(cBoard.getTurn()) * territory);
 
         System.out.println("numberOfcoins: " + numberOfCoins);
         System.out.println("numberOfMoves: " + numberOfMoves);
@@ -102,67 +99,6 @@ public class EvaluationFunction {
         System.out.println("territoryScoreBlack: " + getTerritoryScore(BLACK));
         System.out.println("terrScore: " + territory);
         System.out.println("totalscore: " + totalScore);
-
-        return totalScore;
-    }
-
-    public int evaluate(Board cBoard) {
-        int totalScore = 0;
-        double numberOfCorners;
-        double numberOfMoves;
-        double numberOfCoins;
-        int blackMoves = 0;
-        int whiteMoves = 0;
-        double territory;
-
-        numberOfCoins = (double) (cBoard.getNrSquares(BLACK) - cBoard.getNrSquares(WHITE)) / (cBoard.getNrSquares(BLACK) + cBoard.getNrSquares(WHITE));
-
-        if (cBoard.getCurrentPlayer() == WHITE) {
-            whiteMoves = Logic.numberSquaresAllowed(cBoard);
-            cBoard.changePlayer();
-            blackMoves = Logic.numberSquaresAllowed(cBoard);
-        } else {
-            blackMoves = Logic.numberSquaresAllowed(cBoard);
-            cBoard.changePlayer();
-            whiteMoves = Logic.numberSquaresAllowed(cBoard);
-        }
-
-        if (blackMoves + whiteMoves != 0) {
-            numberOfMoves = (double) ((blackMoves - whiteMoves) / (blackMoves + whiteMoves));
-        } else numberOfMoves = 0;
-
-        if (getCorners(cBoard, BLACK) + getCorners(cBoard, WHITE) != 0) {
-            numberOfCorners = (double) ((getCorners(cBoard, BLACK) - getCorners(cBoard, WHITE)) / (getCorners(cBoard, BLACK) + getCorners(cBoard, WHITE)));
-        } else numberOfCorners = 0;
-
-        if (getTerritoryScore(BLACK, cBoard) + getTerritoryScore(WHITE, cBoard) != 0) {
-            territory = (double) (getTerritoryScore(BLACK, cBoard) - getTerritoryScore(WHITE, cBoard)) / (getTerritoryScore(BLACK, cBoard) + getTerritoryScore(WHITE, cBoard));
-        } else territory = 0;
-
-
-//        if (cBoard.getTurn() > 10 && cBoard.getTurn() < 20) { //even kijken wat de beste strategie is, ook rekening houden met de grote van de borden
-//            this.coinWeight = 50;
-//            this.cornerWeightPoly0 = 50;
-//            this.moveWeightPoly0 = 50;
-//            this.territoryWeightPoly0 = 50;
-//        }
-//
-//        if (cBoard.getTurn() > 20 && cBoard.getTurn() < 32) { //even kijken wat de beste strategie is, ook rekening houden met de grote van de borden
-//            this.coinWeight = 50;
-//            this.cornerWeightPoly0 = 50;
-//            this.moveWeightPoly0 = 50;
-//            this.territoryWeightPoly0 = 50;
-//        }
-
-        totalScore = (int) (coinWeightPoly0 * numberOfCoins + cornerWeightPoly0 * numberOfCorners + moveWeightPoly0 * numberOfMoves + territoryWeightPoly0 * territory);
-
-//        System.out.println("numberOfcoins: " + numberOfCoins);
-//        System.out.println("numberOfMoves: " + numberOfMoves);
-//        System.out.println("territoryScoreWhite: " + getTerritoryScore(WHITE, cBoard));
-//        System.out.println("territoryScoreBlack: " + getTerritoryScore(BLACK, cBoard));
-//        System.out.println("terrScore: " + territory);
-//        System.out.println("turn: " + cBoard.getTurn());
-//        System.out.println("totalscore: " + totalScore);
 
         return totalScore;
     }
@@ -177,34 +113,24 @@ public class EvaluationFunction {
         return nrCorners;
     }
 
-    public int getCorners(Board cBoard, int player) {
-        int nrCorners = 0;
-        for (int i = 0; i < cBoard.getBoardGrid().length; i += cBoard.getBoardGrid().length-1)
-            for (int j = 0; j < cBoard.getBoardGrid()[i].length; j += cBoard.getBoardGrid()[i].length-1)
-                if (cBoard.getBoardGrid()[i][j] == player)
-                    nrCorners++;
 
-        return nrCorners;
-    }
-
-    public double[][] setTerritory(double bound) {
+    public void setTerritory(double bound) {
+        cellValues = new double[cBoard.getSize()][cBoard.getSize()];
         Random rand = new Random();
-        for(int i = 0; i < board.getSize(); i++) {
-            for(int j = 0; j < board.getSize(); j++) {
+        for(int i = 0; i < cBoard.getSize(); i++) {
+            for(int j = 0; j < cBoard.getSize(); j++) {
                 cellValues[i][j] = rand.nextDouble()*bound;
             }
         }
-        return cellValues;
     }
 
-    public double[][] setTerritory(double[][] cellValues) {
+    public void setTerritory(double[][] cellValues) {
         this.cellValues = cellValues;
-        return  cellValues;
     }
 
-    public double[][] setTerritory(){
-        cellValues = new double[board.getSize()][board.getSize()];
-        if(board.getSize() == 4){
+    public void setTerritory(){
+        cellValues = new double[cBoard.getSize()][cBoard.getSize()];
+        if(cBoard.getSize() == 4){
 
             cellValues[0][0]  = 10;
             cellValues[3][3]  = 10;
@@ -219,11 +145,9 @@ public class EvaluationFunction {
             cellValues[3][2]  = 5;
             cellValues[2][3]  = 5;
             cellValues[1][3]  = 5;
-
-            return cellValues;
         }
 
-        if(board.getSize() == 6) {
+        if(cBoard.getSize() == 6) {
 
             cellValues[0][0] = 10;
             cellValues[5][5] = 10;
@@ -260,11 +184,9 @@ public class EvaluationFunction {
             cellValues[3][5] = 8;
             cellValues[5][2] = 8;
             cellValues[5][3] = 8;
-
-            return cellValues;
         }
 
-        if(board.getSize() == 8){
+        if(cBoard.getSize() == 8){
 
             cellValues[0][0] = 10;
             cellValues[7][7] = 10;
@@ -330,10 +252,7 @@ public class EvaluationFunction {
             cellValues[7][3] = 8;
             cellValues[7][4] = 8;
             cellValues[7][5] = 8;
-            return cellValues;
         }
-
-        return null;
     }
 
     public int getTerritoryScore(int player){
@@ -342,20 +261,7 @@ public class EvaluationFunction {
         for (int i = 0; i < boardGrid.length; i++) {
             for (int j = 0; j < boardGrid[i].length; j++) {
                 if (boardGrid[i][j] == player) {
-                    score += setTerritory()[i][j];
-                }
-            }
-        }
-        return score;
-    }
-
-    public int getTerritoryScore(int player, Board cBoard){
-        this.score = 0;
-
-        for (int i = 0; i < cBoard.getBoardGrid().length; i++) {
-            for (int j = 0; j < cBoard.getBoardGrid()[i].length; j++) {
-                if (cBoard.getBoardGrid()[i][j] == player) {
-                    score += setTerritory()[i][j];
+                    score += cellValues[i][j];
                 }
             }
         }
