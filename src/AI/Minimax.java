@@ -17,7 +17,7 @@ public class Minimax {
     public Minimax(int depth, Board board) {
         this.depth = depth;
         this.gameTree = new GameTree(depth, board);
-        this.evaluator = new EvaluationFunction();
+        this.evaluator = new EvaluationFunction(board);
         this.root = gameTree.createTree();
         //this.board = board;
         //this.bestNode = new Node<Board>(board);
