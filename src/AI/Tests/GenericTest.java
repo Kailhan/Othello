@@ -16,12 +16,12 @@ public class GenericTest {
     private static int draws = 0;
     private static Board board;
 
-    public static void test(AI player1, AI player2, int games, int boardSize) {
+    public static void test(AI player1, AI player2, int gamesToBeSimmed, int boardSize) {
         player1Wins = 0;
         player2Wins = 0;
         draws = 0;
 
-        for (int i = 0; i < games; i++) {
+        for (int i = 0; i < gamesToBeSimmed; i++) {
             boolean gameFinished = false;
             board = new Board(boardSize);
             int[] move = new int[2];

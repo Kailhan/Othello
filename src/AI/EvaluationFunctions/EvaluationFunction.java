@@ -39,9 +39,7 @@ public abstract class EvaluationFunction {
     }
 
     public EvaluationFunction(){
-        this.board = new Board();
-        this.boardGrid = board.getBoardGrid();
-        this.settings = new Settings();
+        this(new Board());
     }
 
     public int evaluate(){
@@ -53,7 +51,7 @@ public abstract class EvaluationFunction {
         double numberOfCoins;
         double territory;
 
-        numberOfCoins =  (double) (this.board.getNrSquares(BLACK) - this.board.getNrSquares(WHITE)) / (this.board.getNrSquares(BLACK) + this.board.getNrSquares(WHITE));
+        numberOfCoins = (double) (this.board.getNrSquares(BLACK) - this.board.getNrSquares(WHITE)) / (this.board.getNrSquares(BLACK) + this.board.getNrSquares(WHITE));
 
         if(this.board.getCurrentPlayer() == WHITE){
             whiteMoves = Logic.numberSquaresAllowed(this.board);
@@ -186,7 +184,7 @@ public abstract class EvaluationFunction {
         return nrCorners;
     }
 
-    public abstract int[][] setTerritory(int j);
+    public abstract int[][] setTerritory();
 
     public int getTerritoryScore(int player){
         this.score = 0;
@@ -194,7 +192,7 @@ public abstract class EvaluationFunction {
         for (int i = 0; i < boardGrid.length; i++) {
             for (int j = 0; j < boardGrid[i].length; j++) {
                 if (boardGrid[i][j] == player) {
-                    score += setTerritory(settings.getBoardSize())[i][j];
+                    score += setTerritory()[i][j];
                 }
             }
         }
@@ -207,7 +205,7 @@ public abstract class EvaluationFunction {
         for (int i = 0; i < cBoard.getBoardGrid().length; i++) {
             for (int j = 0; j < cBoard.getBoardGrid()[i].length; j++) {
                 if (cBoard.getBoardGrid()[i][j] == player) {
-                    score += setTerritory(cBoard.getSize())[i][j];
+                    score += setTerritory()[i][j];
                 }
             }
         }
