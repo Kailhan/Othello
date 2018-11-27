@@ -173,6 +173,10 @@ public class Board implements Serializable {
             boardGrid[flippedDisk[0]][flippedDisk[1]] = currentPlayer;
     }
 
+    public void applyMove(int[] move) {
+        applyMove(move[0], move[1]);
+    }
+
     public boolean checkTile(int r, int c, int state) {
         return (boardGrid[r][c] == state);
     }

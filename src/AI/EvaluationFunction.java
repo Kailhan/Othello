@@ -330,4 +330,11 @@ public class EvaluationFunction {
         return territoryWeight;
     }
 
+    public double[][] getCellValues() {
+        return cellValues;
+    }
+
+    public double[] getWeightPoly() {
+        return weightPoly;
+    }
 }
