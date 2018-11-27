@@ -126,17 +126,6 @@ public class EvaluationFunction {
         return nrCorners;
     }
 
-
-    public void setTerritory(double bound) {
-        cellValues = new double[cBoard.getSize()][cBoard.getSize()];
-        Random rand = new Random();
-        for(int i = 0; i < cBoard.getSize(); i++) {
-            for(int j = 0; j < cBoard.getSize(); j++) {
-                cellValues[i][j] = rand.nextDouble()*bound;
-            }
-        }
-    }
-
     public void setTerritory(double[][] cellValues) {
         for(int i = 0; i < cBoard.getSize(); i++) {
             for(int j = 0; j < cBoard.getSize(); j++) {
