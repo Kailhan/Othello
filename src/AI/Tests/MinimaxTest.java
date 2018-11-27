@@ -1,6 +1,6 @@
 package AI.Tests;
 
-import AI.EvalFunc_FixedTerr;
+import AI.EvaluationFunctions.EvalFunc_FixedTerr;
 import AI.GameTree;
 import AI.Minimax;
 import AI.Node;

@@ -1,6 +1,7 @@
 package AI.Tests;
 
 import AI.*;
+import AI.EvaluationFunctions.EvalFunc_FixedTerr;
 import Core.Board;
 
 public class MiniMaxAlphaTest {

@@ -1,8 +1,7 @@
 package AI.Tests;
-
+import AI.AI;
 import AI.EvaluationFunctions.EvalFunc_FixedTerr;
-import AI.MCTS;
-import AI.MCTSNode;
+import AI.Genetic_Algorithm.GA_MiniMaxAlph;
 import Core.Board;
 import Core.Logic;
 
@@ -11,45 +10,31 @@ import java.util.Scanner;
 import static Core.Board.BLACK;
 import static Core.Board.WHITE;
 
-public class MCTSTest {
-    public static void main(String[] args) {
-        System.out.println("Enter totalSims of MCTS 1");
-        Scanner scanner = new Scanner(System.in);
-        int totalSims1 = scanner.nextInt();
-        System.out.println("Enter totalSims of MCTS 2");
-        scanner = new Scanner(System.in);
-        int totalSims2 = scanner.nextInt();
-        //System.out.println("Amount of games to be simulated");
-        //scanner = new Scanner(System.in);
-        //int games = scanner.nextInt();
-        int games = 1000;
-        System.out.println("board size");
-        scanner = new Scanner(System.in);
-        int size = scanner.nextInt();
+public class GenericTest {
+    private static int player1Wins = 0;
+    private static int player2Wins = 0;
+    private static int draws = 0;
+    private static Board board;
 
-        MCTS mcts1 = new MCTS(totalSims1);
-        MCTS mcts2 = new MCTS(totalSims2);
-
-        Board board = new Board(size);
-        MCTSNode node = new MCTSNode(board);
-        EvalFunc_FixedTerr evaluator = new EvalFunc_FixedTerr();
-        int mcts1Wins = 0;
-        int mcts2Wins = 0;
-        int draws = 0;
+    public static void test(AI player1, AI player2, int games, int boardSize) {
+        player1Wins = 0;
+        player2Wins = 0;
+        draws = 0;
 
         for (int i = 0; i < games; i++) {
             boolean gameFinished = false;
-            board = new Board(size);
+            board = new Board(boardSize);
+            int[] move = new int[2];
             while (!gameFinished) {
                 if (board.getCurrentPlayer() == BLACK) {
-                    node = mcts1.findMove(board);
+                    move = player1.getBestMove(board);
                     //System.out.println("mcts1 turn");
                 }
                 if (board.getCurrentPlayer() == WHITE) {
-                    node = mcts2.findMove(board);
+                    move = player2.getBestMove(board);
                     //System.out.println("mcts2 turn");
                 }
-                board.setBoardGrid(node.getBoard().getBoardGrid());
+                board.applyMove(move[0], move[1]);
                 //board.displayBoardGrid();
                 board.incrementTurn();
                 //System.out.println("Turn: " + board.getTurn());
@@ -62,10 +47,10 @@ public class MCTSTest {
                     if(!Logic.checkMovePossible(board)) {
                         gameFinished = true;
                         if (board.getNrSquares(BLACK) > board.getNrSquares(WHITE)) {
-                            mcts1Wins++;
+                            player1Wins++;
                             //System.out.println("mcts1 win");
                         } else if (board.getNrSquares(BLACK) < board.getNrSquares(WHITE)) {
-                            mcts2Wins++;
+                            player2Wins++;
                             //System.out.println("mcts2 win");
                         } else {
                             draws++;
@@ -78,8 +63,20 @@ public class MCTSTest {
             //System.out.println("Game finished: " + gameFinished);
             System.out.println("Games simulated: " + i);
         }
-        System.out.println("MCTS1 wins: " + mcts1Wins);
-        System.out.println("MCTS2 wins: " + mcts2Wins);
-        System.out.println("MCTS draws: " + draws);
+        System.out.println("Player1 wins: " + player1Wins);
+        System.out.println("Player2 wins: " + player2Wins);
+        System.out.println("draws: " + draws);
+    }
+
+    public static int getPlayer1Wins() {
+        return player1Wins;
+    }
+
+    public static int getPlayer2Wins() {
+        return player2Wins;
+    }
+
+    public static int getDraws() {
+        return draws;
     }
 }

@@ -1,7 +1,5 @@
 package AI.EvaluationFunctions;
 
-import AI.EvaluationFunctions.EvaluationFunction;
-
 public class GA_EvalFunc extends EvaluationFunction {
 
     private int[][] small;
