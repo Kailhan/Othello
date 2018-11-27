@@ -1,6 +1,6 @@
 package AI.Tests;
 
-import AI.EvaluationFunctions.EvalFunc_FixedTerr;
+import AI.EvaluationFunction;
 import AI.MCTS;
 import AI.MCTSNode;
 import Core.Board;
@@ -32,7 +32,7 @@ public class MCTSTest {
 
         Board board = new Board(size);
         MCTSNode node = new MCTSNode(board);
-        EvalFunc_FixedTerr evaluator = new EvalFunc_FixedTerr();
+        EvaluationFunction evaluator = new EvaluationFunction();
         int mcts1Wins = 0;
         int mcts2Wins = 0;
         int draws = 0;

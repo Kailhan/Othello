@@ -1,36 +1,39 @@
-package AI.EvaluationFunctions;
+package AI;
 
 import AI.AI;
 import Core.Board;
 import Core.Logic;
 import Core.Settings;
 
-public abstract class EvaluationFunction {
+import java.util.Random;
 
-    protected Board board;
-    protected int[][] boardGrid;
-    protected Settings settings;
+public class EvaluationFunction {
 
-    protected double coinWeightPoly0 = 100;
-    protected double coinWeightPoly1 = 0;
-    protected double coinWeightPoly2 = 0;
-    protected double coinWeightPoly3 = 0;
-    protected double cornerWeightPoly0 = 0;       //set to 0 to disable for a while
-    protected double cornerWeightPoly1 = 0;
-    protected double cornerWeightPoly2 = 0;
-    protected double cornerWeightPoly3 = 0;
-    protected double moveWeightPoly0 = 100;
-    protected double moveWeightPoly1 = 0;
-    protected double moveWeightPoly2 = 0;
-    protected double moveWeightPoly3 = 0;
-    protected double territoryWeightPoly0 = 100;
-    protected double territoryWeightPoly1 = 0;
-    protected double territoryWeightPoly2 = 0;
-    protected double territoryWeightPoly3 = 0;
+    private Board board;
+    private int[][] boardGrid;
+    private Settings settings;
+    private double[][] cellValues;
 
-    protected final static int BLACK = 1;
-    protected final static int WHITE = -1;
-    protected int score;
+    private double coinWeightPoly0 = 100;
+    private double coinWeightPoly1 = 0;
+    private double coinWeightPoly2 = 0;
+    private double coinWeightPoly3 = 0;
+    private double cornerWeightPoly0 = 0;       //set to 0 to disable for a while
+    private double cornerWeightPoly1 = 0;
+    private double cornerWeightPoly2 = 0;
+    private double cornerWeightPoly3 = 0;
+    private double moveWeightPoly0 = 100;
+    private double moveWeightPoly1 = 0;
+    private double moveWeightPoly2 = 0;
+    private double moveWeightPoly3 = 0;
+    private double territoryWeightPoly0 = 100;
+    private double territoryWeightPoly1 = 0;
+    private double territoryWeightPoly2 = 0;
+    private double territoryWeightPoly3 = 0;
+
+    private final static int BLACK = 1;
+    private final static int WHITE = -1;
+    private int score;
 
     public EvaluationFunction(Board cBoard){
         this.board = cBoard;
@@ -184,7 +187,154 @@ public abstract class EvaluationFunction {
         return nrCorners;
     }
 
-    public abstract int[][] setTerritory();
+    public double[][] setTerritory(double bound) {
+        Random rand = new Random();
+        for(int i = 0; i < board.getSize(); i++) {
+            for(int j = 0; j < board.getSize(); j++) {
+                cellValues[i][j] = rand.nextDouble()*bound;
+            }
+        }
+        return cellValues;
+    }
+
+    public double[][] setTerritory(double[][] cellValues) {
+        this.cellValues = cellValues;
+        return  cellValues;
+    }
+
+    public double[][] setTerritory(){
+        cellValues = new double[board.getSize()][board.getSize()];
+        if(board.getSize() == 4){
+
+            cellValues[0][0]  = 10;
+            cellValues[3][3]  = 10;
+            cellValues[3][0]  = 10;
+            cellValues[0][3]  = 10;
+
+            cellValues[0][1]  = 5;
+            cellValues[0][2]  = 5;
+            cellValues[1][0]  = 5;
+            cellValues[2][0]  = 5;
+            cellValues[3][1]  = 5;
+            cellValues[3][2]  = 5;
+            cellValues[2][3]  = 5;
+            cellValues[1][3]  = 5;
+
+            return cellValues;
+        }
+
+        if(board.getSize() == 6) {
+
+            cellValues[0][0] = 10;
+            cellValues[5][5] = 10;
+            cellValues[0][5] = 10;
+            cellValues[5][0] = 10;
+
+            cellValues[0][1] = 5;
+            cellValues[1][1] = 5;
+            cellValues[1][0] = 5;
+            cellValues[0][4] = 5;
+            cellValues[1][4] = 5;
+            cellValues[1][5] = 5;
+            cellValues[4][0] = 5;
+            cellValues[4][1] = 5;
+            cellValues[5][1] = 5;
+            cellValues[5][4] = 5;
+            cellValues[4][4] = 5;
+            cellValues[4][5] = 5;
+
+            cellValues[1][2] = 6;
+            cellValues[1][3] = 6;
+            cellValues[2][1] = 6;
+            cellValues[3][1] = 6;
+            cellValues[4][2] = 6;
+            cellValues[4][3] = 6;
+            cellValues[2][4] = 6;
+            cellValues[3][4] = 6;
+
+            cellValues[2][0] = 8;
+            cellValues[3][0] = 8;
+            cellValues[0][2] = 8;
+            cellValues[0][3] = 8;
+            cellValues[2][5] = 8;
+            cellValues[3][5] = 8;
+            cellValues[5][2] = 8;
+            cellValues[5][3] = 8;
+
+            return cellValues;
+        }
+
+        if(board.getSize() == 8){
+
+            cellValues[0][0] = 10;
+            cellValues[7][7] = 10;
+            cellValues[0][7] = 10;
+            cellValues[7][0] = 10;
+
+            cellValues[0][1] = 5;
+            cellValues[1][1] = 5;
+            cellValues[1][0] = 5;
+            cellValues[0][4] = 5;
+            cellValues[1][4] = 5;
+            cellValues[1][5] = 5;
+            cellValues[6][0] = 5;
+            cellValues[6][1] = 5;
+            cellValues[7][1] = 5;
+            cellValues[7][6] = 5;
+            cellValues[6][6] = 5;
+            cellValues[6][7] = 5;
+
+            cellValues[2][1] = 6;
+            cellValues[3][1] = 6;
+            cellValues[4][1] = 6;
+            cellValues[5][1] = 6;
+            cellValues[1][2] = 6;
+            cellValues[1][3] = 6;
+            cellValues[1][4] = 6;
+            cellValues[1][5] = 6;
+            cellValues[2][6] = 6;
+            cellValues[3][6] = 6;
+            cellValues[4][6] = 6;
+            cellValues[5][6] = 6;
+            cellValues[6][2] = 6;
+            cellValues[6][3] = 6;
+            cellValues[6][4] = 6;
+            cellValues[6][5] = 6;
+
+            cellValues[2][2] = 7;
+            cellValues[2][3] = 7;
+            cellValues[2][4] = 7;
+            cellValues[2][5] = 7;
+            cellValues[5][2] = 7;
+            cellValues[5][3] = 7;
+            cellValues[5][4] = 7;
+            cellValues[5][5] = 7;
+            cellValues[3][2] = 7;
+            cellValues[4][2] = 7;
+            cellValues[3][5] = 7;
+            cellValues[4][5] = 7;
+
+            cellValues[2][0] = 8;
+            cellValues[3][0] = 8;
+            cellValues[4][0] = 8;
+            cellValues[5][0] = 8;
+            cellValues[0][2] = 8;
+            cellValues[0][3] = 8;
+            cellValues[0][4] = 8;
+            cellValues[0][5] = 8;
+            cellValues[2][7] = 8;
+            cellValues[3][7] = 8;
+            cellValues[4][7] = 8;
+            cellValues[5][7] = 8;
+            cellValues[7][2] = 8;
+            cellValues[7][3] = 8;
+            cellValues[7][4] = 8;
+            cellValues[7][5] = 8;
+            return cellValues;
+        }
+
+        return null;
+    }
 
     public int getTerritoryScore(int player){
         this.score = 0;

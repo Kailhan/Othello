@@ -1,17 +1,16 @@
 package AI;
 
-import AI.EvaluationFunctions.EvalFunc_FixedTerr;
 import Core.Board;
 
 public class MiniMaxAlph {
 
-    EvalFunc_FixedTerr evaluator;
+    private EvaluationFunction evaluator;
     private GameTree gameTree;
     private Node<Board> root;
 
     public MiniMaxAlph(int depth , Board board) {
         this.gameTree = new GameTree(depth, board);
-        this.evaluator = new EvalFunc_FixedTerr();
+        this.evaluator = new EvaluationFunction();
         this.root = gameTree.createTree();
     }
 

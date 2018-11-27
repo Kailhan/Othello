@@ -1,6 +1,5 @@
 package AI.Tests;
 import AI.AI;
-import AI.EvaluationFunctions.EvalFunc_FixedTerr;
 import AI.Genetic_Algorithm.GA_MiniMaxAlph;
 import Core.Board;
 import Core.Logic;

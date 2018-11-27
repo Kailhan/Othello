@@ -1,15 +1,15 @@
 package AI.Genetic_Algorithm;
 
-import AI.EvaluationFunctions.GA_EvalFunc;
+import AI.EvaluationFunction;
 
 public class Population {
 
     private int size;
-    private GA_EvalFunc[] individuals;
+    private EvaluationFunction[] individuals;
 
     public Population(int size) {
         this.size = size;
-        individuals = new GA_EvalFunc[size];
+        individuals = new EvaluationFunction[size];
     }
 
 

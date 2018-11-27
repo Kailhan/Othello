@@ -1,7 +1,6 @@
 package AI.Tests;
 
 import AI.*;
-import AI.EvaluationFunctions.EvalFunc_FixedTerr;
 import Core.Board;
 
 public class MiniMaxAlphaTest {
@@ -10,7 +9,7 @@ public class MiniMaxAlphaTest {
 
     public static void main(String[] args) {
 
-        EvalFunc_FixedTerr evaluator = new EvalFunc_FixedTerr();
+        EvaluationFunction evaluator = new EvaluationFunction();
         Board board = new Board();
         MiniMaxAlph minimax = new MiniMaxAlph(DEPTH,board);
         GameTree gameTree = new GameTree(DEPTH);

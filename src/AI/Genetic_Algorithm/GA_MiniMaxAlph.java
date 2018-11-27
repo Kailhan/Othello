@@ -1,7 +1,6 @@
 package AI.Genetic_Algorithm;
 
-import AI.EvaluationFunctions.EvalFunc_FixedTerr;
-import AI.EvaluationFunctions.EvaluationFunction;
+import AI.EvaluationFunction;
 import AI.GameTree;
 import AI.MiniMaxAlph;
 import AI.Node;
