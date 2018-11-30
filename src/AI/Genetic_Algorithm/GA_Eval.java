@@ -17,12 +17,15 @@ public class GA_Eval {
         for(int i = 0; i < maxIterations; i++) {
             selectedIndividuals = pop.selection(2);
             for(int j = 0; j < pop.getPopSize(); j++) {
-                selectedIndividualsChildren[j] = pop.randomWeightedCrossover(selectedIndividuals[j], selectedIndividuals[(pop.getPopSize()*2)-j]);
+                selectedIndividualsChildren[j] = pop.randomWeightedCrossover(selectedIndividuals[j], selectedIndividuals[((pop.getPopSize()*2) - 1) -j]);
             }
             pop.setAIs(selectedIndividualsChildren);
             pop.nonUniformBitMutate(0.5, 0.5);
             pop.calculateFitness(GA_GAMES_TO_BE_SIMMED, pop.getBoardSize());
             System.out.println("iteration: " + i);
         }
+        AI topSpecimen = pop.getTopSpecimen();
+        System.out.println("Fitness of top specimen: " + topSpecimen.getFitness());
+        topSpecimen.getEvaluator().printChromosome();
     }
 }

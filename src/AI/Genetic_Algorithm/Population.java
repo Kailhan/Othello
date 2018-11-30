@@ -21,7 +21,7 @@ public class Population {
     public static final int GA_GAMES_TO_BE_SIMMED = 2;
     public static final int GA_BOARD_SIZE = 4;
     public static final int DEPTH = 3;
-    public static final int GA_POP_SIZE = 10;
+    public static final int GA_POP_SIZE = 100;
     public static final double GA_WEIGHT_POLY_BOUND = 10;
     public static final double GA_TERRITORY_BOUND = 10;
 
@@ -31,7 +31,7 @@ public class Population {
         this.rand = new Random();
         this.weightPolyBound = weightPolyBound;
         this.territoryBound = territoryBound;
-        this.mutationCount = 0;
+        this.mutationCount = 1;
         AIs = new AI[popSize];
         initMiniMaxAlphPopulation();
     }
@@ -209,5 +209,16 @@ public class Population {
 
     public int getBoardSize() {
         return boardSize;
+    }
+
+    public AI getTopSpecimen() {
+        double fitness = Double.MIN_VALUE;
+        int indexTopSpecimen = 0;
+        for(int i = 0; i < AIs.length; i++) {
+            if(AIs[i].getFitness() > fitness) {
+                indexTopSpecimen = i;
+            }
+        }
+        return AIs[indexTopSpecimen];
     }
 }

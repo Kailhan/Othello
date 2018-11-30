@@ -35,10 +35,10 @@ public class GenericTest {
                     //System.out.println("mcts2 turn");
                 }
                 board.applyMove(move[0], move[1]);
-                System.out.println("Board after applying move: ");
-                board.displayBoardGrid();
+//                System.out.println("Board after applying move: ");
+//                board.displayBoardGrid();
                 board.incrementTurn();
-                System.out.println("Turn: " + board.getTurn());
+                //System.out.println("Turn: " + board.getTurn());
                 board.changePlayer();
                 if(!Logic.checkMovePossible(board)) {
                     //System.out.println("!Logic.checkMovePossible(board)");
@@ -60,7 +60,7 @@ public class GenericTest {
                 }
             }
             long endTime = System.nanoTime();
-            System.out.println("Simulated one game in generic test in ms: " + (endTime-startTime)/1000000);
+            //System.out.println("Simulated one game in generic test in ms: " + (endTime-startTime)/1000000);
             //System.out.println("Board at end of test cycle");
             //board.displayBoardGrid();
             //System.out.println("Game finished: " + gameFinished);

@@ -12,6 +12,8 @@ public class EvaluationFunction {
     private double[][] cellValues;
     private double[] weightPoly;
 
+    private double[] chromosome;
+
     private final static int BLACK = 1;
     private final static int WHITE = -1;
     private int score;
@@ -336,18 +338,24 @@ public class EvaluationFunction {
     }
 
     public double[] getChromosome() {
-        double[] chromesome = new double[weightPoly.length + (cellValues.length * cellValues[0].length)];
+        this.chromosome = new double[weightPoly.length + (cellValues.length * cellValues[0].length)];
         int chromesomePosCounter = 0;
         for(int i = 0; i < weightPoly.length; i++)  {
-            chromesome[chromesomePosCounter] = weightPoly[i];
+            chromosome[chromesomePosCounter] = weightPoly[i];
             chromesomePosCounter++;
         }
         for(int i = 0; i < cellValues.length; i++) {
             for (int j = 0; j < cellValues[0].length; j++) {
-                chromesome[chromesomePosCounter] = cellValues[i][j];
+                chromosome[chromesomePosCounter] = cellValues[i][j];
                 chromesomePosCounter++;
             }
         }
-        return chromesome;
+        return chromosome;
+    }
+
+    public void printChromosome() {
+        for(int i = 0; i < chromosome.length; i++){
+            System.out.println("Gene " + i + " has value: " + chromosome[i]);
+        }
     }
 }
