@@ -60,11 +60,11 @@ public class GenericTest {
             //System.out.println("Board at end of test cycle");
             //board.displayBoardGrid();
             //System.out.println("Game finished: " + gameFinished);
-            System.out.println("Games simulated: " + i);
+            //System.out.println("Games simulated: " + i);
         }
-        System.out.println("Player1 wins: " + player1Wins);
-        System.out.println("Player2 wins: " + player2Wins);
-        System.out.println("draws: " + draws);
+//        System.out.println("Player1 wins: " + player1Wins);
+//        System.out.println("Player2 wins: " + player2Wins);
+//        System.out.println("draws: " + draws);
     }
 
     public static int getPlayer1Wins() {

@@ -23,10 +23,6 @@ public class EvaluationFunction {
         setTerritory();
     }
 
-    public EvaluationFunction(){
-        this(new Board());
-    }
-
     public void setWeightPoly() {
         this.weightPoly = new double[16];
         this.weightPoly[0] = 100;  //coinWeightPoly0 = 100;
@@ -127,6 +123,8 @@ public class EvaluationFunction {
     }
 
     public void setTerritory(double[][] cellValues) {
+        System.out.println("setterrr " + cBoard.getSize());
+        this.cellValues = new double[cBoard.getSize()][cBoard.getSize()];
         for(int i = 0; i < cBoard.getSize(); i++) {
             for(int j = 0; j < cBoard.getSize(); j++) {
                 this.cellValues[i][j] = cellValues[i][j];

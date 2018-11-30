@@ -10,7 +10,6 @@ import AI.Tests.GenericTest;
 import Core.Board;
 
 public class GA_MiniMaxAlph extends MiniMaxAlph {
-    EvaluationFunction evaluator;
     private GameTree gameTree;
     private Node<Board> root;
     private AI stupid;

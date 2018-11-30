@@ -13,7 +13,7 @@ import static Core.Board.WHITE;
 import static java.lang.Integer.MIN_VALUE;
 import static java.lang.Integer.max;
 
-public class MCTS implements AI {
+public class MCTS extends AI {
 
     private int treeDepth;
     private int totalSims;

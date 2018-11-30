@@ -12,6 +12,7 @@ import static Core.Board.BLACK;
 import static Core.Board.WHITE;
 
 public class MCTSTest {
+
     public static void main(String[] args) {
         System.out.println("Enter totalSims of MCTS 1");
         Scanner scanner = new Scanner(System.in);

@@ -11,8 +11,9 @@ public class MinimaxTest {
     final static int DEPTH = 6;
     public static void main(String[] args) {
 
-        EvaluationFunction evaluator = new EvaluationFunction();
+
         Board board = new Board();
+        EvaluationFunction evaluator = new EvaluationFunction(board);
         Minimax minimax = new Minimax(3, board);
         GameTree gameTree = new GameTree(DEPTH);
         Node<Board> root = gameTree.createTree();

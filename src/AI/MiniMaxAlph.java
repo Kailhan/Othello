@@ -4,13 +4,13 @@ import Core.Board;
 
 public class MiniMaxAlph extends AI {
 
-    private EvaluationFunction evaluator;
+    //private EvaluationFunction evaluator;
     private GameTree gameTree;
     private Node<Board> root;
 
     public MiniMaxAlph(int depth , Board board) {
         this.gameTree = new GameTree(depth, board);
-        this.evaluator = new EvaluationFunction();
+        this.evaluator = new EvaluationFunction(board);
         this.root = gameTree.createTree();
     }
 

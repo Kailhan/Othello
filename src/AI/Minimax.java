@@ -2,7 +2,7 @@ package AI;
 
 import Core.*;
 
-public class Minimax implements AI {
+public class Minimax extends AI {
 
 
     int depth;

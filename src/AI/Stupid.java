@@ -4,7 +4,7 @@ import Core.Logic;
 
 import java.util.Random;
 
-public class Stupid implements AI {
+public class Stupid extends AI {
     private int[][] board;
     private int[][] move;
     private Random rand = new Random();

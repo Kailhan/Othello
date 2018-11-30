@@ -283,12 +283,10 @@ public class GameScene extends BorderPane {
         board.applyMove(r, c);
         board.incrementTurn();
         board.changePlayer();
-        if(!Logic.checkMovePossible(board))
-        {
+        if(!Logic.checkMovePossible(board)) {
             board.incrementTurn();
             board.changePlayer();
-            if(!Logic.checkMovePossible(board))
-            {
+            if(!Logic.checkMovePossible(board)) {
                 redrawBoard();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Game Finished");

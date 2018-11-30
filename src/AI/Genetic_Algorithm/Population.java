@@ -2,7 +2,6 @@ package AI.Genetic_Algorithm;
 
 import AI.EvaluationFunction;
 import AI.AI;
-import AI.Stupid;
 import Core.Board;
 import Core.QuickSort;
 
@@ -15,38 +14,38 @@ public class Population {
     private static Random rand;
     private double weightPolyBound;
     private double territoryBound;
-    private EvaluationFunction[] individuals;
     private AI[] AIs;
 
     private int mutationCount;
 
-    public static final int GA_GAMES_TO_BE_SIMMED = 10;
-    public static final int GA_BOARD_SIZE = 8;
+    public static final int GA_GAMES_TO_BE_SIMMED = 2;
+    public static final int GA_BOARD_SIZE = 4;
+    public static final int DEPTH = 3;
+    public static final int GA_POP_SIZE = 100;
+    public static final double GA_WEIGHT_POLY_BOUND = 10;
+    public static final double GA_TERRITORY_BOUND = 10;
 
-
-    public Population(int popSize, int boardSize, double weightPolyBound, double territoryBound, AI ai) {
+    public Population(int popSize, int boardSize, double weightPolyBound, double territoryBound) {
         this.popSize = popSize;
         this.boardSize = boardSize;
         this.rand = new Random();
         this.weightPolyBound = weightPolyBound;
         this.territoryBound = territoryBound;
         this.mutationCount = 0;
-        individuals = new EvaluationFunction[popSize];
         AIs = new AI[popSize];
-        initPopulation();
+        initMiniMaxAlphPopulation();
     }
 
     public Population() {
-        this(100, 4, 10, 10, new Stupid());
+        this(GA_POP_SIZE, GA_BOARD_SIZE, GA_WEIGHT_POLY_BOUND, GA_TERRITORY_BOUND);
     }
 
-    public void initPopulation() {
+    public void initMiniMaxAlphPopulation() {
         for(int i = 0; i < popSize; i++) {
-            EvaluationFunction cEvalFunc = new EvaluationFunction();
-            this.individuals[i] = cEvalFunc;
+            EvaluationFunction cEvalFunc = new EvaluationFunction(new Board(boardSize));
             cEvalFunc.setWeightPoly(initWeightPoly(16, weightPolyBound)); //size of weightpoly in evaluationfunction
             cEvalFunc.setTerritory(initTerritory(territoryBound));
-            this.AIs[i] = new GA_MiniMaxAlph(3, new Board(boardSize), cEvalFunc); //idk what the depth should be
+            this.AIs[i] = new GA_MiniMaxAlph(DEPTH, new Board(boardSize), cEvalFunc); //idk what the depth should be
         }
     }
 
@@ -84,9 +83,9 @@ public class Population {
         for(int i = 0; i < territoryPart.length; i++) {
             for(int j = 0; j < territoryPart.length; j++) {
                 territory[i][j] = territoryPart[i][j]; //topleft
-                territory[i][territoryPart.length*2-j] = territoryPart[i][j]; //topright
-                territory[territoryPart.length*2-i][j] = territoryPart[i][j]; //bottomleft
-                territory[territoryPart.length*2-i][territoryPart.length*2-j] = territoryPart[i][j]; //bottomright
+                territory[i][(boardSize - 1) - j] = territoryPart[i][j]; //topright
+                territory[(boardSize - 1) - i][j] = territoryPart[i][j]; //bottomleft
+                territory[(boardSize - 1) - i][(boardSize - 1) - j] = territoryPart[i][j]; //bottomright
             }
         }
         return territory;
@@ -102,13 +101,15 @@ public class Population {
         for(int i = 0; i < AIs.length; i++) {
             AIs[i].evaluateFitness(gamesToBeSimmed, boardSize);
         }
-       AI[] AIsTemp = new QuickSort(AIs).getAIs();
-        for(int i = 0; i < AIs.length; i++) {
-            AIs[i] = AIsTemp[i];
-        }
+//        AI[] AIsTemp = new QuickSort(AIs).getAIs();
+//        for(int i = 0; i < AIs.length; i++) {
+//            AIs[i] = AIsTemp[i];
+//        }
     }
 
-    public EvaluationFunction randomCrossover(EvaluationFunction parent1, EvaluationFunction parent2) {
+    public AI randomCrossover(AI ai_parent1, AI ai_parent2) {
+        EvaluationFunction parent1 = ai_parent1.getEvaluator();
+        EvaluationFunction parent2 = ai_parent2.getEvaluator();
         double[] parent1WeightPoly = parent1.getWeightPoly();
         double[] parent2WeightPoly = parent1.getWeightPoly();
         double[][] parent1CellValues = parent2.getCellValues();
@@ -124,13 +125,15 @@ public class Population {
                 childCellValues[i][j] = (rand.nextInt(2) == 0) ? parent1CellValues[i][j] : parent2CellValues[i][j];
             }
         }
-        EvaluationFunction tmpEvalFunc = new EvaluationFunction();
+        EvaluationFunction tmpEvalFunc = new EvaluationFunction(new Board(boardSize));
         tmpEvalFunc.setWeightPoly(initWeightPoly(16, weightPolyBound)); //size of weightpoly in evaluationfunction
         tmpEvalFunc.setTerritory(initTerritory(territoryBound));
-        return tmpEvalFunc;
+        return new GA_MiniMaxAlph(DEPTH, new Board(boardSize), tmpEvalFunc);
     }
 
-    public EvaluationFunction randomWeightedCrossover(EvaluationFunction parent1, EvaluationFunction parent2) {
+    public AI randomWeightedCrossover(AI ai_parent1, AI ai_parent2) {
+        EvaluationFunction parent1 = ai_parent1.getEvaluator();
+        EvaluationFunction parent2 = ai_parent2.getEvaluator();
         double[] parent1WeightPoly = parent1.getWeightPoly();
         double[] parent2WeightPoly = parent1.getWeightPoly();
         double[][] parent1CellValues = parent2.getCellValues();
@@ -149,10 +152,10 @@ public class Population {
                 childCellValues[i][j] = parent1CellValues[i][j] * proportion + parent2CellValues[i][j] * (1 - proportion);
             }
         }
-        EvaluationFunction tmpEvalFunc = new EvaluationFunction();
+        EvaluationFunction tmpEvalFunc = new EvaluationFunction(new Board(boardSize));
         tmpEvalFunc.setWeightPoly(initWeightPoly(16, weightPolyBound)); //size of weightpoly in evaluationfunction
         tmpEvalFunc.setTerritory(initTerritory(territoryBound));
-        return tmpEvalFunc;
+        return new GA_MiniMaxAlph(DEPTH, new Board(boardSize), tmpEvalFunc);
     }
 
     /**
@@ -162,21 +165,20 @@ public class Population {
      */
 
     public void nonUniformBitMutate(double percentPopAff, double percentChromoAff) {
-        for(int i = 0; i < individuals.length; i++) {
+        for(int i = 0; i < AIs.length; i++) {
             if(rand.nextDouble() < percentPopAff) {
-                double[] chromosome = individuals[i].getChromosome();
+                double[] chromosome = AIs[i].getEvaluator().getChromosome();
                 for(int j = 0; j < chromosome.length; j++ ) {
                     if(rand.nextDouble() < percentChromoAff) {
                         chromosome[j] = (rand.nextDouble() < 0.5) ? (1/mutationCount) * chromosome[j] + chromosome[j] : (1/mutationCount) * chromosome[j] - chromosome[j];
                     }
                 }
-
             }
         }
         mutationCount++;
     }
 
-    public void selection(double selectionRatio) {
+    public AI[] selection(double selectionRatio) {
         double totalFitness = 0;
         AI[] selectedIndividuals = new AI[AIs.length*2];
         this.calculateFitness(GA_GAMES_TO_BE_SIMMED, GA_BOARD_SIZE);
@@ -184,15 +186,28 @@ public class Population {
             totalFitness += AIs[i].getFitness();
         }
         for(int i = 0; i < AIs.length*2; i++) {
-            if(AIs[rand.nextInt(AIs.length)].getFitness() > rand.nextDouble() * selectionRatio * totalFitness) {
-
-            }
-//            while()
-//            do{
-//                int individualIndex = rand.nextInt(AIs.length);
-////                selectedIndividuals[i] =
-//            } while(AIs[individualIndex].getFitness() > rand.nextDouble() * totalFitness);
-       }
+            int individualIndex = -1; //makes sure its gets updated
+            do {
+                individualIndex = rand.nextInt(AIs.length);
+                selectedIndividuals[i] = AIs[individualIndex];
+            } while(AIs[individualIndex].getFitness() > rand.nextDouble() * selectionRatio * totalFitness);
+        }
+       return selectedIndividuals;
     }
 
+    public AI[] getAIs() {
+        return AIs;
+    }
+
+    public void setAIs(AI[] AIs) {
+        this.AIs = AIs;
+    }
+
+    public int getPopSize() {
+        return popSize;
+    }
+
+    public int getBoardSize() {
+        return boardSize;
+    }
 }
