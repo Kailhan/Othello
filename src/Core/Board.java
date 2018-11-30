@@ -146,8 +146,7 @@ public class Board implements Serializable {
         return turn;
     }
 
-    public void changePlayer()
-    {
+    public void changePlayer() {
         if (currentPlayer == BLACK)
             currentPlayer = WHITE;
         else

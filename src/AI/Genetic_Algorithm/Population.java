@@ -12,7 +12,7 @@ public class Population {
 
     private int popSize;
     private int boardSize;
-    private Random rand;
+    private static Random rand;
     private double weightPolyBound;
     private double territoryBound;
     private EvaluationFunction[] individuals;
@@ -115,6 +115,31 @@ public class Population {
         for(int i = 0; i < parent1CellValues.length; i++) {
             for (int j = 0; j < parent1CellValues[0].length; j++) {
                 childCellValues[i][j] = (rand.nextInt(2) == 0) ? parent1CellValues[i][j] : parent2CellValues[i][j];
+            }
+        }
+        EvaluationFunction tmpEvalFunc = new EvaluationFunction();
+        tmpEvalFunc.setWeightPoly(initWeightPoly(16, weightPolyBound)); //size of weightpoly in evaluationfunction
+        tmpEvalFunc.setTerritory(initTerritory(territoryBound));
+        return tmpEvalFunc;
+    }
+
+    public EvaluationFunction randomWeightedCrossover(EvaluationFunction parent1, EvaluationFunction parent2) {
+        double[] parent1WeightPoly = parent1.getWeightPoly();
+        double[] parent2WeightPoly = parent1.getWeightPoly();
+        double[][] parent1CellValues = parent2.getCellValues();
+        double[][] parent2CellValues = parent2.getCellValues();
+        double[] childWeightPoly = new double[parent1WeightPoly.length];
+        double[][] childCellValues = new double[parent1CellValues.length][parent1CellValues[0].length];
+        double proportion;
+
+        for(int i = 0; i < parent1WeightPoly.length; i++) {
+            proportion = rand.nextDouble();
+            childWeightPoly[i] = parent1WeightPoly[i] * proportion + parent2WeightPoly[i] * (1 - proportion);
+        }
+        for(int i = 0; i < parent1CellValues.length; i++) {
+            for (int j = 0; j < parent1CellValues[0].length; j++) {
+                proportion = rand.nextDouble();
+                childCellValues[i][j] = parent1CellValues[i][j] * proportion + parent2CellValues[i][j] * (1 - proportion);
             }
         }
         EvaluationFunction tmpEvalFunc = new EvaluationFunction();

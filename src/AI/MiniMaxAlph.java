@@ -2,7 +2,7 @@ package AI;
 
 import Core.Board;
 
-public class MiniMaxAlph implements AI {
+public class MiniMaxAlph extends AI {
 
     private EvaluationFunction evaluator;
     private GameTree gameTree;
