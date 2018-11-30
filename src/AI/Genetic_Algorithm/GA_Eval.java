@@ -7,7 +7,7 @@ public class GA_Eval {
     public static void main(String[] args) {
 
         Population pop =  new Population();
-        pop.calculateFitness(10, 4);
+        pop.calculateFitness(Population.GA_GAMES_TO_BE_SIMMED, Population.GA_BOARD_SIZE);
         int maxIterations = 1000;
         for(int i = 0; i < maxIterations; i++) {
 

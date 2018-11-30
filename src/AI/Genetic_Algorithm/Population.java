@@ -18,12 +18,19 @@ public class Population {
     private EvaluationFunction[] individuals;
     private AI[] AIs;
 
+    private int mutationCount;
+
+    public static final int GA_GAMES_TO_BE_SIMMED = 10;
+    public static final int GA_BOARD_SIZE = 8;
+
+
     public Population(int popSize, int boardSize, double weightPolyBound, double territoryBound, AI ai) {
         this.popSize = popSize;
         this.boardSize = boardSize;
         this.rand = new Random();
         this.weightPolyBound = weightPolyBound;
         this.territoryBound = territoryBound;
+        this.mutationCount = 0;
         individuals = new EvaluationFunction[popSize];
         AIs = new AI[popSize];
         initPopulation();
@@ -147,4 +154,35 @@ public class Population {
         tmpEvalFunc.setTerritory(initTerritory(territoryBound));
         return tmpEvalFunc;
     }
+
+    /**
+     * Mutates EvaluationFunction chromosomes, severity of mutations decreases each iteration of population
+     * @param percentPopAff percentage of individuals affected
+     * @param percentChromoAff percentage of genes in chromosomes of individuals affected
+     */
+
+    public void nonUniformBitMutate(double percentPopAff, double percentChromoAff) {
+        for(int i = 0; i < individuals.length; i++) {
+            if(rand.nextDouble() < percentPopAff) {
+                double[] chromosome = individuals[i].getChromosome();
+                for(int j = 0; j < chromosome.length; j++ ) {
+                    if(rand.nextDouble() < percentChromoAff) {
+                        chromosome[j] = (rand.nextDouble() < 0.5) ? (1/mutationCount) * chromosome[j] + chromosome[j] : (1/mutationCount) * chromosome[j] - chromosome[j];
+                    }
+                }
+
+            }
+        }
+        mutationCount++;
+    }
+
+    public void selection() {
+        double totalFitness = 0;
+        this.calculateFitness(GA_GAMES_TO_BE_SIMMED, GA_BOARD_SIZE);
+        for (int i = 0; i < AIs.length; i++) {
+            totalFitness += AIs[i].getFitness();
+        }
+        
+    }
+
 }

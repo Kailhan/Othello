@@ -337,4 +337,20 @@ public class EvaluationFunction {
     public double[] getWeightPoly() {
         return weightPoly;
     }
+
+    public double[] getChromosome() {
+        double[] chromesome = new double[weightPoly.length + (cellValues.length * cellValues[0].length)];
+        int chromesomePosCounter = 0;
+        for(int i = 0; i < weightPoly.length; i++)  {
+            chromesome[chromesomePosCounter] = weightPoly[i];
+            chromesomePosCounter++;
+        }
+        for(int i = 0; i < cellValues.length; i++) {
+            for (int j = 0; j < cellValues[0].length; j++) {
+                chromesome[chromesomePosCounter] = cellValues[i][j];
+                chromesomePosCounter++;
+            }
+        }
+        return chromesome;
+    }
 }
