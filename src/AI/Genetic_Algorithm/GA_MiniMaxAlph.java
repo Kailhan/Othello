@@ -6,7 +6,6 @@ import AI.MiniMaxAlph;
 import AI.Node;
 import AI.AI;
 import AI.Stupid;
-import AI.Tests.GenericTest;
 import Core.Board;
 
 public class GA_MiniMaxAlph extends MiniMaxAlph {
@@ -16,7 +15,7 @@ public class GA_MiniMaxAlph extends MiniMaxAlph {
     private Board board;
 
     public GA_MiniMaxAlph(int depth , Board board, EvaluationFunction evalFunc) {
-        super(depth, board);
+        super(depth);
         this.board = board;
         this.gameTree = new GameTree(depth, board);
         this.evaluator = evalFunc;

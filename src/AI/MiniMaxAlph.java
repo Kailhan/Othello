@@ -7,14 +7,16 @@ public class MiniMaxAlph extends AI {
     //private EvaluationFunction evaluator;
     private GameTree gameTree;
     private Node<Board> root;
+    private int depth;
 
-    public MiniMaxAlph(int depth , Board board) {
-        this.gameTree = new GameTree(depth, board);
-        this.evaluator = new EvaluationFunction(board);
-        this.root = gameTree.createTree();
+    public MiniMaxAlph(int depth) {
+        this.depth = depth;
     }
 
     public int[] getBestMove(Board board) {
+        this.gameTree = new GameTree(this.depth, board);
+        this.evaluator = new EvaluationFunction(board);
+        this.root = gameTree.createTree();
         int[] bestMove = new int[2];
         bestMove[0] = selectMove(root).getRow();
         bestMove[1] = selectMove(root).getColumn();
@@ -58,6 +60,7 @@ public class MiniMaxAlph extends AI {
         for (Node<Board> currentChild : root.getChildren()) {
             if (currentChild.getValue() == root.getValue()) return currentChild;
         }
+        System.out.println("returning null in selectmove minimaxalph");
         return null;
     }
 

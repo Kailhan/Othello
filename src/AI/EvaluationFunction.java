@@ -123,7 +123,6 @@ public class EvaluationFunction {
     }
 
     public void setTerritory(double[][] cellValues) {
-        System.out.println("setterrr " + cBoard.getSize());
         this.cellValues = new double[cBoard.getSize()][cBoard.getSize()];
         for(int i = 0; i < cBoard.getSize(); i++) {
             for(int j = 0; j < cBoard.getSize(); j++) {

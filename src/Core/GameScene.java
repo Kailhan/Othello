@@ -18,7 +18,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-import javax.naming.Context;
 import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -272,7 +271,7 @@ public class GameScene extends BorderPane {
             case 2:
                 //int[] move = minmax.getBestMove(board);
                 //updateBoard(move[0], move[1]);
-                Minimax minimax = new Minimax(3, board);
+                Minimax minimax = new Minimax(3);
                 minimax.minimaxAlg2(minimax.getRoot());
                 updateBoard(minimax.selectMove(minimax.getRoot()).getData());
         }

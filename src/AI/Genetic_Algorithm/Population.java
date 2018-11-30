@@ -21,7 +21,7 @@ public class Population {
     public static final int GA_GAMES_TO_BE_SIMMED = 2;
     public static final int GA_BOARD_SIZE = 4;
     public static final int DEPTH = 3;
-    public static final int GA_POP_SIZE = 100;
+    public static final int GA_POP_SIZE = 10;
     public static final double GA_WEIGHT_POLY_BOUND = 10;
     public static final double GA_TERRITORY_BOUND = 10;
 

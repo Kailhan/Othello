@@ -19,7 +19,7 @@ public abstract class AI {
         int winsSecondMove = GenericTest.getPlayer2Wins();
         this.fitness = (winsFirstMove + winsSecondMove)/gamesToBeSimmed;
         long endTime = System.nanoTime();
-        System.out.println("AI EvaluateFitness: " + (endTime-startTime)/1000000);
+        System.out.println("Full AI evaluateFitness cycle: " + (endTime-startTime)/1000000);
         return (winsFirstMove + winsSecondMove)/gamesToBeSimmed;
     }
 

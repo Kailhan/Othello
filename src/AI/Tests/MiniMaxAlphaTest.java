@@ -12,7 +12,7 @@ public class MiniMaxAlphaTest {
 
         Board board = new Board();
         EvaluationFunction evaluator = new EvaluationFunction(board);
-        MiniMaxAlph minimax = new MiniMaxAlph(DEPTH,board);
+        MiniMaxAlph minimax = new MiniMaxAlph(DEPTH);
         GameTree gameTree = new GameTree(DEPTH);
         Node<Board> root = gameTree.createTree();
         System.out.println(minimax.search(root,Integer.MIN_VALUE, Integer.MAX_VALUE));
