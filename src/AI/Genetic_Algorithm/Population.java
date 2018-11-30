@@ -176,13 +176,23 @@ public class Population {
         mutationCount++;
     }
 
-    public void selection() {
+    public void selection(double selectionRatio) {
         double totalFitness = 0;
+        AI[] selectedIndividuals = new AI[AIs.length*2];
         this.calculateFitness(GA_GAMES_TO_BE_SIMMED, GA_BOARD_SIZE);
         for (int i = 0; i < AIs.length; i++) {
             totalFitness += AIs[i].getFitness();
         }
-        
+        for(int i = 0; i < AIs.length*2; i++) {
+            if(AIs[rand.nextInt(AIs.length)].getFitness() > rand.nextDouble() * selectionRatio * totalFitness) {
+
+            }
+//            while()
+//            do{
+//                int individualIndex = rand.nextInt(AIs.length);
+////                selectedIndividuals[i] =
+//            } while(AIs[individualIndex].getFitness() > rand.nextDouble() * totalFitness);
+       }
     }
 
 }
