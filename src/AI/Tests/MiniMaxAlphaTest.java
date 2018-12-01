@@ -8,10 +8,9 @@ public class MiniMaxAlphaTest {
     final static int DEPTH = 7;
 
     public static void main(String[] args) {
-
-
         Board board = new Board();
-        EvaluationFunction evaluator = new EvaluationFunction(board);
+        EvaluationFunction evaluator = new EvaluationFunction();
+        evaluator.setBoard(board);
         MiniMaxAlph minimax = new MiniMaxAlph(DEPTH);
         GameTree gameTree = new GameTree(DEPTH);
         Node<Board> root = gameTree.createTree();

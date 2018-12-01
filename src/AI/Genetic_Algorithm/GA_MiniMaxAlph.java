@@ -20,7 +20,7 @@ public class GA_MiniMaxAlph extends MiniMaxAlph {
         this.gameTree = new GameTree(depth, board);
         this.evaluator = evalFunc;
         this.root = gameTree.createTree();
-        stupid = new Stupid();
+        this.stupid = new Stupid();
     }
 
 }

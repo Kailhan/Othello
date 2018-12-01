@@ -9,10 +9,12 @@ public abstract class AI {
     public abstract int[] getBestMove(Board board);
 
     public double evaluateFitness(int gamesToBeSimmed, int boardSize){
+        //System.out.println(getEvaluator().getWeightPoly()[0]);
         long startTime = System.nanoTime();
         AI stupid = new Stupid();
         gamesToBeSimmed = (gamesToBeSimmed < 2) ? 2 : gamesToBeSimmed;
         gamesToBeSimmed = (gamesToBeSimmed % 2 != 0) ? gamesToBeSimmed + 1:gamesToBeSimmed;
+        //System.out.println(getEvaluator().getWeightPoly()[3]);
         GenericTest.test(this, stupid, gamesToBeSimmed/2, boardSize);
         int winsFirstMove = GenericTest.getPlayer1Wins();
         GenericTest.test(stupid, this, gamesToBeSimmed/2, boardSize);

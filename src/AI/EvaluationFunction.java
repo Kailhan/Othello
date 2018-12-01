@@ -8,7 +8,6 @@ import java.util.Random;
 public class EvaluationFunction {
 
     private Board cBoard;
-    private int[][] boardGrid;
     private double[][] cellValues;
     private double[] weightPoly;
 
@@ -18,12 +17,12 @@ public class EvaluationFunction {
     private final static int WHITE = -1;
     private int score;
 
-    public EvaluationFunction(Board cBoard){
-        this.cBoard = cBoard;
-        this.boardGrid = cBoard.getBoardGrid();
-        setWeightPoly();
-        setTerritory();
-    }
+//    public EvaluationFunction(Board cBoard){
+//        this.cBoard = cBoard;
+//        this.cBoard.getBoardGrid() = cBoard.getBoardGrid();
+//        setWeightPoly();
+//        setTerritory();
+//    }
 
     public void setWeightPoly() {
         this.weightPoly = new double[16];
@@ -116,9 +115,9 @@ public class EvaluationFunction {
 
     public int getCorners(int player) {
         int nrCorners = 0;
-        for (int i = 0; i < boardGrid.length; i += boardGrid.length-1)
-            for (int j = 0; j < boardGrid[i].length; j += boardGrid[i].length-1)
-                if (boardGrid[i][j] == player)
+        for (int i = 0; i < cBoard.getBoardGrid().length; i += cBoard.getBoardGrid().length-1)
+            for (int j = 0; j < cBoard.getBoardGrid()[i].length; j += cBoard.getBoardGrid()[i].length-1)
+                if (cBoard.getBoardGrid()[i][j] == player)
                     nrCorners++;
 
         return nrCorners;
@@ -263,9 +262,9 @@ public class EvaluationFunction {
     public int getTerritoryScore(int player){
         this.score = 0;
 
-        for (int i = 0; i < boardGrid.length; i++) {
-            for (int j = 0; j < boardGrid[i].length; j++) {
-                if (boardGrid[i][j] == player) {
+        for (int i = 0; i < cBoard.getBoardGrid().length; i++) {
+            for (int j = 0; j < cBoard.getBoardGrid()[i].length; j++) {
+                if (cBoard.getBoardGrid()[i][j] == player) {
                     score += cellValues[i][j];
                 }
             }
@@ -354,8 +353,17 @@ public class EvaluationFunction {
     }
 
     public void printChromosome() {
+        getChromosome();
         for(int i = 0; i < chromosome.length; i++){
             System.out.println("Gene " + i + " has value: " + chromosome[i]);
         }
+    }
+
+    public Board getBoard() {
+        return cBoard;
+    }
+
+    public void setBoard(Board cBoard) {
+        this.cBoard = cBoard;
     }
 }

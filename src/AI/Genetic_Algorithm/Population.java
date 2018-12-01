@@ -18,10 +18,10 @@ public class Population {
 
     private int mutationCount;
 
-    public static final int GA_GAMES_TO_BE_SIMMED = 2;
+    public static final int GA_GAMES_TO_BE_SIMMED = 6;
     public static final int GA_BOARD_SIZE = 4;
     public static final int DEPTH = 3;
-    public static final int GA_POP_SIZE = 100;
+    public static final int GA_POP_SIZE = 25;
     public static final double GA_WEIGHT_POLY_BOUND = 10;
     public static final double GA_TERRITORY_BOUND = 10;
 
@@ -32,7 +32,7 @@ public class Population {
         this.weightPolyBound = weightPolyBound;
         this.territoryBound = territoryBound;
         this.mutationCount = 1;
-        AIs = new AI[popSize];
+        AIs = new GA_MiniMaxAlph[popSize];
         initMiniMaxAlphPopulation();
     }
 
@@ -42,7 +42,8 @@ public class Population {
 
     public void initMiniMaxAlphPopulation() {
         for(int i = 0; i < popSize; i++) {
-            EvaluationFunction cEvalFunc = new EvaluationFunction(new Board(boardSize));
+            EvaluationFunction cEvalFunc = new EvaluationFunction();
+            cEvalFunc.setBoard(new Board(boardSize));
             cEvalFunc.setWeightPoly(initWeightPoly(16, weightPolyBound)); //size of weightpoly in evaluationfunction
             cEvalFunc.setTerritory(initTerritory(territoryBound));
             this.AIs[i] = new GA_MiniMaxAlph(DEPTH, new Board(boardSize), cEvalFunc); //idk what the depth should be
@@ -52,7 +53,8 @@ public class Population {
     public double[] initWeightPoly(int weightPolySize, double bound) {
         double[] weightPoly = new double[weightPolySize];
         for(int i = 0; i < weightPolySize; i++) {
-            weightPoly[i] = rand.nextDouble()*bound;
+            weightPoly[i] = rand.nextDouble() * bound;
+
         }
         return weightPoly;
     }
@@ -99,6 +101,7 @@ public class Population {
 
     public void calculateFitness(int gamesToBeSimmed, int boardSize) {
         for(int i = 0; i < AIs.length; i++) {
+
             AIs[i].evaluateFitness(gamesToBeSimmed, boardSize);
         }
 //        AI[] AIsTemp = new QuickSort(AIs).getAIs();
@@ -125,7 +128,8 @@ public class Population {
                 childCellValues[i][j] = (rand.nextInt(2) == 0) ? parent1CellValues[i][j] : parent2CellValues[i][j];
             }
         }
-        EvaluationFunction tmpEvalFunc = new EvaluationFunction(new Board(boardSize));
+        EvaluationFunction tmpEvalFunc = new EvaluationFunction();
+        tmpEvalFunc.setBoard(new Board(boardSize));
         tmpEvalFunc.setWeightPoly(initWeightPoly(16, weightPolyBound)); //size of weightpoly in evaluationfunction
         tmpEvalFunc.setTerritory(initTerritory(territoryBound));
         return new GA_MiniMaxAlph(DEPTH, new Board(boardSize), tmpEvalFunc);
@@ -152,7 +156,8 @@ public class Population {
                 childCellValues[i][j] = parent1CellValues[i][j] * proportion + parent2CellValues[i][j] * (1 - proportion);
             }
         }
-        EvaluationFunction tmpEvalFunc = new EvaluationFunction(new Board(boardSize));
+        EvaluationFunction tmpEvalFunc = new EvaluationFunction();
+        tmpEvalFunc.setBoard(new Board(boardSize));
         tmpEvalFunc.setWeightPoly(initWeightPoly(16, weightPolyBound)); //size of weightpoly in evaluationfunction
         tmpEvalFunc.setTerritory(initTerritory(territoryBound));
         return new GA_MiniMaxAlph(DEPTH, new Board(boardSize), tmpEvalFunc);
@@ -181,7 +186,6 @@ public class Population {
     public AI[] selection(double selectionRatio) {
         double totalFitness = 0;
         AI[] selectedIndividuals = new AI[AIs.length*2];
-        this.calculateFitness(GA_GAMES_TO_BE_SIMMED, GA_BOARD_SIZE);
         for (int i = 0; i < AIs.length; i++) {
             totalFitness += AIs[i].getFitness();
         }

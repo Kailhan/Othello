@@ -13,7 +13,7 @@ public class GA_Eval {
         AI[] selectedIndividualsChildren = new AI[pop.getPopSize()];
         pop.calculateFitness(Population.GA_GAMES_TO_BE_SIMMED, pop.getBoardSize());
         System.out.println("Calculated fitness of initial population");
-        int maxIterations = 1000;
+        int maxIterations = 100;
         for(int i = 0; i < maxIterations; i++) {
             selectedIndividuals = pop.selection(2);
             for(int j = 0; j < pop.getPopSize(); j++) {

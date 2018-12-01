@@ -13,7 +13,8 @@ public class MinimaxTest {
 
 
         Board board = new Board();
-        EvaluationFunction evaluator = new EvaluationFunction(board);
+        EvaluationFunction evaluator = new EvaluationFunction();
+        evaluator.setBoard(board);
         Minimax minimax = new Minimax(3);
         GameTree gameTree = new GameTree(DEPTH);
         Node<Board> root = gameTree.createTree();
