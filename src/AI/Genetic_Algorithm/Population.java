@@ -3,7 +3,6 @@ package AI.Genetic_Algorithm;
 import AI.EvaluationFunction;
 import AI.AI;
 import Core.Board;
-import Core.QuickSort;
 
 import java.util.Random;
 
@@ -18,7 +17,7 @@ public class Population {
 
     private int mutationCount;
 
-    public static final int GA_GAMES_TO_BE_SIMMED = 10;
+    public static final int GA_GAMES_TO_BE_SIMMED = 25;
     public static final int GA_BOARD_SIZE = 4;
     public static final int DEPTH = 3;
     public static final int GA_POP_SIZE = 25;
@@ -104,10 +103,6 @@ public class Population {
 
             AIs[i].evaluateFitness(gamesToBeSimmed, boardSize);
         }
-//        AI[] AIsTemp = new QuickSort(AIs).getAIs();
-//        for(int i = 0; i < AIs.length; i++) {
-//            AIs[i] = AIsTemp[i];
-//        }
     }
 
     public AI randomCrossover(AI ai_parent1, AI ai_parent2) {
@@ -238,4 +233,6 @@ public class Population {
         }
         return AIs[indexWorstSpecimen];
     }
+
+
 }

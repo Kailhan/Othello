@@ -16,6 +16,7 @@ public class EvaluationFunction {
     private final static int BLACK = 1;
     private final static int WHITE = -1;
     private int score;
+    public static final int WEIGHT_POLY_SIZE = 16;
 
 //    public EvaluationFunction(Board cBoard){
 //        this.cBoard = cBoard;
@@ -25,7 +26,7 @@ public class EvaluationFunction {
 //    }
 
     public void setWeightPoly() {
-        this.weightPoly = new double[16];
+        this.weightPoly = new double[WEIGHT_POLY_SIZE];
         this.weightPoly[0] = 100;  //coinWeightPoly0 = 100;
         this.weightPoly[1] = 0; //coinWeightPoly1 = 0;
         this.weightPoly[2] = 0; //coinWeightPoly2 = 0;
@@ -45,7 +46,7 @@ public class EvaluationFunction {
     }
 
     public void setWeightPoly(double[] weightPoly) {
-        this.weightPoly = new double[16];
+        this.weightPoly = new double[WEIGHT_POLY_SIZE];
         for(int i = 0; i < weightPoly.length; i++) {
             this.weightPoly[i] = weightPoly[i];
         }
