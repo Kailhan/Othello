@@ -12,11 +12,14 @@ public class MiniMaxAlph extends AI {
     public MiniMaxAlph(int depth) {
         this.depth = depth;
         this.evaluator = new EvaluationFunction();
+
     }
 
     public int[] getBestMove(Board board) {
         this.gameTree = new GameTree(this.depth, board);
         this.evaluator.setBoard(board);
+        evaluator.setTerritory();
+        evaluator.setWeightPoly();
         this.root = gameTree.createTree();
         int[] bestMove = new int[2];
         bestMove[0] = selectMove(root).getRow();

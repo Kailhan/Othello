@@ -17,9 +17,10 @@ public class Minimax extends AI {
     public int[] getBestMove(Board board) {
         this.gameTree = new GameTree(depth, board);
         evaluator.setBoard(board);
+        evaluator.setTerritory();
+        evaluator.setWeightPoly();
         this.root = gameTree.createTree();
-        //this.board = board;
-        //this.bestNode = new Node<Board>(board);
+        minimaxAlg2(root);
         int[] bestMove = new int[2];
         bestMove[0] = selectMove(root).getRow();
         bestMove[1] = selectMove(root).getColumn();
@@ -29,6 +30,7 @@ public class Minimax extends AI {
     public Minimax(int depth) {
         this.depth = depth;
         this.evaluator = new EvaluationFunction();
+
     }
 
     public int minimaxAlg2(Node<Board> currentNode) {
