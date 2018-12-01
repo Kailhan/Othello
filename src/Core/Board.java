@@ -146,8 +146,7 @@ public class Board implements Serializable {
         return turn;
     }
 
-    public void changePlayer()
-    {
+    public void changePlayer() {
         if (currentPlayer == BLACK)
             currentPlayer = WHITE;
         else
@@ -171,6 +170,10 @@ public class Board implements Serializable {
         boardGrid[row][col] = currentPlayer;
         for (int[] flippedDisk : flippedDisks)
             boardGrid[flippedDisk[0]][flippedDisk[1]] = currentPlayer;
+    }
+
+    public void applyMove(int[] move) {
+        applyMove(move[0], move[1]);
     }
 
     public boolean checkTile(int r, int c, int state) {

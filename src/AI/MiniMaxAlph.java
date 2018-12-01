@@ -2,17 +2,29 @@ package AI;
 
 import Core.Board;
 
-public class MiniMaxAlph {
+public class MiniMaxAlph extends AI {
 
-    EvalFunc_FixedTerr evaluator;
+    //private EvaluationFunction evaluator;
     private GameTree gameTree;
     private Node<Board> root;
+    private int depth;
 
+    public MiniMaxAlph(int depth) {
+        this.depth = depth;
+        this.evaluator = new EvaluationFunction();
 
-    public MiniMaxAlph(int depth , Board board) {
-        this.gameTree = new GameTree(depth, board);
-        this.evaluator = new EvalFunc_FixedTerr();
+    }
+
+    public int[] getBestMove(Board board) {
+        this.gameTree = new GameTree(this.depth, board);
+        this.evaluator.setBoard(board);
+        evaluator.setTerritory();
+        evaluator.setWeightPoly();
         this.root = gameTree.createTree();
+        int[] bestMove = new int[2];
+        bestMove[0] = selectMove(root).getRow();
+        bestMove[1] = selectMove(root).getColumn();
+        return bestMove;
     }
 
     public int search(Node<Board> currentNode, int alpha, int beta) {
@@ -23,8 +35,10 @@ public class MiniMaxAlph {
         } else if (currentNode.getData().getCurrentPlayer() == -1) {
             int value = Integer.MIN_VALUE;
             for (Node<Board> currentChild : currentNode.getChildren()) {
-                value = Math.max(value, search(currentChild, alpha, beta));
-                alpha = Math.max(value, alpha);
+                //value = Math.max(value, search(currentChild, alpha, beta));
+                value = (value > search(currentChild, alpha, beta)) ? value : search(currentChild, alpha, beta);
+                //alpha = Math.max(value, alpha);
+                alpha = (value > alpha) ? value : alpha;
                 if (alpha >= beta) {
                     System.out.println("pruned");
                     break;
@@ -35,8 +49,10 @@ public class MiniMaxAlph {
         } else { //MINVALUE, opponent player
             int value = Integer.MAX_VALUE;
             for (Node<Board> currentChild : currentNode.getChildren()) {
-                value = Math.min(value, search(currentChild, alpha, beta));
-                beta = Math.min(value, beta);
+                //value = Math.min(value, search(currentChild, alpha, beta));
+                value = (value < search(currentChild, alpha, beta)) ? value : search(currentChild, alpha, beta);
+                //beta = Math.min(value, beta);
+                beta = (value < beta) ? value : beta;
                 if (alpha >= beta) {
                     System.out.println("pruned");
                     break;

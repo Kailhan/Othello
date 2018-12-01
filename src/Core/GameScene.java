@@ -18,7 +18,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-import javax.naming.Context;
 import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -258,23 +257,22 @@ public class GameScene extends BorderPane {
         AILevel = settings.getAI1Level();
         if (board.getCurrentPlayer() == WHITE)
             AILevel = settings.getAI2Level();
+        int[] move = new int[2];
         switch(AILevel)
         {
             case 0:
                 MCTS mcts = new MCTS(100);
-                MCTSNode node = mcts.findMove(board);
-                updateBoard(node.getRow(), node.getColumn());
+                move = mcts.getBestMove(board);
+                updateBoard(move[0], move[1]);
 
             case 1:
                 Stupid stupid = new Stupid();
-                int[] move = stupid.getBestMove(board);
+                move = stupid.getBestMove(board);
                 updateBoard(move[0], move[1]);
             case 2:
-                //int[] move = minmax.getBestMove(board);
-                //updateBoard(move[0], move[1]);
-                Minimax minimax = new Minimax(3, board);
-                minimax.minimaxAlg2(minimax.getRoot());
-                updateBoard(minimax.selectMove(minimax.getRoot()).getData());
+                Minimax minimax = new Minimax(3);
+                move = minimax.getBestMove(board);
+                updateBoard(move[0], move[1]);
         }
     }
 
@@ -283,12 +281,10 @@ public class GameScene extends BorderPane {
         board.applyMove(r, c);
         board.incrementTurn();
         board.changePlayer();
-        if(!Logic.checkMovePossible(board))
-        {
+        if(!Logic.checkMovePossible(board)) {
             board.incrementTurn();
             board.changePlayer();
-            if(!Logic.checkMovePossible(board))
-            {
+            if(!Logic.checkMovePossible(board)) {
                 redrawBoard();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Game Finished");

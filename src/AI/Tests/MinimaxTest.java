@@ -1,6 +1,6 @@
 package AI.Tests;
 
-import AI.EvalFunc_FixedTerr;
+import AI.EvaluationFunction;
 import AI.GameTree;
 import AI.Minimax;
 import AI.Node;
@@ -11,9 +11,11 @@ public class MinimaxTest {
     final static int DEPTH = 6;
     public static void main(String[] args) {
 
-        EvalFunc_FixedTerr evaluator = new EvalFunc_FixedTerr();
+
         Board board = new Board();
-        Minimax minimax = new Minimax(3, board);
+        EvaluationFunction evaluator = new EvaluationFunction();
+        evaluator.setBoard(board);
+        Minimax minimax = new Minimax(3);
         GameTree gameTree = new GameTree(DEPTH);
         Node<Board> root = gameTree.createTree();
 

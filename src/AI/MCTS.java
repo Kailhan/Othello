@@ -13,7 +13,7 @@ import static Core.Board.WHITE;
 import static java.lang.Integer.MIN_VALUE;
 import static java.lang.Integer.max;
 
-public class MCTS implements AI {
+public class MCTS extends AI {
 
     private int treeDepth;
     private int totalSims;
@@ -33,8 +33,8 @@ public class MCTS implements AI {
     public int[] getBestMove(Board board) {
         int[] move = new int[2];
         MCTSNode node = findMove(board);
-        move[1] = node.getRow();
-        move[2] = node.getColumn();
+        move[0] = node.getRow();
+        move[1] = node.getColumn();
         return move;
     }
 
