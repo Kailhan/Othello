@@ -6,22 +6,21 @@ public abstract class AI {
 
     protected EvaluationFunction evaluator;
     private double fitness;
+    private double winsFirstMove;
+    private double winsSecondMove;
     public abstract int[] getBestMove(Board board);
 
     public double evaluateFitness(int gamesToBeSimmed, int boardSize){
-        //System.out.println(getEvaluator().getWeightPoly()[0]);
-        long startTime = System.nanoTime();
         AI stupid = new Stupid();
         gamesToBeSimmed = (gamesToBeSimmed < 2) ? 2 : gamesToBeSimmed;
         gamesToBeSimmed = (gamesToBeSimmed % 2 != 0) ? gamesToBeSimmed + 1:gamesToBeSimmed;
-        //System.out.println(getEvaluator().getWeightPoly()[3]);
         GenericTest.test(this, stupid, gamesToBeSimmed/2, boardSize);
-        int winsFirstMove = GenericTest.getPlayer1Wins();
+        winsFirstMove = GenericTest.getPlayer1Wins();
         GenericTest.test(stupid, this, gamesToBeSimmed/2, boardSize);
-        int winsSecondMove = GenericTest.getPlayer2Wins();
-        this.fitness = (winsFirstMove + winsSecondMove)/gamesToBeSimmed;
-        long endTime = System.nanoTime();
-        //System.out.println("Full AI evaluateFitness cycle: " + (endTime-startTime)/1000000);
+        winsSecondMove = GenericTest.getPlayer2Wins();
+        //System.out.println("this.fitness = (winsFirstMove + winsSecondMove)/gamesToBeSimmed;");
+        //System.out.println(gamesToBeSimmed);
+        fitness = (winsFirstMove + winsSecondMove)/gamesToBeSimmed;
         return (winsFirstMove + winsSecondMove)/gamesToBeSimmed;
     }
 
@@ -35,5 +34,13 @@ public abstract class AI {
 
     public EvaluationFunction getEvaluator() {
         return evaluator;
+    }
+
+    public double getWinsFirstMove() {
+        return winsFirstMove;
+    }
+
+    public double getWinsSecondMove() {
+        return winsSecondMove;
     }
 }

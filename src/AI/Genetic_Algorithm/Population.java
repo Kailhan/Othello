@@ -18,7 +18,7 @@ public class Population {
 
     private int mutationCount;
 
-    public static final int GA_GAMES_TO_BE_SIMMED = 6;
+    public static final int GA_GAMES_TO_BE_SIMMED = 10;
     public static final int GA_BOARD_SIZE = 4;
     public static final int DEPTH = 3;
     public static final int GA_POP_SIZE = 25;
@@ -217,12 +217,25 @@ public class Population {
 
     public AI getTopSpecimen() {
         double fitness = Double.MIN_VALUE;
-        int indexTopSpecimen = 0;
+        int indexTopSpecimen = -1;
         for(int i = 0; i < AIs.length; i++) {
             if(AIs[i].getFitness() > fitness) {
+                fitness = AIs[i].getFitness();
                 indexTopSpecimen = i;
             }
         }
         return AIs[indexTopSpecimen];
+    }
+
+    public AI getWorstSpecimen() {
+        double fitness = Double.MAX_VALUE;
+        int indexWorstSpecimen = -1;
+        for(int i = 0; i < AIs.length; i++) {
+            if(AIs[i].getFitness() < fitness) {
+                fitness = AIs[i].getFitness();
+                indexWorstSpecimen = i;
+            }
+        }
+        return AIs[indexWorstSpecimen];
     }
 }

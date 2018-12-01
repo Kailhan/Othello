@@ -65,7 +65,6 @@ public class MiniMaxAlph extends AI {
         for (Node<Board> currentChild : root.getChildren()) {
             if (currentChild.getValue() == root.getValue()) return currentChild;
         }
-        System.out.println("returning null in selectmove minimaxalph");
         return null;
     }
 
