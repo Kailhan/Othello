@@ -23,8 +23,13 @@ public class Minimax extends AI {
         this.root = gameTree.createTree();
         minimaxAlg2(root);
         int[] bestMove = new int[2];
-        bestMove[0] = selectMove(root).getRow();
-        bestMove[1] = selectMove(root).getColumn();
+        try {
+            bestMove[0] = selectMove(root).getRow();
+            bestMove[1] = selectMove(root).getColumn();
+        }
+        catch(NullPointerException e) {
+            System.out.println("no more moves");
+        }
         return bestMove;
     }
 

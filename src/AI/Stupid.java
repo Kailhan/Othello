@@ -18,7 +18,11 @@ public class Stupid extends AI {
 
     public int[] getBestMove(Board board) {
         int[][] moves = Logic.getPossibleMoves(board);
-        return moves[rand.nextInt(moves.length)];
+        try {
+            return moves[rand.nextInt(moves.length)];
+        } catch (IllegalArgumentException e) {
+            System.out.println("illegal argument" + e.getMessage());
+        }
+        return null;
     }
-
 }
