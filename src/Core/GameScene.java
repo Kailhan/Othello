@@ -222,7 +222,11 @@ public class GameScene extends BorderPane {
                 if(board.checkTile(r, c, EMPTY)) {
                     if(Logic.checkSquareAllowed(r, c, board)) {
                         int flippedNo = Logic.getFlippedDisks(r, c, board).length;
-                        flippedNo = (flippedNo > 9 ? 10 : flippedNo); // if more than 9 discs can be flipped set flippedNo to 10, because we only have assets up to "9+"
+                        if(board.getSize() == 8 && (settings.getAI1Level() == 2 || settings.getAI2Level() == 2)) {
+                            flippedNo = (flippedNo > 9 ? 9 : flippedNo);// if this is set to 9 ? 10 for boardssize 8 at some point the minimax will try to place coin at 9,9 which is out fo bounds for the arraylist..
+                            //System.out.println("here");
+                        }
+                        else {flippedNo = (flippedNo > 9 ? 10 : flippedNo);} // if more than 9 discs can be flipped set flippedNo to 10, because we only have assets up to "9+"
                         toAdd.add(new TileButton(r, c, new ImageView(flippedImg.get(flippedNo-1)))); // Show image corresponding to amount of discs that will be flipped
                     } else {
                         toAdd.add(new TileButton(r, c, new ImageView(bgrImg))); // If we cannot apply a move here just show standard background
