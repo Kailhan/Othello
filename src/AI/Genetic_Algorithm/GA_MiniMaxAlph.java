@@ -6,6 +6,7 @@ import AI.MiniMaxAlph;
 import AI.Node;
 import AI.AI;
 import AI.Stupid;
+import AI.Tests.GenericTest;
 import Core.Board;
 
 public class GA_MiniMaxAlph extends MiniMaxAlph {
@@ -22,5 +23,4 @@ public class GA_MiniMaxAlph extends MiniMaxAlph {
         this.root = gameTree.createTree();
         this.stupid = new Stupid();
     }
-
 }

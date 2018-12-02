@@ -13,12 +13,13 @@ public class Minimax extends AI {
     //Board board;
     //Node<Board> bestNode;
     //int maxValue;
+    public double evaluateFitness(int gamesToBeSimmed, int boardSize) {
+        return -1;
+    }
 
     public int[] getBestMove(Board board) {
         this.gameTree = new GameTree(depth, board);
-        evaluator.setBoard(board);
-        evaluator.setTerritory();
-        evaluator.setWeightPoly();
+        this.evaluator.setBoard(board);
         this.root = gameTree.createTree();
         minimaxAlg2(root);
         int[] bestMove = new int[2];

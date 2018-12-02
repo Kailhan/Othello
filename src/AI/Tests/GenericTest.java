@@ -1,10 +1,7 @@
 package AI.Tests;
 import AI.AI;
-import AI.Genetic_Algorithm.GA_MiniMaxAlph;
 import Core.Board;
 import Core.Logic;
-
-import java.util.Scanner;
 
 import static Core.Board.BLACK;
 import static Core.Board.WHITE;

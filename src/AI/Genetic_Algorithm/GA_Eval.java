@@ -20,9 +20,9 @@ public class GA_Eval {
         AI[] selectedIndividuals = new AI[pop.getPopSize()*2];
         AI[] selectedIndividualsChildren = new AI[pop.getPopSize()];
         pop.calculateFitness(Population.GA_GAMES_TO_BE_SIMMED, pop.getBoardSize());
-
         System.out.println("Calculated fitness of initial population");
         int maxIterations = 40;
+
         String[] gaLog = new String[(WEIGHT_POLY_SIZE + (pop.getBoardSize() * pop.getBoardSize()) + 2) * (1  + (maxIterations * pop.getPopSize()))];
         int gaLogIndex = 0;
         gaLog[gaLogIndex] = ("attributes"); gaLogIndex++;
@@ -64,7 +64,6 @@ public class GA_Eval {
                     gaLogIndex++;
                 }
             }
-
             selectedIndividuals = pop.selection(SELECTION_RATIO);
             for(int j = 0; j < pop.getPopSize(); j++) {
                 selectedIndividualsChildren[j] = pop.randomWeightedCrossover(selectedIndividuals[j], selectedIndividuals[((pop.getPopSize()*2) - 1) -j]);
@@ -88,7 +87,14 @@ public class GA_Eval {
         System.out.println("Wins when having first move: " + topSpecimen.getWinsFirstMove());
         System.out.println("Wins when having second move: " + topSpecimen.getWinsSecondMove());
 
-        String gaCSVLog = String.join(",", gaLog);
+        StringBuilder gaCSVLogBuilder = new StringBuilder();
+
+        for(int i = 1; i < gaLog.length; i++) {
+            gaCSVLogBuilder.append(gaLog[i - 1] + ",");
+            if(i % ((WEIGHT_POLY_SIZE + (pop.getBoardSize() * pop.getBoardSize()) + 2)) == 0) gaCSVLogBuilder.append("\n");
+        }
+        gaCSVLogBuilder.append(gaLog[gaLog.length-1]);
+        String gaCSVLog = gaCSVLogBuilder.toString();
         try {
             String fileName = "depth_" + String.valueOf(DEPTH) +
                     "_boardSize_" + String.valueOf(GA_BOARD_SIZE) +
@@ -98,6 +104,7 @@ public class GA_Eval {
                     "_popSize_" + String.valueOf(GA_POP_SIZE) +
                     "_selectionRatio" + String.valueOf(SELECTION_RATIO) +
                     "_time_" + String.valueOf(endTime - startTime) +
+                    "_maxIter_" + String.valueOf(maxIterations) +
                     ".csv";
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
             writer.write(gaCSVLog);

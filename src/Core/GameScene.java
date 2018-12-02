@@ -83,7 +83,7 @@ public class GameScene extends BorderPane {
         this.discBlackImg = new Image(discBlack.toURI().toString(), tileSize, tileSize, false,false);
         this.discWhiteImg = new Image(discWhite.toURI().toString(), tileSize, tileSize, false,false);
         this.bgrImg = new Image(bgr.toURI().toString(), tileSize, tileSize, false,false);
-        for(int i = 0; i < 9; i++) {
+        for(int i = 0; i < 10; i++) {
             String fileName = "src/Assets/" + Integer.toString(i+1) + ".png";
             flipped.add(new File(fileName));
             flippedImg.add(new Image(flipped.get(flipped.size()-1).toURI().toString(), tileSize, tileSize, false,false)); // Prepares images that show how many disks will be flipped

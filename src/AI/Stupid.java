@@ -1,4 +1,5 @@
 package AI;
+import AI.Tests.GenericTest;
 import Core.Board;
 import Core.Logic;
 
@@ -10,6 +11,10 @@ public class Stupid extends AI {
     private Random rand = new Random();
 
     public Stupid(){}
+
+    public double evaluateFitness(int gamesToBeSimmed, int boardSize){
+        return -1;
+    }
 
     public int[] getBestMove(Board board) {
         int[][] moves = Logic.getPossibleMoves(board);

@@ -30,6 +30,10 @@ public class MCTS extends AI {
         this.totalSims = totalSims;
     }
 
+    public double evaluateFitness(int gamesToBeSimmed, int boardSize) {
+        return -1;
+    }
+
     public int[] getBestMove(Board board) {
         int[] move = new int[2];
         MCTSNode node = findMove(board);

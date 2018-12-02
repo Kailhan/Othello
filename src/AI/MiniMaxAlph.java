@@ -1,5 +1,6 @@
 package AI;
 
+import AI.Tests.GenericTest;
 import Core.Board;
 
 public class MiniMaxAlph extends AI {
@@ -12,14 +13,27 @@ public class MiniMaxAlph extends AI {
     public MiniMaxAlph(int depth) {
         this.depth = depth;
         this.evaluator = new EvaluationFunction();
+    }
 
+    public double evaluateFitness(int gamesToBeSimmed, int boardSize){
+        AI stupid = new Stupid();
+        gamesToBeSimmed = (gamesToBeSimmed < 2) ? 2 : gamesToBeSimmed;
+        gamesToBeSimmed = (gamesToBeSimmed % 2 != 0) ? gamesToBeSimmed + 1:gamesToBeSimmed;
+        GenericTest.test(this, stupid, gamesToBeSimmed/2, boardSize);
+        winsFirstMove = GenericTest.getPlayer1Wins();
+        //GenericTest.test(stupid, this, gamesToBeSimmed/2, boardSize);
+        winsSecondMove = GenericTest.getPlayer2Wins();
+        //System.out.println(this.getEvaluator().getChromosome()[2]);
+        //System.out.println("this.fitness = (winsFirstMove + winsSecondMove)/gamesToBeSimmed;");
+        //System.out.println(gamesToBeSimmed);
+        fitness = (winsFirstMove + winsSecondMove)/gamesToBeSimmed;
+
+        return (winsFirstMove + winsSecondMove)/gamesToBeSimmed;
     }
 
     public int[] getBestMove(Board board) {
         this.gameTree = new GameTree(this.depth, board);
         this.evaluator.setBoard(board);
-        evaluator.setTerritory();
-        evaluator.setWeightPoly();
         this.root = gameTree.createTree();
         int[] bestMove = new int[2];
         bestMove[0] = selectMove(root).getRow();
