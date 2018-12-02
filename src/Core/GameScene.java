@@ -83,7 +83,7 @@ public class GameScene extends BorderPane {
         this.discBlackImg = new Image(discBlack.toURI().toString(), tileSize, tileSize, false,false);
         this.discWhiteImg = new Image(discWhite.toURI().toString(), tileSize, tileSize, false,false);
         this.bgrImg = new Image(bgr.toURI().toString(), tileSize, tileSize, false,false);
-        for(int i = 0; i < 9; i++) {
+        for(int i = 0; i < 10; i++) {
             String fileName = "src/Assets/" + Integer.toString(i+1) + ".png";
             flipped.add(new File(fileName));
             flippedImg.add(new Image(flipped.get(flipped.size()-1).toURI().toString(), tileSize, tileSize, false,false)); // Prepares images that show how many disks will be flipped
@@ -222,11 +222,7 @@ public class GameScene extends BorderPane {
                 if(board.checkTile(r, c, EMPTY)) {
                     if(Logic.checkSquareAllowed(r, c, board)) {
                         int flippedNo = Logic.getFlippedDisks(r, c, board).length;
-                        if(board.getSize() == 8 && (settings.getAI1Level() == 2 || settings.getAI2Level() == 2)) {
-                            flippedNo = (flippedNo > 9 ? 9 : flippedNo);// if this is set to 9 ? 10 for boardssize 8 at some point the minimax will try to place coin at 9,9 which is out fo bounds for the arraylist..
-                            //System.out.println("here");
-                        }
-                        else {flippedNo = (flippedNo > 9 ? 10 : flippedNo);} // if more than 9 discs can be flipped set flippedNo to 10, because we only have assets up to "9+"
+                        flippedNo = (flippedNo > 9 ? 10 : flippedNo); // if more than 9 discs can be flipped set flippedNo to 10, because we only have assets up to "9+"
                         toAdd.add(new TileButton(r, c, new ImageView(flippedImg.get(flippedNo-1)))); // Show image corresponding to amount of discs that will be flipped
                     } else {
                         toAdd.add(new TileButton(r, c, new ImageView(bgrImg))); // If we cannot apply a move here just show standard background
