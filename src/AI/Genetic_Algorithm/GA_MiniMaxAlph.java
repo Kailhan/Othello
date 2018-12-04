@@ -16,7 +16,7 @@ public class GA_MiniMaxAlph extends MiniMaxAlph {
     private Board board;
 
     public GA_MiniMaxAlph(int depth , Board board, EvaluationFunction evalFunc) {
-        super(depth);
+        super(depth, board);
         this.board = board;
         this.gameTree = new GameTree(depth, board);
         this.evaluator = evalFunc;

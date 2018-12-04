@@ -18,7 +18,8 @@ public class EvaluationFunction {
     private int score;
     public static final int WEIGHT_POLY_SIZE = 16;
 
-    public EvaluationFunction(){
+    public EvaluationFunction(Board board){
+        this.cBoard = board;
         setWeightPoly();
         setTerritory();
     }

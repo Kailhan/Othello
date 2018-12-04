@@ -10,9 +10,9 @@ public class MiniMaxAlph extends AI {
     private Node<Board> root;
     private int depth;
 
-    public MiniMaxAlph(int depth) {
+    public MiniMaxAlph(int depth, Board board) {
         this.depth = depth;
-        this.evaluator = new EvaluationFunction();
+        this.evaluator = new EvaluationFunction(board);
     }
 
     public double evaluateFitness(int gamesToBeSimmed, int boardSize){
