@@ -24,6 +24,8 @@ public class EvaluationFunction {
 //        setWeightPoly();
 //        setTerritory();
 //    }
+//
+
 
     public void setWeightPoly() {
         this.weightPoly = new double[WEIGHT_POLY_SIZE];
@@ -267,6 +269,7 @@ public class EvaluationFunction {
             for (int j = 0; j < cBoard.getBoardGrid()[i].length; j++) {
                 if (cBoard.getBoardGrid()[i][j] == player) {
                     score += cellValues[i][j];
+                    System.out.println("score: " + score);
                 }
             }
         }

@@ -36,8 +36,13 @@ public class MiniMaxAlph extends AI {
         this.evaluator.setBoard(board);
         this.root = gameTree.createTree();
         int[] bestMove = new int[2];
-        bestMove[0] = selectMove(root).getRow();
-        bestMove[1] = selectMove(root).getColumn();
+        try {
+            bestMove[0] = selectMove(root).getRow();
+            bestMove[1] = selectMove(root).getColumn();
+        }
+        catch(NullPointerException e) {
+            System.out.println("no more moves");
+        }
         return bestMove;
     }
 
