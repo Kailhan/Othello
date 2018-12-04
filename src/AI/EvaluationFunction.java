@@ -19,7 +19,8 @@ public class EvaluationFunction {
     public static final int WEIGHT_POLY_SIZE = 16;
 
 //    public EvaluationFunction(Board cBoard){
-//        this.cBoard = cBoard;
+//        this.cBoard = cBoard
+// ;
 //        this.cBoard.getBoardGrid() = cBoard.getBoardGrid();
 //        setWeightPoly();
 //        setTerritory();
@@ -33,7 +34,7 @@ public class EvaluationFunction {
         this.weightPoly[1] = 0; //coinWeightPoly1 = 0;
         this.weightPoly[2] = 0; //coinWeightPoly2 = 0;
         this.weightPoly[3] = 0; //coinWeightPoly3 = 0;
-        this.weightPoly[4] = 0; //cornerWeightPoly0 = 0;       //set to 0 to disable for a while
+        this.weightPoly[4] = 100; //cornerWeightPoly0 = 0;       //set to 0 to disable for a while
         this.weightPoly[5] = 0; //cornerWeightPoly1 = 0;
         this.weightPoly[6] = 0; //cornerWeightPoly2 = 0;
         this.weightPoly[7] = 0; //cornerWeightPoly3 = 0;
@@ -63,6 +64,8 @@ public class EvaluationFunction {
         double numberOfMoves;
         double numberOfCoins;
         double territory;
+        setTerritory();
+        setWeightPoly();
 
         numberOfCoins = (double) (this.cBoard.getNrSquares(BLACK) - this.cBoard.getNrSquares(WHITE)) / (this.cBoard.getNrSquares(BLACK) + this.cBoard.getNrSquares(WHITE));
 
@@ -106,12 +109,14 @@ public class EvaluationFunction {
         totalScore = (int) (calcCoinWeight(cBoard.getTurn()) * numberOfCoins + calcCornerWeight(cBoard.getTurn()) * numberOfCorners +
                 calcMoveWeight(cBoard.getTurn()) * numberOfMoves + calcTerritoryWeight(cBoard.getTurn()) * territory);
 
-        System.out.println("numberOfcoins: " + numberOfCoins);
-        System.out.println("numberOfMoves: " + numberOfMoves);
-        System.out.println("territoryScoreWhite: " + getTerritoryScore(WHITE));
-        System.out.println("territoryScoreBlack: " + getTerritoryScore(BLACK));
+      //  System.out.println("numberOfcoins: " + numberOfCoins);
+      //  System.out.println("numberOfMoves: " + numberOfMoves);
+       // System.out.println("territoryScoreWhite: " + getTerritoryScore(WHITE));
+       // System.out.println("territoryScoreBlack: " + getTerritoryScore(BLACK));
+        System.out.println("corner score: " + numberOfCorners);
         System.out.println("terrScore: " + territory);
         System.out.println("totalscore: " + totalScore);
+        System.out.println("----------");
 
         return totalScore;
     }
@@ -269,7 +274,6 @@ public class EvaluationFunction {
             for (int j = 0; j < cBoard.getBoardGrid()[i].length; j++) {
                 if (cBoard.getBoardGrid()[i][j] == player) {
                     score += cellValues[i][j];
-                    System.out.println("score: " + score);
                 }
             }
         }
