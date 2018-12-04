@@ -10,9 +10,9 @@ public class MiniMaxAlph extends AI {
     private Node<Board> root;
     private int depth;
 
-    public MiniMaxAlph(int depth) {
+    public MiniMaxAlph(int depth, Board board) {
         this.depth = depth;
-        this.evaluator = new EvaluationFunction();
+        this.evaluator = new EvaluationFunction(board);
     }
 
     public double evaluateFitness(int gamesToBeSimmed, int boardSize){
@@ -36,8 +36,13 @@ public class MiniMaxAlph extends AI {
         this.evaluator.setBoard(board);
         this.root = gameTree.createTree();
         int[] bestMove = new int[2];
-        bestMove[0] = selectMove(root).getRow();
-        bestMove[1] = selectMove(root).getColumn();
+        try {
+            bestMove[0] = selectMove(root).getRow();
+            bestMove[1] = selectMove(root).getColumn();
+        }
+        catch(NullPointerException e) {
+            System.out.println("no more moves");
+        }
         return bestMove;
     }
 

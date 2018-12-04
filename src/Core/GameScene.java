@@ -270,7 +270,7 @@ public class GameScene extends BorderPane {
                 move = stupid.getBestMove(board);
                 updateBoard(move[0], move[1]);
             case 2:
-                Minimax minimax = new Minimax(3);
+                Minimax minimax = new Minimax(3, board);
                 move = minimax.getBestMove(board);
                 updateBoard(move[0], move[1]);
         }

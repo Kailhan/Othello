@@ -10,7 +10,7 @@ public class Minimax extends AI {
     private EvaluationFunction evaluator;
     private Node<Board> root;
 
-    //Board board;
+    private Board board;
     //Node<Board> bestNode;
     //int maxValue;
     public double evaluateFitness(int gamesToBeSimmed, int boardSize) {
@@ -18,6 +18,7 @@ public class Minimax extends AI {
     }
 
     public int[] getBestMove(Board board) {
+        this.board = board;
         this.gameTree = new GameTree(depth, board);
         this.evaluator.setBoard(board);
         this.root = gameTree.createTree();
@@ -33,10 +34,9 @@ public class Minimax extends AI {
         return bestMove;
     }
 
-    public Minimax(int depth) {
+    public Minimax(int depth, Board board) {
         this.depth = depth;
-        this.evaluator = new EvaluationFunction();
-
+        this.evaluator = new EvaluationFunction(board);
     }
 
     public int minimaxAlg2(Node<Board> currentNode) {

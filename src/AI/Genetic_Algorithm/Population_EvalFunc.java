@@ -50,10 +50,7 @@ public class Population_EvalFunc {
      */
     public void initMiniMaxAlphPopulation() {
         for(int i = 0; i < popSize; i++) {
-            EvaluationFunction cEvalFunc = new EvaluationFunction();
-            cEvalFunc.setBoard(new Board(boardSize));
-            cEvalFunc.setWeightPoly(initWeightPoly(16, weightPolyBound)); //size of weightpoly in evaluationfunction
-            cEvalFunc.setTerritory(initTerritory(territoryBound));
+            EvaluationFunction cEvalFunc = new EvaluationFunction(initTerritory(territoryBound), initWeightPoly(16, weightPolyBound), new Board(boardSize));
             this.AIs[i] = cEvalFunc; //idk what the depth should be
             //System.out.println(AIs[i].getEvaluator().getChromosome()[1]);
         }
@@ -150,10 +147,8 @@ public class Population_EvalFunc {
                 childCellValues[i][j] = (rand.nextInt(2) == 0) ? parent1CellValues[i][j] : parent2CellValues[i][j];
             }
         }
-        EvaluationFunction tmpEvalFunc = new EvaluationFunction();
-        tmpEvalFunc.setBoard(new Board(boardSize));
-        tmpEvalFunc.setWeightPoly(initWeightPoly(16, weightPolyBound)); //size of weightpoly in evaluationfunction
-        tmpEvalFunc.setTerritory(initTerritory(territoryBound));
+
+        EvaluationFunction tmpEvalFunc = new EvaluationFunction(initTerritory(territoryBound), initWeightPoly(16, weightPolyBound),new Board(boardSize));
         return tmpEvalFunc;
     }
 
@@ -186,6 +181,8 @@ public class Population_EvalFunc {
         tmpEvalFunc.setBoard(new Board(boardSize));
         tmpEvalFunc.setWeightPoly(initWeightPoly(16, weightPolyBound)); //size of weightpoly in evaluationfunction
         tmpEvalFunc.setTerritory(initTerritory(territoryBound));
+        EvaluationFunction tmpEvalFunc = new EvaluationFunction(initTerritory(territoryBound), initWeightPoly(16, weightPolyBound),new Board(boardSize));
+
         return tmpEvalFunc;
     }
 
