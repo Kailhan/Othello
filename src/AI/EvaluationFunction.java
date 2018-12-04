@@ -18,14 +18,15 @@ public class EvaluationFunction {
     private int score;
     public static final int WEIGHT_POLY_SIZE = 16;
 
-//    public EvaluationFunction(Board cBoard){
-//        this.cBoard = cBoard
-// ;
-//        this.cBoard.getBoardGrid() = cBoard.getBoardGrid();
-//        setWeightPoly();
-//        setTerritory();
-//    }
-//
+    public EvaluationFunction(){
+        setWeightPoly();
+        setTerritory();
+    }
+
+    public EvaluationFunction(double [][] cellValues, double[] weightPoly) {
+        this.cellValues = cellValues;
+        this.weightPoly = weightPoly;
+    }
 
 
     public void setWeightPoly() {
@@ -64,8 +65,6 @@ public class EvaluationFunction {
         double numberOfMoves;
         double numberOfCoins;
         double territory;
-        setTerritory();
-        setWeightPoly();
 
         numberOfCoins = (double) (this.cBoard.getNrSquares(BLACK) - this.cBoard.getNrSquares(WHITE)) / (this.cBoard.getNrSquares(BLACK) + this.cBoard.getNrSquares(WHITE));
 

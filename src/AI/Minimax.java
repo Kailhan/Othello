@@ -36,7 +36,6 @@ public class Minimax extends AI {
     public Minimax(int depth) {
         this.depth = depth;
         this.evaluator = new EvaluationFunction();
-
     }
 
     public int minimaxAlg2(Node<Board> currentNode) {
