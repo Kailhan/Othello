@@ -1,28 +1,27 @@
 package AI.Genetic_Algorithm;
 
-import AI.EvaluationFunction;
 import AI.AI;
+import AI.EvaluationFunction;
 import Core.Board;
 
 import java.util.Random;
 
-public class Population {
+public class Population_EvalFunc {
 
     private int popSize;
     private int boardSize;
     private static Random rand;
     private double weightPolyBound;
     private double territoryBound;
-    private AI[] AIs;
+    private EvaluationFunction[] AIs;
 
     private int mutationCount;
 
-    public static final int GA_GAMES_TO_BE_SIMMED = 100;
+    public static final int GA_GAMES_TO_BE_SIMMED = 25;
     public static final int GA_BOARD_SIZE = 8;
-    public static final int DEPTH = 3;
-    public static final int GA_POP_SIZE = 100;
-    public static final double GA_WEIGHT_POLY_BOUND = 50;
-    public static final double GA_TERRITORY_BOUND = 50;
+    public static final int GA_POP_SIZE = 40;
+    public static final double GA_WEIGHT_POLY_BOUND = 25;
+    public static final double GA_TERRITORY_BOUND = 25;
 
     /**
      * Create population of MiniMax with AB pruning
@@ -31,18 +30,18 @@ public class Population {
      * @param weightPolyBound Max value that we are initializing our weights for evaluation function polynome with
      * @param territoryBound Max value of territory values
      */
-    public Population(int popSize, int boardSize, double weightPolyBound, double territoryBound) {
+    public Population_EvalFunc(int popSize, int boardSize, double weightPolyBound, double territoryBound) {
         this.popSize = popSize;
         this.boardSize = boardSize;
         this.rand = new Random();
         this.weightPolyBound = weightPolyBound;
         this.territoryBound = territoryBound;
         this.mutationCount = 1;
-        this.AIs = new GA_MiniMaxAlph[popSize];
+        this.AIs = new EvaluationFunction[popSize];
         initMiniMaxAlphPopulation();
     }
 
-    public Population() {
+    public Population_EvalFunc() {
         this(GA_POP_SIZE, GA_BOARD_SIZE, GA_WEIGHT_POLY_BOUND, GA_TERRITORY_BOUND);
     }
 
@@ -55,7 +54,7 @@ public class Population {
             cEvalFunc.setBoard(new Board(boardSize));
             cEvalFunc.setWeightPoly(initWeightPoly(16, weightPolyBound)); //size of weightpoly in evaluationfunction
             cEvalFunc.setTerritory(initTerritory(territoryBound));
-            this.AIs[i] = new GA_MiniMaxAlph(DEPTH, new Board(boardSize), cEvalFunc); //idk what the depth should be
+            this.AIs[i] = cEvalFunc; //idk what the depth should be
             //System.out.println(AIs[i].getEvaluator().getChromosome()[1]);
         }
     }
@@ -131,13 +130,11 @@ public class Population {
 
     /**
      * Randomly (discretely) combines the chromosomes of parents
-     * @param ai_parent1 daddy
-     * @param ai_parent2 mommy
+     * @param parent1 daddy
+     * @param parent2 mommy
      * @return lil baby
      */
-    public AI randomCrossover(AI ai_parent1, AI ai_parent2) {
-        EvaluationFunction parent1 = ai_parent1.getEvaluator();
-        EvaluationFunction parent2 = ai_parent2.getEvaluator();
+    public AI randomCrossover(EvaluationFunction parent1, EvaluationFunction parent2) {
         double[] parent1WeightPoly = parent1.getWeightPoly();
         double[] parent2WeightPoly = parent1.getWeightPoly();
         double[][] parent1CellValues = parent2.getCellValues();
@@ -157,18 +154,16 @@ public class Population {
         tmpEvalFunc.setBoard(new Board(boardSize));
         tmpEvalFunc.setWeightPoly(initWeightPoly(16, weightPolyBound)); //size of weightpoly in evaluationfunction
         tmpEvalFunc.setTerritory(initTerritory(territoryBound));
-        return new GA_MiniMaxAlph(DEPTH, new Board(boardSize), tmpEvalFunc);
+        return tmpEvalFunc;
     }
 
     /**
      * Randomly combines the chromosomes of parents
-     * @param ai_parent1 daddy
-     * @param ai_parent2 mommy
+     * @param parent1 daddy
+     * @param parent2 mommy
      * @return lil baby
      */
-    public AI randomWeightedCrossover(AI ai_parent1, AI ai_parent2) {
-        EvaluationFunction parent1 = ai_parent1.getEvaluator();
-        EvaluationFunction parent2 = ai_parent2.getEvaluator();
+    public EvaluationFunction randomWeightedCrossover(EvaluationFunction parent1, EvaluationFunction parent2) {
         double[] parent1WeightPoly = parent1.getWeightPoly();
         double[] parent2WeightPoly = parent1.getWeightPoly();
         double[][] parent1CellValues = parent2.getCellValues();
@@ -191,7 +186,7 @@ public class Population {
         tmpEvalFunc.setBoard(new Board(boardSize));
         tmpEvalFunc.setWeightPoly(initWeightPoly(16, weightPolyBound)); //size of weightpoly in evaluationfunction
         tmpEvalFunc.setTerritory(initTerritory(territoryBound));
-        return new GA_MiniMaxAlph(DEPTH, new Board(boardSize), tmpEvalFunc);
+        return tmpEvalFunc;
     }
 
     /**
@@ -203,7 +198,7 @@ public class Population {
     public void nonUniformBitMutate(double percentPopAff, double percentChromoAff) {
         for(int i = 0; i < AIs.length; i++) {
             if(rand.nextDouble() < percentPopAff) {
-                double[] chromosome = AIs[i].getEvaluator().getChromosome();
+                double[] chromosome = AIs[i].getChromosome();
                 for(int j = 0; j < chromosome.length; j++ ) {
                     if(rand.nextDouble() < percentChromoAff) {
                         chromosome[j] = (rand.nextDouble() < 0.5) ? (1/mutationCount) * chromosome[j] + chromosome[j] : (1/mutationCount) * chromosome[j] - chromosome[j];
@@ -219,9 +214,9 @@ public class Population {
      * @param selectionRatio Higher selection ratios leads to more elite picking and potentially inbreeding
      * @return New AI array that can directly be used as individuals for next generation
      */
-    public AI[] selection(double selectionRatio) {
+    public EvaluationFunction[] selection(double selectionRatio) {
         double totalFitness = 0;
-        AI[] selectedIndividuals = new AI[AIs.length*2];
+        EvaluationFunction[] selectedIndividuals = new EvaluationFunction[AIs.length*2];
         for (int i = 0; i < AIs.length; i++) {
             totalFitness += AIs[i].getFitness();
         }
@@ -232,15 +227,7 @@ public class Population {
                 selectedIndividuals[i] = AIs[individualIndex];
             } while(AIs[individualIndex].getFitness() > rand.nextDouble() * selectionRatio * totalFitness);
         }
-       return selectedIndividuals;
-    }
-
-    public AI[] getAIs() {
-        return AIs;
-    }
-
-    public void setAIs(AI[] AIs) {
-        this.AIs = AIs;
+        return selectedIndividuals;
     }
 
     public int getPopSize() {
@@ -281,5 +268,13 @@ public class Population {
             }
         }
         return AIs[indexWorstSpecimen];
+    }
+
+    public EvaluationFunction[] getAIs() {
+        return AIs;
+    }
+
+    public void setAIs(EvaluationFunction[] AIs) {
+        this.AIs = AIs;
     }
 }

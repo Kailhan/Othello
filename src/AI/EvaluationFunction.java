@@ -1,11 +1,13 @@
 package AI;
 
+import AI.Tests.GenericTest;
 import Core.Board;
 import Core.Logic;
+import sun.rmi.runtime.Log;
 
 import java.util.Random;
 
-public class EvaluationFunction {
+public class EvaluationFunction extends AI{
 
     private Board cBoard;
     private double[][] cellValues;
@@ -51,6 +53,65 @@ public class EvaluationFunction {
             this.weightPoly[i] = weightPoly[i];
         }
     }
+
+    /**
+     * One level AI that directly and only uses the evaluation function itself (used for GA and maybe future stuff)
+     * @param board current board for which we want to find the best move
+     * @return a best move
+     */
+
+    public int[] getBestMove(Board board) {
+
+        int moveCounter = 0;
+        int possibleBoardIndex = 0;
+        int bestBoardIndex = -1;
+        for (int r = 0; r < board.getSize(); r++) {
+            for (int c = 0; c < board.getSize(); c++) {
+                if (Logic.checkSquareAllowed(r, c, board)) moveCounter++;
+            }
+        }
+        Board[] possibleBoards = new Board[moveCounter];
+        for (int r = 0; r < board.getSize(); r++) {
+            for (int c = 0; c < board.getSize(); c++) {
+                if (Logic.checkSquareAllowed(r, c, board)) {
+                    Board tmpBoard = new Board(board);
+                    tmpBoard.applyMove(r, c);
+                    possibleBoards[possibleBoardIndex] = new Board(tmpBoard);
+                    possibleBoardIndex++;
+                }
+            }
+        }
+        double score = Integer.MIN_VALUE;
+        double cScore;
+        for(int i = 0; i < possibleBoards.length; i++) {
+            cScore = evaluate(possibleBoards[i]);
+            if(cScore >= score) {
+                score = cScore;
+                bestBoardIndex = i;
+            }
+        }
+        int[] move = new int[2];
+        move[0] = possibleBoards[bestBoardIndex].getRow(board);
+        move[1] = possibleBoards[bestBoardIndex].getColumn(board);
+
+        return move;
+    }
+
+    public double evaluateFitness(int gamesToBeSimmed, int boardSize) {
+        AI stupid = new Stupid();
+        gamesToBeSimmed = (gamesToBeSimmed < 2) ? 2 : gamesToBeSimmed;
+        gamesToBeSimmed = (gamesToBeSimmed % 2 != 0) ? gamesToBeSimmed + 1:gamesToBeSimmed;
+        GenericTest.test(this, stupid, gamesToBeSimmed/2, boardSize);
+        winsFirstMove = GenericTest.getPlayer1Wins();
+        //GenericTest.test(stupid, this, gamesToBeSimmed/2, boardSize);
+        winsSecondMove = GenericTest.getPlayer2Wins();
+        //System.out.println(this.getEvaluator().getChromosome()[2]);
+        //System.out.println("this.fitness = (winsFirstMove + winsSecondMove)/gamesToBeSimmed;");
+        //System.out.println(gamesToBeSimmed);
+        this.fitness = (winsFirstMove + winsSecondMove)/gamesToBeSimmed;
+        return (winsFirstMove + winsSecondMove)/gamesToBeSimmed;
+    }
+
 
     public int evaluate(Board cBoard){
         this.cBoard = cBoard;
@@ -104,12 +165,12 @@ public class EvaluationFunction {
         totalScore = (int) (calcCoinWeight(cBoard.getTurn()) * numberOfCoins + calcCornerWeight(cBoard.getTurn()) * numberOfCorners +
                 calcMoveWeight(cBoard.getTurn()) * numberOfMoves + calcTerritoryWeight(cBoard.getTurn()) * territory);
 
-        System.out.println("numberOfcoins: " + numberOfCoins);
-        System.out.println("numberOfMoves: " + numberOfMoves);
-        System.out.println("territoryScoreWhite: " + getTerritoryScore(WHITE));
-        System.out.println("territoryScoreBlack: " + getTerritoryScore(BLACK));
-        System.out.println("terrScore: " + territory);
-        System.out.println("totalscore: " + totalScore);
+//        System.out.println("numberOfcoins: " + numberOfCoins);
+//        System.out.println("numberOfMoves: " + numberOfMoves);
+//        System.out.println("territoryScoreWhite: " + getTerritoryScore(WHITE));
+//        System.out.println("territoryScoreBlack: " + getTerritoryScore(BLACK));
+//        System.out.println("terrScore: " + territory);
+//        System.out.println("totalscore: " + totalScore);
 
         return totalScore;
     }
