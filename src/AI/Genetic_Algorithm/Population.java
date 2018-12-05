@@ -66,7 +66,7 @@ public class Population {
     public double[] initWeightPoly(int weightPolySize, double bound) {
         double[] weightPoly = new double[weightPolySize];
         for(int i = 0; i < weightPolySize; i++) {
-            weightPoly[i] = rand.nextDouble() * bound;
+            weightPoly[i] = ((rand.nextDouble() * bound) - bound/2)*2;
 
         }
         return weightPoly;

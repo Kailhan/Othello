@@ -78,10 +78,12 @@ public class EvaluationFunction extends AI{
         AI stupid = new Stupid();
         gamesToBeSimmed = (gamesToBeSimmed < 2) ? 2 : gamesToBeSimmed;
         gamesToBeSimmed = (gamesToBeSimmed % 2 != 0) ? gamesToBeSimmed + 1:gamesToBeSimmed;
+
+        GenericTest.test(stupid, this, gamesToBeSimmed/2, boardSize);
+        winsSecondMove = GenericTest.getPlayer2Wins();
         GenericTest.test(this, stupid, gamesToBeSimmed/2, boardSize);
         winsFirstMove = GenericTest.getPlayer1Wins();
-        //GenericTest.test(stupid, this, gamesToBeSimmed/2, boardSize);
-        winsSecondMove = GenericTest.getPlayer2Wins();
+
         //System.out.println(this.getEvaluator().getChromosome()[2]);
         //System.out.println("this.fitness = (winsFirstMove + winsSecondMove)/gamesToBeSimmed;");
         //System.out.println(gamesToBeSimmed);
@@ -117,9 +119,9 @@ public class EvaluationFunction extends AI{
         }
     }
 
-    public int evaluate(Board cBoard){
+    public double evaluate(Board cBoard){
         this.cBoard = cBoard;
-        int totalScore;
+        double totalScore;
         int blackMoves;
         int whiteMoves;
         double numberOfCorners;
@@ -166,17 +168,19 @@ public class EvaluationFunction extends AI{
 //            this.territoryWeightPoly0 = 50;
 //        }
 
-        totalScore = (int) (calcCoinWeight(cBoard.getTurn()) * numberOfCoins + calcCornerWeight(cBoard.getTurn()) * numberOfCorners +
-                calcMoveWeight(cBoard.getTurn()) * numberOfMoves + calcTerritoryWeight(cBoard.getTurn()) * territory);
+//        totalScore = (int) (calcCoinWeight(cBoard.getTurn()) * numberOfCoins + calcCornerWeight(cBoard.getTurn()) * numberOfCorners +
+//                calcMoveWeight(cBoard.getTurn()) * numberOfMoves + calcTerritoryWeight(cBoard.getTurn()) * territory);
+        totalScore = (calcCoinWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfCoins + calcCornerWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfCorners +
+                calcMoveWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfMoves + calcTerritoryWeight(cBoard.getNrSquares(Board.EMPTY)) * territory);
 
       //  System.out.println("numberOfcoins: " + numberOfCoins);
       //  System.out.println("numberOfMoves: " + numberOfMoves);
        // System.out.println("territoryScoreWhite: " + getTerritoryScore(WHITE));
        // System.out.println("territoryScoreBlack: " + getTerritoryScore(BLACK));
-        System.out.println("corner score: " + numberOfCorners);
-        System.out.println("terrScore: " + territory);
-        System.out.println("totalscore: " + totalScore);
-        System.out.println("----------");
+//        System.out.println("corner score: " + numberOfCorners);
+//        System.out.println("terrScore: " + territory);
+//        System.out.println("totalscore: " + totalScore);
+//        System.out.println("----------");
 
         return totalScore;
     }
@@ -376,23 +380,23 @@ public class EvaluationFunction extends AI{
         return territoryWeightPoly;
     }
 
-    public double calcCoinWeight(int turn) {
-        double coinWeight = coinWeightPoly()[0] + (coinWeightPoly()[1] * turn) + (coinWeightPoly()[2] * turn * turn) + (coinWeightPoly()[3] * turn * turn * turn);
+    public double calcCoinWeight(int emptySquares) {
+        double coinWeight = coinWeightPoly()[0] + (coinWeightPoly()[1] * emptySquares) + (coinWeightPoly()[2] * emptySquares * emptySquares) + (coinWeightPoly()[3] * emptySquares * emptySquares * emptySquares);
         return coinWeight;
     }
 
-    public double calcCornerWeight(int turn) {
-        double cornerWeight = cornerWeightPoly()[0] + (cornerWeightPoly()[1] * turn) + (cornerWeightPoly()[2] * turn * turn) + (cornerWeightPoly()[3] * turn * turn * turn);
+    public double calcCornerWeight(int emptySquares) {
+        double cornerWeight = cornerWeightPoly()[0] + (cornerWeightPoly()[1] * emptySquares) + (cornerWeightPoly()[2] * emptySquares * emptySquares) + (cornerWeightPoly()[3] * emptySquares * emptySquares * emptySquares);
         return cornerWeight;
     }
 
-    public double calcMoveWeight(int turn) {
-        double moveWeight = moveWeightPoly()[0] + (moveWeightPoly()[1] * turn) + (moveWeightPoly()[2] * turn * turn) + (moveWeightPoly()[3] * turn * turn * turn);
+    public double calcMoveWeight(int emptySquares) {
+        double moveWeight = moveWeightPoly()[0] + (moveWeightPoly()[1] * emptySquares) + (moveWeightPoly()[2] * emptySquares * emptySquares) + (moveWeightPoly()[3] * emptySquares * emptySquares * emptySquares);
         return moveWeight;
     }
 
-    public double calcTerritoryWeight(int turn) {
-        double territoryWeight = territoryWeightPoly()[0] + (territoryWeightPoly()[1] * turn) + (territoryWeightPoly()[2] * turn * turn) + (territoryWeightPoly()[3] * turn * turn * turn);
+    public double calcTerritoryWeight(int emptySquares) {
+        double territoryWeight = territoryWeightPoly()[0] + (territoryWeightPoly()[1] * emptySquares) + (territoryWeightPoly()[2] * emptySquares * emptySquares) + (territoryWeightPoly()[3] * emptySquares * emptySquares * emptySquares);
         return territoryWeight;
     }
 

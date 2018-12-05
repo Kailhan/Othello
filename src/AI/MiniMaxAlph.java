@@ -21,7 +21,7 @@ public class MiniMaxAlph extends AI {
         gamesToBeSimmed = (gamesToBeSimmed % 2 != 0) ? gamesToBeSimmed + 1:gamesToBeSimmed;
         GenericTest.test(this, stupid, gamesToBeSimmed/2, boardSize);
         winsFirstMove = GenericTest.getPlayer1Wins();
-        //GenericTest.test(stupid, this, gamesToBeSimmed/2, boardSize);
+        GenericTest.test(stupid, this, gamesToBeSimmed/2, boardSize);
         winsSecondMove = GenericTest.getPlayer2Wins();
         //System.out.println(this.getEvaluator().getChromosome()[2]);
         //System.out.println("this.fitness = (winsFirstMove + winsSecondMove)/gamesToBeSimmed;");
@@ -48,7 +48,7 @@ public class MiniMaxAlph extends AI {
 
     public int search(Node<Board> currentNode, int alpha, int beta) {
         if (currentNode.getChildren().size() == 0) {
-            int value = evaluator.evaluate(currentNode.getData());
+            int value = (int)evaluator.evaluate(currentNode.getData());
             currentNode.setValue(value);
             return value;
         } else if (currentNode.getData().getCurrentPlayer() == -1) {
