@@ -1,9 +1,6 @@
 package Core;
 
-import AI.MCTS;
-import AI.MCTSNode;
-import AI.Minimax;
-import AI.Stupid;
+import AI.*;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -39,6 +36,7 @@ public class GameScene extends BorderPane {
     private int AI1Level;
     private int AI2Level;
     private static String[] AIs;
+    private static final int MINIMAX_DEPTH = 7;
 
     private File discBlack = new File("src/Assets/disc_blackBgr.png");
     private File discWhite = new File("src/Assets/disc_whiteBgrFthr.png");
@@ -270,7 +268,10 @@ public class GameScene extends BorderPane {
                 move = stupid.getBestMove(board);
                 updateBoard(move[0], move[1]);
             case 2:
-                Minimax minimax = new Minimax(3, board);
+//                Minimax minimax = new Minimax(3, board);
+//                move = minimax.getBestMove(board);
+//                updateBoard(move[0], move[1]);
+                MiniMaxAlph minimax = new MiniMaxAlph(MINIMAX_DEPTH, board);
                 move = minimax.getBestMove(board);
                 updateBoard(move[0], move[1]);
         }

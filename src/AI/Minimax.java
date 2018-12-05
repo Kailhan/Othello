@@ -41,7 +41,7 @@ public class Minimax extends AI {
 
     public int minimaxAlg2(Node<Board> currentNode) {
         if (currentNode.getChildren().size() == 0) {
-            int value = evaluator.evaluate(currentNode.getData());
+            int value = (int)evaluator.evaluate(currentNode.getData());
             currentNode.setValue(value);
             return value;
         } else if (currentNode.getData().getCurrentPlayer() == -1) {

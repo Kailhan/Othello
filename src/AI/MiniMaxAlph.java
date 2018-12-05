@@ -21,7 +21,7 @@ public class MiniMaxAlph extends AI {
         gamesToBeSimmed = (gamesToBeSimmed % 2 != 0) ? gamesToBeSimmed + 1:gamesToBeSimmed;
         GenericTest.test(this, stupid, gamesToBeSimmed/2, boardSize);
         winsFirstMove = GenericTest.getPlayer1Wins();
-        //GenericTest.test(stupid, this, gamesToBeSimmed/2, boardSize);
+        GenericTest.test(stupid, this, gamesToBeSimmed/2, boardSize);
         winsSecondMove = GenericTest.getPlayer2Wins();
         //System.out.println(this.getEvaluator().getChromosome()[2]);
         //System.out.println("this.fitness = (winsFirstMove + winsSecondMove)/gamesToBeSimmed;");
@@ -32,13 +32,17 @@ public class MiniMaxAlph extends AI {
     }
 
     public int[] getBestMove(Board board) {
-        this.gameTree = new GameTree(this.depth, board);
-        this.evaluator.setBoard(board);
-        this.root = gameTree.createTree();
+        MiniMaxAlph minimax = new MiniMaxAlph(7, board);
+        GameTree gameTree = new GameTree(7, board);
+        Node<Board> root = gameTree.createTree();
+
+        minimax.search(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        Node<Board> child1 = minimax.selectMove(root);
+
         int[] bestMove = new int[2];
         try {
-            bestMove[0] = selectMove(root).getRow();
-            bestMove[1] = selectMove(root).getColumn();
+            bestMove[0] = child1.getRow();
+            bestMove[1] = child1.getColumn();
         }
         catch(NullPointerException e) {
             System.out.println("no more moves");
@@ -48,16 +52,17 @@ public class MiniMaxAlph extends AI {
 
     public int search(Node<Board> currentNode, int alpha, int beta) {
         if (currentNode.getChildren().size() == 0) {
-            int value = evaluator.evaluate(currentNode.getData());
+            int value = (int)evaluator.evaluate(currentNode.getData());
             currentNode.setValue(value);
             return value;
         } else if (currentNode.getData().getCurrentPlayer() == -1) {
             int value = Integer.MIN_VALUE;
             for (Node<Board> currentChild : currentNode.getChildren()) {
-                //value = Math.max(value, search(currentChild, alpha, beta));
-                value = (value > search(currentChild, alpha, beta)) ? value : search(currentChild, alpha, beta);
-                //alpha = Math.max(value, alpha);
-                alpha = (value > alpha) ? value : alpha;
+                value = Math.max(value, search(currentChild, alpha, beta));
+                System.out.println("Max value: " +value);
+//                value = (value > search(currentChild, alpha, beta)) ? value : search(currentChild, alpha, beta);
+                alpha = Math.max(value, alpha);
+//                alpha = (value > alpha) ? value : alpha;
                 if (alpha >= beta) {
                     System.out.println("pruned");
                     break;
@@ -68,10 +73,11 @@ public class MiniMaxAlph extends AI {
         } else { //MINVALUE, opponent player
             int value = Integer.MAX_VALUE;
             for (Node<Board> currentChild : currentNode.getChildren()) {
-                //value = Math.min(value, search(currentChild, alpha, beta));
-                value = (value < search(currentChild, alpha, beta)) ? value : search(currentChild, alpha, beta);
-                //beta = Math.min(value, beta);
-                beta = (value < beta) ? value : beta;
+                value = Math.min(value, search(currentChild, alpha, beta));
+                System.out.println("Min value: "+value);
+//                value = (value < search(currentChild, alpha, beta)) ? value : search(currentChild, alpha, beta);
+                beta = Math.min(value, beta);
+//                beta = (value < beta) ? value : beta;
                 if (alpha >= beta) {
                     System.out.println("pruned");
                     break;

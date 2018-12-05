@@ -22,7 +22,7 @@ public class GA_DirectEvalFunc {
         EvaluationFunction[] selectedIndividualsChildren = new EvaluationFunction[pop.getPopSize()];
         pop.calculateFitness(Population.GA_GAMES_TO_BE_SIMMED, pop.getBoardSize());
         System.out.println("Calculated fitness of initial population");
-        int maxIterations = 40;
+        int maxIterations = 50;
 
         String[] gaLog = new String[(WEIGHT_POLY_SIZE + (pop.getBoardSize() * pop.getBoardSize()) + 2) * (1  + (maxIterations * pop.getPopSize()))];
         int gaLogIndex = 0;
