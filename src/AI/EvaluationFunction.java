@@ -180,10 +180,15 @@ public class EvaluationFunction extends AI{
 
     public int getCorners(int player) {
         int nrCorners = 0;
-        for (int i = 0; i < cBoard.getBoardGrid().length; i += cBoard.getBoardGrid().length-1)
-            for (int j = 0; j < cBoard.getBoardGrid()[i].length; j += cBoard.getBoardGrid()[i].length-1)
+        for (int i = 0; i < cBoard.getBoardGrid().length; i += cBoard.getBoardGrid().length - 1) {
+            for (int j = 0; j < cBoard.getBoardGrid().length; j += cBoard.getBoardGrid()[i].length - 1) {
                 if (cBoard.getBoardGrid()[i][j] == player)
                     nrCorners++;
+                System.out.print("corner "+i+","+j+": "+nrCorners+"\t");
+                System.out.println();
+            }
+        }
+        //System.out.println("Corners "+nrCorners);
 
         return nrCorners;
     }
