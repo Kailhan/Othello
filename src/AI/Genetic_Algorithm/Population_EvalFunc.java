@@ -20,8 +20,8 @@ public class Population_EvalFunc {
     public static final int GA_GAMES_TO_BE_SIMMED = 25;
     public static final int GA_BOARD_SIZE = 6;
     public static final int GA_POP_SIZE = 50;
-    public static final double GA_WEIGHT_POLY_BOUND = 10000;
-    public static final double GA_TERRITORY_BOUND = 10000;
+    public static final double GA_WEIGHT_POLY_BOUND = 1000;
+    public static final double GA_TERRITORY_BOUND = 1000;
 
     /**
      * Create population of MiniMax with AB pruning
