@@ -22,7 +22,7 @@ public class GA_DirectEvalFunc {
         EvaluationFunction[] selectedIndividualsChildren = new EvaluationFunction[pop.getPopSize()];
         pop.calculateFitness(Population.GA_GAMES_TO_BE_SIMMED, pop.getBoardSize());
         System.out.println("Calculated fitness of initial population");
-        int maxIterations = 50;
+        int maxIterations = 25;
 
         String[] gaLog = new String[(WEIGHT_POLY_SIZE + (pop.getBoardSize() * pop.getBoardSize()) + 2) * (1  + (maxIterations * pop.getPopSize()))];
         int gaLogIndex = 0;
@@ -70,7 +70,7 @@ public class GA_DirectEvalFunc {
                 selectedIndividualsChildren[j] = pop.randomWeightedCrossover(selectedIndividuals[j], selectedIndividuals[((pop.getPopSize()*2) - 1) -j]);
             }
             pop.setAIs(selectedIndividualsChildren);
-            pop.nonUniformBitMutate(0.5, 0.5);
+            //pop.nonUniformBitMutate(0.5, 0.5);
             pop.calculateFitness(GA_GAMES_TO_BE_SIMMED, pop.getBoardSize());
             System.out.println("iteration: " + i);
         }
