@@ -59,6 +59,7 @@ public class MiniMaxAlph extends AI {
             int value = Integer.MIN_VALUE;
             for (Node<Board> currentChild : currentNode.getChildren()) {
                 value = Math.max(value, search(currentChild, alpha, beta));
+                System.out.println("Max value: " +value);
 //                value = (value > search(currentChild, alpha, beta)) ? value : search(currentChild, alpha, beta);
                 alpha = Math.max(value, alpha);
 //                alpha = (value > alpha) ? value : alpha;
@@ -73,6 +74,7 @@ public class MiniMaxAlph extends AI {
             int value = Integer.MAX_VALUE;
             for (Node<Board> currentChild : currentNode.getChildren()) {
                 value = Math.min(value, search(currentChild, alpha, beta));
+                System.out.println("Min value: "+value);
 //                value = (value < search(currentChild, alpha, beta)) ? value : search(currentChild, alpha, beta);
                 beta = Math.min(value, beta);
 //                beta = (value < beta) ? value : beta;
