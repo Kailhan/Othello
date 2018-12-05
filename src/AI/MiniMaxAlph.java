@@ -32,13 +32,17 @@ public class MiniMaxAlph extends AI {
     }
 
     public int[] getBestMove(Board board) {
-        this.gameTree = new GameTree(this.depth, board);
-        this.evaluator.setBoard(board);
-        this.root = gameTree.createTree();
+        MiniMaxAlph minimax = new MiniMaxAlph(7, board);
+        GameTree gameTree = new GameTree(7, board);
+        Node<Board> root = gameTree.createTree();
+
+        minimax.search(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        Node<Board> child1 = minimax.selectMove(root);
+
         int[] bestMove = new int[2];
         try {
-            bestMove[0] = selectMove(root).getRow();
-            bestMove[1] = selectMove(root).getColumn();
+            bestMove[0] = child1.getRow();
+            bestMove[1] = child1.getColumn();
         }
         catch(NullPointerException e) {
             System.out.println("no more moves");
@@ -54,10 +58,10 @@ public class MiniMaxAlph extends AI {
         } else if (currentNode.getData().getCurrentPlayer() == -1) {
             int value = Integer.MIN_VALUE;
             for (Node<Board> currentChild : currentNode.getChildren()) {
-                //value = Math.max(value, search(currentChild, alpha, beta));
-                value = (value > search(currentChild, alpha, beta)) ? value : search(currentChild, alpha, beta);
-                //alpha = Math.max(value, alpha);
-                alpha = (value > alpha) ? value : alpha;
+                value = Math.max(value, search(currentChild, alpha, beta));
+//                value = (value > search(currentChild, alpha, beta)) ? value : search(currentChild, alpha, beta);
+                alpha = Math.max(value, alpha);
+//                alpha = (value > alpha) ? value : alpha;
                 if (alpha >= beta) {
                     System.out.println("pruned");
                     break;
@@ -68,10 +72,10 @@ public class MiniMaxAlph extends AI {
         } else { //MINVALUE, opponent player
             int value = Integer.MAX_VALUE;
             for (Node<Board> currentChild : currentNode.getChildren()) {
-                //value = Math.min(value, search(currentChild, alpha, beta));
-                value = (value < search(currentChild, alpha, beta)) ? value : search(currentChild, alpha, beta);
-                //beta = Math.min(value, beta);
-                beta = (value < beta) ? value : beta;
+                value = Math.min(value, search(currentChild, alpha, beta));
+//                value = (value < search(currentChild, alpha, beta)) ? value : search(currentChild, alpha, beta);
+                beta = Math.min(value, beta);
+//                beta = (value < beta) ? value : beta;
                 if (alpha >= beta) {
                     System.out.println("pruned");
                     break;
