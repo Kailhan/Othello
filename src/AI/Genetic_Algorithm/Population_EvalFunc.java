@@ -147,6 +147,7 @@ public class Population_EvalFunc {
                 childCellValues[i][j] = (rand.nextInt(2) == 0) ? parent1CellValues[i][j] : parent2CellValues[i][j];
             }
         }
+
         EvaluationFunction tmpEvalFunc = new EvaluationFunction(initTerritory(territoryBound), initWeightPoly(16, weightPolyBound),new Board(boardSize));
         return tmpEvalFunc;
     }
@@ -176,6 +177,7 @@ public class Population_EvalFunc {
                 childCellValues[i][j] = parent1CellValues[i][j] * proportion + parent2CellValues[i][j] * (1 - proportion);
             }
         }
+
         EvaluationFunction tmpEvalFunc = new EvaluationFunction(initTerritory(territoryBound), initWeightPoly(16, weightPolyBound),new Board(boardSize));
         return tmpEvalFunc;
     }
