@@ -28,7 +28,7 @@ public class Node<T> implements GenericTree<T> {
     public Node<T> addChild(Node<T> child) {
         this.children.add(child);
         child.setParent(this); //set parent when adding a child
-        child.depth = this.depth++;
+        child.depth = depth + 1;
         return child;
     }
 
