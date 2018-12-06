@@ -262,18 +262,17 @@ public class GameScene extends BorderPane {
                 MCTS mcts = new MCTS(100);
                 move = mcts.getBestMove(board);
                 updateBoard(move[0], move[1]);
-
+                break;
             case 1:
                 Stupid stupid = new Stupid();
                 move = stupid.getBestMove(board);
                 updateBoard(move[0], move[1]);
+                break;
             case 2:
-//                Minimax minimax = new Minimax(3, board);
-//                move = minimax.getBestMove(board);
-//                updateBoard(move[0], move[1]);
                 MiniMaxAlph minimax = new MiniMaxAlph(MINIMAX_DEPTH, board);
                 move = minimax.getBestMove(board);
                 updateBoard(move[0], move[1]);
+                break;
         }
     }
 
