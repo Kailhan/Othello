@@ -36,7 +36,8 @@ public class GameScene extends BorderPane {
     private int AI1Level;
     private int AI2Level;
     private static String[] AIs;
-    private static final int MINIMAX_DEPTH = 7;
+    private static final int MINIMAX_DEPTH = 3;
+    private static final int MINIMAXALPH_DEPTH = 3;
 
     private File discBlack = new File("src/Assets/disc_blackBgr.png");
     private File discWhite = new File("src/Assets/disc_whiteBgrFthr.png");
@@ -262,18 +263,21 @@ public class GameScene extends BorderPane {
                 MCTS mcts = new MCTS(100);
                 move = mcts.getBestMove(board);
                 updateBoard(move[0], move[1]);
-
+                break;
             case 1:
                 Stupid stupid = new Stupid();
                 move = stupid.getBestMove(board);
                 updateBoard(move[0], move[1]);
+                break;
             case 2:
-//                Minimax minimax = new Minimax(3, board);
-//                move = minimax.getBestMove(board);
-//                updateBoard(move[0], move[1]);
-                MiniMaxAlph minimax = new MiniMaxAlph(MINIMAX_DEPTH, board);
-                move = minimax.getBestMove(board);
+                MiniMaxAlph minimaxAlph = new MiniMaxAlph(MINIMAX_DEPTH, board);
+                move = minimaxAlph.getBestMove(board);
                 updateBoard(move[0], move[1]);
+                break;
+            case 3:
+                Minimax minimax = new Minimax(MINIMAX_DEPTH, board);
+                move = minimax.getBestMove(board);
+                updateBoard(move[0],move[1]);
         }
     }
 
