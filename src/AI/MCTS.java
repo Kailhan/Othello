@@ -97,7 +97,7 @@ public class MCTS extends AI {
             }
         }
         MCTSNode toBeChecked = potentialNodes.get(rand.nextInt(potentialNodes.size()));
-        nodeQueue.remove((Object) toBeChecked);
+        nodeQueue.remove(toBeChecked);
 //        MCTSNode toBeChecked = (MCTSNode)nodeQueue.poll(); //retrieves and removes the first element of this list or returns null if this list is empty
 //        if(toBeChecked.getDepth() < treeDepth) createChildren(toBeChecked);
         if(nodeQueue.size() < totalSims) createChildren(toBeChecked);

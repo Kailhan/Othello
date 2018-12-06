@@ -76,7 +76,7 @@ public class GameScene extends BorderPane {
         this.primaryStage = primaryStage;
         this.board = new Board(settings.getBoard());
         this.tileSize = windowSize/ board.getSize();
-        this.AIs = settings.getAIs();
+        AIs = Settings.getAIs();
 
         this.discBlackImg = new Image(discBlack.toURI().toString(), tileSize, tileSize, false,false);
         this.discWhiteImg = new Image(discWhite.toURI().toString(), tileSize, tileSize, false,false);

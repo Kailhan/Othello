@@ -10,7 +10,7 @@ public class StartGame extends Application {
     private SettingsScene settingsScene;
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         primaryStage.setTitle("Othello Game - Settings");
         settingsScene = new SettingsScene(primaryStage);
