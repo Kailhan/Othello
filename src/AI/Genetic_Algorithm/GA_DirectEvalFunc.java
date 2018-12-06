@@ -12,7 +12,7 @@ import static AI.Genetic_Algorithm.Population_EvalFunc.*;
 
 public class GA_DirectEvalFunc {
 
-    public static double SELECTION_RATIO = 0;
+    public static double SELECTION_RATIO = 2;
 
     public static void main(String[] args) {
         long startTime = System.nanoTime();

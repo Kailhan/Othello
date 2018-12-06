@@ -38,7 +38,7 @@ public class MinimaxTest2{
 
         //MCTSNode node = new MCTSNode(board);
         Node<Board> node = m1.getRoot();
-        EvaluationFunction evaluator = new EvaluationFunction();
+        EvaluationFunction evaluator = new EvaluationFunction(board);
         int mcts1Wins = 0;
         int mcts2Wins = 0;
         int draws = 0;
