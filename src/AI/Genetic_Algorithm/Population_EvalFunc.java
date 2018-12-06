@@ -13,14 +13,17 @@ public class Population_EvalFunc {
     private double weightPolyBound;
     private double territoryBound;
     private EvaluationFunction[] AIs;
+    private double totalFitness;
 
     private int mutationCount;
 
-    public static final int GA_GAMES_TO_BE_SIMMED = 25;
-    public static final int GA_BOARD_SIZE = 6;
-    public static final int GA_POP_SIZE = 25;
+    public static final int GA_GAMES_TO_BE_SIMMED = 250;
+    public static final int GA_BOARD_SIZE = 8;
+    public static final int GA_POP_SIZE = 100;
     public static final double GA_WEIGHT_POLY_BOUND = 1000;
     public static final double GA_TERRITORY_BOUND = 1000;
+    public static double SELECTION_RATIO = 1;
+
 
     /**
      * Create population of MiniMax with AB pruning
@@ -35,7 +38,7 @@ public class Population_EvalFunc {
         rand = new Random();
         this.weightPolyBound = weightPolyBound;
         this.territoryBound = territoryBound;
-        this.mutationCount = 1000000000;
+        this.mutationCount = 1;
         this.AIs = new EvaluationFunction[popSize];
         initMiniMaxAlphPopulation();
     }
@@ -132,8 +135,8 @@ public class Population_EvalFunc {
      */
     public AI randomCrossover(EvaluationFunction parent1, EvaluationFunction parent2) {
         double[] parent1WeightPoly = parent1.getWeightPoly();
-        double[] parent2WeightPoly = parent1.getWeightPoly();
-        double[][] parent1CellValues = parent2.getCellValues();
+        double[] parent2WeightPoly = parent2.getWeightPoly();
+        double[][] parent1CellValues = parent1.getCellValues();
         double[][] parent2CellValues = parent2.getCellValues();
         double[] childWeightPoly = new double[parent1WeightPoly.length];
         double[][] childCellValues = new double[parent1CellValues.length][parent1CellValues[0].length];
@@ -158,8 +161,8 @@ public class Population_EvalFunc {
      */
     public EvaluationFunction randomWeightedCrossover(EvaluationFunction parent1, EvaluationFunction parent2) {
         double[] parent1WeightPoly = parent1.getWeightPoly();
-        double[] parent2WeightPoly = parent1.getWeightPoly();
-        double[][] parent1CellValues = parent2.getCellValues();
+        double[] parent2WeightPoly = parent2.getWeightPoly();
+        double[][] parent1CellValues = parent1.getCellValues();
         double[][] parent2CellValues = parent2.getCellValues();
         double[] childWeightPoly = new double[parent1WeightPoly.length];
         double[][] childCellValues = new double[parent1CellValues.length][parent1CellValues[0].length];
@@ -167,7 +170,7 @@ public class Population_EvalFunc {
 
         for(int i = 0; i < parent1WeightPoly.length; i++) {
             proportion = rand.nextDouble();
-            childWeightPoly[i] = parent1WeightPoly[i] * proportion + parent2WeightPoly[i] * (1 - proportion);
+            childWeightPoly[i] = (parent1WeightPoly[i] * proportion) + (parent2WeightPoly[i] * (1 - proportion));
         }
         for(int i = 0; i < parent1CellValues.length; i++) {
             for (int j = 0; j < parent1CellValues[0].length; j++) {
@@ -206,7 +209,7 @@ public class Population_EvalFunc {
      * @return New AI array that can directly be used as individuals for next generation
      */
     public EvaluationFunction[] selection(double selectionRatio) {
-        double totalFitness = 0;
+        totalFitness = 0;
         EvaluationFunction[] selectedIndividuals = new EvaluationFunction[AIs.length*2];
         for (int i = 0; i < AIs.length; i++) {
             totalFitness += AIs[i].getFitness();
@@ -259,6 +262,23 @@ public class Population_EvalFunc {
             }
         }
         return AIs[indexWorstSpecimen];
+    }
+
+    public double calcVariance() {
+        double variance = 0;
+        double[] averageChromosome = new double[AIs[0].getChromosome().length];
+        for(int i = 0; i < AIs.length; i++) {
+            for(int j = 0; j < averageChromosome.length; j++) {
+                averageChromosome[j] += AIs[i].getChromosome()[j]/AIs.length;
+            }
+        }
+        for(int i = 0; i < AIs.length; i++) {
+            for(int j = 0; j < averageChromosome.length; j++) {
+                double diff = averageChromosome[j] - AIs[i].getChromosome()[j];
+                variance += diff * diff;
+            }
+        }
+        return variance;
     }
 
     public EvaluationFunction[] getAIs() {

@@ -105,16 +105,17 @@ public class EvaluationFunction extends AI{
         gamesToBeSimmed = (gamesToBeSimmed < 2) ? 2 : gamesToBeSimmed;
         gamesToBeSimmed = (gamesToBeSimmed % 2 != 0) ? gamesToBeSimmed + 1:gamesToBeSimmed;
 
-        GenericTest.test(stupid, this, gamesToBeSimmed/2, boardSize);
-        winsSecondMove = GenericTest.getPlayer2Wins();
+
         GenericTest.test(this, stupid, gamesToBeSimmed/2, boardSize);
         winsFirstMove = GenericTest.getPlayer1Wins();
+        GenericTest.test(stupid, this, gamesToBeSimmed/2, boardSize);
+        winsSecondMove = GenericTest.getPlayer2Wins();
 
         //System.out.println(this.getEvaluator().getChromosome()[2]);
         //System.out.println("this.fitness = (winsFirstMove + winsSecondMove)/gamesToBeSimmed;");
         //System.out.println(gamesToBeSimmed);
         this.fitness = (winsFirstMove + winsSecondMove)/gamesToBeSimmed;
-        return (winsFirstMove + winsSecondMove)/gamesToBeSimmed;
+        return this.fitness;
     }
 
 

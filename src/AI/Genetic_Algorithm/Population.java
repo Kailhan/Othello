@@ -136,8 +136,8 @@ public class Population {
         EvaluationFunction parent1 = ai_parent1.getEvaluator();
         EvaluationFunction parent2 = ai_parent2.getEvaluator();
         double[] parent1WeightPoly = parent1.getWeightPoly();
-        double[] parent2WeightPoly = parent1.getWeightPoly();
-        double[][] parent1CellValues = parent2.getCellValues();
+        double[] parent2WeightPoly = parent2.getWeightPoly();
+        double[][] parent1CellValues = parent1.getCellValues();
         double[][] parent2CellValues = parent2.getCellValues();
         double[] childWeightPoly = new double[parent1WeightPoly.length];
         double[][] childCellValues = new double[parent1CellValues.length][parent1CellValues[0].length];
@@ -164,8 +164,8 @@ public class Population {
         EvaluationFunction parent1 = ai_parent1.getEvaluator();
         EvaluationFunction parent2 = ai_parent2.getEvaluator();
         double[] parent1WeightPoly = parent1.getWeightPoly();
-        double[] parent2WeightPoly = parent1.getWeightPoly();
-        double[][] parent1CellValues = parent2.getCellValues();
+        double[] parent2WeightPoly = parent2.getWeightPoly();
+        double[][] parent1CellValues = parent1.getCellValues();
         double[][] parent2CellValues = parent2.getCellValues();
         double[] childWeightPoly = new double[parent1WeightPoly.length];
         double[][] childCellValues = new double[parent1CellValues.length][parent1CellValues[0].length];
@@ -224,6 +224,23 @@ public class Population {
             } while(AIs[individualIndex].getFitness() > rand.nextDouble() * selectionRatio * totalFitness);
         }
        return selectedIndividuals;
+    }
+
+    public double calcVariance() {
+        double variance = 0;
+        double[] averageChromosome = new double[AIs[0].getEvaluator().getChromosome().length];
+        for(int i = 0; i < AIs.length; i++) {
+            for(int j = 0; j < averageChromosome.length; j++) {
+                averageChromosome[j] += AIs[i].getEvaluator().getChromosome()[j]/AIs.length;
+            }
+        }
+        for(int i = 0; i < AIs.length; i++) {
+            for(int j = 0; j < averageChromosome.length; j++) {
+                double diff = averageChromosome[j] - AIs[i].getEvaluator().getChromosome()[j];
+                variance += diff * diff;
+            }
+        }
+        return variance;
     }
 
     public AI[] getAIs() {

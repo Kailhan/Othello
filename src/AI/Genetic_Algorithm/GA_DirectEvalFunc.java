@@ -12,8 +12,6 @@ import static AI.Genetic_Algorithm.Population_EvalFunc.*;
 
 public class GA_DirectEvalFunc {
 
-    public static double SELECTION_RATIO = 2;
-
     public static void main(String[] args) {
         long startTime = System.nanoTime();
         Population_EvalFunc pop =  new Population_EvalFunc();
@@ -22,7 +20,7 @@ public class GA_DirectEvalFunc {
         EvaluationFunction[] selectedIndividualsChildren = new EvaluationFunction[pop.getPopSize()];
         pop.calculateFitness(Population.GA_GAMES_TO_BE_SIMMED, pop.getBoardSize());
         System.out.println("Calculated fitness of initial population");
-        int maxIterations = 25;
+        int maxIterations = 100;
 
         String[] gaLog = new String[(WEIGHT_POLY_SIZE + (pop.getBoardSize() * pop.getBoardSize()) + 2) * (1  + (maxIterations * pop.getPopSize()))];
         int gaLogIndex = 0;
@@ -50,33 +48,33 @@ public class GA_DirectEvalFunc {
                 gaLogIndex++;
             }
         }
+        int iterationCounter = 0;
         for(int i = 0; i < maxIterations; i++) {
-            System.out.println("Start of iteration");
-//            long starttime = System.nanoTime();
-//            for(int j = 0; j < pop.getAIs().length; j++) {
-//                gaLog[gaLogIndex] = String.valueOf(i); //attribute line
-//                gaLogIndex++;
-//                EvaluationFunction tmpAI = pop.getAIs()[j];
-//                gaLog[gaLogIndex] = String.valueOf(tmpAI.getFitness()); //fitness line
-//                gaLogIndex++;
-//                for(int k = 0; k < tmpAI.getChromosome().length; k++) {
-//                    gaLog[gaLogIndex] = String.valueOf(tmpAI.getChromosome()[k]);
-//                    gaLogIndex++;
-//                }
-//            }
-//            long endtime = System.nanoTime();
-//            System.out.println("logging done in: " + ((endtime-startTime)/1000000000.0));
+            //System.out.println("Start of iteration");
+            //long starttime = System.nanoTime();
+            for(int j = 0; j < pop.getAIs().length; j++) {
+                gaLog[gaLogIndex] = String.valueOf(i); //attribute line
+                gaLogIndex++;
+                EvaluationFunction tmpAI = pop.getAIs()[j];
+                gaLog[gaLogIndex] = String.valueOf(tmpAI.getFitness()); //fitness line
+                gaLogIndex++;
+                for(int k = 0; k < tmpAI.getChromosome().length; k++) {
+                    gaLog[gaLogIndex] = String.valueOf(tmpAI.getChromosome()[k]);
+                    gaLogIndex++;
+                }
+            }
+            //long endtime = System.nanoTime();
+            //System.out.println("logging done in: " + ((endtime-starttime)/1000000000.0));
             selectedIndividuals = pop.selection(SELECTION_RATIO);
-            System.out.println("selection done");
             for(int j = 0; j < pop.getPopSize(); j++) {
                 selectedIndividualsChildren[j] = pop.randomWeightedCrossover(selectedIndividuals[j], selectedIndividuals[((pop.getPopSize()*2) - 1) -j]);
             }
-            System.out.println("crossover done");
             pop.setAIs(selectedIndividualsChildren);
-            //pop.nonUniformBitMutate(0.5, 0.5);
-            System.out.println("end of iteration");
+            pop.nonUniformBitMutate(0.5, 0.5);
             pop.calculateFitness(GA_GAMES_TO_BE_SIMMED, pop.getBoardSize());
             System.out.println("iteration: " + i);
+            iterationCounter = i;
+            if(pop.calcVariance() < 0.0001) break;
         }
         long endTime = System.nanoTime();
         System.out.println("Completed in: " + ((endTime - startTime)/1000000.0) + " ms");
@@ -94,7 +92,7 @@ public class GA_DirectEvalFunc {
 
         StringBuilder gaCSVLogBuilder = new StringBuilder();
 
-        for(int i = 1; i < gaLog.length; i++) {
+        for(int i = 1; i < (WEIGHT_POLY_SIZE + (pop.getBoardSize() * pop.getBoardSize()) + 2) * (1  + (iterationCounter * pop.getPopSize())); i++) {
             gaCSVLogBuilder.append(gaLog[i - 1] + ",");
             if(i % ((WEIGHT_POLY_SIZE + (pop.getBoardSize() * pop.getBoardSize()) + 2)) == 0) gaCSVLogBuilder.append("\n");
         }
