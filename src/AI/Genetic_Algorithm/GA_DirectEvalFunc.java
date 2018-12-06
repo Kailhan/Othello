@@ -51,26 +51,30 @@ public class GA_DirectEvalFunc {
             }
         }
         for(int i = 0; i < maxIterations; i++) {
-
-            for(int j = 0; j < pop.getAIs().length; j++) {
-                gaLog[gaLogIndex] = String.valueOf(i); //attribute line
-                gaLogIndex++;
-                EvaluationFunction tmpAI = pop.getAIs()[j];
-                gaLog[gaLogIndex] = String.valueOf(tmpAI.getFitness()); //fitness line
-                gaLogIndex++;
-                //System.out.println("tmpAI.getEvaluator().getChromosome().length");
-                //System.out.println(tmpAI.getEvaluator().getChromosome().length);
-                for(int k = 0; k < tmpAI.getChromosome().length; k++) {
-                    gaLog[gaLogIndex] = String.valueOf(tmpAI.getChromosome()[k]);
-                    gaLogIndex++;
-                }
-            }
+            System.out.println("Start of iteration");
+//            long starttime = System.nanoTime();
+//            for(int j = 0; j < pop.getAIs().length; j++) {
+//                gaLog[gaLogIndex] = String.valueOf(i); //attribute line
+//                gaLogIndex++;
+//                EvaluationFunction tmpAI = pop.getAIs()[j];
+//                gaLog[gaLogIndex] = String.valueOf(tmpAI.getFitness()); //fitness line
+//                gaLogIndex++;
+//                for(int k = 0; k < tmpAI.getChromosome().length; k++) {
+//                    gaLog[gaLogIndex] = String.valueOf(tmpAI.getChromosome()[k]);
+//                    gaLogIndex++;
+//                }
+//            }
+//            long endtime = System.nanoTime();
+//            System.out.println("logging done in: " + ((endtime-startTime)/1000000000.0));
             selectedIndividuals = pop.selection(SELECTION_RATIO);
+            System.out.println("selection done");
             for(int j = 0; j < pop.getPopSize(); j++) {
                 selectedIndividualsChildren[j] = pop.randomWeightedCrossover(selectedIndividuals[j], selectedIndividuals[((pop.getPopSize()*2) - 1) -j]);
             }
+            System.out.println("crossover done");
             pop.setAIs(selectedIndividualsChildren);
             //pop.nonUniformBitMutate(0.5, 0.5);
+            System.out.println("end of iteration");
             pop.calculateFitness(GA_GAMES_TO_BE_SIMMED, pop.getBoardSize());
             System.out.println("iteration: " + i);
         }

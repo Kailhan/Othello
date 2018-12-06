@@ -39,7 +39,7 @@ public class SettingsScene extends VBox {
         this.primaryStage.setTitle("Othello Game - Settings");
         Label label = new Label("Welcome to the Othello game!");
         label.setTextFill(Color.web("#FFFFFF"));
-        this.AIs = Settings.getAIs();
+        AIs = Settings.getAIs();
 
         submit = new Button("Start");
         submit.setOnAction(e -> {

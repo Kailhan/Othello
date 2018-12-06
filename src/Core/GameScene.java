@@ -36,7 +36,8 @@ public class GameScene extends BorderPane {
     private int AI1Level;
     private int AI2Level;
     private static String[] AIs;
-    private static final int MINIMAX_DEPTH = 7;
+    private static final int MINIMAX_DEPTH = 3;
+    private static final int MINIMAXALPH_DEPTH = 3;
 
     private File discBlack = new File("src/Assets/disc_blackBgr.png");
     private File discWhite = new File("src/Assets/disc_whiteBgrFthr.png");
@@ -76,7 +77,7 @@ public class GameScene extends BorderPane {
         this.primaryStage = primaryStage;
         this.board = new Board(settings.getBoard());
         this.tileSize = windowSize/ board.getSize();
-        this.AIs = settings.getAIs();
+        AIs = Settings.getAIs();
 
         this.discBlackImg = new Image(discBlack.toURI().toString(), tileSize, tileSize, false,false);
         this.discWhiteImg = new Image(discWhite.toURI().toString(), tileSize, tileSize, false,false);
@@ -269,10 +270,14 @@ public class GameScene extends BorderPane {
                 updateBoard(move[0], move[1]);
                 break;
             case 2:
-                MiniMaxAlph minimax = new MiniMaxAlph(MINIMAX_DEPTH, board);
-                move = minimax.getBestMove(board);
+                MiniMaxAlph minimaxAlph = new MiniMaxAlph(MINIMAX_DEPTH, board);
+                move = minimaxAlph.getBestMove(board);
                 updateBoard(move[0], move[1]);
                 break;
+            case 3:
+                Minimax minimax = new Minimax(MINIMAX_DEPTH, board);
+                move = minimax.getBestMove(board);
+                updateBoard(move[0],move[1]);
         }
     }
 

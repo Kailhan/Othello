@@ -19,71 +19,62 @@ public class Logic {
         if (boardGrid[r][c] == 0) //If the square is empty
         {
             if (r > 1  && r < boardSize - 2 && c > 1 && c < boardSize - 2) { //middle
-                if(getFlippedDisksDirection(r, c, board, east).length > 0 ||
+                return getFlippedDisksDirection(r, c, board, east).length > 0 ||
                         getFlippedDisksDirection(r, c, board, southEast).length > 0 ||
                         getFlippedDisksDirection(r, c, board, south).length > 0 ||
                         getFlippedDisksDirection(r, c, board, southWest).length > 0 ||
                         getFlippedDisksDirection(r, c, board, west).length > 0 ||
                         getFlippedDisksDirection(r, c, board, northWest).length > 0 ||
                         getFlippedDisksDirection(r, c, board, north).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, northEast).length > 0)
-                    return true;
+                        getFlippedDisksDirection(r, c, board, northEast).length > 0;
             }
             else if (r <= 1 && c > 1 && c < boardSize - 2) { //left edge
-                if(getFlippedDisksDirection(r, c, board, east).length > 0 ||
+                return getFlippedDisksDirection(r, c, board, east).length > 0 ||
                         getFlippedDisksDirection(r, c, board, southEast).length > 0 ||
                         getFlippedDisksDirection(r, c, board, south).length > 0 ||
                         getFlippedDisksDirection(r, c, board, southWest).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, west).length > 0)
-                    return true;
+                        getFlippedDisksDirection(r, c, board, west).length > 0;
             }
             else if (r >= boardSize - 2 && c > 1 && c < boardSize - 2) { //right edge
-                if(getFlippedDisksDirection(r, c, board, east).length > 0 ||
+                return getFlippedDisksDirection(r, c, board, east).length > 0 ||
                         getFlippedDisksDirection(r, c, board, west).length > 0 ||
                         getFlippedDisksDirection(r, c, board, northWest).length > 0 ||
                         getFlippedDisksDirection(r, c, board, north).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, northEast).length > 0)
-                    return true;
+                        getFlippedDisksDirection(r, c, board, northEast).length > 0;
             }
             else if (r > 1 && r < boardSize - 2 && c <= 1) { //top edge
-                if(getFlippedDisksDirection(r, c, board, south).length > 0 ||
+                return getFlippedDisksDirection(r, c, board, south).length > 0 ||
                         getFlippedDisksDirection(r, c, board, southWest).length > 0 ||
                         getFlippedDisksDirection(r, c, board, west).length > 0 ||
                         getFlippedDisksDirection(r, c, board, northWest).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, north).length > 0)
-                    return true;
+                        getFlippedDisksDirection(r, c, board, north).length > 0;
             }
             else if (r > 1 && r < boardSize - 2 && c >= boardSize - 2) { //bottom edge
-                if(getFlippedDisksDirection(r, c, board, east).length > 0 ||
+                return getFlippedDisksDirection(r, c, board, east).length > 0 ||
                         getFlippedDisksDirection(r, c, board, southEast).length > 0 ||
                         getFlippedDisksDirection(r, c, board, south).length > 0 ||
                         getFlippedDisksDirection(r, c, board, north).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, northEast).length > 0)
-                    return true;
+                        getFlippedDisksDirection(r, c, board, northEast).length > 0;
             }
             else if (r <= 1 && c <= 1) { //top left corner
-                if(getFlippedDisksDirection(r, c, board, south).length > 0 ||
+                return getFlippedDisksDirection(r, c, board, south).length > 0 ||
                         getFlippedDisksDirection(r, c, board, southWest).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, west).length > 0)
-                    return true;
+                        getFlippedDisksDirection(r, c, board, west).length > 0;
             }
             else if (r <= 1 && c >= boardSize - 2) { //bottom left corner
-                if(getFlippedDisksDirection(r, c, board, east).length > 0 ||
+                return getFlippedDisksDirection(r, c, board, east).length > 0 ||
                         getFlippedDisksDirection(r, c, board, southEast).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, south).length > 0)
-                    return true;
+                        getFlippedDisksDirection(r, c, board, south).length > 0;
             }
             else if (r >= boardSize - 2 && c <= 1) { //top right corner
-                if(getFlippedDisksDirection(r, c, board, west).length > 0 ||
+                return getFlippedDisksDirection(r, c, board, west).length > 0 ||
                         getFlippedDisksDirection(r, c, board, northWest).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, north).length > 0)
-                    return true;
+                        getFlippedDisksDirection(r, c, board, north).length > 0;
             }
             else if (r >= boardSize - 2 && c >= boardSize - 2) { //bottom right corner
-                if(getFlippedDisksDirection(r, c, board, east).length > 0 ||
+                return getFlippedDisksDirection(r, c, board, east).length > 0 ||
                         getFlippedDisksDirection(r, c, board, north).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, northEast).length > 0)
-                    return true;
+                        getFlippedDisksDirection(r, c, board, northEast).length > 0;
             }
         }
         return false;

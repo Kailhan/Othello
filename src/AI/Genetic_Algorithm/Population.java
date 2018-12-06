@@ -34,7 +34,7 @@ public class Population {
     public Population(int popSize, int boardSize, double weightPolyBound, double territoryBound) {
         this.popSize = popSize;
         this.boardSize = boardSize;
-        this.rand = new Random();
+        rand = new Random();
         this.weightPolyBound = weightPolyBound;
         this.territoryBound = territoryBound;
         this.mutationCount = 1;
@@ -150,7 +150,7 @@ public class Population {
                 childCellValues[i][j] = (rand.nextInt(2) == 0) ? parent1CellValues[i][j] : parent2CellValues[i][j];
             }
         }
-        EvaluationFunction tmpEvalFunc = new EvaluationFunction(initTerritory(territoryBound), initWeightPoly(16, weightPolyBound), new Board(boardSize));
+        EvaluationFunction tmpEvalFunc = new EvaluationFunction(childCellValues, childWeightPoly,new Board(boardSize));
         return new GA_MiniMaxAlph(DEPTH, new Board(boardSize), tmpEvalFunc);
     }
 
@@ -181,7 +181,7 @@ public class Population {
                 childCellValues[i][j] = parent1CellValues[i][j] * proportion + parent2CellValues[i][j] * (1 - proportion);
             }
         }
-        EvaluationFunction tmpEvalFunc = new EvaluationFunction(initTerritory(territoryBound), initWeightPoly(16, weightPolyBound), new Board(boardSize));
+        EvaluationFunction tmpEvalFunc = new EvaluationFunction(childCellValues, childWeightPoly,new Board(boardSize));
         return new GA_MiniMaxAlph(DEPTH, new Board(boardSize), tmpEvalFunc);
     }
 

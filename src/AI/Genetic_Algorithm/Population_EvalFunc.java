@@ -3,7 +3,6 @@ package AI.Genetic_Algorithm;
 import AI.AI;
 import AI.EvaluationFunction;
 import Core.Board;
-
 import java.util.Random;
 
 public class Population_EvalFunc {
@@ -19,7 +18,7 @@ public class Population_EvalFunc {
 
     public static final int GA_GAMES_TO_BE_SIMMED = 25;
     public static final int GA_BOARD_SIZE = 6;
-    public static final int GA_POP_SIZE = 50;
+    public static final int GA_POP_SIZE = 25;
     public static final double GA_WEIGHT_POLY_BOUND = 1000;
     public static final double GA_TERRITORY_BOUND = 1000;
 
@@ -33,7 +32,7 @@ public class Population_EvalFunc {
     public Population_EvalFunc(int popSize, int boardSize, double weightPolyBound, double territoryBound) {
         this.popSize = popSize;
         this.boardSize = boardSize;
-        this.rand = new Random();
+        rand = new Random();
         this.weightPolyBound = weightPolyBound;
         this.territoryBound = territoryBound;
         this.mutationCount = 1000000000;
@@ -147,8 +146,7 @@ public class Population_EvalFunc {
                 childCellValues[i][j] = (rand.nextInt(2) == 0) ? parent1CellValues[i][j] : parent2CellValues[i][j];
             }
         }
-
-        EvaluationFunction tmpEvalFunc = new EvaluationFunction(initTerritory(territoryBound), initWeightPoly(16, weightPolyBound),new Board(boardSize));
+        EvaluationFunction tmpEvalFunc = new EvaluationFunction(childCellValues, childWeightPoly,new Board(boardSize));
         return tmpEvalFunc;
     }
 
@@ -178,7 +176,7 @@ public class Population_EvalFunc {
             }
         }
 
-        EvaluationFunction tmpEvalFunc = new EvaluationFunction(initTerritory(territoryBound), initWeightPoly(16, weightPolyBound),new Board(boardSize));
+        EvaluationFunction tmpEvalFunc = new EvaluationFunction(childCellValues, childWeightPoly,new Board(boardSize));
         return tmpEvalFunc;
     }
 

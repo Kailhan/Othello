@@ -32,7 +32,6 @@ public class EvaluationFunction extends AI{
         this.weightPoly = weightPoly;
     }
 
-
     public void setWeightPoly() {
         this.weightPoly = new double[WEIGHT_POLY_SIZE];
         this.weightPoly[0] = 100;  //coinWeightPoly0 = 100;
@@ -67,7 +66,6 @@ public class EvaluationFunction extends AI{
      */
 
     public int[] getBestMove(Board board) {
-
         int moveCounter = 0;
         int possibleBoardIndex = 0;
         int bestBoardIndex = -1;
@@ -99,7 +97,6 @@ public class EvaluationFunction extends AI{
         int[] move = new int[2];
         move[0] = possibleBoards[bestBoardIndex].getRow(board);
         move[1] = possibleBoards[bestBoardIndex].getColumn(board);
-
         return move;
     }
 
@@ -184,8 +181,8 @@ public class EvaluationFunction extends AI{
             for (int j = 0; j < cBoard.getBoardGrid().length; j += cBoard.getBoardGrid()[i].length - 1) {
                 if (cBoard.getBoardGrid()[i][j] == player)
                     nrCorners++;
-                System.out.print("corner "+i+","+j+": "+nrCorners+"\t");
-                System.out.println();
+                //System.out.print("corner "+i+","+j+": "+nrCorners+"\t");
+                //System.out.println();
             }
         }
         //System.out.println("Corners "+nrCorners);
@@ -379,25 +376,29 @@ public class EvaluationFunction extends AI{
     }
 
     public double calcCoinWeight(int emptySquares) {
-        int pracTurn = (cBoard.getSize() * cBoard.getSize() - emptySquares);
+        //int pracTurn = (cBoard.getSize() * cBoard.getSize() - emptySquares);
+        int pracTurn = emptySquares;
         double coinWeight = coinWeightPoly()[0] + (coinWeightPoly()[1] * pracTurn) + (coinWeightPoly()[2] * pracTurn * pracTurn) + (coinWeightPoly()[3] * pracTurn * pracTurn * pracTurn);
         return coinWeight;
     }
 
     public double calcCornerWeight(int emptySquares) {
-        int pracTurn = (cBoard.getSize() * cBoard.getSize() - emptySquares);
+        //int pracTurn = (cBoard.getSize() * cBoard.getSize() - emptySquares);
+        int pracTurn = emptySquares;
         double cornerWeight = cornerWeightPoly()[0] + (cornerWeightPoly()[1] * pracTurn) + (cornerWeightPoly()[2] * pracTurn * pracTurn) + (cornerWeightPoly()[3] * pracTurn * pracTurn * pracTurn);
         return cornerWeight;
     }
 
     public double calcMoveWeight(int emptySquares) {
-        int pracTurn = (cBoard.getSize() * cBoard.getSize() - emptySquares);
+        //int pracTurn = (cBoard.getSize() * cBoard.getSize() - emptySquares);
+        int pracTurn = emptySquares;
         double moveWeight = moveWeightPoly()[0] + (moveWeightPoly()[1] * pracTurn) + (moveWeightPoly()[2] * pracTurn * pracTurn) + (moveWeightPoly()[3] * pracTurn * pracTurn * pracTurn);
         return moveWeight;
     }
 
     public double calcTerritoryWeight(int emptySquares) {
-        int pracTurn = (cBoard.getSize() * cBoard.getSize() - emptySquares);
+        //int pracTurn = (cBoard.getSize() * cBoard.getSize() - emptySquares);
+        int pracTurn = emptySquares;
         double territoryWeight = territoryWeightPoly()[0] + (territoryWeightPoly()[1] * pracTurn) + (territoryWeightPoly()[2] * pracTurn * pracTurn) + (territoryWeightPoly()[3] * pracTurn * pracTurn * pracTurn);
         return territoryWeight;
     }
