@@ -270,7 +270,7 @@ public class GameScene extends BorderPane {
                 updateBoard(move[0], move[1]);
                 break;
             case 2:
-                MiniMaxAlph minimaxAlph = new MiniMaxAlph(MINIMAX_DEPTH, board);
+                MiniMaxAlph minimaxAlph = new MiniMaxAlph(MINIMAXALPH_DEPTH, board);
                 move = minimaxAlph.getBestMove(board);
                 updateBoard(move[0], move[1]);
                 break;

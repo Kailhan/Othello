@@ -32,8 +32,8 @@ public class MiniMaxAlph extends AI {
     }
 
     public int[] getBestMove(Board board) {
-        MiniMaxAlph minimax = new MiniMaxAlph(7, board);
-        GameTree gameTree = new GameTree(7, board);
+        MiniMaxAlph minimax = new MiniMaxAlph(this.depth, board);
+        GameTree gameTree = new GameTree(this.depth, board);
         Node<Board> root = gameTree.createTree();
 
         minimax.search(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
@@ -59,12 +59,10 @@ public class MiniMaxAlph extends AI {
             int value = Integer.MIN_VALUE;
             for (Node<Board> currentChild : currentNode.getChildren()) {
                 value = Math.max(value, search(currentChild, alpha, beta));
-                System.out.println("Max value: " +value);
 //                value = (value > search(currentChild, alpha, beta)) ? value : search(currentChild, alpha, beta);
                 alpha = Math.max(value, alpha);
 //                alpha = (value > alpha) ? value : alpha;
                 if (alpha >= beta) {
-                    System.out.println("pruned");
                     break;
                 }
             }
@@ -74,12 +72,10 @@ public class MiniMaxAlph extends AI {
             int value = Integer.MAX_VALUE;
             for (Node<Board> currentChild : currentNode.getChildren()) {
                 value = Math.min(value, search(currentChild, alpha, beta));
-                System.out.println("Min value: "+value);
 //                value = (value < search(currentChild, alpha, beta)) ? value : search(currentChild, alpha, beta);
                 beta = Math.min(value, beta);
 //                beta = (value < beta) ? value : beta;
                 if (alpha >= beta) {
-                    System.out.println("pruned");
                     break;
                 }
             }

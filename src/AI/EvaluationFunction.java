@@ -153,25 +153,18 @@ public class EvaluationFunction extends AI{
         if (getTerritoryScore(BLACK) + getTerritoryScore(WHITE) !=0 ){
             territory = (double) (getTerritoryScore(BLACK) - getTerritoryScore(WHITE))/ (getTerritoryScore(BLACK) + getTerritoryScore(WHITE));
         } else territory = 0;
-
-//        if (this.cBoard.getTurn() > 10 && this.cBoard.getTurn() < 20) { //even kijken wat de beste strategie is, ook rekening houden met de grote van de borden
-//            this.coinWeight = 50;
-//            this.cornerWeightPoly0 = 50;
-//            this.moveWeightPoly0 = 50;
-//            this.territoryWeightPoly0 = 50;
-//        }
 //
-//        if (this.cBoard.getTurn() > 20 && this.cBoard.getTurn() < 32) { //even kijken wat de beste strategie is, ook rekening houden met de grote van de borden
-//            this.coinWeight = 50;
-//            this.cornerWeightPoly0 = 50;
-//            this.moveWeightPoly0 = 50;
-//            this.territoryWeightPoly0 = 50;
-//        }
+//        System.out.println("Nrcorners white: " + getCorners(WHITE));
+//        System.out.println("Nrcorners BLACK: " + getCorners(BLACK));
+//        System.out.println("nrCorners total: "  + numberOfCorners);
+        System.out.println(cBoard.getCurrentPlayer());
+
+        totalScore = weightPoly[0] * numberOfCoins +  weightPoly[4] * numberOfCorners + weightPoly[8] * numberOfMoves + weightPoly[12] * territory;
 
 //        totalScore = (int) (calcCoinWeight(cBoard.getTurn()) * numberOfCoins + calcCornerWeight(cBoard.getTurn()) * numberOfCorners +
 //                calcMoveWeight(cBoard.getTurn()) * numberOfMoves + calcTerritoryWeight(cBoard.getTurn()) * territory);
-        totalScore = (calcCoinWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfCoins + calcCornerWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfCorners +
-                calcMoveWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfMoves + calcTerritoryWeight(cBoard.getNrSquares(Board.EMPTY)) * territory);
+//        totalScore = (calcCoinWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfCoins + calcCornerWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfCorners +
+//                calcMoveWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfMoves + calcTerritoryWeight(cBoard.getNrSquares(Board.EMPTY)) * territory);
 
         return totalScore;
     }
@@ -182,12 +175,8 @@ public class EvaluationFunction extends AI{
             for (int j = 0; j < cBoard.getBoardGrid().length; j += cBoard.getBoardGrid()[i].length - 1) {
                 if (cBoard.getBoardGrid()[i][j] == player)
                     nrCorners++;
-                //System.out.print("corner "+i+","+j+": "+nrCorners+"\t");
-                //System.out.println();
             }
         }
-        //System.out.println("Corners "+nrCorners);
-
         return nrCorners;
     }
 
