@@ -170,6 +170,8 @@ public class EvaluationFunction extends AI{
                 calcMoveWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfMoves + calcTerritoryWeight(cBoard.getNrSquares(Board.EMPTY)) * territory);
 
         System.out.println("total score: " + totalScore);
+        totalScore = (currentPlayer == BLACK) ? totalScore : -totalScore;
+
         return totalScore;
     }
 
