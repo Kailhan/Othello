@@ -8,19 +8,19 @@ import Core.Board;
 
 public class MinimaxTest {
 
-    final static int DEPTH = 6;
+    final static int DEPTH = 3;
     public static void main(String[] args) {
-//
-//        Board board = new Board();
-//
-//        Minimax minimax = new Minimax(1, board);
-//        GameTree gameTree = new GameTree(DEPTH, board);
-//        Node<Board> root = gameTree.createTree();
-//
-//        minimax.minimaxAlg2(root);
-//        Node<Board> child1 = minimax.selectMove(root);
-//        child1.getData().displayBoardGrid();
-//
+
+        Board board = new Board();
+
+        Minimax minimax = new Minimax(1, board);
+        GameTree gameTree = new GameTree(DEPTH, board);
+        Node<Board> root = gameTree.createTree();
+
+        System.out.println(minimax.minimaxAlg2(root));
+        Node<Board> child1 = minimax.selectMove(root);
+     //   child1.getData().displayBoardGrid();
+
 //        System.out.println();
 //        minimax.minimaxAlg2(child1);
 //        Node<Board> child2 = minimax.selectMove(child1);
