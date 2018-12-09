@@ -21,6 +21,7 @@ public class GA_DirectEvalFunc {
         pop.calculateFitness(Population.GA_GAMES_TO_BE_SIMMED, pop.getBoardSize());
         System.out.println("Calculated fitness of initial population");
         int maxIterations = 250;
+        double minVariance = 1000;
 
         String[] gaLog = new String[(WEIGHT_POLY_SIZE + (pop.getBoardSize() * pop.getBoardSize()) + 2) * (1  + (maxIterations * pop.getPopSize()))];
         int gaLogIndex = 0;
@@ -64,6 +65,7 @@ public class GA_DirectEvalFunc {
             selectedIndividuals = pop.selection(SELECTION_RATIO);
             for(int j = 0; j < pop.getPopSize(); j++) {
                 selectedIndividualsChildren[j] = pop.randomWeightedCrossover(selectedIndividuals[j], selectedIndividuals[((pop.getPopSize()*2) - 1) -j]);
+                //selectedIndividualsChildren[j] = pop.randomCrossover(selectedIndividuals[j], selectedIndividuals[((pop.getPopSize()*2) - 1) -j]);
             }
             pop.setAIs(selectedIndividualsChildren);
             pop.nonUniformBitMutate(0.5, 0.5);
@@ -72,8 +74,8 @@ public class GA_DirectEvalFunc {
             iterationCounter = i;
 
             System.out.println("calcvariance: " + pop.calcVariance());
-            if(pop.calcVariance() < 0.1) {
-                System.out.println("pop.calcVariance() < 0.1");
+            if(pop.calcVariance() < minVariance) {
+                System.out.println("pop.calcVariance() < " + minVariance);
                 break;
             }
         }
@@ -100,15 +102,16 @@ public class GA_DirectEvalFunc {
         gaCSVLogBuilder.append(gaLog[(WEIGHT_POLY_SIZE + (pop.getBoardSize() * pop.getBoardSize()) + 2) * (1  + ((iterationCounter + 1) * pop.getPopSize()))-1]);
         String gaCSVLog = gaCSVLogBuilder.toString();
         try {
-            String fileName  ="_boardSize_" + String.valueOf(GA_BOARD_SIZE) +
+            String fileName  = "_selectionRatio" + String.valueOf(SELECTION_RATIO) +
+                    "_time_" + String.valueOf(endTime - startTime) +
+                    "_maxIter_" + String.valueOf(maxIterations) +
+                    "_iterConv_" + String.valueOf(iterationCounter) +
+                    "_minVar" + String.valueOf(minVariance) +
+                    "_boardSize_" + String.valueOf(GA_BOARD_SIZE) +
                     "_WPB_" + String.valueOf(GA_WEIGHT_POLY_BOUND) +
                     "_TB_" + String.valueOf(GA_TERRITORY_BOUND) +
                     "_GTB_" + String.valueOf(GA_GAMES_TO_BE_SIMMED) +
                     "_popSize_" + String.valueOf(GA_POP_SIZE) +
-                    "_selectionRatio" + String.valueOf(SELECTION_RATIO) +
-                    "_time_" + String.valueOf(endTime - startTime) +
-                    "_maxIter_" + String.valueOf(maxIterations) +
-                    "_iterConv_" + String.valueOf(iterationCounter) +
                     ".csv";
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
             writer.write(gaCSVLog);

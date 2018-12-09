@@ -13,9 +13,11 @@ public class MCTSNode extends Node {
     private int scoreTotal;
     private int simulations = 1; //otherwise divide by zero when calculating node score might need to change the order/def of method
     private Board board;
+    private boolean checked;
 
     public MCTSNode(Board board, int x, int y) {
         super(board);
+        this.checked = false;
         this.board = board;
     }
 
@@ -53,12 +55,24 @@ public class MCTSNode extends Node {
 
     public double getNodeScore() {
         MCTSNode node = this;
+        //System.out.println("node.simulations");
+        //System.out.println(node.simulations);
         while(node.getParent() != null) {
+//            System.out.println("node.getParent() != null");
             node = (MCTSNode)node.getParent();
         }
+        //System.out.println(node.simulations);
         int totalSims = node.getSimulations();
-        //double score = scoreTotal/simulations + (explorationParameter * Math.sqrt(Math.log(totalSims)/simulations));
-        double score = scoreTotal/simulations + (explorationParameter * 0.5 * ((totalSims)/simulations));
+        double score = scoreTotal/simulations + (explorationParameter * Math.sqrt(Math.log(totalSims)/simulations));
+        //double score = scoreTotal/simulations + (explorationParameter * 0.5 * ((totalSims)/simulations));
         return score;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 }

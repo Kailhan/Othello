@@ -393,6 +393,20 @@ public class EvaluationFunction extends AI{
         return weightPoly;
     }
 
+    public void setChromosome(double[] chromosome) {
+        int chromesomePosCounter = 0;
+        for(int i = 0; i < weightPoly.length; i++)  {
+            weightPoly[i] = chromosome[chromesomePosCounter];
+            chromesomePosCounter++;
+        }
+        for(int i = 0; i < cellValues.length; i++) {
+            for (int j = 0; j < cellValues[0].length; j++) {
+                cellValues[i][j] = chromosome[chromesomePosCounter];
+                chromesomePosCounter++;
+            }
+        }
+    }
+
     public double[] getChromosome() {
         this.chromosome = new double[weightPoly.length + (cellValues.length * cellValues[0].length)];
         int chromesomePosCounter = 0;

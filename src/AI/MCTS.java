@@ -17,7 +17,6 @@ public class MCTS extends AI {
 
     private int treeDepth;
     private int totalSims;
-    private int simsCounter = 0;
     private Random rand = new Random();
     private LinkedList<MCTSNode> nodeQueue = new LinkedList<MCTSNode>();
     public static final int DUMB = 0;
@@ -44,19 +43,21 @@ public class MCTS extends AI {
 
     public MCTSNode findMove(Board board) {
         MCTSNode root = new MCTSNode(board);
-        //System.out.println("Board in MCTS findMove");
-        //board.displayBoardGrid();
         nodeQueue.addFirst(root);
-        while(nodeQueue.size() > 0) {
+        int playoutCounter = 0;
+        while(nodeQueue.size() > 0 && playoutCounter < totalSims) {
             MCTSNode toBeChecked = nodeSelection(nodeQueue);
+            if(toBeChecked.getParent() != null) System.out.println("has daddy");
             playoutSimulation(toBeChecked);
-            //System.out.println("nodequeueueuesize: " + nodeQueue.size());
+            playoutCounter++;
         }
         int maxScore = MIN_VALUE;
         ArrayList<MCTSNode> potentialNodes = new ArrayList<MCTSNode>();
         for (MCTSNode node : root.getChildren(root)) {
             //System.out.println("scores of children of roots (possible moves");
-            //System.out.println(node.getScoreTotal()/node.getSimulations());
+//            System.out.println(node.getScoreTotal()/node.getSimulations());
+//            System.out.println(node.getNodeScore());
+//            System.out.println("child");
             if(node.getScoreTotal()/node.getSimulations() > maxScore) {
                 maxScore = node.getScoreTotal()/node.getSimulations();
             }
@@ -66,7 +67,6 @@ public class MCTS extends AI {
                 potentialNodes.add(node);
             }
         }
-        simsCounter = 0;
         return potentialNodes.get(rand.nextInt(potentialNodes.size())); //makes sure we pick a random node instead of for example the last one that has a highest score
     }
 
@@ -91,19 +91,17 @@ public class MCTS extends AI {
         ArrayList<MCTSNode> potentialNodes = new ArrayList<MCTSNode>();
         for(Object node : nodeQueue) {
             MCTSNode tmpNode = (MCTSNode) node;
+            
             if(tmpNode.getNodeScore() > nodeScore) {
                 nodeScore = tmpNode.getNodeScore();
                 potentialNodes.add(tmpNode);
             }
         }
         MCTSNode toBeChecked = potentialNodes.get(rand.nextInt(potentialNodes.size()));
-        nodeQueue.remove(toBeChecked);
-//        MCTSNode toBeChecked = (MCTSNode)nodeQueue.poll(); //retrieves and removes the first element of this list or returns null if this list is empty
-//        if(toBeChecked.getDepth() < treeDepth) createChildren(toBeChecked);
-        if(nodeQueue.size() < totalSims) createChildren(toBeChecked);
-        //if(simsCounter < totalSims) createChildren(toBeChecked);
-        simsCounter++;
-        //System.out.println("simsCounter: " + simsCounter);
+        if(toBeChecked.isChecked() == false) {
+            toBeChecked.setChecked(true);
+            createChildren(toBeChecked);
+        }
         return toBeChecked;
     }
 
@@ -115,6 +113,7 @@ public class MCTS extends AI {
                 if(currentPlayer == winner) node.setScoreTotal(node.getScoreTotal() + WIN);
             }
             node.setSimulations(node.getSimulations()+1);
+            System.out.println("get current node propagation sims" + node.getSimulations());
             node = (MCTSNode)node.getParent();
         }
     }

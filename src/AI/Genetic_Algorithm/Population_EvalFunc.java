@@ -20,9 +20,9 @@ public class Population_EvalFunc {
     public static final int GA_GAMES_TO_BE_SIMMED = 100;
     public static final int GA_BOARD_SIZE = 6;
     public static final int GA_POP_SIZE = 100;
-    public static final double GA_WEIGHT_POLY_BOUND = 1000;
-    public static final double GA_TERRITORY_BOUND = 1000;
-    public static double SELECTION_RATIO = 1.5;
+    public static final double GA_WEIGHT_POLY_BOUND = 100;
+    public static final double GA_TERRITORY_BOUND = 100;
+    public static double SELECTION_RATIO = 200;
 
     /**
      * Create population of MiniMax with AB pruning
@@ -132,7 +132,7 @@ public class Population_EvalFunc {
      * @param parent2 mommy
      * @return lil baby
      */
-    public AI randomCrossover(EvaluationFunction parent1, EvaluationFunction parent2) {
+    public EvaluationFunction randomCrossover(EvaluationFunction parent1, EvaluationFunction parent2) {
         double[] parent1WeightPoly = parent1.getWeightPoly();
         double[] parent2WeightPoly = parent2.getWeightPoly();
         double[][] parent1CellValues = parent1.getCellValues();
@@ -218,7 +218,7 @@ public class Population_EvalFunc {
             do {
                 individualIndex = rand.nextInt(AIs.length);
                 selectedIndividuals[i] = AIs[individualIndex];
-            } while(AIs[individualIndex].getFitness() > rand.nextDouble() * selectionRatio * totalFitness);
+            } while(AIs[individualIndex].getFitness() < rand.nextDouble() * selectionRatio * (totalFitness/AIs.length));
         }
         return selectedIndividuals;
     }

@@ -143,6 +143,10 @@ public class GameScene extends BorderPane {
 
         this.playAI = new Button("Let AI play current turn");
         playAI.setOnAction(e -> {
+//            int AILevel = settings.getAI1Level();
+//            if (board.getCurrentPlayer() == WHITE)
+//                AILevel = settings.getAI2Level();
+//            System.out.println("Bot playing: " + AILevel);
             botMove();
         });
         this.playAI.setWrapText(true);
@@ -260,7 +264,7 @@ public class GameScene extends BorderPane {
         switch(AILevel)
         {
             case 0:
-                MCTS mcts = new MCTS(100);
+                MCTS mcts = new MCTS(1000);
                 move = mcts.getBestMove(board);
                 updateBoard(move[0], move[1]);
                 break;
