@@ -127,37 +127,37 @@ public class EvaluationFunction extends AI{
         double numberOfCoins;
         double territory;
 
-        //numberOfCoins = (double) (this.cBoard.getNrSquares(BLACK) - this.cBoard.getNrSquares(WHITE)) / (this.cBoard.getNrSquares(BLACK) + this.cBoard.getNrSquares(WHITE));
-        if(currentPlayer == WHITE){ numberOfCoins = this.cBoard.getNrSquares(WHITE);
-        } else { numberOfCoins = this.cBoard.getNrSquares(BLACK); }
+        numberOfCoins = (double) (this.cBoard.getNrSquares(BLACK) - this.cBoard.getNrSquares(WHITE)) / (this.cBoard.getNrSquares(BLACK) + this.cBoard.getNrSquares(WHITE));
+//        if(currentPlayer == WHITE){ numberOfCoins = this.cBoard.getNrSquares(WHITE);
+//        } else { numberOfCoins = this.cBoard.getNrSquares(BLACK); }
 
-//        if(this.cBoard.getCurrentPlayer() == WHITE){
-//            whiteMoves = Logic.numberSquaresAllowed(this.cBoard);
-//            this.cBoard.changePlayer();
-//            blackMoves = Logic.numberSquaresAllowed(this.cBoard);
-//        }
-//        else {
-//            blackMoves = Logic.numberSquaresAllowed(this.cBoard);
-//            this.cBoard.changePlayer();
-//            whiteMoves = Logic.numberSquaresAllowed(this.cBoard);
-//        }
-//
-//        if(blackMoves + whiteMoves != 0){
-//            numberOfMoves =  (double) ((blackMoves - whiteMoves) / (blackMoves + whiteMoves));
-//        } else numberOfMoves = 0;
-        numberOfMoves = Logic.numberSquaresAllowed(cBoard);
+        if(this.cBoard.getCurrentPlayer() == WHITE){
+            whiteMoves = Logic.numberSquaresAllowed(this.cBoard);
+            this.cBoard.changePlayer();
+            blackMoves = Logic.numberSquaresAllowed(this.cBoard);
+        }
+        else {
+            blackMoves = Logic.numberSquaresAllowed(this.cBoard);
+            this.cBoard.changePlayer();
+            whiteMoves = Logic.numberSquaresAllowed(this.cBoard);
+        }
 
-//        if(getCorners(BLACK) + getCorners(WHITE) != 0) {
-//            numberOfCorners = (double) ((getCorners(BLACK) - getCorners(WHITE)) / (getCorners(BLACK) + getCorners(WHITE)));
-//        } else numberOfCorners = 0;
-        if(currentPlayer == WHITE){ numberOfCorners = cBoard.getCorners(WHITE);
-        } else { numberOfCorners = cBoard.getCorners(BLACK); }
+        if(blackMoves + whiteMoves != 0){
+            numberOfMoves =  (double) ((blackMoves - whiteMoves) / (blackMoves + whiteMoves));
+        } else numberOfMoves = 0;
+//        numberOfMoves = Logic.numberSquaresAllowed(cBoard);
 
-//        if (getTerritoryScore(BLACK) + getTerritoryScore(WHITE) !=0 ){
-//            territory = (double) (getTerritoryScore(BLACK) - getTerritoryScore(WHITE))/ (getTerritoryScore(BLACK) + getTerritoryScore(WHITE));
-//        } else territory = 0;
-        if(currentPlayer == WHITE){ territory = getTerritoryScore(WHITE);
-        } else { territory = getTerritoryScore(BLACK); }
+        if(cBoard.getCorners(BLACK) + cBoard.getCorners(WHITE) != 0) {
+            numberOfCorners = (double) ((cBoard.getCorners(BLACK) - cBoard.getCorners(WHITE)) / (cBoard.getCorners(BLACK) + cBoard.getCorners(WHITE)));
+        } else numberOfCorners = 0;
+//        if(currentPlayer == WHITE){ numberOfCorners = cBoard.getCorners(WHITE);
+//        } else { numberOfCorners = cBoard.getCorners(BLACK); }
+
+        if (getTerritoryScore(BLACK) + getTerritoryScore(WHITE) !=0 ){
+            territory = (double) (getTerritoryScore(BLACK) - getTerritoryScore(WHITE))/ (getTerritoryScore(BLACK) + getTerritoryScore(WHITE));
+        } else territory = 0;
+//        if(currentPlayer == WHITE){ territory = getTerritoryScore(WHITE);
+//        } else { territory = getTerritoryScore(BLACK); }
 //
 //        System.out.println("Nrcorners white: " + getCorners(WHITE));
 //        System.out.println("Nrcorners BLACK: " + getCorners(BLACK));
@@ -169,6 +169,7 @@ public class EvaluationFunction extends AI{
         totalScore = (calcCoinWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfCoins + calcCornerWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfCorners +
                 calcMoveWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfMoves + calcTerritoryWeight(cBoard.getNrSquares(Board.EMPTY)) * territory);
 
+        System.out.println("total score: " + totalScore);
         return totalScore;
     }
 
