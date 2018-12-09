@@ -91,7 +91,7 @@ public class MCTS extends AI {
         ArrayList<MCTSNode> potentialNodes = new ArrayList<MCTSNode>();
         for(Object node : nodeQueue) {
             MCTSNode tmpNode = (MCTSNode) node;
-            
+
             if(tmpNode.getNodeScore() > nodeScore) {
                 nodeScore = tmpNode.getNodeScore();
                 potentialNodes.add(tmpNode);

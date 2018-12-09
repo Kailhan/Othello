@@ -31,22 +31,22 @@ public class EvaluationFunction extends AI{
 
     public void setWeightPoly() {
         this.weightPoly = new double[WEIGHT_POLY_SIZE];
-        this.weightPoly[0] = 100;  //coinWeightPoly0 = 100;
-        this.weightPoly[1] = 0; //coinWeightPoly1 = 0;
-        this.weightPoly[2] = 0; //coinWeightPoly2 = 0;
-        this.weightPoly[3] = 0; //coinWeightPoly3 = 0;
-        this.weightPoly[4] = 100; //cornerWeightPoly0 = 0;       //set to 0 to disable for a while
-        this.weightPoly[5] = 0; //cornerWeightPoly1 = 0;
-        this.weightPoly[6] = 0; //cornerWeightPoly2 = 0;
-        this.weightPoly[7] = 0; //cornerWeightPoly3 = 0;
-        this.weightPoly[8] = 100; //moveWeightPoly0 = 100;
-        this.weightPoly[9] = 0; //moveWeightPoly1 = 0;
-        this.weightPoly[10] = 0; //moveWeightPoly2 = 0;
-        this.weightPoly[11] = 0; //moveWeightPoly3 = 0;
-        this.weightPoly[12] = 100; //territoryWeightPoly0 = 100;
-        this.weightPoly[13] = 0; //territoryWeightPoly1 = 0;
-        this.weightPoly[14] = 0; //territoryWeightPoly2 = 0;
-        this.weightPoly[15] = 0; //territoryWeightPoly3 = 0;
+        this.weightPoly[0] = -638.2467089;  //coinWeightPoly0 = 100;
+        this.weightPoly[1] = 377.936951; //coinWeightPoly1 = 0;
+        this.weightPoly[2] = -470.8216715; //coinWeightPoly2 = 0;
+        this.weightPoly[3] = -280.0405299; //coinWeightPoly3 = 0;
+        this.weightPoly[4] = 1920.731736; //cornerWeightPoly0 = 0;       //set to 0 to disable for a while
+        this.weightPoly[5] = 947.0323143; //cornerWeightPoly1 = 0;
+        this.weightPoly[6] = 20.09849724; //cornerWeightPoly2 = 0;
+        this.weightPoly[7] = 144.5824839; //cornerWeightPoly3 = 0;
+        this.weightPoly[8] = 850.0535637; //moveWeightPoly0 = 100;
+        this.weightPoly[9] = 130.7802043; //moveWeightPoly1 = 0;
+        this.weightPoly[10] = -1106.398786; //moveWeightPoly2 = 0;
+        this.weightPoly[11] = 44.35520982; //moveWeightPoly3 = 0;
+        this.weightPoly[12] = -21.45856893; //territoryWeightPoly0 = 100;
+        this.weightPoly[13] = 859.9369023; //territoryWeightPoly1 = 0;
+        this.weightPoly[14] = -598.4475435; //territoryWeightPoly2 = 0;
+        this.weightPoly[15] = 637.3359287; //territoryWeightPoly3 = 0;
     }
 
     public void setWeightPoly(double[] weightPoly) {
@@ -127,48 +127,54 @@ public class EvaluationFunction extends AI{
         double numberOfCoins;
         double territory;
 
-        //numberOfCoins = (double) (this.cBoard.getNrSquares(BLACK) - this.cBoard.getNrSquares(WHITE)) / (this.cBoard.getNrSquares(BLACK) + this.cBoard.getNrSquares(WHITE));
-        if(currentPlayer == WHITE){ numberOfCoins = this.cBoard.getNrSquares(WHITE);
-        } else { numberOfCoins = this.cBoard.getNrSquares(BLACK); }
+        numberOfCoins = (double) (this.cBoard.getNrSquares(BLACK) - this.cBoard.getNrSquares(WHITE)) / (this.cBoard.getNrSquares(BLACK) + this.cBoard.getNrSquares(WHITE));
+//        if(currentPlayer == WHITE){ numberOfCoins = this.cBoard.getNrSquares(WHITE);
+//        } else { numberOfCoins = this.cBoard.getNrSquares(BLACK); }
 
-//        if(this.cBoard.getCurrentPlayer() == WHITE){
-//            whiteMoves = Logic.numberSquaresAllowed(this.cBoard);
-//            this.cBoard.changePlayer();
-//            blackMoves = Logic.numberSquaresAllowed(this.cBoard);
-//        }
-//        else {
-//            blackMoves = Logic.numberSquaresAllowed(this.cBoard);
-//            this.cBoard.changePlayer();
-//            whiteMoves = Logic.numberSquaresAllowed(this.cBoard);
-//        }
-//
-//        if(blackMoves + whiteMoves != 0){
-//            numberOfMoves =  (double) ((blackMoves - whiteMoves) / (blackMoves + whiteMoves));
-//        } else numberOfMoves = 0;
-        numberOfMoves = Logic.numberSquaresAllowed(cBoard);
+        if(this.cBoard.getCurrentPlayer() == WHITE){
+            whiteMoves = Logic.numberSquaresAllowed(this.cBoard);
+            this.cBoard.changePlayer();
+            blackMoves = Logic.numberSquaresAllowed(this.cBoard);
+        }
+        else {
+            blackMoves = Logic.numberSquaresAllowed(this.cBoard);
+            this.cBoard.changePlayer();
+            whiteMoves = Logic.numberSquaresAllowed(this.cBoard);
+        }
 
-//        if(getCorners(BLACK) + getCorners(WHITE) != 0) {
-//            numberOfCorners = (double) ((getCorners(BLACK) - getCorners(WHITE)) / (getCorners(BLACK) + getCorners(WHITE)));
-//        } else numberOfCorners = 0;
-        if(currentPlayer == WHITE){ numberOfCorners = cBoard.getCorners(WHITE);
-        } else { numberOfCorners = cBoard.getCorners(BLACK); }
+        if(blackMoves + whiteMoves != 0){
+            numberOfMoves =  (double) ((blackMoves - whiteMoves) / (blackMoves + whiteMoves));
+        } else numberOfMoves = 0;
+//        numberOfMoves = Logic.numberSquaresAllowed(cBoard);
 
-//        if (getTerritoryScore(BLACK) + getTerritoryScore(WHITE) !=0 ){
-//            territory = (double) (getTerritoryScore(BLACK) - getTerritoryScore(WHITE))/ (getTerritoryScore(BLACK) + getTerritoryScore(WHITE));
-//        } else territory = 0;
-        if(currentPlayer == WHITE){ territory = getTerritoryScore(WHITE);
-        } else { territory = getTerritoryScore(BLACK); }
+        if(cBoard.getCorners(BLACK) + cBoard.getCorners(WHITE) != 0) {
+            numberOfCorners = (double) ((cBoard.getCorners(BLACK) - cBoard.getCorners(WHITE)) / (cBoard.getCorners(BLACK) + cBoard.getCorners(WHITE)));
+        } else numberOfCorners = 0;
+//        if(currentPlayer == WHITE){ numberOfCorners = cBoard.getCorners(WHITE);
+//        } else { numberOfCorners = cBoard.getCorners(BLACK); }
+
+        if (getTerritoryScore(BLACK) + getTerritoryScore(WHITE) !=0 ){
+            territory = (double) (getTerritoryScore(BLACK) - getTerritoryScore(WHITE))/ (getTerritoryScore(BLACK) + getTerritoryScore(WHITE));
+        } else territory = 0;
+//        if(currentPlayer == WHITE){ territory = getTerritoryScore(WHITE);
+//        } else { territory = getTerritoryScore(BLACK); }
 //
 //        System.out.println("Nrcorners white: " + getCorners(WHITE));
 //        System.out.println("Nrcorners BLACK: " + getCorners(BLACK));
 //        System.out.println("nrCorners total: " + numberOfCorners);
 //        System.out.println("nrCorners total: " + cBoard.getCurrentPlayer());
 
+       // System.out.println("current player : " + cBoard.getCurrentPlayer());
+
         //totalScore = weightPoly[0] * numberOfCoins +  weightPoly[4] * numberOfCorners + weightPoly[8] * numberOfMoves + weightPoly[12] * territory;
 
         totalScore = (calcCoinWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfCoins + calcCornerWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfCorners +
                 calcMoveWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfMoves + calcTerritoryWeight(cBoard.getNrSquares(Board.EMPTY)) * territory);
-        totalScore = (currentPlayer == BLACK) ? totalScore : -totalScore;
+
+        //System.out.println("total Score: " + totalScore);
+//        System.out.println("total score: " + totalScore);
+//        totalScore = (currentPlayer == BLACK) ? totalScore : -totalScore;
+
         return totalScore;
     }
 
