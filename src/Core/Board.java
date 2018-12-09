@@ -157,6 +157,10 @@ public class Board implements Serializable {
         return currentPlayer;
     }
 
+    public void setCurrentPlayer(int x){
+        currentPlayer = x;
+    }
+
     /**
      * Updates a specific cell based on the current status of the game, top left is 0, 0
      * @param row specifies row of cell we want to update
