@@ -168,7 +168,7 @@ public class EvaluationFunction extends AI{
 
         totalScore = (calcCoinWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfCoins + calcCornerWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfCorners +
                 calcMoveWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfMoves + calcTerritoryWeight(cBoard.getNrSquares(Board.EMPTY)) * territory);
-
+        totalScore = (currentPlayer == BLACK) ? totalScore : -totalScore;
         return totalScore;
     }
 
