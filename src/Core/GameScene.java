@@ -36,8 +36,8 @@ public class GameScene extends BorderPane {
     private int AI1Level;
     private int AI2Level;
     private static String[] AIs;
-    private static final int MINIMAX_DEPTH = 4;
-    private static final int MINIMAXALPH_DEPTH = 4;
+    private static final int MINIMAX_DEPTH = 3;
+    private static final int MINIMAXALPH_DEPTH = 3;
 
     private File discBlack = new File("src/Assets/disc_blackBgr.png");
     private File discWhite = new File("src/Assets/disc_whiteBgrFthr.png");

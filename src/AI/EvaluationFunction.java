@@ -153,11 +153,11 @@ public class EvaluationFunction extends AI{
         if (getTerritoryScore(BLACK) + getTerritoryScore(WHITE) !=0 ){
             territory = (double) (getTerritoryScore(BLACK) - getTerritoryScore(WHITE))/ (getTerritoryScore(BLACK) + getTerritoryScore(WHITE));
         } else territory = 0;
-
+//
 //        System.out.println("Nrcorners white: " + getCorners(WHITE));
 //        System.out.println("Nrcorners BLACK: " + getCorners(BLACK));
 //        System.out.println("nrCorners total: "  + numberOfCorners);
-//        System.out.println(cBoard.getCurrentPlayer());
+        System.out.println(cBoard.getCurrentPlayer());
 
         totalScore = weightPoly[0] * numberOfCoins +  weightPoly[4] * numberOfCorners + weightPoly[8] * numberOfMoves + weightPoly[12] * territory;
 

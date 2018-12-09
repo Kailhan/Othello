@@ -15,20 +15,20 @@ public class MiniMaxAlph extends AI {
         this.evaluator = new EvaluationFunction(board);
     }
 
-    public double evaluateFitness(int gamesToBeSimmed, int boardSize) {
+    public double evaluateFitness(int gamesToBeSimmed, int boardSize){
         AI stupid = new Stupid();
         gamesToBeSimmed = (gamesToBeSimmed < 2) ? 2 : gamesToBeSimmed;
-        gamesToBeSimmed = (gamesToBeSimmed % 2 != 0) ? gamesToBeSimmed + 1 : gamesToBeSimmed;
-        GenericTest.test(this, stupid, gamesToBeSimmed / 2, boardSize);
+        gamesToBeSimmed = (gamesToBeSimmed % 2 != 0) ? gamesToBeSimmed + 1:gamesToBeSimmed;
+        GenericTest.test(this, stupid, gamesToBeSimmed/2, boardSize);
         winsFirstMove = GenericTest.getPlayer1Wins();
-        GenericTest.test(stupid, this, gamesToBeSimmed / 2, boardSize);
+        GenericTest.test(stupid, this, gamesToBeSimmed/2, boardSize);
         winsSecondMove = GenericTest.getPlayer2Wins();
         //System.out.println(this.getEvaluator().getChromosome()[2]);
         //System.out.println("this.fitness = (winsFirstMove + winsSecondMove)/gamesToBeSimmed;");
         //System.out.println(gamesToBeSimmed);
-        fitness = (winsFirstMove + winsSecondMove) / gamesToBeSimmed;
+        fitness = (winsFirstMove + winsSecondMove)/gamesToBeSimmed;
 
-        return (winsFirstMove + winsSecondMove) / gamesToBeSimmed;
+        return (winsFirstMove + winsSecondMove)/gamesToBeSimmed;
     }
 
     public int[] getBestMove(Board board) {
@@ -36,14 +36,15 @@ public class MiniMaxAlph extends AI {
         GameTree gameTree = new GameTree(this.depth, board);
         Node<Board> root = gameTree.createTree();
 
-        minimax.search2(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        minimax.search(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
         Node<Board> child1 = minimax.selectMove(root);
 
         int[] bestMove = new int[2];
         try {
             bestMove[0] = child1.getRow();
             bestMove[1] = child1.getColumn();
-        } catch (NullPointerException e) {
+        }
+        catch(NullPointerException e) {
             System.out.println("no more moves");
         }
         return bestMove;
@@ -51,11 +52,10 @@ public class MiniMaxAlph extends AI {
 
     public int search(Node<Board> currentNode, int alpha, int beta) {
         if (currentNode.getChildren().size() == 0) {
-            int value = (int) evaluator.evaluate(currentNode.getData());
+            int value = (int)evaluator.evaluate(currentNode.getData());
             currentNode.setValue(value);
             return value;
         } else if (currentNode.getData().getCurrentPlayer() == -1) {
-            System.out.println("max2");
             int value = Integer.MIN_VALUE;
             for (Node<Board> currentChild : currentNode.getChildren()) {
                 value = Math.max(value, search(currentChild, alpha, beta));
@@ -63,14 +63,12 @@ public class MiniMaxAlph extends AI {
                 alpha = Math.max(value, alpha);
 //                alpha = (value > alpha) ? value : alpha;
                 if (alpha >= beta) {
-                    System.out.println("pruned");
                     break;
                 }
             }
             currentNode.setValue(value);
             return value;
         } else { //MINVALUE, opponent player
-            System.out.println("min2");
             int value = Integer.MAX_VALUE;
             for (Node<Board> currentChild : currentNode.getChildren()) {
                 value = Math.min(value, search(currentChild, alpha, beta));
@@ -78,7 +76,6 @@ public class MiniMaxAlph extends AI {
                 beta = Math.min(value, beta);
 //                beta = (value < beta) ? value : beta;
                 if (alpha >= beta) {
-                    System.out.println("pruned");
                     break;
                 }
             }
@@ -99,44 +96,40 @@ public class MiniMaxAlph extends AI {
         return root;
     }
 
-//pruned niet
-    public int search2(Node<Board> currentNode, int alpha, int beta) {
-        if (currentNode.getChildren().size() == 0) {
-            System.out.println("finished");
-            System.out.println("Score :" + evaluator.evaluate(currentNode.getData()));
-            currentNode.setValue((int)evaluator.evaluate(currentNode.getData()));
-            return (int) evaluator.evaluate(currentNode.getData());
-        }
-
-        if (currentNode.getData().getCurrentPlayer() == -1) { //maximizing white
-            System.out.println("max");
-            int value = alpha;
-            for (Node<Board> child : currentNode.getChildren()) {
-                value = Math.max(value, search(child, alpha, beta));
-                alpha = Math.max(alpha, value);
-                if (alpha >= beta) {
-                    System.out.println("pruned");
-                    break;
-                }
-                currentNode.setValue(value);
-                return value;
-            }
-
-        } else {    //minimizing black
-            System.out.println("min");
-            int value = Integer.MAX_VALUE;
-            for (Node<Board> child : currentNode.getChildren()) {
-                value = Math.min(value, search(child, alpha, beta));
-                beta = Math.min(beta, value);
-                if (alpha >= beta) {
-                    System.out.println("pruned");
-                    break;
-                }
-                currentNode.setValue(value);
-                return value;
-            }
-        }
-        return 0;
-    }
-
 }
+//          never gets pruned... gives other values then the search so possibly wrong
+//    public int search2(Node<Board> currentNode, int alpha, int beta) {
+//        if (currentNode.getChildren().size() == 0) {
+//            System.out.println("finished");
+//            this.bestNode = currentNode;
+//            System.out.println("Score :" + evaluator.evaluate(currentNode.getData()));
+//            return evaluator.evaluate(currentNode.getData());
+//        }
+//
+//        if (currentNode.getData().getCurrentPlayer() == -1) { //maximizing white
+//            System.out.println("max");
+//            int value = alpha;
+//            for (Node<Board> child : currentNode.getChildren()) {
+//                value = Math.max(value, search(child, alpha, beta));
+//                alpha = Math.max(alpha, value);
+//                if (alpha >= beta){
+//                    break;}
+//                    currentNode.setValue(value);
+//                return value;
+//            }
+//
+//        } else {    //minimizing black
+//            System.out.println("min");
+//            int value = Integer.MAX_VALUE;
+//            for (Node<Board> child : currentNode.getChildren()) {
+//                value = Math.min(value, search(child, alpha, beta));
+//                beta = Math.min(beta, value);
+//                if (alpha >= beta) {
+//                    break;
+//                }
+//                currentNode.setValue(value);
+//                return value;
+//            }
+//        }
+//        return 0;
+//    }

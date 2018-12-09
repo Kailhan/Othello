@@ -182,7 +182,8 @@ public class Logic {
             case 2 :
                 for(int i = 1; c - i >= 0; i++)
                     {
-                        if(boardGrid[r][c - i] == 0){
+                        if(boardGrid[r][c - i] == 0)
+                        {
                             return new int[0][2];
                         }
                         else if(boardGrid[r][c - i] != currentPlayer)
