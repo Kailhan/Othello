@@ -22,7 +22,7 @@ public class Minimax extends AI {
         this.gameTree = new GameTree(depth, board);
         this.evaluator.setBoard(board);
         this.root = gameTree.createTree();
-        minimaxAlg2(root);
+        //minimaxAlg2(root);
         int[] bestMove = new int[2];
         try {
             bestMove[0] = selectMove(root).getRow();
@@ -39,22 +39,24 @@ public class Minimax extends AI {
         this.evaluator = new EvaluationFunction(board);
     }
 
-    public int minimaxAlg2(Node<Board> currentNode) {
+    public int minimaxAlg2(Node<Board> currentNode, int playerValue) {
         if (currentNode.getChildren().size() == 0) {
             int value = (int) evaluator.evaluate(currentNode.getData());
             currentNode.setValue(value);
             return value;
-        } else if (currentNode.getData().getCurrentPlayer() == -1) {
+        } else if (currentNode.getData().getCurrentPlayer() == playerValue) {
             int value = Integer.MIN_VALUE;
+            playerValue = -1*playerValue;
             for (Node<Board> currentChild : currentNode.getChildren()) {
-                value = Math.max(value, minimaxAlg2(currentChild));
+                value = Math.max(value, minimaxAlg2(currentChild, playerValue));
             }
             currentNode.setValue(value);
             return value;
         } else { //MINVALUE, opponent player
             int value = Integer.MAX_VALUE;
+            playerValue = -1*playerValue;
             for (Node<Board> currentChild : currentNode.getChildren()) {
-                value = Math.min(value, minimaxAlg2(currentChild));
+                value = Math.min(value, minimaxAlg2(currentChild, playerValue));
             }
             currentNode.setValue(value);
             return value;
