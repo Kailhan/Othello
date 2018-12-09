@@ -87,6 +87,18 @@ public class Board implements Serializable {
         return  nrSquares;
     }
 
+
+    public int getCorners(int player) {
+        int nrCorners = 0;
+        for (int i = 0; i < boardGrid.length; i += boardGrid.length- 1) {
+            for (int j = 0; j < boardGrid.length; j += boardGrid.length - 1) {
+                if (boardGrid[i][j] == player)
+                    nrCorners++;
+            }
+        }
+        return nrCorners;
+    }
+
 //    /**
 //     * Checks the state of integer array representing the board, if cell contains 0 then this is an empty cell
 //     * @return Number of squares that are empty

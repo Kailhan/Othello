@@ -108,6 +108,7 @@ public class GA_DirectEvalFunc {
                     "_selectionRatio" + String.valueOf(SELECTION_RATIO) +
                     "_time_" + String.valueOf(endTime - startTime) +
                     "_maxIter_" + String.valueOf(maxIterations) +
+                    "_iterConv_" + String.valueOf(iterationCounter) +
                     ".csv";
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
             writer.write(gaCSVLog);
