@@ -13,68 +13,66 @@ public class Logic {
 
     public static boolean checkSquareAllowed(int r, int c, Board board) //Returns true if the position clicked would result in disks being flipped
     {
-        int[][] boardGrid = board.getBoardGrid();
         int boardSize = board.getSize();
-
-        if (boardGrid[r][c] == 0) //If the square is empty
+        if (board.getBoardGrid()[r][c] == 0) //If the square is empty
         {
             if (r > 1  && r < boardSize - 2 && c > 1 && c < boardSize - 2) { //middle
-                return getFlippedDisksDirection(r, c, board, east).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, southEast).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, south).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, southWest).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, west).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, northWest).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, north).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, northEast).length > 0;
+                return areDiscsFlipped(r, c, board, east) ||
+                         areDiscsFlipped(r, c, board, southEast) ||
+                         areDiscsFlipped(r, c, board, south) ||
+                         areDiscsFlipped(r, c, board, southWest) ||
+                         areDiscsFlipped(r, c, board, west) ||
+                         areDiscsFlipped(r, c, board, northWest) ||
+                         areDiscsFlipped(r, c, board, north) ||
+                         areDiscsFlipped(r, c, board, northEast);
             }
             else if (r <= 1 && c > 1 && c < boardSize - 2) { //left edge
-                return getFlippedDisksDirection(r, c, board, east).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, southEast).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, south).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, southWest).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, west).length > 0;
+                return  areDiscsFlipped(r, c, board, east) ||
+                         areDiscsFlipped(r, c, board, southEast) ||
+                         areDiscsFlipped(r, c, board, south) ||
+                         areDiscsFlipped(r, c, board, southWest) ||
+                         areDiscsFlipped(r, c, board, west);
             }
             else if (r >= boardSize - 2 && c > 1 && c < boardSize - 2) { //right edge
-                return getFlippedDisksDirection(r, c, board, east).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, west).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, northWest).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, north).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, northEast).length > 0;
+                return  areDiscsFlipped(r, c, board, east) ||
+                         areDiscsFlipped(r, c, board, west) ||
+                         areDiscsFlipped(r, c, board, northWest) ||
+                         areDiscsFlipped(r, c, board, north) ||
+                         areDiscsFlipped(r, c, board, northEast);
             }
             else if (r > 1 && r < boardSize - 2 && c <= 1) { //top edge
-                return getFlippedDisksDirection(r, c, board, south).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, southWest).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, west).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, northWest).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, north).length > 0;
+                return  areDiscsFlipped(r, c, board, south) ||
+                         areDiscsFlipped(r, c, board, southWest) ||
+                         areDiscsFlipped(r, c, board, west) ||
+                         areDiscsFlipped(r, c, board, northWest) ||
+                         areDiscsFlipped(r, c, board, north);
             }
             else if (r > 1 && r < boardSize - 2 && c >= boardSize - 2) { //bottom edge
-                return getFlippedDisksDirection(r, c, board, east).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, southEast).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, south).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, north).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, northEast).length > 0;
+                return  areDiscsFlipped(r, c, board, east) ||
+                         areDiscsFlipped(r, c, board, southEast) ||
+                         areDiscsFlipped(r, c, board, south) ||
+                         areDiscsFlipped(r, c, board, north) ||
+                         areDiscsFlipped(r, c, board, northEast);
             }
             else if (r <= 1 && c <= 1) { //top left corner
-                return getFlippedDisksDirection(r, c, board, south).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, southWest).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, west).length > 0;
+                return  areDiscsFlipped(r, c, board, south) ||
+                         areDiscsFlipped(r, c, board, southWest) ||
+                         areDiscsFlipped(r, c, board, west);
             }
             else if (r <= 1 && c >= boardSize - 2) { //bottom left corner
-                return getFlippedDisksDirection(r, c, board, east).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, southEast).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, south).length > 0;
+                return  areDiscsFlipped(r, c, board, east) ||
+                         areDiscsFlipped(r, c, board, southEast) ||
+                         areDiscsFlipped(r, c, board, south);
             }
             else if (r >= boardSize - 2 && c <= 1) { //top right corner
-                return getFlippedDisksDirection(r, c, board, west).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, northWest).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, north).length > 0;
+                return  areDiscsFlipped(r, c, board, west) ||
+                         areDiscsFlipped(r, c, board, northWest) ||
+                         areDiscsFlipped(r, c, board, north);
             }
             else if (r >= boardSize - 2 && c >= boardSize - 2) { //bottom right corner
-                return getFlippedDisksDirection(r, c, board, east).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, north).length > 0 ||
-                        getFlippedDisksDirection(r, c, board, northEast).length > 0;
+                return  areDiscsFlipped(r, c, board, east) ||
+                         areDiscsFlipped(r, c, board, north) ||
+                         areDiscsFlipped(r, c, board, northEast);
             }
         }
         return false;
@@ -181,29 +179,29 @@ public class Logic {
         {
             case 2 :
                 for(int i = 1; c - i >= 0; i++)
+                {
+                    if(boardGrid[r][c - i] == 0)
                     {
-                        if(boardGrid[r][c - i] == 0)
+                        return new int[0][2];
+                    }
+                    else if(boardGrid[r][c - i] != currentPlayer)
+                    {
+                        foundEnemy = true;
+                        int[][] enemyCoordinate = new int[][]{{r, c - i}};
+                        flippedDisks = combine(flippedDisks, enemyCoordinate);
+                    }
+                    else if (boardGrid[r][c - i] == currentPlayer)
+                    {
+                        if(foundEnemy)
                         {
-                            return new int[0][2];
+                            return flippedDisks;
                         }
-                        else if(boardGrid[r][c - i] != currentPlayer)
+                        else
                         {
-                            foundEnemy = true;
-                            int[][] enemyCoordinate = new int[][]{{r, c - i}};
-                            flippedDisks = combine(flippedDisks, enemyCoordinate);
-                        }
-                        else if (boardGrid[r][c - i] == currentPlayer)
-                        {
-                            if(foundEnemy)
-                            {
-                                return flippedDisks;
-                            }
-                            else
-                            {
-                                return new int[0][0];
-                            }
+                            return new int[0][0];
                         }
                     }
+                }
                 return new int[0][0];
             case 3 :
                 for(int i = 1; c - i >= 0 && r + i < boardSize; i++)
@@ -428,10 +426,220 @@ public class Logic {
 
     public static int[][] combine(int[][] a, int[][] b)
     {
-        int length = a.length + b.length;
-        int[][] result = new int[length][2];
+        int[][] result = new int[a.length + b.length][2];
         System.arraycopy(a, 0, result, 0, a.length);
         System.arraycopy(b, 0, result, a.length, b.length);
         return result;
     }
+
+    public static boolean areDiscsFlipped(int r, int c, Board board, int direction) //Returns list of coordinates of disks in a certain direction that would be flipped
+    {
+        int[][] boardGrid = board.getBoardGrid();
+        int boardSize = board.getSize();
+        int currentPlayer = board.getCurrentPlayer();
+
+        boolean foundEnemy = false;
+        int[][] flippedDisks = new int[0][2];
+
+        switch(direction)
+        {
+            case 2 :
+                for(int i = 1; c - i >= 0; i++)
+                {
+                    if(boardGrid[r][c - i] == 0)
+                    {
+                        return false;
+                    }
+                    else if(boardGrid[r][c - i] != currentPlayer)
+                    {
+                        foundEnemy = true;
+                    }
+                    else if (boardGrid[r][c - i] == currentPlayer)
+                    {
+                        if(foundEnemy)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return false;
+            case 3 :
+                for(int i = 1; c - i >= 0 && r + i < boardSize; i++)
+                {
+                    if(boardGrid[r + i][c - i] == 0)
+                    {
+                        return false;
+                    }
+                    else if(boardGrid[r + i][c - i] != currentPlayer)
+                    {
+                        foundEnemy = true;
+                    }
+                    else if (boardGrid[r + i][c - i] == currentPlayer)
+                    {
+                        if(foundEnemy)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return false;
+            case 4 :
+                for(int i = 1; r + i < boardSize; i++)
+                {
+                    if(boardGrid[r + i][c] == 0)
+                    {
+                        return false;
+                    }
+                    else if(boardGrid[r + i][c] != currentPlayer)
+                    {
+                        foundEnemy = true;
+                    }
+                    else if (boardGrid[r + i][c] == currentPlayer)
+                    {
+                        if(foundEnemy)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return false;
+            case 5 :
+                for(int i = 1; c + i < boardSize && r + i < boardSize; i++)
+                {
+                    if(boardGrid[r + i][c + i] == 0)
+                    {
+                        return false;
+                    }
+                    else if(boardGrid[r + i][c + i] != currentPlayer)
+                    {
+                        foundEnemy = true;
+                    }
+                    else if (boardGrid[r + i][c + i] == currentPlayer)
+                    {
+                        if(foundEnemy)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return false;
+            case 6 :
+                for(int i = 1; c + i < boardSize; i++)
+                {
+                    if(boardGrid[r][c + i] == 0)
+                    {
+                        return false;
+                    }
+                    else if(boardGrid[r][c + i] != currentPlayer)
+                    {
+                        foundEnemy = true;
+                    }
+                    else if (boardGrid[r][c + i] == currentPlayer)
+                    {
+                        if(foundEnemy)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return false;
+            case 7 :
+                for(int i = 1; c + i < boardSize && r - i >= 0; i++)
+                {
+                    if(boardGrid[r - i][c + i] == 0)
+                    {
+                        return false;
+                    }
+                    else if(boardGrid[r - i][c + i] != currentPlayer)
+                    {
+                        foundEnemy = true;
+                    }
+                    else if (boardGrid[r - i][c + i] == currentPlayer)
+                    {
+                        if(foundEnemy)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return false;
+            case 0 :
+                for(int i = 1; r - i >= 0; i++)
+                {
+                    if(boardGrid[r - i][c] == 0)
+                    {
+                        return false;
+                    }
+                    else if(boardGrid[r - i][c] != currentPlayer)
+                    {
+                        foundEnemy = true;
+                    }
+                    else if (boardGrid[r - i][c] == currentPlayer)
+                    {
+                        if(foundEnemy)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return false;
+            case 1 :
+                for(int i = 1; c - i >= 0 && r - i >= 0; i++)
+                {
+                    if(boardGrid[r - i][c - i] == 0)
+                    {
+                        return false;
+                    }
+                    else if(boardGrid[r - i][c - i] != currentPlayer)
+                    {
+                        foundEnemy = true;
+                    }
+                    else if (boardGrid[r - i][c - i] == currentPlayer)
+                    {
+                        if(foundEnemy)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return false;
+
+            default: System.out.println("Invalid direction"); break;
+
+        }
+        return false;
+    }
+
 }
