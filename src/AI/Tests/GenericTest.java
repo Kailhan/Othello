@@ -17,55 +17,39 @@ public class GenericTest {
         player2Wins = 0;
         draws = 0;
 
+        long startTime = System.nanoTime();
         for (int i = 0; i < gamesToBeSimmed; i++) {
-            long startTime = System.nanoTime();
             boolean gameFinished = false;
             board = new Board(boardSize);
             int[] move = new int[2];
             while (!gameFinished) {
                 if (board.getCurrentPlayer() == BLACK) {
                     move = player1.getBestMove(board);
-                    //System.out.println("mcts1 turn");
                 }
                 if (board.getCurrentPlayer() == WHITE) {
                     move = player2.getBestMove(board);
-                    //System.out.println("mcts2 turn");
                 }
                 board.applyMove(move[0], move[1]);
-//                System.out.println("Board after applying move: ");
-//                board.displayBoardGrid();
                 board.incrementTurn();
-                //System.out.println("Turn: " + board.getTurn());
                 board.changePlayer();
                 if(!Logic.checkMovePossible(board)) {
-                    //System.out.println("!Logic.checkMovePossible(board)");
-                    //evaluator.evaluate(board);
                     board.incrementTurn();
                     board.changePlayer();
                     if(!Logic.checkMovePossible(board)) {
                         gameFinished = true;
                         if (board.getNrSquares(BLACK) > board.getNrSquares(WHITE)) {
                             player1Wins++;
-                            //System.out.println("mcts1 win");
                         } else if (board.getNrSquares(BLACK) < board.getNrSquares(WHITE)) {
                             player2Wins++;
-                            //System.out.println("mcts2 win");
                         } else {
                             draws++;
                         }
                     }
                 }
             }
-            long endTime = System.nanoTime();
-            //System.out.println("Simulated one game in generic test in ms: " + (endTime-startTime)/1000000);
-            //System.out.println("Board at end of test cycle");
-            //board.displayBoardGrid();
-            //System.out.println("Game finished: " + gameFinished);
-            //System.out.println("Games simulated: " + i);
         }
-//        System.out.println("Player1 wins: " + player1Wins);
-//        System.out.println("Player2 wins: " + player2Wins);
-//        System.out.println("draws: " + draws);
+        long endTime = System.nanoTime();
+        //System.out.println("Simulated one generic test cycle in generic test in ms: " + (endTime-startTime)/1000000);
     }
 
     public static int getPlayer1Wins() {

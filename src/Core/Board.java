@@ -24,25 +24,25 @@ public class Board implements Serializable {
         size = (size < 4) ? 4: size; //enforces minimum size of 4
         size = ((size % 2) == 0) ? size : (size-1); //makes sure board is even
         this.size = size;
-        boardGrid = new int[size][size];
-        boardGrid[(size/2)-1][(size/2)-1] = BLACK;
-        boardGrid[(size/2)-1][(size/2)] = WHITE;
-        boardGrid[(size/2)][(size/2)-1] = WHITE;
-        boardGrid[(size/2)][(size/2)] = BLACK;
-        turn = 0;
-        currentPlayer = BLACK;
+        this.boardGrid = new int[size][size];
+        this.boardGrid[(size/2)-1][(size/2)-1] = BLACK;
+        this.boardGrid[(size/2)-1][(size/2)] = WHITE;
+        this.boardGrid[(size/2)][(size/2)-1] = WHITE;
+        this.boardGrid[(size/2)][(size/2)] = BLACK;
+        this.turn = 0;
+        this.currentPlayer = BLACK;
     }
 
     public Board(Board board) { // properly "deep" copy a board
-            this.size = board.getSize();
-            this.turn = board.getTurn();
-            this.currentPlayer = board.getCurrentPlayer();
-            this.boardGrid = new int[size][size];
-            for(int r = 0; r < size; r++) {
-                for(int c = 0; c < size; c++) {
-                    this.boardGrid[r][c] = board.getBoardGrid()[r][c];
-                }
+        this.size = board.getSize();
+        this.turn = board.getTurn();
+        this.currentPlayer = board.getCurrentPlayer();
+        this.boardGrid = new int[size][size];
+        for(int r = 0; r < size; r++) {
+            for(int c = 0; c < size; c++) {
+                this.boardGrid[r][c] = board.getBoardGrid()[r][c];
             }
+        }
     }
 
     /**
@@ -79,7 +79,6 @@ public class Board implements Serializable {
     public int getNrSquares(int state)
     {
         int nrSquares = 0;
-
         for(int i = 0; i < boardGrid.length; i++)
             for(int j = 0; j < boardGrid[i].length; j++)
                 if(boardGrid[i][j] == state)

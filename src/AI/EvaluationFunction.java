@@ -12,6 +12,7 @@ public class EvaluationFunction extends AI{
     private Board cBoard;
     private double[][] cellValues;
     private double[] weightPoly;
+    private AI stupid = new Stupid();
 
     private double[] chromosome;
 
@@ -89,6 +90,7 @@ public class EvaluationFunction extends AI{
         double cScore;
         for(int i = 0; i < possibleBoards.length; i++) {
             cScore = evaluate(possibleBoards[i]);
+            cScore *= cScore;
             if(cScore >= score) {
                 score = cScore;
                 bestBoardIndex = i;
@@ -101,10 +103,9 @@ public class EvaluationFunction extends AI{
     }
 
     public double evaluateFitness(int gamesToBeSimmed, int boardSize) {
-        AI stupid = new Stupid();
+
         gamesToBeSimmed = (gamesToBeSimmed < 2) ? 2 : gamesToBeSimmed;
         gamesToBeSimmed = (gamesToBeSimmed % 2 != 0) ? gamesToBeSimmed + 1:gamesToBeSimmed;
-
 
         GenericTest.test(this, stupid, gamesToBeSimmed/2, boardSize);
         winsFirstMove = GenericTest.getPlayer1Wins();
@@ -149,7 +150,6 @@ public class EvaluationFunction extends AI{
         if(getCorners(BLACK) + getCorners(WHITE) != 0) {
             numberOfCorners = (double) ((getCorners(BLACK) - getCorners(WHITE)) / (getCorners(BLACK) + getCorners(WHITE)));
         } else numberOfCorners = 0;
-
         if (getTerritoryScore(BLACK) + getTerritoryScore(WHITE) !=0 ){
             territory = (double) (getTerritoryScore(BLACK) - getTerritoryScore(WHITE))/ (getTerritoryScore(BLACK) + getTerritoryScore(WHITE));
         } else territory = 0;
@@ -172,7 +172,7 @@ public class EvaluationFunction extends AI{
 //                calcMoveWeight(cBoard.getTurn()) * numberOfMoves + calcTerritoryWeight(cBoard.getTurn()) * territory);
         totalScore = (calcCoinWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfCoins + calcCornerWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfCorners +
                 calcMoveWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfMoves + calcTerritoryWeight(cBoard.getNrSquares(Board.EMPTY)) * territory);
-
+        //System.out.println(numberOfCorners);
         return totalScore;
     }
 
