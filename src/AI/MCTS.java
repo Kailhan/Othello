@@ -46,7 +46,7 @@ public class MCTS extends AI {
         nodeQueue.addFirst(root);
         int playoutCounter = 0;
         while(nodeQueue.size() > 0 && playoutCounter < totalSims) {
-            MCTSNode toBeChecked = nodeSelection(nodeQueue);
+            MCTSNode toBeChecked = nodeSelection();
             if(toBeChecked.getParent() != null) System.out.println("has daddy");
             playoutSimulation(toBeChecked);
             playoutCounter++;
@@ -85,14 +85,25 @@ public class MCTS extends AI {
         }
     }
 
-    public MCTSNode nodeSelection(LinkedList nodeQueue) {
+    public MCTSNode nodeSelection() {
         double nodeScore = -1;
-
         ArrayList<MCTSNode> potentialNodes = new ArrayList<MCTSNode>();
-        for(Object node : nodeQueue) {
-            MCTSNode tmpNode = (MCTSNode) node;
-
+        for(int i = 0; i < nodeQueue.size(); i++) {
+            MCTSNode tmpNode = (MCTSNode)nodeQueue.get(i);
+            //System.out.println("nodescore" + tmpNode.getNodeScore());
             if(tmpNode.getNodeScore() > nodeScore) {
+                nodeScore = tmpNode.getNodeScore();
+            }
+        }
+        for(int i = 0; i < nodeQueue.size(); i++) {
+            MCTSNode tmpNode = (MCTSNode)nodeQueue.get(i);
+            if(tmpNode.getNodeScore() >= nodeScore) {
+//                if(tmpNode.getParent() == null) System.out.println("has no daddy");
+//                System.out.println(nodeQueue.indexOf(nodeQueue.get(i)));
+//                if(nodeQueue.getLast().getParent() != null) System.out.println("has daddy - createChildren");
+//                System.out.println(nodeQueue.indexOf(nodeQueue.getLast()));
+//                System.out.println();
+
                 nodeScore = tmpNode.getNodeScore();
                 potentialNodes.add(tmpNode);
             }
@@ -102,6 +113,7 @@ public class MCTS extends AI {
             toBeChecked.setChecked(true);
             createChildren(toBeChecked);
         }
+
         return toBeChecked;
     }
 

@@ -14,6 +14,10 @@ public class MiniMaxAlph extends AI {
         this.depth = depth;
         this.evaluator = new EvaluationFunction(board);
     }
+    public MiniMaxAlph(int depth, EvaluationFunction eval) {
+        this.depth = depth;
+        this.evaluator = eval;
+    }
 
     public double evaluateFitness(int gamesToBeSimmed, int boardSize) {
         AI stupid = new Stupid();
@@ -62,7 +66,7 @@ public class MiniMaxAlph extends AI {
                 alpha = Math.max(value, alpha);
 //                alpha = (value > alpha) ? value : alpha;
                 if (alpha >= beta) {
-                    System.out.println("pruned");
+                    //System.out.println("pruned");
                     break;
                 }
             }
@@ -76,7 +80,7 @@ public class MiniMaxAlph extends AI {
                 beta = Math.min(value, beta);
 //                beta = (value < beta) ? value : beta;
                 if (alpha >= beta) {
-                    System.out.println("pruned");
+                    //System.out.println("pruned");
                     break;
                 }
             }
@@ -109,7 +113,7 @@ public class MiniMaxAlph extends AI {
         }
 
         if (currentNode.getData().getCurrentPlayer() == -1) { //maximizing white
-            System.out.println("max");
+            //System.out.println("max");
             int value = alpha;
             for (Node<Board> child : currentNode.getChildren()) {
                 value = Math.max(value, search(child, alpha, beta));
@@ -122,7 +126,7 @@ public class MiniMaxAlph extends AI {
             }
 
         } else {    //minimizing black
-            System.out.println("min");
+            //System.out.println("min");
             int value = Integer.MAX_VALUE;
             for (Node<Board> child : currentNode.getChildren()) {
                 value = Math.min(value, search(child, alpha, beta));

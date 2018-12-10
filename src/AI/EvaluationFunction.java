@@ -23,6 +23,15 @@ public class EvaluationFunction extends AI{
         setTerritory();
     }
 
+    public EvaluationFunction(double[] chromosome, Board board) {
+        this.cBoard = board;
+        setChromosome(chromosome);
+    }
+
+    public EvaluationFunction(double[] chromosome) {
+        this(chromosome, new Board((int)Math.sqrt(chromosome.length - WEIGHT_POLY_SIZE)));
+    }
+
     public EvaluationFunction(double [][] cellValues, double[] weightPoly, Board board) {
         this.cBoard = board;
         this.cellValues = cellValues;
@@ -401,10 +410,12 @@ public class EvaluationFunction extends AI{
 
     public void setChromosome(double[] chromosome) {
         int chromesomePosCounter = 0;
+        weightPoly = new double[WEIGHT_POLY_SIZE];
         for(int i = 0; i < weightPoly.length; i++)  {
             weightPoly[i] = chromosome[chromesomePosCounter];
             chromesomePosCounter++;
         }
+        cellValues = new double[cBoard.getSize()][cBoard.getSize()];
         for(int i = 0; i < cellValues.length; i++) {
             for (int j = 0; j < cellValues[0].length; j++) {
                 cellValues[i][j] = chromosome[chromesomePosCounter];
