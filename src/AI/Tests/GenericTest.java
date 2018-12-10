@@ -19,6 +19,12 @@ public class GenericTest {
 
         long startTime = System.nanoTime();
         for (int i = 0; i < gamesToBeSimmed; i++) {
+            if(gamesToBeSimmed < 10) {
+                System.out.println("GenericTestIteration: " + i);
+            } else if(i%(gamesToBeSimmed/10)==0) {
+                System.out.println("GenericTestIteration: " + i);
+            }
+
             boolean gameFinished = false;
             board = new Board(boardSize);
             int[] move = new int[2];

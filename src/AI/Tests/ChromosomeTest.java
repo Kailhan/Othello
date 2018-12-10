@@ -3,9 +3,6 @@ package AI.Tests;
 import AI.EvaluationFunction;
 import AI.MiniMaxAlph;
 import AI.Stupid;
-import Core.Board;
-
-import static AI.EvaluationFunction.WEIGHT_POLY_SIZE;
 
 public class ChromosomeTest {
 

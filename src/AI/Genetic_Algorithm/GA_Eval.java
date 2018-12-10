@@ -90,7 +90,7 @@ public class GA_Eval {
         StringBuilder gaCSVLogBuilder = new StringBuilder();
 
         for(int i = 1; i < gaLog.length; i++) {
-            gaCSVLogBuilder.append(gaLog[i - 1] + ",");
+            gaCSVLogBuilder.append(gaLog[i - 1]).append(",");
             if(i % ((WEIGHT_POLY_SIZE + (pop.getBoardSize() * pop.getBoardSize()) + 2)) == 0) gaCSVLogBuilder.append("\n");
         }
         gaCSVLogBuilder.append(gaLog[gaLog.length-1]);

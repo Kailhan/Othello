@@ -3,11 +3,8 @@ package AI;
 import Core.Board;
 import Core.Logic;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 /**
  * The tree data structure which contains simulated boards, constructed layer by layer so that a specified depth can be used

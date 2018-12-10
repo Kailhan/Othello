@@ -60,9 +60,7 @@ public class EvaluationFunction extends AI{
 
     public void setWeightPoly(double[] weightPoly) {
         this.weightPoly = new double[WEIGHT_POLY_SIZE];
-        for(int i = 0; i < weightPoly.length; i++) {
-            this.weightPoly[i] = weightPoly[i];
-        }
+        System.arraycopy(weightPoly, 0, this.weightPoly, 0, weightPoly.length);
     }
 
     /**

@@ -2,7 +2,6 @@ package AI;
 
 import Core.Board;
 
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,14 +10,12 @@ import static java.lang.Integer.MIN_VALUE;
 public class MCTSNode extends Node {
 
     public static final double explorationParameter = 1.414;
-    private int scoreTotal;
+    private float scoreTotal;
     private int simulations = 1; //otherwise divide by zero when calculating node score might need to change the order/def of method
     private Board board;
-    private boolean checked;
 
     public MCTSNode(Board board, int x, int y) {
         super(board);
-        this.checked = false;
         this.board = board;
     }
 
@@ -38,11 +35,11 @@ public class MCTSNode extends Node {
         this.simulations = simulations;
     }
 
-    public int getScoreTotal() {
+    public float getScoreTotal() {
         return scoreTotal;
     }
 
-    public void setScoreTotal(int scoreTotal) {
+    public void setScoreTotal(float scoreTotal) {
         this.scoreTotal = scoreTotal;
     }
 
@@ -55,30 +52,15 @@ public class MCTSNode extends Node {
     }
 
     public double getNodeScore() {
-        int currentScoreTotal = scoreTotal;
-        int currentSimulations = simulations;
-        System.out.println("node.simulations");
-        //System.out.println(node.simulations);
-        MCTSNode parentNode = (MCTSNode)this.getParent();
-        if(parentNode == null) {
-            System.out.println("parent node null in getnodescore");
-            return currentScoreTotal/currentSimulations + (explorationParameter * Math.sqrt(Math.log(currentSimulations)/currentSimulations));
-        } else {
-            while (parentNode.getParent() != null) {
-                parentNode = (MCTSNode)this.getParent();
-            }
-            int totalSims = parentNode.getSimulations();
-            System.out.println(currentScoreTotal);
-            System.out.println(currentSimulations);
-            return currentScoreTotal/currentSimulations + (explorationParameter * Math.sqrt(Math.log(totalSims)/currentSimulations));
+        double totalSimulations = simulations;
+        MCTSNode node = this;
+        while(node.getParent() != null) {
+            node = (MCTSNode)node.getParent();
         }
-    }
-
-    public boolean isChecked() {
-        return checked;
-    }
-
-    public void setChecked(boolean checked) {
-        this.checked = checked;
+        int totalSims = node.getSimulations();
+        //double score = scoreTotal/simulations + (explorationParameter * Math.sqrt(Math.log(totalSims)/simulations));
+        //double score = scoreTotal/simulations + (explorationParameter * 0.5 * ((totalSims)/simulations));
+        //System.out.println(scoreTotal);
+        return 1.0/totalSimulations * explorationParameter + (scoreTotal/simulations);
     }
 }

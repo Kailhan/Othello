@@ -11,18 +11,18 @@ import static Core.Board.BLACK;
 import static Core.Board.EMPTY;
 import static Core.Board.WHITE;
 import static java.lang.Integer.MIN_VALUE;
-import static java.lang.Integer.max;
 
 public class MCTS extends AI {
 
     private int treeDepth;
     private int totalSims;
+    private int simsCounter = 0;
     private Random rand = new Random();
     private LinkedList<MCTSNode> nodeQueue = new LinkedList<MCTSNode>();
     public static final int DUMB = 0;
-    public static final int WIN = 100;
-    public static final int DRAW = 50;
-    public static final int LOSS = 0;
+    public static final float WIN = 1;
+    public static final float DRAW = 0.5f;
+    public static final float LOSS = 0;
 
 
     public MCTS(int totalSims) {
@@ -42,22 +42,19 @@ public class MCTS extends AI {
     }
 
     public MCTSNode findMove(Board board) {
+        simsCounter = 0;
+        nodeQueue.clear();
         MCTSNode root = new MCTSNode(board);
         nodeQueue.addFirst(root);
-        int playoutCounter = 0;
-        while(nodeQueue.size() > 0 && playoutCounter < totalSims) {
-            MCTSNode toBeChecked = nodeSelection();
-            if(toBeChecked.getParent() != null) System.out.println("has daddy");
+        while(nodeQueue.size() > 0 && simsCounter < totalSims) {
+            MCTSNode toBeChecked = nodeSelection(nodeQueue);
+            toBeChecked.setVisited();
             playoutSimulation(toBeChecked);
-            playoutCounter++;
+            simsCounter++;
         }
-        int maxScore = MIN_VALUE;
+        float maxScore = MIN_VALUE;
         ArrayList<MCTSNode> potentialNodes = new ArrayList<MCTSNode>();
         for (MCTSNode node : root.getChildren(root)) {
-            //System.out.println("scores of children of roots (possible moves");
-//            System.out.println(node.getScoreTotal()/node.getSimulations());
-//            System.out.println(node.getNodeScore());
-//            System.out.println("child");
             if(node.getScoreTotal()/node.getSimulations() > maxScore) {
                 maxScore = node.getScoreTotal()/node.getSimulations();
             }
@@ -67,6 +64,7 @@ public class MCTS extends AI {
                 potentialNodes.add(node);
             }
         }
+        simsCounter = 0;
         return potentialNodes.get(rand.nextInt(potentialNodes.size())); //makes sure we pick a random node instead of for example the last one that has a highest score
     }
 
@@ -85,47 +83,46 @@ public class MCTS extends AI {
         }
     }
 
-    public MCTSNode nodeSelection() {
+    public MCTSNode nodeSelection(LinkedList nodeQueue) {
         double nodeScore = -1;
+
         ArrayList<MCTSNode> potentialNodes = new ArrayList<MCTSNode>();
-        for(int i = 0; i < nodeQueue.size(); i++) {
-            MCTSNode tmpNode = (MCTSNode)nodeQueue.get(i);
-            //System.out.println("nodescore" + tmpNode.getNodeScore());
-            if(tmpNode.getNodeScore() > nodeScore) {
+        for(Object node : nodeQueue) {
+            MCTSNode tmpNode = (MCTSNode) node;
+            double tmpNodeScore = tmpNode.getNodeScore();
+            if(tmpNodeScore >= nodeScore) {
                 nodeScore = tmpNode.getNodeScore();
             }
         }
-        for(int i = 0; i < nodeQueue.size(); i++) {
-            MCTSNode tmpNode = (MCTSNode)nodeQueue.get(i);
+        for(Object node : nodeQueue) {
+            MCTSNode tmpNode = (MCTSNode) node;
             if(tmpNode.getNodeScore() >= nodeScore) {
-//                if(tmpNode.getParent() == null) System.out.println("has no daddy");
-//                System.out.println(nodeQueue.indexOf(nodeQueue.get(i)));
-//                if(nodeQueue.getLast().getParent() != null) System.out.println("has daddy - createChildren");
-//                System.out.println(nodeQueue.indexOf(nodeQueue.getLast()));
-//                System.out.println();
-
-                nodeScore = tmpNode.getNodeScore();
                 potentialNodes.add(tmpNode);
             }
         }
+//        for(Object node : nodeQueue) {
+//            MCTSNode tmpNode = (MCTSNode) node;
+//            if(tmpNode.getNodeScore() > nodeScore) {
+//                nodeScore = tmpNode.getNodeScore();
+//                potentialNodes.add(tmpNode);
+//            }
+//        }
         MCTSNode toBeChecked = potentialNodes.get(rand.nextInt(potentialNodes.size()));
-        if(toBeChecked.isChecked() == false) {
-            toBeChecked.setChecked(true);
-            createChildren(toBeChecked);
-        }
-
+        nodeQueue.remove(toBeChecked);
+        createChildren(toBeChecked);
         return toBeChecked;
     }
 
     public void playoutBackpropogation(MCTSNode node, int winner, int currentPlayer) {
+        //if(node.getParent() == null) System.out.println("nodedaddynull");
         while(node.getParent() != null) {
             Board board = node.getBoard();
             if(winner == EMPTY) node.setScoreTotal(node.getScoreTotal() + DRAW);
             if(board.getCurrentPlayer() == currentPlayer) {
                 if(currentPlayer == winner) node.setScoreTotal(node.getScoreTotal() + WIN);
             }
+            //System.out.println("nodegetsims" + node.getSimulations());
             node.setSimulations(node.getSimulations()+1);
-            System.out.println("get current node propagation sims" + node.getSimulations());
             node = (MCTSNode)node.getParent();
         }
     }
@@ -137,14 +134,11 @@ public class MCTS extends AI {
         do{
             //System.out.print("Performing playout simulation -> game not finished yet");
             if(Logic.checkMovePossible(board)) {
-                int x = rand.nextInt(board.getSize());
-                int y = rand.nextInt(board.getSize());
-                if(Logic.checkSquareAllowed(x, y, board)) {
-                    board.applyMove(x, y);
-                    board.incrementTurn();
-                    board.changePlayer();
-                }
-            }
+                int[][] moves = Logic.getPossibleMoves(board);
+                board.applyMove(moves[rand.nextInt(moves.length)]);
+                board.incrementTurn();
+                board.changePlayer();
+        }
             if(!Logic.checkMovePossible(board)) {
                 board.changePlayer();
                 if(!Logic.checkMovePossible(board)) { // No moves possible for either player so game has ended

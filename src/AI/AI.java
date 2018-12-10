@@ -1,5 +1,4 @@
 package AI;
-import AI.Tests.GenericTest;
 import Core.Board;
 
 public abstract class AI {

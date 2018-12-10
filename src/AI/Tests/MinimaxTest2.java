@@ -4,8 +4,6 @@ import AI.*;
 import Core.Board;
 import Core.Logic;
 
-import java.util.Scanner;
-
 import static Core.Board.BLACK;
 import static Core.Board.WHITE;
 

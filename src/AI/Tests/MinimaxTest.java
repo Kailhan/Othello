@@ -1,6 +1,5 @@
 package AI.Tests;
 
-import AI.EvaluationFunction;
 import AI.GameTree;
 import AI.Minimax;
 import AI.Node;

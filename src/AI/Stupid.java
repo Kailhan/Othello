@@ -1,5 +1,4 @@
 package AI;
-import AI.Tests.GenericTest;
 import Core.Board;
 import Core.Logic;
 
