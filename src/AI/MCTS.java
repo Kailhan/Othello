@@ -84,23 +84,34 @@ public class MCTS extends AI {
     }
 
     public MCTSNode nodeSelection(LinkedList nodeQueue) {
-        double nodeScore = -1;
+//        double nodeScore = -1;
+//
+//        ArrayList<MCTSNode> potentialNodes = new ArrayList<MCTSNode>();
+//        for(Object node : nodeQueue) {
+//            MCTSNode tmpNode = (MCTSNode) node;
+//            double tmpNodeScore = tmpNode.getNodeScore();
+//            if(tmpNodeScore >= nodeScore) {
+//                nodeScore = tmpNode.getNodeScore();
+//            }
+//        }
+//        for(Object node : nodeQueue) {
+//            MCTSNode tmpNode = (MCTSNode) node;
+//            if(tmpNode.getNodeScore() >= nodeScore) {
+//                potentialNodes.add(tmpNode);
+//            }
+//        }
+//        MCTSNode toBeChecked = potentialNodes.get(rand.nextInt(potentialNodes.size()));
 
-        ArrayList<MCTSNode> potentialNodes = new ArrayList<MCTSNode>();
-        for(Object node : nodeQueue) {
-            MCTSNode tmpNode = (MCTSNode) node;
-            double tmpNodeScore = tmpNode.getNodeScore();
-            if(tmpNodeScore >= nodeScore) {
-                nodeScore = tmpNode.getNodeScore();
-            }
-        }
-        for(Object node : nodeQueue) {
-            MCTSNode tmpNode = (MCTSNode) node;
-            if(tmpNode.getNodeScore() >= nodeScore) {
-                potentialNodes.add(tmpNode);
-            }
-        }
-        MCTSNode toBeChecked = potentialNodes.get(rand.nextInt(potentialNodes.size()));
+        // GOOOOOTTAAA UPDDAATETHIS YEEETT
+
+
+        //
+
+
+
+        //
+
+        MCTSNode toBeChecked = (MCTSNode)nodeQueue.get(rand.nextInt(nodeQueue.size()));
         nodeQueue.remove(toBeChecked);
         createChildren(toBeChecked);
         return toBeChecked;
@@ -147,4 +158,6 @@ public class MCTS extends AI {
             }
         } while(!gameFinished);
     }
+
+
 }

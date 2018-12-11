@@ -1,4 +1,4 @@
-package AI.Tests;
+package AI.Tests.MCTS_GA;
 
 import AI.MCTS;
 import AI.MCTSNode;

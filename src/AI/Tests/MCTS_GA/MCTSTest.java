@@ -1,7 +1,8 @@
-package AI.Tests;
+package AI.Tests.MCTS_GA;
 
 import AI.MCTS;
 import AI.Stupid;
+import AI.Tests.GenericTest;
 
 public class MCTSTest {
 
@@ -19,9 +20,9 @@ public class MCTSTest {
 //        scanner = new Scanner(System.in);
 //        int size = scanner.nextInt();
         int games = 100;
-        int totalSims1 = 1000;
+        int totalSims1 = 125;
         int totalSims2 = 2;
-        int size = 6;
+        int size = 8;
 
 
         MCTS mcts1 = new MCTS(totalSims1);

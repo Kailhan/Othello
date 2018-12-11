@@ -19,6 +19,7 @@ public class GenericTest {
 
         long startTime = System.nanoTime();
         for (int i = 0; i < gamesToBeSimmed; i++) {
+            //if((i % (gamesToBeSimmed/5.0)) == 0) System.out.println("GTIter: " + i);
             boolean gameFinished = false;
             board = new Board(boardSize);
             int[] move = new int[2];

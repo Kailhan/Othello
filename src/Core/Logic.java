@@ -439,8 +439,6 @@ public class Logic {
         int currentPlayer = board.getCurrentPlayer();
 
         boolean foundEnemy = false;
-        int[][] flippedDisks = new int[0][2];
-
         switch(direction)
         {
             case 2 :

@@ -115,4 +115,8 @@ public class Node<T> implements GenericTree<T> {
         }
         return column;
     }
+
+    public boolean isLeaf() {
+        return children.isEmpty();
+    }
 }
