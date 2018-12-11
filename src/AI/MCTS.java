@@ -100,13 +100,6 @@ public class MCTS extends AI {
                 potentialNodes.add(tmpNode);
             }
         }
-//        for(Object node : nodeQueue) {
-//            MCTSNode tmpNode = (MCTSNode) node;
-//            if(tmpNode.getNodeScore() > nodeScore) {
-//                nodeScore = tmpNode.getNodeScore();
-//                potentialNodes.add(tmpNode);
-//            }
-//        }
         MCTSNode toBeChecked = potentialNodes.get(rand.nextInt(potentialNodes.size()));
         nodeQueue.remove(toBeChecked);
         createChildren(toBeChecked);
