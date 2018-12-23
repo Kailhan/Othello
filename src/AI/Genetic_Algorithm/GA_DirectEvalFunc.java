@@ -20,7 +20,7 @@ public class GA_DirectEvalFunc {
         EvaluationFunction[] selectedIndividualsChildren = new EvaluationFunction[pop.getPopSize()];
         pop.calculateFitness(Population.GA_GAMES_TO_BE_SIMMED, pop.getBoardSize());
         System.out.println("Calculated fitness of initial population");
-        int maxIterations = 250;
+        int maxIterations = 1000;
         double minVariance = 1000;
 
         String[] gaLog = new String[(WEIGHT_POLY_SIZE + (pop.getBoardSize() * pop.getBoardSize()) + 2) * (1  + (maxIterations * pop.getPopSize()))];
@@ -51,6 +51,7 @@ public class GA_DirectEvalFunc {
         }
         int iterationCounter = 0;
         for(int i = 0; i < maxIterations; i++) {
+            long starttime = System.nanoTime();
             for(int j = 0; j < pop.getAIs().length; j++) {
                 gaLog[gaLogIndex] = String.valueOf(i); //attribute line
                 gaLogIndex++;
@@ -78,6 +79,8 @@ public class GA_DirectEvalFunc {
                 System.out.println("pop.calcVariance() < " + minVariance);
                 break;
             }
+            long endtime = System.nanoTime();
+            System.out.println("iteration time: " + (endtime-starttime)/1000000000.0);
         }
         long endTime = System.nanoTime();
         System.out.println("Completed in: " + ((endTime - startTime)/1000000.0) + " ms");
@@ -121,5 +124,4 @@ public class GA_DirectEvalFunc {
         }
         System.out.println("GA_Eval finished");
     }
-
 }

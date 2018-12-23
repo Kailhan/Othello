@@ -12,8 +12,8 @@ import java.sql.Timestamp;
 public class MCTSTest3 {
 
     public static void main(String[] args) {
-        int minPlayouts = 200;
-        int maxPlayouts = 300;
+        int minPlayouts = 100;
+        int maxPlayouts = 100;
         int steps = 10;
         int totalGames = 100;
         int rowWidth = 5;

@@ -24,7 +24,6 @@ public class MCTSNode extends Node {
     private MCTSNode[] children;
     private static Random rand = new Random();
 
-
     public MCTSNode(Board board) {
         super(board);
         this.board = board;

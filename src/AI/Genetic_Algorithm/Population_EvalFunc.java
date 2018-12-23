@@ -17,20 +17,13 @@ public class Population_EvalFunc {
 
     private int mutationCount;
 
-    public static final int GA_GAMES_TO_BE_SIMMED = 100;
-    public static final int GA_BOARD_SIZE = 6;
-    public static final int GA_POP_SIZE = 100;
-    public static final double GA_WEIGHT_POLY_BOUND = 100;
-    public static final double GA_TERRITORY_BOUND = 100;
-    public static double SELECTION_RATIO = 200;
+    public static final int GA_GAMES_TO_BE_SIMMED = 1000;
+    public static final int GA_BOARD_SIZE = 8;
+    public static final int GA_POP_SIZE = 1000;
+    public static final double GA_WEIGHT_POLY_BOUND = 10000;
+    public static final double GA_TERRITORY_BOUND = 10000;
+    public static double SELECTION_RATIO = 5;
 
-    /**
-     * Create population of MiniMax with AB pruning
-     * @param popSize Amount of individuals per generation
-     * @param boardSize Size of board that we want to get values for the territory values and evaluation function weights
-     * @param weightPolyBound Max value that we are initializing our weights for evaluation function polynome with
-     * @param territoryBound Max value of territory values
-     */
     public Population_EvalFunc(int popSize, int boardSize, double weightPolyBound, double territoryBound) {
         this.popSize = popSize;
         this.boardSize = boardSize;
@@ -194,7 +187,7 @@ public class Population_EvalFunc {
                 double[] chromosome = AIs[i].getChromosome();
                 for(int j = 0; j < chromosome.length; j++ ) {
                     if(rand.nextDouble() < percentChromoAff) {
-                        chromosome[j] = (rand.nextDouble() < 0.5) ? (1/mutationCount) * chromosome[j] + chromosome[j] : (1/mutationCount) * chromosome[j] - chromosome[j];
+                        chromosome[j] = (rand.nextDouble() < 0.5) ? (100.0/(mutationCount/2.0)) * chromosome[j] + chromosome[j] : (100.0/(mutationCount/2.0)) * chromosome[j] - chromosome[j];
                     }
                 }
             }
