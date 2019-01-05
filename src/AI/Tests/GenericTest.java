@@ -24,16 +24,17 @@ public class GenericTest {
             board = new Board(boardSize);
             int[] move = new int[2];
             while (!gameFinished) {
-                if (board.getCurrentPlayer() == BLACK) {
-                    move = player1.getBestMove(board);
-                }
-                if (board.getCurrentPlayer() == WHITE) {
-                    move = player2.getBestMove(board);
-                }
-                board.applyMove(move[0], move[1]);
-                board.incrementTurn();
-                board.changePlayer();
-                if(!Logic.checkMovePossible(board)) {
+                if(Logic.checkMovePossible(board)) {
+                    if (board.getCurrentPlayer() == BLACK) {
+                        move = player1.getBestMove(board);
+                    }
+                    if (board.getCurrentPlayer() == WHITE) {
+                        move = player2.getBestMove(board);
+                    }
+                    board.applyMove(move[0], move[1]);
+                    board.incrementTurn();
+                    board.changePlayer();
+                } else {
                     board.incrementTurn();
                     board.changePlayer();
                     if(!Logic.checkMovePossible(board)) {
