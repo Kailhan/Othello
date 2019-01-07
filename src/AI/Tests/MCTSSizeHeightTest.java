@@ -22,6 +22,7 @@ public class MCTSSizeHeightTest {
         node1.addChild(node2);
         node1.addChild(node3);
         node2.addChild(node4);
+        node2.addChild(node5);
         node4.addChild(node6);
         node4.addChild(node7);
         node4.addChild(node8);
