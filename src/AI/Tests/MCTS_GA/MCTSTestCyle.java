@@ -67,7 +67,7 @@ public class MCTSTestCyle {
                                 node = mcts2.findMove(board);
                             }
                             //System.out.println("Setting board to board found by MCTS");
-                            board = new Board(node.getBoard());
+                            board = new Board(node.getData());
                             //board.displayBoardGrid();
                             board.incrementTurn();
                             //System.out.println("Turn: " + board.getTurn());
