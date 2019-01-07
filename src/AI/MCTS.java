@@ -2,6 +2,8 @@ package AI;
 
 import Core.Board;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class MCTS extends AI {
@@ -11,6 +13,7 @@ public class MCTS extends AI {
     private Random rand = new Random();
     private double explorationMultiplier = 1;
     private double explorationParameter = 1.414 * explorationMultiplier;
+    private MCTSNode rootNode;
 
     public MCTS(int maxSims) {
         this.maxSims = maxSims;
@@ -31,6 +34,7 @@ public class MCTS extends AI {
     public MCTSNode findMove(Board board) {
         MCTSNode.totalSims = 0;
         MCTSNode currentNode = new MCTSNode(new Board(board), explorationParameter);
+        rootNode = currentNode;
         MCTSNode moveNode = null;
         boolean reachedThreshold = false;
         int currentAmountOfSims = 0;
@@ -53,5 +57,7 @@ public class MCTS extends AI {
         return explorationParameter;
     }
 
-
+    public MCTSNode getRootNode() {
+        return rootNode;
+    }
 }
