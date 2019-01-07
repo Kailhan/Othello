@@ -238,4 +238,32 @@ public class MCTSNode {
     public void setSims(double sims) {
         this.sims = sims;
     }
+
+    public boolean hasChildren() {
+        return !getChildNodes().isEmpty();
+    }
+
+    public void addChild(MCTSNode childNode) {
+        childNodes.add(childNode);
+    }
+
+    public int getTreeSize() {
+        int treeSize = 1;
+        List<MCTSNode> queue = new ArrayList<MCTSNode>();
+        queue.add(this);
+        while(!queue.isEmpty()){
+            MCTSNode node = queue.remove(0);
+            queue.addAll(node.getChildNodes());
+            treeSize += node.getChildNodes().size();
+        }
+        return treeSize;
+    }
+
+    public int getHeight(MCTSNode rootNode){
+        int height = 0;
+        for(MCTSNode node : rootNode.getChildNodes()){
+            height = Math.max(height, getHeight(node));
+        }
+        return height+1;
+    }
 }
