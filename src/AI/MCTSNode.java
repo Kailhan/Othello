@@ -21,6 +21,7 @@ public class MCTSNode {
 
     private double wins;
     private double sims;
+    private double explorationParameter;
 
     private Board board;
     private static Random rand = new Random();
@@ -29,11 +30,12 @@ public class MCTSNode {
     //private MCTSNode[] childNodes = new MCTSNode[8 * 8]; // size of board hardcoded so that we notice immediately if we're maing a stupid amount of nodes
     private List<MCTSNode> childNodes = new ArrayList<MCTSNode>();
 
-    public MCTSNode(Board board) {
+    public MCTSNode(Board board, double explorationParameter) {
         this.board = board;
         this.parentNode = null;
         this.wins = 0;
         this.sims = 0;
+        this.explorationParameter = explorationParameter;
     }
 
     public int getRow() {
@@ -78,10 +80,10 @@ public class MCTSNode {
 
     public double getSelectionScore() {
         double exploitationScore = (sims == 0) ? 0 : (double)(wins/sims);
-        double explorationScore = (wins == 0) ? 0 : MCTS.EXPLORATION_PARAMETER * (double)(Math.sqrt(Math.log(totalSims)/wins));
+        double explorationScore = (wins == 0) ? 0 : explorationParameter * (double)(Math.sqrt(Math.log(totalSims)/wins));
         if(sims != 0) {
-            System.out.println("ploit: " + exploitationScore);
-            System.out.println("plore: " + explorationScore);
+            //System.out.println("ploit: " + exploitationScore);
+            //System.out.println("plore: " + explorationScore);
         }
         double selectionScore = exploitationScore + explorationScore;
 
@@ -195,7 +197,7 @@ public class MCTSNode {
             possibleBoard.applyMove(possibleMoves[i]);
             possibleBoard.incrementTurn();
             possibleBoard.changePlayer();
-            MCTSNode possibleNode = new MCTSNode(possibleBoard);
+            MCTSNode possibleNode = new MCTSNode(possibleBoard, explorationParameter);
             possibleNode.setParentNode(this);
             childNodes.add(possibleNode);
         }

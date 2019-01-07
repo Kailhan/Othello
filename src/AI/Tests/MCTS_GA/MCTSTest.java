@@ -25,7 +25,7 @@ public class MCTSTest {
         int mcts2Wins = GenericTest.getPlayer2Wins();
 
         System.out.println("MCTS 1 wins: " + GenericTest.getPlayer1Wins());
-        System.out.println("MCTS 2 wins: " + GenericTest.getPlayer2Wins());
+        System.out.println("MCTS w2 wins: " + GenericTest.getPlayer2Wins());
         System.out.println("MCTS draws: " + (games/2-GenericTest.getPlayer1Wins()-GenericTest.getPlayer2Wins()));
         System.out.println("halfway thru");
 
@@ -43,7 +43,7 @@ public class MCTSTest {
         long endTime = System.nanoTime();
         System.out.println(endTime-startTime);
         System.out.println("mcts1 totalsims: " + totalSims1);
-        System.out.println("exploration: " + MCTS.EXPLORATION_PARAMETER);
+        System.out.println("exploration: " + mcts1.getExplorationParameter());
         System.out.println("totalGames: " + games);
         System.out.println("MCTS 1 win%: " + (double)mcts1Wins/games);
         System.out.println("MCTS 2 win%: " + (double)mcts2Wins/games);

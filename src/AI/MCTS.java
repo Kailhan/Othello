@@ -9,8 +9,8 @@ public class MCTS extends AI {
     private int maxSims;
     private int simsCounter = 0;
     private Random rand = new Random();
-    public static final double EXPLORATION_MULTIPLIER = 1;
-    public static final double EXPLORATION_PARAMETER = 1.414 * EXPLORATION_MULTIPLIER;
+    private double explorationMultiplier = 1;
+    private double explorationParameter = 1.414 * explorationMultiplier;
 
     public MCTS(int maxSims) {
         this.maxSims = maxSims;
@@ -30,7 +30,7 @@ public class MCTS extends AI {
 
     public MCTSNode findMove(Board board) {
         MCTSNode.totalSims = 0;
-        MCTSNode currentNode = new MCTSNode(new Board(board));
+        MCTSNode currentNode = new MCTSNode(new Board(board), explorationParameter);
         MCTSNode moveNode = null;
         boolean reachedThreshold = false;
         int currentAmountOfSims = 0;
@@ -48,5 +48,10 @@ public class MCTS extends AI {
         //System.out.println();
         return moveNode;
         }
+
+    public double getExplorationParameter() {
+        return explorationParameter;
+    }
+
 
 }
