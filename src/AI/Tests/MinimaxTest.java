@@ -14,17 +14,18 @@ public class MinimaxTest {
     final static int DEPTH = 3;
     public static void main(String[] args) {
 
-        /*
+//   For testing if same results as MinimaxAB
+//
+//        Board board = new Board();
+//
+//        Minimax minimax = new Minimax(DEPTH, board);
+//        GameTree gameTree = new GameTree(DEPTH, board);
+//        Node<Board> root = gameTree.createTree();
+//
+//        System.out.println("value" + minimax.minimaxAlg(root, board.getCurrentPlayer()));
+//        Node<Board> child1 = minimax.selectMove(root);
 
-
-        Minimax minimax = new Minimax(DEPTH, board);
-        GameTree gameTree = new GameTree(DEPTH, board);
-        Node<Board> root = gameTree.createTree();
-
-        System.out.println(minimax.minimaxAlg2(root));
-        Node<Board> child1 = minimax.selectMove(root);
-        */
-
+//        */
         /*
 
         Board board = new Board();

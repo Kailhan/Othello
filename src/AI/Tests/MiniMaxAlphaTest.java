@@ -5,7 +5,7 @@ import Core.Board;
 
 public class MiniMaxAlphaTest {
 
-    final static int DEPTH = 7;
+    final static int DEPTH = 4;
 
     public static void main(String[] args) {
         Board board = new Board();
