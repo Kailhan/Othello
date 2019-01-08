@@ -12,7 +12,7 @@ public class MiniMaxAlphaTest {
         MiniMaxAlph minimax = new MiniMaxAlph(DEPTH, board);
         GameTree gameTree = new GameTree(DEPTH);
         Node<Board> root = gameTree.createTree();
-        System.out.println(minimax.search(root,Integer.MIN_VALUE, Integer.MAX_VALUE));
+        System.out.println(minimax.miniMaxAB(root,Integer.MIN_VALUE, Integer.MAX_VALUE, board.getCurrentPlayer()));
 
         Node<Board> child1 = minimax.selectMove(root);
         //child1.getData().displayBoardGrid();
