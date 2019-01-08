@@ -134,7 +134,7 @@ public class EvaluationFunction extends AI{
         double numberOfCoins;
         double territory;
 
-        numberOfCoins = (double) (this.cBoard.getNrSquares(BLACK) - this.cBoard.getNrSquares(WHITE)) / (this.cBoard.getNrSquares(BLACK) + this.cBoard.getNrSquares(WHITE));
+        numberOfCoins = ((double) (this.cBoard.getNrSquares(BLACK) - this.cBoard.getNrSquares(WHITE))) / ((double) (this.cBoard.getNrSquares(BLACK) + this.cBoard.getNrSquares(WHITE)));
 //        if(currentPlayer == WHITE){ numberOfCoins = this.cBoard.getNrSquares(WHITE);
 //        } else { numberOfCoins = this.cBoard.getNrSquares(BLACK); }
 

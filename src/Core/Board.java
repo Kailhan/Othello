@@ -79,10 +79,12 @@ public class Board implements Serializable {
     public int getNrSquares(int state)
     {
         int nrSquares = 0;
-        for(int i = 0; i < boardGrid.length; i++)
-            for(int j = 0; j < boardGrid[i].length; j++)
-                if(boardGrid[i][j] == state)
+        for(int i = 0; i < boardGrid.length; i++) {
+            for (int j = 0; j < boardGrid[i].length; j++) {
+                if (boardGrid[i][j] == state)
                     nrSquares++;
+            }
+        }
 
         return  nrSquares;
     }
@@ -172,6 +174,8 @@ public class Board implements Serializable {
     public void setCurrentPlayer(int x){
         currentPlayer = x;
     }
+
+    public void setTurn(int x) {turn = x;}
 
     /**
      * Updates a specific cell based on the current status of the game, top left is 0, 0
