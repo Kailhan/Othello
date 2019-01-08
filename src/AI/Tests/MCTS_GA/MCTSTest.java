@@ -7,38 +7,50 @@ import AI.Tests.GenericTest;
 public class MCTSTest {
 
     public static void main(String[] args) {
-//        System.out.println("Enter totalSims of MCTS 1");
-//        Scanner scanner = new Scanner(System.in);
-//        int totalSims1 = scanner.nextInt();
-//        System.out.println("Enter totalSims of MCTS 2");
-//        scanner = new Scanner(System.in);
-//        int totalSims2 = scanner.nextInt();
-        //System.out.println("Amount of games to be simulated");
-        //scanner = new Scanner(System.in);
-        //int games = scanner.nextInt();
-//        System.out.println("board size");
-//        scanner = new Scanner(System.in);
-//        int size = scanner.nextInt();
-        int games = 100;
-        int totalSims1 = 125;
-        int totalSims2 = 2;
+        int games = 500;
+        int totalSims1 = 50;
+        int totalSims2 = 1;
         int size = 8;
-
 
         MCTS mcts1 = new MCTS(totalSims1);
         MCTS mcts2 = new MCTS(totalSims2);
 
+        long startTime = System.nanoTime();
+
         GenericTest.test(mcts1, new Stupid(), games/2, size);
+        //GenericTest.test(new Stupid(), new Stupid(), games/2, size);
+        //GenericTest.test(mcts1, mcts2, games/2, size);
+
         int mcts1Wins = GenericTest.getPlayer1Wins();
         int mcts2Wins = GenericTest.getPlayer2Wins();
-        //System.out.println("MCTS 1 wins: " + GenericTest.getPlayer1Wins());
-        //System.out.println("MCTS 2 wins: " + GenericTest.getPlayer2Wins());
+
+        System.out.println("MCTS 1 wins: " + GenericTest.getPlayer1Wins());
+        System.out.println("MCTS w2 wins: " + GenericTest.getPlayer2Wins());
+        System.out.println("MCTS draws: " + (games/2-GenericTest.getPlayer1Wins()-GenericTest.getPlayer2Wins()));
+        System.out.println("halfway thru");
+
         GenericTest.test(new Stupid(), mcts1, games/2, size);
+        //GenericTest.test(new Stupid(), new Stupid(), games/2, size);
+        //GenericTest.test(mcts2, mcts1, games/2, size);
+
         mcts1Wins += GenericTest.getPlayer2Wins();
         mcts2Wins += GenericTest.getPlayer1Wins();
 
-        System.out.println("MCTS 1 wins: " + mcts1Wins);
-        System.out.println("MCTS 2 wins: " + mcts2Wins);
-        System.out.println("MCTS draws: " + (games-mcts1Wins-mcts2Wins));
+        System.out.println("MCTS 1 wins: " + GenericTest.getPlayer2Wins());
+        System.out.println("MCTS 2 wins: " + GenericTest.getPlayer1Wins());
+        System.out.println("MCTS draws: " + (games/2-GenericTest.getPlayer1Wins()-GenericTest.getPlayer2Wins()));
+
+        long endTime = System.nanoTime();
+        System.out.println(endTime-startTime);
+        System.out.println("mcts1 totalsims: " + totalSims1);
+        System.out.println("exploration: " + mcts1.getExplorationParameter());
+        System.out.println("totalGames: " + games);
+        System.out.println("MCTS 1 win%: " + (double)mcts1Wins/games);
+        System.out.println("MCTS 2 win%: " + (double)mcts2Wins/games);
+        System.out.println("MCTS draw%: " + (double)(games-mcts1Wins-mcts2Wins)/games);
+
+//        System.out.println("MCTS 1 wins: " + mcts1Wins);
+//        System.out.println("MCTS 2 wins: " + mcts2Wins);
+//        System.out.println("MCTS draws: " + (games-mcts1Wins-mcts2Wins));
     }
 }

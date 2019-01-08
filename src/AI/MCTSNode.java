@@ -4,177 +4,266 @@ import Core.Board;
 import Core.Logic;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 import static Core.Board.BLACK;
-import static Core.Board.EMPTY;
 import static Core.Board.WHITE;
-import static java.lang.Integer.MIN_VALUE;
 
-public class MCTSNode extends Node {
+public class MCTSNode {
 
-    public static final double explorationParameter = 1.414;
-    private float scoreTotal;
-    private int simulations = 1; //otherwise divide by zero when calculating node score might need to change the order/def of method
-    private double exploreExploitScore;
-    private static int totalSimulations = 1;
+
+    public static final int WIN = 1;
+    public static final int DRAW = 0;
+    public static final int LOSS = 0;
+
+    public static int totalSims;
+
+    private double wins;
+    private double sims;
+    private double explorationParameter;
+
     private Board board;
-    private MCTSNode[] children;
     private static Random rand = new Random();
 
+    private MCTSNode parentNode;
+    //private MCTSNode[] childNodes = new MCTSNode[8 * 8]; // size of board hardcoded so that we notice immediately if we're maing a stupid amount of nodes
+    private List<MCTSNode> childNodes = new ArrayList<MCTSNode>();
 
-    public MCTSNode(Board board) {
-        super(board);
+    public MCTSNode(Board board, double explorationParameter) {
         this.board = board;
+        this.parentNode = null;
+        this.wins = 0;
+        this.sims = 0;
+        this.explorationParameter = explorationParameter;
     }
 
-    public MCTSNode(Board board, int x, int y) {
-        super(board);
-        this.board = board;
+    public int getRow() {
+        int row = -1; //makes sure we throw an error if we have not updated our coordinate
+        Board parentBoard = new Board(parentNode.getData());
+        int[][] parentBoardGrid = parentBoard.getBoardGrid();
+        Board currentBoard = new Board(this.getData());
+        int[][] currentBoardGrid = currentBoard.getBoardGrid();
+//        System.out.println("getX parentBoard");
+//        parentBoard.displayBoardGrid();
+//        System.out.println("getX currentBoard");
+//        currentBoard.displayBoardGrid();
+        for(int r = 0; r < parentBoardGrid.length; r++) {
+            for(int c = 0; c < parentBoardGrid.length; c++) {
+                if(parentBoardGrid[r][c] == 0 && currentBoardGrid[r][c] != 0) row = r;
+            }
+        }
+        return row;
     }
 
-    public Board getBoard() {
+    public int getColumn() {
+        int column = -1; //makes sure we throw an error if we have not updated our coordinate
+        Board parentBoard = new Board(parentNode.getData());
+        int[][] parentBoardGrid = parentBoard.getBoardGrid();
+        Board currentBoard = new Board(this.getData());
+        int[][] currentBoardGrid = currentBoard.getBoardGrid();
+        //System.out.println("getY parentBoard");
+        //parentBoard.displayBoardGrid();
+        //System.out.println("getY currentBoard");
+        //currentBoard.displayBoardGrid();
+        for(int r = 0; r < parentBoardGrid.length; r++) {
+            for(int c = 0; c < parentBoardGrid.length; c++) {
+                if(parentBoardGrid[r][c] == 0 && currentBoardGrid[r][c] != 0) column = c;
+            }
+        }
+        return column;
+    }
+
+    public Board getData() {
         return board;
     }
 
-    public int getSimulations() {
-        return simulations;
-    }
-
-    public void setSimulations(int simulations) {
-        this.simulations = simulations;
-    }
-
-    public float getScoreTotal() {
-        return scoreTotal;
-    }
-
-    public void setScoreTotal(float scoreTotal) {
-        this.scoreTotal = scoreTotal;
-    }
-
-    public List<MCTSNode> getChildren(Node root) {
-        List<MCTSNode> mctsNodeList = new ArrayList();
-        for(Object child : root.getChildren()) {
-            mctsNodeList.add((MCTSNode)child);
+    public double getSelectionScore() {
+        double exploitationScore = (sims == 0) ? 0 : (double)(wins/sims);
+        double explorationScore = (wins == 0) ? 0 : explorationParameter * (double)(Math.sqrt(Math.log(totalSims)/wins));
+        if(sims != 0) {
+            //System.out.println("ploit: " + exploitationScore);
+            //System.out.println("plore: " + explorationScore);
         }
-        return mctsNodeList;
+        double selectionScore = exploitationScore + explorationScore;
+
+//        double selectionScore = (sims == 0) ? 0 : 1/sims;
+
+        return selectionScore;
     }
 
-    public double getNodeScore() {
-//        double totalSimulations = simulations;
-//        MCTSNode node = this;
-//        while(node.getParent() != null) {
-//            node = (MCTSNode)node.getParent();
-//        }
-//        int totalSims = node.getSimulations();
-//        //double score = scoreTotal/simulations + (explorationParameter * Math.sqrt(Math.log(totalSims)/simulations));
-//        //double score = scoreTotal/simulations + (explorationParameter * 0.5 * ((totalSims)/simulations));
-//        //System.out.println(scoreTotal);
-//        System.out.println( 1.0/totalSimulations * explorationParameter + (scoreTotal/simulations));
-//        return 1.0/totalSimulations * explorationParameter + (scoreTotal/simulations);
-        return explorationParameter;
-    }
-
-    public void selectAction() {
-        List<MCTSNode> visited = new LinkedList<MCTSNode>();
-        MCTSNode current = this;
-        visited.add(this);
-        while(!current.isLeaf()){
-            current = current.select();
-            visited.add(current);
-        }
-        current.expand();
-        MCTSNode newNode = current.select();
-        visited.add(newNode);
-        double value = newNode.playoutSimulation();
-        for(MCTSNode node: visited) {
-            node.nodePlayoutBackpropogation(value);
-        }
-    }
-
-    public void expand() {
-        int[][] possibleMoves = Logic.getPossibleMoves(board);
-        this.children = new MCTSNode[possibleMoves.length];
-        for(int i = 0; i < possibleMoves.length; i++) {
-            Board tmpCopyBoard =  new Board(board);
-            tmpCopyBoard.applyMove(possibleMoves[i]);
-            MCTSNode tmpNode = new MCTSNode(tmpCopyBoard);
-            this.children[i] = tmpNode;
-        }
-    }
-
-    private MCTSNode select() {
-        MCTSNode selected = null;
-        List<MCTSNode> potential = new ArrayList<MCTSNode>();
-        double bestValue = -1;
-        for (MCTSNode c : children) {
-            c.setExploreExploitScore(c.scoreTotal / (c.simulations) + Math.sqrt(Math.log(totalSimulations) / (c.simulations)));
-            if (c.getExploreExploitScore() > bestValue) {
-                bestValue = c.getExploreExploitScore();
-            }
-        }
-        for (MCTSNode c : children) {
-            if (c.getExploreExploitScore() >= bestValue) {
-                potential.add(c);
-            }
-        }
-        //return potential.get(rand.nextInt(potential.size()));
-        return children[rand.nextInt(children.length)];
-    }
-
-    public double playoutSimulation() {
+    public void playoutSimulation(int currentPlayer) {
+        Board startBoard = new Board(board);
+        Board simulationBoard = new Board(board);
         boolean gameFinished = false;
-        Board workingBoard = new Board(board);
-        int currentPlayer = workingBoard.getCurrentPlayer();
-        do{
-            //System.out.print("Performing playout simulation -> game not finished yet");
-            if(Logic.checkMovePossible(workingBoard)) {
-                int[][] moves = Logic.getPossibleMoves(workingBoard);
-                workingBoard.applyMove(moves[rand.nextInt(moves.length)]);
-                workingBoard.incrementTurn();
-                workingBoard.changePlayer();
-            }
-            if(!Logic.checkMovePossible(workingBoard)) {
-                workingBoard.changePlayer();
-                if(!Logic.checkMovePossible(workingBoard)) { // No moves possible for either player so game has ended
+        int[] move;
+        while(!gameFinished) {
+            if(Logic.checkMovePossible(simulationBoard)) {
+                move = selectMove(simulationBoard, startBoard);
+                simulationBoard.applyMove(move);
+                simulationBoard.incrementTurn();
+                simulationBoard.changePlayer();
+            } else {
+                simulationBoard.incrementTurn();
+                simulationBoard.changePlayer();
+                if(!Logic.checkMovePossible(simulationBoard)) {
                     gameFinished = true;
                 }
             }
-        } while(!gameFinished);
-        if(workingBoard.getNrSquares(BLACK) > workingBoard.getNrSquares(WHITE)) {
-            if(currentPlayer == BLACK) {
-                return 1;
+        }
+
+        int gameState = DRAW;
+        int numberOfBlackCoins = simulationBoard.getNrSquares(BLACK);
+        int numberOfWhiteCoins = simulationBoard.getNrSquares(WHITE);
+        //System.out.println("numberOfWhiteCoins: " + numberOfWhiteCoins + " numberOfBlackCoins: " + numberOfBlackCoins + " total: " + (numberOfBlackCoins + numberOfWhiteCoins));
+        if(currentPlayer == BLACK) {
+            if(numberOfBlackCoins > numberOfWhiteCoins) gameState = WIN;
+            if(numberOfBlackCoins < numberOfWhiteCoins) gameState = LOSS;
+        }
+        if(currentPlayer == WHITE) {
+            if(numberOfBlackCoins > numberOfWhiteCoins) gameState = LOSS;
+            if(numberOfBlackCoins < numberOfWhiteCoins) gameState = WIN;
+        }
+
+        setWins(wins + gameState);
+        setSims(sims + 1);
+        MCTSNode.totalSims++;
+        MCTSNode currentNode = this;
+
+        while(currentNode.getParentNode() != null) {
+            if(currentNode.getParentNode().getData().getCurrentPlayer() == currentPlayer) {
+                currentNode.getParentNode().setWins(currentNode.getParentNode().getSims() + gameState);
+                //System.out.println("node does belong to same player ");
             } else {
-                return 0;
+                //System.out.println("node does not belong to same player ");
             }
-        } else if(workingBoard.getNrSquares(BLACK) < workingBoard.getNrSquares(WHITE)) {
-            if(currentPlayer == BLACK) {
-                return 0;
-            } else {
-                return 1;
-            }
-        } else {
-            return 0.5;
+            currentNode.getParentNode().setSims(currentNode.getParentNode().getSims() + 1);
+            currentNode = currentNode.getParentNode();
         }
     }
 
-    public void nodePlayoutBackpropogation(double value) {
-        this.simulations++;
-        this.scoreTotal += value;
+    public int[] selectMove(Board simulationBoard, Board startBoard) {
+        int[][] possibleMoves = Logic.getPossibleMoves(simulationBoard);
+        return possibleMoves[rand.nextInt(possibleMoves.length)];
     }
 
-    public void setExploreExploitScore(double exploreExploitScore) {
-        this.exploreExploitScore = exploreExploitScore;
+
+    public MCTSNode getBestSelectionChildNode() {
+        List<MCTSNode> potentialChildren = new ArrayList<MCTSNode>();
+        double maxScore = -1;
+        for(MCTSNode childNode : childNodes) {
+            double childNodeScore = childNode.getSelectionScore();
+            if(childNodeScore > maxScore) maxScore = childNodeScore;
+        }
+        for(MCTSNode childNode : childNodes) {
+            double childNodeScore = childNode.getSelectionScore();
+            if(childNodeScore >= maxScore) potentialChildren.add(childNode);
+        }
+        return potentialChildren.get(rand.nextInt(potentialChildren.size()));
     }
 
-    public double getExploreExploitScore() {
-        return exploreExploitScore;
+    public MCTSNode getBestSimulationChildNode() {
+        List<MCTSNode> potentialChildren = new ArrayList<MCTSNode>();
+        double maxScore = -1;
+        for(MCTSNode childNode : childNodes) {
+            double childNodeScore = (childNode.getSims() == 0) ? 0 : (double)childNode.getWins()/childNode.getSims();
+            if(childNodeScore > maxScore) maxScore = childNodeScore;
+        }
+        for(MCTSNode childNode : childNodes) {
+            double childNodeScore = (childNode.getSims() == 0) ? 0 : (double)childNode.getWins()/childNode.getSims();
+            if(childNodeScore >= maxScore) potentialChildren.add(childNode);
+            //System.out.println(childNode.getWins());
+            //System.out.println(childNode.getSims());
+            //System.out.println(childNodeScore);
+        }
+        return potentialChildren.get(rand.nextInt(potentialChildren.size()));
     }
 
-    public MCTSNode[] getChilds() {
-        return this.children;
+    public MCTSNode getBestLeafNode() {
+        MCTSNode bestLeafNode = null;
+        MCTSNode currentNode = this;
+        //if(currentNode.childNodes.isEmpty()) System.out.println("childNodes in getBestLeafNode empty");
+        while(!currentNode.childNodes.isEmpty()) {
+            currentNode = currentNode.getBestSelectionChildNode();
+        }
+        currentNode.createChildren();
+        return currentNode;
+    }
+
+    public void createChildren() {
+        int[][] possibleMoves = Logic.getPossibleMoves(board);
+        for(int i = 0; i < possibleMoves.length; i++){
+            Board possibleBoard = new Board(board);
+            possibleBoard.applyMove(possibleMoves[i]);
+            possibleBoard.incrementTurn();
+            possibleBoard.changePlayer();
+            MCTSNode possibleNode = new MCTSNode(possibleBoard, explorationParameter);
+            possibleNode.setParentNode(this);
+            childNodes.add(possibleNode);
+        }
+    }
+
+    public MCTSNode getRandomChild() {
+        return childNodes.get(rand.nextInt(childNodes.size()));
+    }
+
+    public MCTSNode getParentNode() {
+        return parentNode;
+    }
+
+    public void setParentNode(MCTSNode parentNode) {
+        this.parentNode = parentNode;
+    }
+
+    public List<MCTSNode> getChildNodes() {
+        return childNodes;
+    }
+
+    public void setChildNodes(List<MCTSNode> childNodes) {
+        this.childNodes = childNodes;
+    }
+
+    public double getWins() {
+        return wins;
+    }
+
+    public void setWins(double wins) {
+        this.wins = wins;
+    }
+
+    public double getSims() {
+        return sims;
+    }
+
+    public void setSims(double sims) {
+        this.sims = sims;
+    }
+
+    public boolean hasChildren() {
+        return !getChildNodes().isEmpty();
+    }
+
+    public void addChild(MCTSNode childNode) {
+        childNodes.add(childNode);
+    }
+
+    public int getTreeSize() {
+        int treeSize = 1;
+        List<MCTSNode> queue = new ArrayList<MCTSNode>();
+        queue.add(this);
+        while(!queue.isEmpty()){
+            MCTSNode node = queue.remove(0);
+            queue.addAll(node.getChildNodes());
+            treeSize += node.getChildNodes().size();
+        }
+        return treeSize;
+    }
+
+    public int getHeight(MCTSNode rootNode){
+        int height = 0;
+        for(MCTSNode node : rootNode.getChildNodes()){
+            height = Math.max(height, getHeight(node));
+        }
+        return height+1;
     }
 }
