@@ -17,7 +17,7 @@ public class EvaluationFunctionTest {
 
 
         //for(int i = 0; i <100; i++) {
-            generic.test(evaluator, stupid, 1000, 8);
+            generic.test(evaluator, stupid,1000, 8);
 
             System.out.println("Player 1 wins: " + (generic.getPlayer1Wins()));
             System.out.println("Player 2 wins: " + generic.getPlayer2Wins());
