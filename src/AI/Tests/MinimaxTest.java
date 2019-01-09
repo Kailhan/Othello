@@ -105,8 +105,9 @@ public class MinimaxTest {
                 MiniMaxAlph ma = new MiniMaxAlph(4, board);
                 MCTS mcts = new MCTS(1000);
                 MMAB_IterativeDeepening mai = new MMAB_IterativeDeepening(1000000, board);
+                NegaScout ns = new NegaScout(4, board);
 
-                GenericTest.test(s, ma, games, size);
+                GenericTest.test(s, mai, games, size);
                 int p1wins = GenericTest.getPlayer1Wins();
                 int p2wins = GenericTest.getPlayer2Wins();
                 System.out.println("p1 wins: "+ p1wins);

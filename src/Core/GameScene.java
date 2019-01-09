@@ -289,6 +289,11 @@ public class GameScene extends BorderPane {
                 move = negascout.getBestMove(board);
                 updateBoard(move[0], move[1]);
                 break;
+            case 5:
+                MMAB_IterativeDeepening mai = new MMAB_IterativeDeepening(100000, board);
+                move = mai.getBestMove(board);
+                updateBoard(move[0], move[1]);
+                break;
         }
     }
 
