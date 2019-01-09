@@ -19,14 +19,14 @@ public class NegaMax {
     }
 
     public int[] getBestMove(Board board, int player){
-        int maxScore = Integer.MIN_VALUE;
+        double maxScore = Double.MIN_VALUE;
         int[] bestMove = new int[2];
         this.gameTree = new GameTree(depth, board);
         this.evaluator.setBoard(board);
         this.root = gameTree.createTree();
 
         for(Node<Board> child : root.getChildren()) {
-            int score = NegaAlgo(child, this.depth, player);
+            double score = NegaAlgo(child, this.depth, player);
             if (score > maxScore) {
                 maxScore = score;
                 bestMove[0] = child.getRow();
@@ -37,11 +37,11 @@ public class NegaMax {
         return bestMove;
     }
 
-    public int NegaAlgo(Node<Board> currentNode, int depth, int player) {
+    public double NegaAlgo(Node<Board> currentNode, int depth, int player) {
         if (depth == 0 || currentNode.getChildren().size() == 0) {
-            return (int) (player * evaluator.evaluate(currentNode.getData()));
+            return (player * evaluator.evaluate(currentNode.getData()));
         } else {
-            int value = Integer.MIN_VALUE;
+            double value = Integer.MIN_VALUE;
             for (Node<Board> child : currentNode.getChildren()) {
                 value = Math.max(value, -NegaAlgo(child, depth - 1, -player));
             }

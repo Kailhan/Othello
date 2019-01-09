@@ -16,6 +16,7 @@ public class GameTree {
     private Board board;
     private int[][] boardGrid;
     private int treeDepth;
+    private Minimax minimax;
 
     public GameTree(int treeDepth, Board board) {
         this.logic = new Logic();
@@ -66,6 +67,13 @@ public class GameTree {
             currentLayer = new ArrayList<>(newLayer);
             newLayer.clear(); //clearing ArrayList so that it can be used for the next layer
         }
+
+        Node<Board> currentNode = root;
+        for (Node<Board> child : currentNode.getChildren()) {
+            System.out.print(child.getValue() + "\t");//getData().getCurrentPlayer()));
+
+        }
+        System.out.println();
         return root;
     }
 
