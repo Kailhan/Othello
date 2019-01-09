@@ -1,39 +1,117 @@
 package AI.Tests;
 
+import AI.EvaluationFunction;
 import AI.GameTree;
 import AI.Minimax;
 import AI.Node;
 import Core.Board;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MinimaxTest {
 
     final static int DEPTH = 3;
     public static void main(String[] args) {
 
-          Board board = new Board();
+//   For testing if same results as MinimaxAB
+//
+//        Board board = new Board();
+//
+//        Minimax minimax = new Minimax(DEPTH, board);
+//        GameTree gameTree = new GameTree(DEPTH, board);
+//        Node<Board> root = gameTree.createTree();
+//
+//        System.out.println("value" + minimax.minimaxAlg(root, board.getCurrentPlayer()));
+//        Node<Board> child1 = minimax.selectMove(root);
 
-          Minimax minimax = new Minimax(3, board);
-          GameTree gameTree = new GameTree(DEPTH, board);
-          Node<Board> root = gameTree.createTree();
+//        */
+        /*
 
-          System.out.println(minimax.minimaxAlg2(root, root.getData().getCurrentPlayer()));
-          Node<Board> child1 = minimax.selectMove(root);
-          child1.getData().displayBoardGrid();
+        Board board = new Board();
+        Node<Board> root = new Node(board);
+        Node<Board> node1 = new Node(board);
+        //node1.getData().setCurrentPlayer(-1);
+        Node<Board> node2 = new Node(board);
+        //node2.getData().setCurrentPlayer(-1);
+        Node<Board> node3 = new Node(board);
+        //node3.getData().setCurrentPlayer(-1);
+        Node<Board> node4 = new Node(board);
+        node4.setValue(10);
+        Node<Board> node5 = new Node(board);
+        node5.setValue(-30);
+        Node<Board> node6 = new Node(board);
+        node6.setValue(-10);
+        Node<Board> node7 = new Node(board);
+        node7.setValue(20);
+        Node<Board> node8 = new Node(board);
+        node8.setValue(15);
+        Node<Board> node9 = new Node(board);
+        node9.setValue(-5);
 
-          System.out.println();
-          minimax.minimaxAlg2(child1, child1.getData().getCurrentPlayer());
-          Node<Board> child2 = minimax.selectMove(child1);
-          child2.getData().displayBoardGrid();
+        root.addChild(node1);
+        root.addChild(node2);
+        root.addChild(node3);
 
-          System.out.println();
-          minimax.minimaxAlg2(child2, child1.getData().getCurrentPlayer());
-          Node<Board> child3 = minimax.selectMove(child2);
-          child3.getData().displayBoardGrid();
+        node1.addChild(node4);
+        node1.addChild(node5);
 
-        //minimax.minimaxAlg(root, -1);
-        //minimax.getBestNode().getData().displayBoardGrid();
+        node2.addChild(node6);
+        node2.addChild(node7);
+
+        node3.addChild(node8);
+        node3.addChild(node9);
+
+        */
+
+
+        GameTree gameTree = new GameTree(4);
+        Node<Board> root = gameTree.createTree();
+
+        /*
+        root.getChildren().get(0).getChildren().get(0).setValue(10);
+        root.getChildren().get(0).getChildren().get(1).setValue(-30);
+        root.getChildren().get(0).getChildren().get(2).setValue(5);
+
+        root.getChildren().get(1).getChildren().get(0).setValue(-10);
+        root.getChildren().get(1).getChildren().get(1).setValue(20);
+        root.getChildren().get(1).getChildren().get(2).setValue(2);
+
+        root.getChildren().get(2).getChildren().get(0).setValue(15);
+        root.getChildren().get(2).getChildren().get(1).setValue(-5);
+        root.getChildren().get(2).getChildren().get(2).setValue(-15);
+
+        root.getChildren().get(3).getChildren().get(0).setValue(-2);
+        root.getChildren().get(3).getChildren().get(1).setValue(-7);
+        root.getChildren().get(3).getChildren().get(2).setValue(10);
+        */
+
+        //Minimax m = new Minimax(4, root.getData());
+        //m.minimaxAlg2(root, 1);
+
+        //System.out.println(root.getValue());
+        //System.out.println(m.selectMove(root).getValue());
+
+
+                int games = 100;
+                int totalSims1 = 1;
+                int totalSims2 = 1;
+                int size = 8;
 
 
 
-    }
-}
+                //GenericTest gt = new GenericTest();
+                AI.Stupid s = new AI.Stupid();
+                //gt.test(m,s, 5,8);
+                Board board = new Board();
+                Minimax m = new Minimax(3, board);
+
+                GenericTest.test(s,m, games, size);
+                int minimaxWins = GenericTest.getPlayer2Wins();
+                int stupidWins = GenericTest.getPlayer1Wins();
+                System.out.println("Minimax wins: "+ minimaxWins);
+                System.out.println("Stupid wins: "+ stupidWins);
+
+
+            }
+        }
