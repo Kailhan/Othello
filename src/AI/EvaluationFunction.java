@@ -40,19 +40,19 @@ public class EvaluationFunction extends AI{
 
     public void setWeightPoly() {
         this.weightPoly = new double[WEIGHT_POLY_SIZE];
-        this.weightPoly[0] = 0;  //coinWeightPoly0 = 100;
+        this.weightPoly[0] = 100;  //coinWeightPoly0 = 100;
         this.weightPoly[1] = 0; //coinWeightPoly1 = 0;
         this.weightPoly[2] = 0; //coinWeightPoly2 = 0;
         this.weightPoly[3] = 0; //coinWeightPoly3 = 0;
-        this.weightPoly[4] = 1000; //cornerWeightPoly0 = 0;       //set to 0 to disable for a while
+        this.weightPoly[4] = 100; //cornerWeightPoly0 = 0;       //set to 0 to disable for a while
         this.weightPoly[5] = 0; //cornerWeightPoly1 = 0;
         this.weightPoly[6] = 0; //cornerWeightPoly2 = 0;
         this.weightPoly[7] = 0; //cornerWeightPoly3 = 0;
-        this.weightPoly[8] = 0; //moveWeightPoly0 = 100;
+        this.weightPoly[8] = 100; //moveWeightPoly0 = 100;
         this.weightPoly[9] = 0; //moveWeightPoly1 = 0;
         this.weightPoly[10] = 0; //moveWeightPoly2 = 0;
         this.weightPoly[11] = 0; //moveWeightPoly3 = 0;
-        this.weightPoly[12] = 0; //territoryWeightPoly0 = 100;
+        this.weightPoly[12] = 100; //territoryWeightPoly0 = 100;
         this.weightPoly[13] = 0; //territoryWeightPoly1 = 0;
         this.weightPoly[14] = 0; //territoryWeightPoly2 = 0;
         this.weightPoly[15] = 0; //territoryWeightPoly3 = 0;
@@ -115,9 +115,6 @@ public class EvaluationFunction extends AI{
         GenericTest.test(stupid, this, gamesToBeSimmed/2, boardSize);
         winsSecondMove = GenericTest.getPlayer2Wins();
 
-        //System.out.println(this.getEvaluator().getChromosome()[2]);
-        //System.out.println("this.fitness = (winsFirstMove + winsSecondMove)/gamesToBeSimmed;");
-        //System.out.println(gamesToBeSimmed);
         this.fitness = (winsFirstMove + winsSecondMove)/gamesToBeSimmed;
         return this.fitness;
     }
@@ -134,10 +131,7 @@ public class EvaluationFunction extends AI{
         double numberOfCoins;
         double territory;
 
-
-        numberOfCoins = (double) (this.cBoard.getNrSquares(BLACK) - this.cBoard.getNrSquares(WHITE)) / (this.cBoard.getNrSquares(BLACK) + this.cBoard.getNrSquares(WHITE));
-//        if(currentPlayer == WHITE){ numberOfCoins = this.cBoard.getNrSquares(WHITE);
-//        } else { numberOfCoins = this.cBoard.getNrSquares(BLACK); }
+        numberOfCoins = ((double) (this.cBoard.getNrSquares(BLACK) - this.cBoard.getNrSquares(WHITE))) / ((double) (this.cBoard.getNrSquares(BLACK) + this.cBoard.getNrSquares(WHITE)));
 
         if(this.cBoard.getCurrentPlayer() == WHITE){
             whiteMoves = Logic.numberSquaresAllowed(this.cBoard);
@@ -153,36 +147,17 @@ public class EvaluationFunction extends AI{
         if(blackMoves + whiteMoves != 0){
             numberOfMoves =  (double) ((blackMoves - whiteMoves) / (blackMoves + whiteMoves));
         } else numberOfMoves = 0;
-//        numberOfMoves = Logic.numberSquaresAllowed(cBoard);
 
         if(cBoard.getCorners(BLACK) + cBoard.getCorners(WHITE) != 0) {
             numberOfCorners = (double) ((cBoard.getCorners(BLACK) - cBoard.getCorners(WHITE)) / (cBoard.getCorners(BLACK) + cBoard.getCorners(WHITE)));
         } else numberOfCorners = 0;
-//        if(currentPlayer == WHITE){ numberOfCorners = cBoard.getCorners(WHITE);
-//        } else { numberOfCorners = cBoard.getCorners(BLACK); }
 
         if (getTerritoryScore(BLACK) + getTerritoryScore(WHITE) !=0 ){
             territory = (double) (getTerritoryScore(BLACK) - getTerritoryScore(WHITE))/ (getTerritoryScore(BLACK) + getTerritoryScore(WHITE));
         } else territory = 0;
-//        if(currentPlayer == WHITE){ territory = getTerritoryScore(WHITE);
-//        } else { territory = getTerritoryScore(BLACK); }
-//
-//        System.out.println("Nrcorners white: " + getCorners(WHITE));
-//        System.out.println("Nrcorners BLACK: " + getCorners(BLACK));
-//        System.out.println("nrCorners total: " + numberOfCorners);
-//        System.out.println("nrCorners total: " + cBoard.getCurrentPlayer());
-
-       // System.out.println("current player : " + cBoard.getCurrentPlayer());
-
-        //totalScore = weightPoly[0] * numberOfCoins +  weightPoly[4] * numberOfCorners + weightPoly[8] * numberOfMoves + weightPoly[12] * territory;
-
 
         totalScore = (calcCoinWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfCoins + calcCornerWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfCorners +
                 calcMoveWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfMoves + calcTerritoryWeight(cBoard.getNrSquares(Board.EMPTY)) * territory);
-
-        //System.out.println("total Score: " + totalScore);
-//        System.out.println("total score: " + totalScore);
-//        totalScore = (currentPlayer == BLACK) ? totalScore : -totalScore;
 
         return totalScore;
     }
@@ -257,70 +232,145 @@ public class EvaluationFunction extends AI{
 
         if(cBoard.getSize() == 8){
 
-            cellValues[0][0] = 10;
-            cellValues[7][7] = 10;
-            cellValues[0][7] = 10;
-            cellValues[7][0] = 10;
+            cellValues[0][0] = 400;
+            cellValues[1][0] = 100;
+            cellValues[2][0] = 300;
+            cellValues[3][0] = 250;
+            cellValues[4][0] = 250;
+            cellValues[5][0] = 300;
+            cellValues[6][0] = 100;
+            cellValues[7][0] = 400;
 
-            cellValues[0][1] = 5;
-            cellValues[1][1] = 5;
-            cellValues[1][0] = 5;
-            cellValues[0][4] = 5;
-            cellValues[1][4] = 5;
-            cellValues[1][5] = 5;
-            cellValues[6][0] = 5;
-            cellValues[6][1] = 5;
-            cellValues[7][1] = 5;
-            cellValues[7][6] = 5;
-            cellValues[6][6] = 5;
-            cellValues[6][7] = 5;
+            cellValues[0][1] = 100;
+            cellValues[1][1] = 10;
+            cellValues[2][1] = 150;
+            cellValues[3][1] = 150;
+            cellValues[4][1] = 150;
+            cellValues[5][1] = 150;
+            cellValues[6][1] = 10;
+            cellValues[7][1] = 100;
 
-            cellValues[2][1] = 6;
-            cellValues[3][1] = 6;
-            cellValues[4][1] = 6;
-            cellValues[5][1] = 6;
-            cellValues[1][2] = 6;
-            cellValues[1][3] = 6;
-            cellValues[1][4] = 6;
-            cellValues[1][5] = 6;
-            cellValues[2][6] = 6;
-            cellValues[3][6] = 6;
-            cellValues[4][6] = 6;
-            cellValues[5][6] = 6;
-            cellValues[6][2] = 6;
-            cellValues[6][3] = 6;
-            cellValues[6][4] = 6;
-            cellValues[6][5] = 6;
+            cellValues[0][2] = 300;
+            cellValues[1][2] = 150;
+            cellValues[2][2] = 300;
+            cellValues[3][2] = 0;
+            cellValues[4][2] = 0;
+            cellValues[5][2] = 300;
+            cellValues[6][2] = 150;
+            cellValues[7][2] = 300;
 
-            cellValues[2][2] = 7;
-            cellValues[2][3] = 7;
-            cellValues[2][4] = 7;
-            cellValues[2][5] = 7;
-            cellValues[5][2] = 7;
-            cellValues[5][3] = 7;
-            cellValues[5][4] = 7;
-            cellValues[5][5] = 7;
-            cellValues[3][2] = 7;
-            cellValues[4][2] = 7;
-            cellValues[3][5] = 7;
-            cellValues[4][5] = 7;
+            cellValues[0][3] = 250;
+            cellValues[1][3] = 150;
+            cellValues[2][3] = 0;
+            cellValues[3][3] = 0;
+            cellValues[4][3] = 0;
+            cellValues[5][3] = 0;
+            cellValues[6][3] = 150;
+            cellValues[7][3] = 250;
 
-            cellValues[2][0] = 8;
-            cellValues[3][0] = 8;
-            cellValues[4][0] = 8;
-            cellValues[5][0] = 8;
-            cellValues[0][2] = 8;
-            cellValues[0][3] = 8;
-            cellValues[0][4] = 8;
-            cellValues[0][5] = 8;
-            cellValues[2][7] = 8;
-            cellValues[3][7] = 8;
-            cellValues[4][7] = 8;
-            cellValues[5][7] = 8;
-            cellValues[7][2] = 8;
-            cellValues[7][3] = 8;
-            cellValues[7][4] = 8;
-            cellValues[7][5] = 8;
+            cellValues[0][4] = 250;
+            cellValues[1][4] = 150;
+            cellValues[2][4] = 0;
+            cellValues[3][4] = 0;
+            cellValues[4][4] = 0;
+            cellValues[5][4] = 0;
+            cellValues[6][4] = 150;
+            cellValues[7][4] = 250;
+
+            cellValues[0][5] = 300;
+            cellValues[1][5] = 150;
+            cellValues[2][5] = 300;
+            cellValues[3][5] = 0;
+            cellValues[4][5] = 0;
+            cellValues[5][5] = 300;
+            cellValues[6][5] = 150;
+            cellValues[7][5] = 300;
+
+            cellValues[0][6] = 100;
+            cellValues[1][6] = 0;
+            cellValues[2][6] = 150;
+            cellValues[3][6] = 150;
+            cellValues[4][6] = 150;
+            cellValues[5][6] = 150;
+            cellValues[6][6] = 0;
+            cellValues[7][6] = 100;
+
+            cellValues[0][7] = 400;
+            cellValues[1][7] = 100;
+            cellValues[2][7] = 300;
+            cellValues[3][7] = 250;
+            cellValues[4][7] = 250;
+            cellValues[5][7] = 300;
+            cellValues[6][7] = 100;
+            cellValues[7][7] = 400;
+
+
+//            cellValues[0][0] = 10;
+//            cellValues[7][7] = 10;
+//            cellValues[0][7] = 10;
+//            cellValues[7][0] = 10;
+//
+//            cellValues[0][1] = 5;
+//            cellValues[1][1] = 5;
+//            cellValues[1][0] = 5;
+//            cellValues[1][4] = 5;
+//            cellValues[1][5] = 5;
+//            cellValues[6][0] = 5;
+//            cellValues[6][1] = 5;
+//            cellValues[7][1] = 5;
+//            cellValues[7][6] = 5;
+//            cellValues[6][6] = 5;
+//            cellValues[6][7] = 5;
+//
+//            cellValues[2][1] = 6;
+//            cellValues[3][1] = 6;
+//            cellValues[4][1] = 6;
+//            cellValues[5][1] = 6;
+//            cellValues[1][2] = 6;
+//            cellValues[1][3] = 6;
+//            cellValues[1][4] = 6;
+//            cellValues[1][5] = 6;
+//            cellValues[2][6] = 6;
+//            cellValues[3][6] = 6;
+//            cellValues[4][6] = 6;
+//            cellValues[5][6] = 6;
+//            cellValues[6][2] = 6;
+//            cellValues[6][3] = 6;
+//            cellValues[6][4] = 6;
+//            cellValues[6][5] = 6;
+//
+//            cellValues[2][2] = 7;
+//            cellValues[2][3] = 7;
+//            cellValues[2][4] = 7;
+//            cellValues[2][5] = 7;
+//            cellValues[5][2] = 7;
+//            cellValues[5][3] = 7;
+//            cellValues[5][4] = 7;
+//            cellValues[5][5] = 7;
+//            cellValues[3][2] = 7;
+//            cellValues[4][2] = 7;
+//            cellValues[3][5] = 7;
+//            cellValues[4][5] = 7;
+//
+//            cellValues[2][0] = 8;
+//            cellValues[3][0] = 8;
+//            cellValues[4][0] = 8;
+//            cellValues[5][0] = 8;
+//            cellValues[0][2] = 8;
+//            cellValues[0][3] = 8;
+//            cellValues[0][4] = 8;
+//            cellValues[0][5] = 8;
+//            cellValues[2][7] = 8;
+//            cellValues[3][7] = 8;
+//            cellValues[4][7] = 8;
+//            cellValues[5][7] = 8;
+//            cellValues[7][2] = 8;
+//            cellValues[7][3] = 8;
+//            cellValues[7][4] = 8;
+//            cellValues[7][5] = 8;
+
+
+
         }
     }
 
