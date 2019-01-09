@@ -18,20 +18,19 @@ public class NegaScout extends AI {
     }
 
     public int[] getBestMove(Board board){
-        double maxScore = Double.MIN_VALUE;
-        int[] bestMove = new int[2];
+        this.board = board;
         this.gameTree = new GameTree(depth, board);
         this.evaluator.setBoard(board);
         this.root = gameTree.createTree();
 
-        for(Node<Board> child : root.getChildren()) {
-            double score = NegaSAlg(child, this.depth, -10000, 10000, board.getCurrentPlayer());
-            //double score = NegaSAlg(child, this.depth, Integer.MIN_VALUE, Integer.MAX_VALUE, board.getCurrentPlayer());
-            if (score > maxScore) {
-                maxScore = score;
-                bestMove[0] = child.getRow();
-                bestMove[1] = child.getColumn();
-            }
+        NegaSAlg(root, depth, -10000, 10000, board.getCurrentPlayer());
+        int[] bestMove = new int[2];
+        try {
+            bestMove[0] = selectMove(root).getRow();
+            bestMove[1] = selectMove(root).getColumn();
+        }
+        catch(NullPointerException e) {
+            System.out.println("no more moves");
         }
         return bestMove;
     }
@@ -45,24 +44,30 @@ public class NegaScout extends AI {
         if (depth == 0 || currentNode.getChildren().size() == 0) {
             //System.out.println(player * evaluator.evaluate(currentNode.getData()));
             return player * evaluator.evaluate(currentNode.getData());
-        } else {
-            double value = Integer.MIN_VALUE;
-            for (Node<Board> child : currentNode.getChildren()) {
-                if(child == currentNode.getChildren().get(0)) {
-                    value = -NegaSAlg(child, depth - 1, -beta, -alpha, -player);
-                } else {
-                    value = -NegaSAlg(child, depth - 1, -alpha - 1, -alpha, -player);
-                    if (alpha < value && value < beta) {
-                        value = -NegaSAlg(child, depth - 1, -beta, -value, -player);
-                    }
-                }
-                alpha = Math.max(alpha, value);
-                if(alpha >= beta){
-                    break;
+        }
+        double value;
+        for (Node<Board> child : currentNode.getChildren()) {
+            if(child == currentNode.getChildren().get(0)) {
+                value = -1*NegaSAlg(child, depth - 1, -1*beta, -1*alpha, -1*player);
+            } else {
+                value = -NegaSAlg(child, depth - 1, -1 * alpha - 1, -1 * alpha, -1 * player);
+                if (alpha < value && value < beta) {
+                    value = -1 * NegaSAlg(child, depth - 1, -1 * beta, -1 * value, -1 * player);
                 }
             }
-            return alpha;
+            alpha = Math.max(alpha, value);
+            if(alpha >= beta){
+                break;
+            }
         }
+        return alpha;
+    }
+
+    public Node<Board> selectMove(Node<Board> root) {
+        for (Node<Board> currentChild : root.getChildren()) {
+            if (currentChild.getValue() == root.getValue()) return currentChild;
+        }
+        return null;
     }
 
 //    public double NegaSAlg(Node<Board> currentNode, int depth, double alpha, double beta, int player) {
