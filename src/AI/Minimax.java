@@ -22,7 +22,7 @@ public class Minimax extends AI {
         this.evaluator.setBoard(board);
         this.root = gameTree.createTree();
         minimaxAlg(root, board.getCurrentPlayer());
-        //minimaxAlg2(root);
+
         int[] bestMove = new int[2];
         try {
             bestMove[0] = selectMove(root).getRow();
