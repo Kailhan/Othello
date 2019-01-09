@@ -70,10 +70,9 @@ public class GameTree {
 
         Node<Board> currentNode = root;
         for (Node<Board> child : currentNode.getChildren()) {
-            System.out.print(child.getValue() + "\t");//getData().getCurrentPlayer()));
+            child.getData().getCurrentPlayer();
 
         }
-        System.out.println();
         return root;
     }
 

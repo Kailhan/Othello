@@ -1,9 +1,6 @@
 package AI.Tests;
 
-import AI.EvaluationFunction;
-import AI.GameTree;
-import AI.Minimax;
-import AI.Node;
+import AI.*;
 import Core.Board;
 
 import java.util.ArrayList;
@@ -93,7 +90,7 @@ public class MinimaxTest {
         //System.out.println(m.selectMove(root).getValue());
 
 
-                int games = 100;
+                int games = 1000;
                 int totalSims1 = 1;
                 int totalSims2 = 1;
                 int size = 8;
@@ -101,16 +98,19 @@ public class MinimaxTest {
 
 
                 //GenericTest gt = new GenericTest();
-                AI.Stupid s = new AI.Stupid();
+                Stupid s = new Stupid();
                 //gt.test(m,s, 5,8);
                 Board board = new Board();
-                Minimax m = new Minimax(3, board);
+                Minimax m = new Minimax(4, board);
+                MiniMaxAlph ma = new MiniMaxAlph(4, board);
+                MCTS mcts = new MCTS(1000);
+                MMAB_IterativeDeepening mai = new MMAB_IterativeDeepening(1000000, board);
 
-                GenericTest.test(s,m, games, size);
-                int minimaxWins = GenericTest.getPlayer2Wins();
-                int stupidWins = GenericTest.getPlayer1Wins();
-                System.out.println("Minimax wins: "+ minimaxWins);
-                System.out.println("Stupid wins: "+ stupidWins);
+                GenericTest.test(s, ma, games, size);
+                int p1wins = GenericTest.getPlayer1Wins();
+                int p2wins = GenericTest.getPlayer2Wins();
+                System.out.println("p1 wins: "+ p1wins);
+                System.out.println("p2 wins: "+ p2wins);
 
 
             }
