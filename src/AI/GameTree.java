@@ -69,9 +69,6 @@ public class GameTree {
         }
 
         Node<Board> currentNode = root;
-        for (Node<Board> child : currentNode.getChildren()) {
-           child.getData().getCurrentPlayer();
-        }
         return root;
     }
 
@@ -105,6 +102,25 @@ public class GameTree {
         }
     }
 
+    /*
+    public int findLayerIndex(Node<Board> node) {
+        int[][] boardGrid = node.getData().getBoardGrid();
+        int discCounter = 0;
+        for (int i = 0; i < boardGrid.length; i++) {
+            for (int j = 0; j < boardGrid[0].length; j++) {
+                if (boardGrid[i][j] == -1 || boardGrid[i][j] == 1) discCounter++;
+            }
+        }
+            return discCounter - 3;
+    }
+
+
+   public void displayTree(Node root) {
+       Queue<Node> nodes = new LinkedList<Node>();
+       nodes.add(root.getChildren());
+       nodes.add(nodes.remove().getChildren());
+    }
+    */
 
     public int getTreeDepth() {
         return treeDepth;
