@@ -69,6 +69,10 @@ public class GameTree {
         }
 
         Node<Board> currentNode = root;
+        for (Node<Board> child : currentNode.getChildren()) {
+            child.getData().getCurrentPlayer();
+
+        }
         return root;
     }
 
