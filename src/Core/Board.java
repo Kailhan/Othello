@@ -187,6 +187,25 @@ public class Board implements Serializable {
             boardGrid[flippedDisk[0]][flippedDisk[1]] = currentPlayer;
     }
 
+    public boolean isSameBoard(Board parent) {
+        boolean sameBoard = true;
+        int[][] parentBoardGrid = parent.getBoardGrid();
+        int[][] currentBoardGrid = this.getBoardGrid();
+        if(currentPlayer != parent.getCurrentPlayer()) {
+            sameBoard = false;
+        } else {
+            for(int r = 0; r < parentBoardGrid.length; r++) {
+                for(int c = 0; c < parentBoardGrid.length; c++) {
+                    if(parentBoardGrid[r][c] != currentBoardGrid[r][c]) {
+                        sameBoard = false;
+                        break;
+                    }
+                }
+            }
+        }
+        return sameBoard;
+    }
+
     public int getRow(Board parent) {
         int row = -1; //makes sure we throw an error if we have not updated our coordinate
         int[][] parentBoardGrid = parent.getBoardGrid();

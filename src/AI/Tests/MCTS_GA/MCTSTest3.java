@@ -12,37 +12,62 @@ import java.sql.Timestamp;
 public class MCTSTest3 {
 
     public static void main(String[] args) {
-        int minPlayouts = 100;
-        int maxPlayouts = 100;
-        int steps = 10;
-        int totalGames = 100;
-        int rowWidth = 5;
+        int minPlayouts = 1;
+        int maxPlayouts = 25;
+        int stepsPlayouts = 1;
+        double minExplore = 0;
+        double maxExplore = 2;
+        double stepsExplore = 0.1;
+        int scaling = 100;
+        int minExploreInt = (int)Math.round(minExplore * scaling);
+        int maxExploreInt = (int)Math.round(maxExplore * scaling);
+        int stepsExploreInt = (int)Math.round(stepsExplore * scaling);
+        int totalGames = 400;
+        int rowWidth = 6;
 
         int logCounter = 0;
-        String[] log = new String[(((maxPlayouts - minPlayouts)/steps)+1)*rowWidth];
+        System.out.println((((maxPlayouts - minPlayouts)/stepsPlayouts) + 1));
+        System.out.println((((maxExploreInt - minExploreInt)/stepsExploreInt) + 1));
+        String [] log = new String[(((maxPlayouts - minPlayouts)/stepsPlayouts) + 1) * (((maxExploreInt - minExploreInt)/stepsExploreInt) + 1) * rowWidth];
+        //String[] log = new String[660];
+        System.out.println("loglength: " +  log.length);
+        System.out.println("minExploreInt: " +  minExploreInt);
+        System.out.println("maxExploreInt: " +  maxExploreInt);
+        System.out.println("stepsExploreInt: " + stepsExploreInt);
+
         StringBuilder logBuilder8 = new StringBuilder();
 
-        for(int i = minPlayouts; i < maxPlayouts + 1; i += steps) {
-            long startTime = System.nanoTime();
-            MCTS mcts = new MCTS(i);
-            GenericTest.test(mcts, new Stupid(), totalGames/2, 8);
-            log[logCounter] = String.valueOf(GenericTest.getPlayer1Wins()); logCounter++;
-            log[logCounter] = String.valueOf(GenericTest.getDraws()); logCounter++;
-            GenericTest.test(new Stupid(), mcts, totalGames/2, 8);
-            log[logCounter] = String.valueOf(GenericTest.getPlayer2Wins()); logCounter++;
-            log[logCounter] = String.valueOf(GenericTest.getDraws()); logCounter++;
-            long endTime = System.nanoTime();
-            log[logCounter] = String.valueOf(endTime-startTime); logCounter++;
-            System.out.println("board8 iter: " + i + "time: " + ((endTime-startTime)/1000000000));
-        }
+        for(int i = minExploreInt; i <= maxExploreInt; i += stepsExploreInt) {
+            long startTimeTot = System.nanoTime();
+            for(int j = minPlayouts; j < maxPlayouts + 1; j += stepsPlayouts) {
+                long startTime = System.nanoTime();
+                MCTS mcts = new MCTS(j, (double)i/scaling);
 
+                log[logCounter] = String.valueOf((double)i/scaling); logCounter++;
+                GenericTest.test(mcts, new Stupid(), totalGames/2, 8);
+                log[logCounter] = String.valueOf(GenericTest.getPlayer1Wins()); logCounter++;
+                log[logCounter] = String.valueOf(GenericTest.getDraws()); logCounter++;
+                GenericTest.test(new Stupid(), mcts, totalGames/2, 8);
+                log[logCounter] = String.valueOf(GenericTest.getPlayer2Wins()); logCounter++;
+                log[logCounter] = String.valueOf(GenericTest.getDraws()); logCounter++;
+                long endTime = System.nanoTime();
+                log[logCounter] = String.valueOf(endTime-startTime); logCounter++;
+                //System.out.println("board8 iter: " + j + "time: " + ((endTime-startTime)/1000000000));
+            }
+            long endTimeTot = System.nanoTime();
+            System.out.println("logCntr:" + logCounter);
+            System.out.println("Done with exploreparam: " + (double)i/scaling);
+            System.out.println(((endTimeTot-startTimeTot)/1000000000));
+        }
         System.out.println("Done with board 8: " + System.currentTimeMillis());
 
-        logBuilder8.append("maxPlayouts").append(",").append("board(8)_p1").append(",").append("draws").append(",").append("board(8)_p2").append(",").append("draws").append(",").append("iterTime");
+        logBuilder8.append("maxPlayouts").append(",").append("explorationParam").append(",").append("board(8)_p1").append(",").append("draws").append(",").append("board(8)_p2").append(",").append("draws").append(",").append("iterTime");
         for(int i = 0; i < log.length; i++) {
             if(i % rowWidth == 0) {
                 logBuilder8.append("\n");
-                logBuilder8.append((minPlayouts + ((i/rowWidth)*steps))).append(",");
+                System.out.println((minPlayouts + ((i/rowWidth)*stepsPlayouts)));
+                int playout = ((minPlayouts + ((i/rowWidth)*stepsPlayouts))%maxPlayouts == 0) ? maxPlayouts : (minPlayouts + ((i/rowWidth)*stepsPlayouts)) % maxPlayouts;
+                logBuilder8.append(playout).append(",");
             }
             logBuilder8.append(log[i]);
             if((i+1) % rowWidth != 0) logBuilder8.append(",");
@@ -52,7 +77,7 @@ public class MCTSTest3 {
             String logCSV8 = logBuilder8.toString();
             String fileName8  = "minPlayouts_" + String.valueOf(minPlayouts) +
                     "_maxPlayouts_" + String.valueOf(maxPlayouts) +
-                    "_steps_" + String.valueOf(steps) +
+                    "_steps_" + String.valueOf(stepsPlayouts) +
                     "_totalGames_" + String.valueOf(totalGames) +
                     "_BOARDSIZE8ONLY_" + String.valueOf(8) +
                     "_time" + new Timestamp(System.currentTimeMillis()).toInstant().toString() +
@@ -65,6 +90,4 @@ public class MCTSTest3 {
             e.printStackTrace();
         }
     }
-
-
 }
