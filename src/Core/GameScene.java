@@ -38,6 +38,7 @@ public class GameScene extends BorderPane {
     private static String[] AIs;
     private static final int MINIMAX_DEPTH = 4;
     private static final int MINIMAXALPH_DEPTH = 2;
+    private static final int NEGASCOUT_DEPTH = 2;
 
     private File discBlack = new File("src/Assets/disc_blackBgr.png");
     private File discWhite = new File("src/Assets/disc_whiteBgrFthr.png");
@@ -279,12 +280,14 @@ public class GameScene extends BorderPane {
                 updateBoard(move[0], move[1]);
                 break;
             case 3:
-                Minimax minimax;
-                if(board.getCurrentPlayer() == BLACK) minimax = new Minimax(1, board);
-                else minimax = new Minimax(6,board);
-
+                Minimax minimax =new Minimax(MINIMAX_DEPTH,board);
                 move = minimax.getBestMove(board);
                 updateBoard(move[0],move[1]);
+                break;
+            case 4:
+                NegaScout negascout = new NegaScout(NEGASCOUT_DEPTH, board);
+                move = negascout.getBestMove(board);
+                updateBoard(move[0], move[1]);
                 break;
         }
     }

@@ -101,54 +101,6 @@ public class Board implements Serializable {
         return nrCorners;
     }
 
-//    /**
-//     * Checks the state of integer array representing the board, if cell contains 0 then this is an empty cell
-//     * @return Number of squares that are empty
-//     */
-//    public int getNrEmptySquares()
-//    {
-//        int nrEmptySquares = 0;
-//
-//        for(int i = 0; i < boardGrid.length; i++)
-//            for(int j = 0; j < boardGrid[i].length; j++)
-//                if(boardGrid[i][j] == EMPTY)
-//                    nrEmptySquares++;
-//
-//        return  nrEmptySquares;
-//    }
-//
-//    /**
-//     * Checks the state of integer array representing the board, if cell contains 1 then this is a black cell
-//     * @return Number of squares that are black
-//     */
-//    public int getNrBlackSquares()
-//    {
-//        int nrBlackSquares = 0;
-//
-//        for(int i = 0; i < boardGrid.length; i++)
-//            for(int j = 0; j < boardGrid[i].length; j++)
-//                if(boardGrid[i][j] == BLACK)
-//                    nrBlackSquares++;
-//
-//        return  nrBlackSquares;
-//    }
-//
-//    /**
-//     * Checks the state of integer array representing the board, if cell contains -1 then this is an white cell
-//     * @return Number of squares that are white
-//     */
-//    public int getNrWhiteSquares()
-//    {
-//        int nrWhiteSquares = 0;
-//
-//        for(int i = 0; i < boardGrid.length; i++)
-//            for(int j = 0; j < boardGrid[i].length; j++)
-//                if(boardGrid[i][j] == WHITE)
-//                    nrWhiteSquares++;
-//
-//        return  nrWhiteSquares;
-//    }
-
     public void incrementTurn()
     {
         turn++;
@@ -191,14 +143,29 @@ public class Board implements Serializable {
             boardGrid[flippedDisk[0]][flippedDisk[1]] = currentPlayer;
     }
 
+    public boolean isSameBoard(Board parent) {
+        boolean sameBoard = true;
+        int[][] parentBoardGrid = parent.getBoardGrid();
+        int[][] currentBoardGrid = this.getBoardGrid();
+        if(currentPlayer != parent.getCurrentPlayer()) {
+            sameBoard = false;
+        } else {
+            for(int r = 0; r < parentBoardGrid.length; r++) {
+                for(int c = 0; c < parentBoardGrid.length; c++) {
+                    if(parentBoardGrid[r][c] != currentBoardGrid[r][c]) {
+                        sameBoard = false;
+                        break;
+                    }
+                }
+            }
+        }
+        return sameBoard;
+    }
+
     public int getRow(Board parent) {
         int row = -1; //makes sure we throw an error if we have not updated our coordinate
         int[][] parentBoardGrid = parent.getBoardGrid();
         int[][] currentBoardGrid = this.getBoardGrid();
-//        System.out.println("getX parentBoard");
-//        parentBoard.displayBoardGrid();
-//        System.out.println("getX currentBoard");
-//        currentBoard.displayBoardGrid();
         for(int r = 0; r < parentBoardGrid.length; r++) {
             for(int c = 0; c < parentBoardGrid.length; c++) {
                 if(parentBoardGrid[r][c] == EMPTY && currentBoardGrid[r][c] != EMPTY) row = r;
@@ -211,10 +178,6 @@ public class Board implements Serializable {
         int column = -1; //makes sure we throw an error if we have not updated our coordinate
         int[][] parentBoardGrid = parent.getBoardGrid();
         int[][] currentBoardGrid = this.getBoardGrid();
-        //System.out.println("getY parentBoard");
-        //parentBoard.displayBoardGrid();
-        //System.out.println("getY currentBoard");
-        //currentBoard.displayBoardGrid();
         for(int r = 0; r < parentBoardGrid.length; r++) {
             for(int c = 0; c < parentBoardGrid.length; c++) {
                 if(parentBoardGrid[r][c] == EMPTY && currentBoardGrid[r][c] != EMPTY) column = c;
@@ -226,43 +189,6 @@ public class Board implements Serializable {
     public void applyMove(int[] move) {
         applyMove(move[0], move[1]);
     }
-
-//    public int getRow(Board parent) {
-//        int row = -1; //makes sure we throw an error if we have not updated our coordinate
-//        Board parentBoard = new Board(parent);
-//        int[][] parentBoardGrid = parentBoard.getBoardGrid();
-//        Board currentBoard = new Board(this);
-//        int[][] currentBoardGrid = currentBoard.getBoardGrid();
-////        System.out.println("getX parentBoard");
-////        parentBoard.displayBoardGrid();
-////        System.out.println("getX currentBoard");
-////        currentBoard.displayBoardGrid();
-//        for(int r = 0; r < parentBoardGrid.length; r++) {
-//            for(int c = 0; c < parentBoardGrid.length; c++) {
-//                if(parentBoardGrid[r][c] == 0 && currentBoardGrid[r][c] != 0) row = r;
-//            }
-//        }
-//        return row;
-//    }
-//
-//    public int getColumn(Board parent) {
-//        int column = -1; //makes sure we throw an error if we have not updated our coordinate
-//        Board parentBoard = new Board(parent);
-//        int[][] parentBoardGrid = parentBoard.getBoardGrid();
-//        Board currentBoard = new Board(this);
-//        int[][] currentBoardGrid = currentBoard.getBoardGrid();
-//        //System.out.println("getY parentBoard");
-//        //parentBoard.displayBoardGrid();
-//        //System.out.println("getY currentBoard");
-//        //currentBoard.displayBoardGrid();
-//        for(int r = 0; r < parentBoardGrid.length; r++) {
-//            for(int c = 0; c < parentBoardGrid.length; c++) {
-//                if(parentBoardGrid[r][c] == 0 && currentBoardGrid[r][c] != 0) column = c;
-//            }
-//        }
-//        return column;
-//    }
-
 
     public boolean checkTile(int r, int c, int state) {
         return (boardGrid[r][c] == state);

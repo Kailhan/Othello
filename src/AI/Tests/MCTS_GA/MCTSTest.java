@@ -8,7 +8,7 @@ public class MCTSTest {
 
     public static void main(String[] args) {
         int games = 500;
-        int totalSims1 = 50;
+        int totalSims1 = 10;
         int totalSims2 = 1;
         int size = 8;
 
@@ -25,7 +25,7 @@ public class MCTSTest {
         int mcts2Wins = GenericTest.getPlayer2Wins();
 
         System.out.println("MCTS 1 wins: " + GenericTest.getPlayer1Wins());
-        System.out.println("MCTS w2 wins: " + GenericTest.getPlayer2Wins());
+        System.out.println("MCTS 2 wins: " + GenericTest.getPlayer2Wins());
         System.out.println("MCTS draws: " + (games/2-GenericTest.getPlayer1Wins()-GenericTest.getPlayer2Wins()));
         System.out.println("halfway thru");
 
@@ -44,6 +44,8 @@ public class MCTSTest {
         System.out.println(endTime-startTime);
         System.out.println("mcts1 totalsims: " + totalSims1);
         System.out.println("exploration: " + mcts1.getExplorationParameter());
+        System.out.println("treeSize: " + mcts1.getRootNode().getTreeSize());
+        System.out.println("treeHeight: " + mcts1.getRootNode().getHeight(mcts1.getRootNode()));
         System.out.println("totalGames: " + games);
         System.out.println("MCTS 1 win%: " + (double)mcts1Wins/games);
         System.out.println("MCTS 2 win%: " + (double)mcts2Wins/games);

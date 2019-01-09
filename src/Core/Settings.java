@@ -7,7 +7,7 @@ public class Settings {
     private int AI2Level;
     private int boardSize;
     private Board board;
-    private static String[] AIs = new String[]{"MCTS", "Stupid", "AB-Minimax","Minimax", "NegaMax"};
+    private static String[] AIs = new String[]{"MCTS", "Stupid", "AB-Minimax","Minimax", "NegaMax","NegaScout"};
     public static final int SIZE_SMALL = 4;
     public static final int SIZE_MEDIUM = 6;
     public static final int SIZE_LARGE = 8;

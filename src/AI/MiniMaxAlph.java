@@ -46,9 +46,10 @@ public class MiniMaxAlph extends AI {
 
         int[] bestMove = new int[2];
         try {
-            bestMove[0] = child1.getRow();
-            bestMove[1] = child1.getColumn();
-        } catch (NullPointerException e) {
+            bestMove[0] = selectMove(root).getRow();
+            bestMove[1] = selectMove(root).getColumn();
+        }
+        catch(NullPointerException e) {
             System.out.println("no more moves");
         }
         return bestMove;

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MCTS extends AI {
+public class MCTS_TreeReuse extends AI {
 
     private int maxSims;
     private int simsCounter = 0;
@@ -15,11 +15,11 @@ public class MCTS extends AI {
     private double explorationParameter = 1.414 * explorationMultiplier;
     private MCTSNode rootNode;
 
-    public MCTS(int maxSims) {
+    public MCTS_TreeReuse(int maxSims) {
         this.maxSims = maxSims;
     }
 
-    public MCTS(int maxSims, double explorationParameter) {
+    public MCTS_TreeReuse(int maxSims, double explorationParameter) {
         this.maxSims = maxSims;
         this.explorationParameter = explorationParameter;
     }
@@ -39,7 +39,6 @@ public class MCTS extends AI {
     public MCTSNode findMove(Board board) {
         MCTSNode.totalSims = 0;
         MCTSNode currentNode = new MCTSNode(new Board(board), explorationParameter);
-        rootNode = currentNode;
         MCTSNode moveNode = null;
         boolean reachedThreshold = false;
         int currentAmountOfSims = 0;
@@ -56,7 +55,15 @@ public class MCTS extends AI {
         //System.out.println("Found move using: " + MCTSNode.totalSims + " sims");
         //System.out.println();
         return moveNode;
-        }
+    }
+
+    public MCTSNode getCurrentNode(Board board) {
+        return null;
+    }
+
+    public void updateTree(MCTSNode currentNode) {
+
+    }
 
     public double getExplorationParameter() {
         return explorationParameter;

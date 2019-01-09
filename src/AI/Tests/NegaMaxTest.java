@@ -16,11 +16,17 @@ public class NegaMaxTest {
         GameTree gameTree = new GameTree(DEPTH, board);
         Node<Board> root = gameTree.createTree();
 
-        int[] bestMove = new int[2];
-        bestMove = negaMax.getBestMove(root.getData(), 1); //1 is black -1 is white;
+        int games = 30;
+        int size = 8;
 
-        for (int i = 0; i < bestMove.length; i++) {
-            System.out.println(i);
-        }
+        AI.Stupid s = new AI.Stupid();
+
+        GenericTest.test(s,negaMax, games, size);
+        int minimaxWins = GenericTest.getPlayer2Wins();
+        int stupidWins = GenericTest.getPlayer1Wins();
+        System.out.println("NegaMax wins: "+ minimaxWins);
+        System.out.println("Stupid wins: "+ stupidWins);
+
+
     }
 }
