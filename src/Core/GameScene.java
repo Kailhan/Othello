@@ -261,7 +261,7 @@ public class GameScene extends BorderPane {
         AILevel = settings.getAI1Level();
         if (board.getCurrentPlayer() == WHITE)
             AILevel = settings.getAI2Level();
-        int[] move = new int[2];
+        int[] move;
         switch(AILevel)
         {
             case 0:

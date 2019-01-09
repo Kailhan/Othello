@@ -90,14 +90,16 @@ public class Board implements Serializable {
     }
 
 
-    public int getCorners(int player) {
+    public int getCorners(int state)
+    {
         int nrCorners = 0;
         for (int i = 0; i < boardGrid.length; i += boardGrid.length- 1) {
             for (int j = 0; j < boardGrid.length; j += boardGrid.length - 1) {
-                if (boardGrid[i][j] == player)
+                if (boardGrid[i][j] == state)
                     nrCorners++;
             }
         }
+
         return nrCorners;
     }
 
@@ -123,11 +125,11 @@ public class Board implements Serializable {
         return currentPlayer;
     }
 
-    public void setCurrentPlayer(int x){
-        currentPlayer = x;
+    public void setCurrentPlayer(int player){
+        currentPlayer = player;
     }
 
-    public void setTurn(int x) {turn = x;}
+    public void setTurn(int turn) {turn = turn;}
 
     /**
      * Updates a specific cell based on the current status of the game, top left is 0, 0
