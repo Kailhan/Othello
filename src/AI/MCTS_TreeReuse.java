@@ -58,7 +58,7 @@ public class MCTS_TreeReuse extends AI {
     }
 
     public MCTSNode getCurrentNode(Board board) {
-
+        return null;
     }
 
     public void updateTree(MCTSNode currentNode) {
