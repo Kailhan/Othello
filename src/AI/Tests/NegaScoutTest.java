@@ -13,7 +13,7 @@ public class NegaScoutTest {
         GameTree gameTree = new GameTree(4);
         Node<Board> root = gameTree.createTree();
 
-        int games = 10;
+        int games = 100;
         int totalSims1 = 1;
         int totalSims2 = 1;
         int size = 8;
@@ -22,7 +22,7 @@ public class NegaScoutTest {
         Stupid s = new Stupid();
         //gt.test(m,s, 5,8);
         Board board = new Board();
-        NegaScout ns = new NegaScout(3, board);
+        NegaScout ns = new NegaScout(4, board);
 
         GenericTest.test(s, ns, games, size);
         int negascoutWins = GenericTest.getPlayer2Wins();
