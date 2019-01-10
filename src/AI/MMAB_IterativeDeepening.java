@@ -6,33 +6,31 @@ import Core.GameScene;
 public class MMAB_IterativeDeepening extends AI {
 
     private int moveTime;
-    private Board startBoard;
+    //private Board startBoard;
 
-        public MMAB_IterativeDeepening(int moveTime, Board startBoard){
+        public MMAB_IterativeDeepening(int moveTime){
             this.moveTime = moveTime;
-            this.startBoard = startBoard;
+            //this.startBoard = startBoard;
         }
 
-        public int[] getBestMove(Board board){
+        public int[] getBestMove(Board startBoard){
             long startTime = System.currentTimeMillis();
             long endTime = startTime + moveTime;
             int depth = 1;
             int[] currentBestMove = null;
+            Board board;
             //startBoard = new Board(board);
             while (System.currentTimeMillis() < endTime)
             {
                 board = new Board(startBoard);
-                int[] move = null;
                 MiniMaxAlph m = new MiniMaxAlph(depth, board);
-                for(int i = 0; i < depth; i++) {
-                    move = m.getBestMove(board);
-                    board.applyMove(move[0], move[1]);
-                }
+                int[] move = m.getBestMove(board);
                 currentBestMove = move;
                 depth++;
             }
             return currentBestMove;
         }
+
 
     public double evaluateFitness(int gamesToBeSimmed, int boardSize) {
         return -1;

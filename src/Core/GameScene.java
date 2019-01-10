@@ -37,7 +37,7 @@ public class GameScene extends BorderPane {
     private int AI2Level;
     private static String[] AIs;
     private static final int MINIMAX_DEPTH = 4;
-    private static final int MINIMAXALPH_DEPTH = 2;
+    private static final int MINIMAXALPH_DEPTH = 4;
     private static final int NEGASCOUT_DEPTH = 2;
 
     private File discBlack = new File("src/Assets/disc_blackBgr.png");
@@ -290,7 +290,7 @@ public class GameScene extends BorderPane {
                 updateBoard(move[0], move[1]);
                 break;
             case 5:
-                MMAB_IterativeDeepening mai = new MMAB_IterativeDeepening(100000, board);
+                MMAB_IterativeDeepening mai = new MMAB_IterativeDeepening(10);
                 move = mai.getBestMove(board);
                 updateBoard(move[0], move[1]);
                 break;

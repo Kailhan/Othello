@@ -7,7 +7,7 @@ public class Settings {
     private int AI2Level;
     private int boardSize;
     private Board board;
-    private static String[] AIs = new String[]{"MCTS", "Stupid", "AB-Minimax","Minimax", "NegaMax","NegaScout", "MMAB Iterative deepening"};
+    private static String[] AIs = new String[]{"MCTS", "Stupid", "AB-Minimax","Minimax","NegaScout", "MMAB Iterative deepening"};
     public static final int SIZE_SMALL = 4;
     public static final int SIZE_MEDIUM = 6;
     public static final int SIZE_LARGE = 8;
