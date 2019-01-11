@@ -35,7 +35,6 @@ public class MinimaxTest {
         Board board = new Board();
         Minimax m = new Minimax(DEPTH, board);
 
-
         GenericTest.test(s, m, GAMES, SIZE);
         int minimaxWins = GenericTest.getPlayer2Wins();
         int stupidWins = GenericTest.getPlayer1Wins();
