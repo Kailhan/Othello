@@ -24,5 +24,6 @@ public class EvaluationFunctionTest {
         System.out.println("EvaluationFunction wins: " + (generic.getPlayer1Wins()));
         System.out.println("Stupid wins: " + generic.getPlayer2Wins());
         System.out.println("Draws: " + generic.getDraws());
+
     }
 }

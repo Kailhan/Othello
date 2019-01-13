@@ -11,7 +11,7 @@ public class MCTS extends AI {
     private int maxSims;
     private int simsCounter = 0;
     private Random rand = new Random();
-    private double explorationMultiplier = 1;
+    private double explorationMultiplier = 1.21;
     private double explorationParameter = 1.414 * explorationMultiplier;
     private MCTSNode rootNode;
 
