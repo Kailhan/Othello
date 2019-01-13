@@ -3,6 +3,8 @@ package AI;
 import AI.Tests.GenericTest;
 import Core.Board;
 
+import java.util.function.BinaryOperator;
+
 public class MiniMaxAlph extends AI {
 
     //private EvaluationFunction evaluator;
@@ -18,6 +20,12 @@ public class MiniMaxAlph extends AI {
     public MiniMaxAlph(int depth, EvaluationFunction eval) {
         this.depth = depth;
         this.evaluator = eval;
+    }
+
+    public MiniMaxAlph(int depth, Board board, GameTree gameTree) {
+        this.depth = depth;
+        this.evaluator = new EvaluationFunction(board);
+        this.gameTree = gameTree;
     }
 
     public double evaluateFitness(int gamesToBeSimmed, int boardSize) {
@@ -37,18 +45,15 @@ public class MiniMaxAlph extends AI {
     }
 
     public int[] getBestMove(Board board) {
-        MiniMaxAlph minimax = new MiniMaxAlph(this.depth, board);
-        GameTree gameTree = new GameTree(this.depth, board);
-        Node<Board> root = gameTree.createTree();
 
-        minimax.miniMaxAB(root, Integer.MIN_VALUE, Integer.MAX_VALUE, board.getCurrentPlayer());
-        Node<Board> child1 = minimax.selectMove(root);
+        Node<Board> root = getBestMoveNode(board);
 
         int[] bestMove = new int[2];
         try {
-            bestMove[0] = child1.getRow();
-            bestMove[1] = child1.getColumn();
-        } catch (NullPointerException e) {
+            bestMove[0] = selectMove(root).getRow();
+            bestMove[1] = selectMove(root).getColumn();
+        }
+        catch(NullPointerException e) {
             System.out.println("no more moves");
         }
         return bestMove;
@@ -98,6 +103,38 @@ public class MiniMaxAlph extends AI {
 
     public Node<Board> getRoot() {
         return root;
+    }
+
+    public Node<Board> getBestMoveNode(Board board){
+        MiniMaxAlph minimax = new MiniMaxAlph(this.depth, board);
+        GameTree gameTree = new GameTree(this.depth, board);
+        Node<Board> root = gameTree.createTree();
+
+        minimax.miniMaxAB(root, Integer.MIN_VALUE, Integer.MAX_VALUE, board.getCurrentPlayer());
+
+        return root;
+    }
+
+    public Node<Board> getBestMoveNodeOrdered(Board board, Node<Board> PV_node){
+        MiniMaxAlph minimax = new MiniMaxAlph(this.depth, board);
+        GameTree gameTree = new GameTree(this.depth, board, PV_node);
+        Node<Board> root = gameTree.createTree();
+
+        minimax.miniMaxAB(root, Integer.MIN_VALUE, Integer.MAX_VALUE, board.getCurrentPlayer());
+
+        return root;
+    }
+
+    public int[] getBestMoveFromNode(Node<Board> root){
+        int[] bestMove = new int[2];
+        try {
+            bestMove[0] = selectMove(root).getRow();
+            bestMove[1] = selectMove(root).getColumn();
+        }
+        catch(NullPointerException e) {
+            System.out.println("no more moves");
+        }
+        return bestMove;
     }
 
 }
