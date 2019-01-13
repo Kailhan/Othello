@@ -73,7 +73,7 @@ public class GameTree {
             System.out.print(child.getValue() + "\t");//getData().getCurrentPlayer()));
 
         }
-        System.out.println();
+        //System.out.println();
         return root;
     }
 

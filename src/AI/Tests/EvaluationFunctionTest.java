@@ -14,8 +14,6 @@ public class EvaluationFunctionTest {
         Stupid stupid = new Stupid();
         EvaluationFunction evaluator = new EvaluationFunction(board) ;
 
-
-
         //for(int i = 0; i <100; i++) {
             generic.test(evaluator, stupid,1000, 8);
 

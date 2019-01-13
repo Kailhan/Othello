@@ -121,7 +121,7 @@ public class EvaluationFunction extends AI{
 
 
     public double evaluate(Board cBoard){
-        this.cBoard = cBoard;
+        this.cBoard = new Board(cBoard);
         int currentPlayer = cBoard.getCurrentPlayer();
         double totalScore;
         int blackMoves;
