@@ -1,6 +1,7 @@
 package AI;
 
 import Core.Board;
+import Core.Logic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +12,10 @@ public class MCTS_TreeReuse extends AI {
     private int maxSims;
     private int simsCounter = 0;
     private Random rand = new Random();
-    private double explorationMultiplier = 1;
+    private double explorationMultiplier = 0.0;
     private double explorationParameter = 1.414 * explorationMultiplier;
     private MCTSNode rootNode;
+    private MCTSNode previousNode;
 
     public MCTS_TreeReuse(int maxSims) {
         this.maxSims = maxSims;
@@ -38,40 +40,78 @@ public class MCTS_TreeReuse extends AI {
 
     public MCTSNode findMove(Board board) {
         MCTSNode.totalSims = 0;
-        MCTSNode currentNode = new MCTSNode(new Board(board), explorationParameter);
+        MCTSNode currentNode = findCurrentNode(board);
         MCTSNode moveNode = null;
         boolean reachedThreshold = false;
         int currentAmountOfSims = 0;
         while(!reachedThreshold) {
             MCTSNode bestLeafNode = currentNode.getBestLeafNode();
-            //System.out.println(currentNode.getChildNodes());
             bestLeafNode.playoutSimulation(board.getCurrentPlayer());
-            //System.out.println("bestleafnode wins: " + bestLeafNode.getWins() + " sims: " + bestLeafNode.getSims());
             currentAmountOfSims++;
             if(currentAmountOfSims >= maxSims) reachedThreshold = true; //to enable otherways of thresholds eg time
         }
+
         moveNode = currentNode.getBestSimulationChildNode();
-        //System.out.println("bestmovenode wins: " + moveNode.getWins() + " sims: " + moveNode.getSims());
-        //System.out.println("Found move using: " + MCTSNode.totalSims + " sims");
-        //System.out.println();
+        previousNode = moveNode;
+
         return moveNode;
     }
 
-    public MCTSNode getCurrentNode(Board board) {
-        return null;
-    }
+    public MCTSNode findCurrentNode(Board board) {
+        MCTSNode currentNode = null;
+        if((previousNode == null) || (board.getTurn() == 1) || (board.getTurn() == 0)) {
+            previousNode = new MCTSNode(new Board(board), explorationParameter);
+            currentNode = previousNode;
+        }
+//        System.out.println("previusnode currently finding node for");
+//        System.out.println("boardturn: " + previousNode.getData().getTurn());
+//        System.out.println("boardplayer: " + previousNode.getData().getCurrentPlayer());
+//        System.out.println("possiblemoves: " + Logic.getPossibleMoves(previousNode.getData()).length);
+//        previousNode.getData().displayBoardGrid();
+//
+//        System.out.println("board currently finding node for");
+//        System.out.println("boardturn: " + board.getTurn());
+//        System.out.println("boardplayer: " + board.getCurrentPlayer());
+//        System.out.println("possiblemoves: " + Logic.getPossibleMoves(board).length);
+//        board.displayBoardGrid();
 
-    public void updateTree(MCTSNode currentNode) {
+        //currentNode.createChildren();
 
+        previousNode.createChildren();
+        List<MCTSNode> subTreeQueue = new ArrayList<MCTSNode>();
+        subTreeQueue.add(previousNode);
+        while (!subTreeQueue.isEmpty()) {
+            MCTSNode nodeToBeChecked = subTreeQueue.remove(0);
+            nodeToBeChecked.createChildren();
+            subTreeQueue.addAll(nodeToBeChecked.getChildNodes());
+            Board childBoard = nodeToBeChecked.getData();
+            if (childBoard.isSameBoard(board)) {
+                currentNode = nodeToBeChecked;
+                break;
+            }
+        }
+
+//        if(previousNode.getData().isSameBoard(board)) {
+//            currentNode = previousNode;
+//        } else {
+//            for(MCTSNode childNode : previousNode.getChildNodes()) {
+//                Board childBoard = childNode.getData();
+//                if(childBoard.isSameBoard(board)) currentNode = childNode;
+//            }
+//        }
+//        currentNode.createChildren();
+        return currentNode;
     }
 
     public double getExplorationParameter() {
         return explorationParameter;
     }
 
-
-
     public MCTSNode getRootNode() {
-        return rootNode;
+        MCTSNode currentNode = previousNode;
+        while(currentNode.getParentNode() != null) {
+            currentNode = currentNode.getParentNode();
+        }
+        return currentNode;
     }
 }

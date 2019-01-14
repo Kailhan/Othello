@@ -56,7 +56,7 @@ public class EvaluationFunction extends AI{
     public int[] getBestMove(Board board) {
         int moveCounter = 0;
         int possibleBoardIndex = 0;
-        int bestBoardIndex = -1;
+        int bestBoardIndex = -1;                    //waarom -1
 
         for (int r = 0; r < board.getSize(); r++)
         {
@@ -80,16 +80,32 @@ public class EvaluationFunction extends AI{
                 }
             }
         }
-        double score = Integer.MIN_VALUE;
-        double cScore;
-        for(int i = 0; i < possibleBoards.length; i++) {
-            cScore = evaluate(possibleBoards[i]);
-            cScore *= cScore;
-            if(cScore >= score) {
-                score = cScore;
-                bestBoardIndex = i;
+
+        if(board.getCurrentPlayer() == Board.BLACK) {
+            double score = Integer.MIN_VALUE;
+            double cScore;
+            for (int i = 0; i < possibleBoards.length; i++) {
+                cScore = evaluate(possibleBoards[i]);
+                cScore *= cScore;
+                if (cScore >= score) {
+                    score = cScore;
+                    bestBoardIndex = i;
+                }
             }
         }
+
+        if(board.getCurrentPlayer() == Board.WHITE) {
+            double score = Integer.MAX_VALUE;
+            double cScore;
+            for (int i = 0; i < possibleBoards.length; i++) {
+                cScore = evaluate(possibleBoards[i]);
+                if (cScore <= score) {
+                    score = cScore;
+                    bestBoardIndex = i;
+                }
+            }
+        }
+
         int[] move = new int[2];
         move[0] = possibleBoards[bestBoardIndex].getRow(board);
         move[1] = possibleBoards[bestBoardIndex].getColumn(board);
@@ -181,14 +197,14 @@ public class EvaluationFunction extends AI{
         else if(cBoard.getSize() == 8)
         {
             setTerritory(new double[][] {
-                    {400,100,300,250,250,300,100,400},
-                    {100,10,150,150,150,150,10,100},
+                    {400,50,300,250,250,300,50,400},
+                    {50,10,150,150,150,150,10,50},
                     {300,150,300,0,0,300,150,300},
                     {250,150,0,0,0,0,150,250},
                     {250,150,0,0,0,0,150,250},
                     {300,150,300,0,0,300,150,300},
-                    {100,10,150,150,150,150,10,100},
-                    {400,100,300,250,250,300,100,400}});
+                    {50,10,150,150,150,150,10,50},
+                    {400,50,300,250,250,300,50,400}});
         }
         else {
             System.out.println("Invalid boardsize");
