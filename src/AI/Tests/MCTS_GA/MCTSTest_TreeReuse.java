@@ -10,7 +10,7 @@ public class MCTSTest_TreeReuse {
     public static void main(String[] args) {
         int games = 500;
         int totalSims1 = 50;
-        double explorationParameter = 20;
+        double explorationParameter = 1;
         int size = 8;
 
         MCTS_TreeReuse mcts1 = new MCTS_TreeReuse(totalSims1, explorationParameter);

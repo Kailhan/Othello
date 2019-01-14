@@ -14,7 +14,7 @@ import static Core.Board.WHITE;
 public class MCTSNode {
 
 
-    public static final int WIN = 1;
+    public static final int WIN = 5;
     public static final int DRAW = 0;
     public static final int LOSS = 0;
 
@@ -129,7 +129,7 @@ public class MCTSNode {
         }
 
         wins += gameState;
-        sims += + 1;
+        sims += 1;
         MCTSNode.totalSims++;
         MCTSNode currentNode = this;
 
@@ -170,7 +170,7 @@ public class MCTSNode {
         List<MCTSNode> potentialChildren = new ArrayList<MCTSNode>();
         double maxScore = -1;
         for(MCTSNode childNode : childNodes) {
-            double childNodeScore = (childNode.getSims() == 0) ? 0 : (double)childNode.getWins()/childNode.getSims();
+            double childNodeScore = (childNode.getSims() == 0) ? 0 : (double)childNode.getWins()/(double)childNode.getSims();
             if(childNodeScore > maxScore) maxScore = childNodeScore;
         }
         for(MCTSNode childNode : childNodes) {

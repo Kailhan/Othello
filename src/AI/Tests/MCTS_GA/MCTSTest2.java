@@ -13,7 +13,7 @@ public class MCTSTest2 {
     public static void main(String[] args) {
 
         int maxPlayouts = 100;
-        int totalGames = 100;
+        int totalGames = 800;
 
         int logCounter = 0;
         int rowWidth = 5;

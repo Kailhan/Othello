@@ -22,7 +22,7 @@ public class MCTSTest3_TreeReuse {
         int minExploreInt = (int)Math.round(minExplore * scaling);
         int maxExploreInt = (int)Math.round(maxExplore * scaling);
         int stepsExploreInt = (int)Math.round(stepsExplore * scaling);
-        int totalGames = 400;
+        int totalGames = 800;
         int rowWidth = 6;
 
         int logCounter = 0;

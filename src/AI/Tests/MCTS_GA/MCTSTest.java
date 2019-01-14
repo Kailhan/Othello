@@ -7,7 +7,7 @@ import AI.Tests.GenericTest;
 public class MCTSTest {
 
     public static void main(String[] args) {
-        int games = 1000;
+        int games = 800;
         int totalSims1 = 25;
         int totalSims2 = 1;
         int size = 8;
