@@ -56,7 +56,7 @@ public class EvaluationFunction extends AI{
     public int[] getBestMove(Board board) {
         int moveCounter = 0;
         int possibleBoardIndex = 0;
-        int bestBoardIndex = -1;
+        int bestBoardIndex = -1;                    //waarom -1
 
         for (int r = 0; r < board.getSize(); r++)
         {
@@ -80,16 +80,32 @@ public class EvaluationFunction extends AI{
                 }
             }
         }
-        double score = Integer.MIN_VALUE;
-        double cScore;
-        for(int i = 0; i < possibleBoards.length; i++) {
-            cScore = evaluate(possibleBoards[i]);
-            cScore *= cScore;
-            if(cScore >= score) {
-                score = cScore;
-                bestBoardIndex = i;
+
+        if(board.getCurrentPlayer() == Board.BLACK) {
+            double score = Integer.MIN_VALUE;
+            double cScore;
+            for (int i = 0; i < possibleBoards.length; i++) {
+                cScore = evaluate(possibleBoards[i]);
+                cScore *= cScore;
+                if (cScore >= score) {
+                    score = cScore;
+                    bestBoardIndex = i;
+                }
             }
         }
+
+        if(board.getCurrentPlayer() == Board.WHITE) {
+            double score = Integer.MAX_VALUE;
+            double cScore;
+            for (int i = 0; i < possibleBoards.length; i++) {
+                cScore = evaluate(possibleBoards[i]);
+                if (cScore <= score) {
+                    score = cScore;
+                    bestBoardIndex = i;
+                }
+            }
+        }
+
         int[] move = new int[2];
         move[0] = possibleBoards[bestBoardIndex].getRow(board);
         move[1] = possibleBoards[bestBoardIndex].getColumn(board);
