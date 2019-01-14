@@ -2,6 +2,7 @@ package AI;
 
 import Core.Board;
 import Core.Logic;
+import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class MCTSNode {
     private double wins;
     private double sims;
     private double explorationParameter;
+    private boolean terminalNode;
 
     private Board board;
     private static Random rand = new Random();
@@ -36,6 +38,7 @@ public class MCTSNode {
         this.wins = 0;
         this.sims = 0;
         this.explorationParameter = explorationParameter;
+        this.terminalNode = false;
     }
 
     public int getRow() {
@@ -79,8 +82,8 @@ public class MCTSNode {
     }
 
     public double getSelectionScore() {
-        double exploitationScore = (sims == 0) ? 0 : (double)(wins/sims);
-        double explorationScore = (wins == 0) ? 0 : explorationParameter * (double)(Math.sqrt(Math.log(totalSims)/wins));
+        double exploitationScore = (sims == 0) ? 0 : ((double)(wins/sims));
+        double explorationScore = ((wins == 0) || (totalSims == 0)) ? 0 : (explorationParameter * (double)(Math.sqrt(Math.log(totalSims)/wins)));
         if(sims != 0) {
             //System.out.println("ploit: " + exploitationScore);
             //System.out.println("plore: " + explorationScore);
@@ -125,14 +128,14 @@ public class MCTSNode {
             if(numberOfBlackCoins < numberOfWhiteCoins) gameState = WIN;
         }
 
-        setWins(wins + gameState);
-        setSims(sims + 1);
+        wins += gameState;
+        sims += + 1;
         MCTSNode.totalSims++;
         MCTSNode currentNode = this;
 
         while(currentNode.getParentNode() != null) {
             if(currentNode.getParentNode().getData().getCurrentPlayer() == currentPlayer) {
-                currentNode.getParentNode().setWins(currentNode.getParentNode().getSims() + gameState);
+                currentNode.getParentNode().setWins(currentNode.getParentNode().getWins() + gameState);
                 //System.out.println("node does belong to same player ");
             } else {
                 //System.out.println("node does not belong to same player ");
@@ -150,10 +153,11 @@ public class MCTSNode {
 
     public MCTSNode getBestSelectionChildNode() {
         List<MCTSNode> potentialChildren = new ArrayList<MCTSNode>();
-        double maxScore = -1;
+        double maxScore = Integer.MIN_VALUE;
         for(MCTSNode childNode : childNodes) {
             double childNodeScore = childNode.getSelectionScore();
-            if(childNodeScore > maxScore) maxScore = childNodeScore;
+            //System.out.println("childnodescore: " + childNodeScore);
+            if(childNodeScore >= maxScore) maxScore = childNodeScore;
         }
         for(MCTSNode childNode : childNodes) {
             double childNodeScore = childNode.getSelectionScore();
@@ -182,7 +186,6 @@ public class MCTSNode {
     public MCTSNode getBestLeafNode() {
         MCTSNode bestLeafNode = null;
         MCTSNode currentNode = this;
-        //if(currentNode.childNodes.isEmpty()) System.out.println("childNodes in getBestLeafNode empty");
         while(!currentNode.childNodes.isEmpty()) {
             currentNode = currentNode.getBestSelectionChildNode();
         }
@@ -191,15 +194,61 @@ public class MCTSNode {
     }
 
     public void createChildren() {
-        int[][] possibleMoves = Logic.getPossibleMoves(board);
-        for(int i = 0; i < possibleMoves.length; i++){
-            Board possibleBoard = new Board(board);
-            possibleBoard.applyMove(possibleMoves[i]);
-            possibleBoard.incrementTurn();
-            possibleBoard.changePlayer();
-            MCTSNode possibleNode = new MCTSNode(possibleBoard, explorationParameter);
-            possibleNode.setParentNode(this);
-            childNodes.add(possibleNode);
+        Board board = new Board(this.board);
+        int[][] possibleMoves;
+        if(Logic.checkMovePossible(board)) {
+            possibleMoves = Logic.getPossibleMoves(board);
+            if(getChildNodes().isEmpty()) {
+                for(int i = 0; i < possibleMoves.length; i++){
+                    Board possibleBoard = new Board(board);
+                    possibleBoard.applyMove(possibleMoves[i]);
+                    possibleBoard.incrementTurn();
+                    possibleBoard.changePlayer();
+                    MCTSNode possibleNode = new MCTSNode(possibleBoard, explorationParameter);
+                    possibleNode.setParentNode(this);
+                    childNodes.add(possibleNode);
+                }
+            } else {
+                for(int i = 0; i < possibleMoves.length; i++){
+                    Board possibleBoard = new Board(board);
+                    possibleBoard.applyMove(possibleMoves[i]);
+                    possibleBoard.incrementTurn();
+                    possibleBoard.changePlayer();
+                    boolean alreadyHasBoard = false;
+                    for(MCTSNode childNode : getChildNodes()) {
+                        if(childNode.getData().isSameBoard(possibleBoard)) alreadyHasBoard = true;
+                    }
+                    if(!alreadyHasBoard) {
+                        MCTSNode possibleNode = new MCTSNode(possibleBoard, explorationParameter);
+                        possibleNode.setParentNode(this);
+                        childNodes.add(possibleNode);
+                    }
+                }
+            }
+        } else {
+            board.incrementTurn();
+            board.changePlayer();
+            if(Logic.checkMovePossible(board)) {
+                if(getChildNodes().isEmpty()) {
+                    Board possibleBoard = new Board(board);
+                    MCTSNode possibleNode = new MCTSNode(possibleBoard, explorationParameter);
+                    possibleNode.setParentNode(this);
+                    childNodes.add(possibleNode);
+                } else {
+                    Board possibleBoard = new Board(board);
+                    boolean alreadyHasBoard = false;
+                    for(MCTSNode childNode : getChildNodes()) {
+                        if(childNode.getData().isSameBoard(possibleBoard)) alreadyHasBoard = true;
+                    }
+                    if(!alreadyHasBoard) {
+                        MCTSNode possibleNode = new MCTSNode(possibleBoard, explorationParameter);
+                        possibleNode.setParentNode(this);
+                        childNodes.add(possibleNode);
+                    }
+                }
+            } else {
+                terminalNode = true;
+            }
         }
     }
 
