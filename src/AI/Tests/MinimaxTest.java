@@ -11,7 +11,12 @@ public class MinimaxTest {
 
     public static void main(String[] args) {
             //test1();
+            long startTime = System.currentTimeMillis();
             test2();
+            long endTime = System.currentTimeMillis();
+            long runTime = endTime - startTime;
+            System.out.println("runtime:  " + runTime);
+            //test3();
         }
 
     //test if same value as minimaxAB
@@ -34,12 +39,21 @@ public class MinimaxTest {
         Stupid s = new Stupid();
         Board board = new Board();
         Minimax m = new Minimax(DEPTH, board);
+        MMAB_IterativeDeepening mmab = new MMAB_IterativeDeepening(10);
+        MMAB_moveOrdering mmab2 = new MMAB_moveOrdering(10);
 
-        GenericTest.test(s, m, GAMES, SIZE);
-        int minimaxWins = GenericTest.getPlayer2Wins();
-        int stupidWins = GenericTest.getPlayer1Wins();
-        System.out.println("Minimax wins: " + minimaxWins);
-        System.out.println("Stupid wins: " + stupidWins);
+        GenericTest.test(s, mmab2, GAMES, SIZE);
+        int p1wins = GenericTest.getPlayer1Wins();
+        int p2wins = GenericTest.getPlayer2Wins();
+        System.out.println("p1_wins: " + p1wins);
+        System.out.println("p2_wins: " + p2wins);
 
+    }
+
+    private static void test3(){
+
+        MMAB_IterativeDeepening mmab = new MMAB_IterativeDeepening(1000);
+
+        mmab.getBestMove(new Board());
     }
 }

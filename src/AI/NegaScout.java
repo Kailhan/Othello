@@ -70,6 +70,28 @@ public class NegaScout extends AI {
         return null;
     }
 
+    public Node<Board> getBestMoveNode(Board board){
+        NegaScout ns = new NegaScout(this.depth, board);
+        GameTree gameTree = new GameTree(this.depth, board);
+        Node<Board> root = gameTree.createTree();
+
+        ns.NegaSAlg(root, depth, -10000, 10000, board.getCurrentPlayer());
+
+        return root;
+    }
+
+    public int[] getBestMoveFromNode(Node<Board> root){
+        int[] bestMove = new int[2];
+        try {
+            bestMove[0] = selectMove(root).getRow();
+            bestMove[1] = selectMove(root).getColumn();
+        }
+        catch(NullPointerException e) {
+            System.out.println("no more moves");
+        }
+        return bestMove;
+    }
+
 //    public double NegaSAlg(Node<Board> currentNode, int depth, double alpha, double beta, int player) {
 //        if (depth == 0 || currentNode.getChildren().size() == 0) {
 //            System.out.println(player * evaluator.evaluate(currentNode.getData()));
