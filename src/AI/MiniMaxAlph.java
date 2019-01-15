@@ -11,15 +11,16 @@ public class MiniMaxAlph extends AI {
     private GameTree gameTree;
     private Node<Board> root;
     private int depth;
+    private Board board;
 
     public MiniMaxAlph(int depth, Board board) {
         this.depth = depth;
         this.evaluator = new EvaluationFunction(board);
     }
 
-    public MiniMaxAlph(int depth, EvaluationFunction eval) {
+    public MiniMaxAlph(int depth, Board board, double[] weights) {
         this.depth = depth;
-        this.evaluator = eval;
+        this.evaluator = new EvaluationFunction(board,weights);
     }
 
     public MiniMaxAlph(int depth, Board board, GameTree gameTree) {

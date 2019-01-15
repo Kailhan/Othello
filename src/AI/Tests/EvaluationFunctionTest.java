@@ -6,24 +6,27 @@ import Core.Board;
 public class EvaluationFunctionTest {
 
     private static final int SIZE = 8;
-    private static final int GAMES = 1000;
-    private static final int DEPTH = 3;
+    private static final int GAMES = 200;
+    private static final int DEPTH = 1;
 
     public static void main(String[] args){
 
-//        for(int i =0; i < 10; i++) {
-            double[] polyWeights = new double[]{10, 30, 100, 30, 50, 20, 10, 70, 100};
-            test1(polyWeights);
-//        }
+        double[] bestValues = test3();
+        System.out.println("finnished val i: " + bestValues[0]);
+        System.out.println("finnished val j: " + bestValues[1]);
+        System.out.println("finnished val h: " + bestValues[2]);
+        System.out.println("finalValue: " + bestValues[3]);
 
-//
+
+
+
 //        double[] polyWeight1 = new double[] {20,10,100,0,0,0,0,0,0};
 //        double[] polyWeight2 = new double[] {10,20,100,0,0,0,0,0,0};
 //        test2(polyWeight1,polyWeight2);
 
     }
 
-    private static void test1(double[] polyWeights){
+    private static int test1(double[] polyWeights){
 
         GameTree gameTree = new GameTree(DEPTH);
         Node<Board> root = gameTree.createTree();
@@ -32,17 +35,17 @@ public class EvaluationFunctionTest {
         GenericTest generic = new GenericTest();
         Stupid stupid = new Stupid();
 
-        EvaluationFunction evaluator = new EvaluationFunction(board) ;
-        evaluator.setWeightPoly(polyWeights);
-        MiniMaxAlph miniMaxAlph = new MiniMaxAlph(DEPTH, board);
+        EvaluationFunction evaluator = new EvaluationFunction(board,polyWeights) ;
+        double[] polyWeights2 = new double[] {50,50,50,50,50,50,50,50,50};
 
-        generic.test( stupid,evaluator,GAMES, SIZE);
+        EvalRandom evaluator2 = new EvalRandom(board,polyWeights2);
+        generic.test( evaluator,stupid,GAMES, SIZE);
 
 
-        System.out.println("EvaluationFunction wins: " + (generic.getPlayer1Wins()));
-        System.out.println("Stupid wins: " + generic.getPlayer2Wins());
-        System.out.println("Draws: " + generic.getDraws());
-
+//        System.out.println("EvaluationFunction wins: " + (generic.getPlayer1Wins()));
+//        System.out.println("Stupid wins: " + generic.getPlayer2Wins());
+//        System.out.println("Draws: " + generic.getDraws());
+        return generic.getPlayer1Wins();
     }
 
     private static void test2(double[] polyWeights1, double[] polyWeights2){
@@ -65,7 +68,69 @@ public class EvaluationFunctionTest {
 
     }
 
-    private static void test3(){
+    private static double[] test3() {
 
+        double[] bestVal = new double[4];
+        double score = Integer.MIN_VALUE;
+        double cScore;
+        double startingH = -100;
+        double startingJ = -100;
+        double startingI = -100;
+        double endingH = 100;
+        double endingJ = 100;
+        double endingI = 100;
+        double incrementH = 20;
+        double incrementJ = 20;
+        double incrementI = 20;
+        int count = 0;
+
+
+        while(incrementI > 1){
+        for (double i = startingI; i < endingI; i += incrementI) {
+            for (double j = startingJ; j < endingJ; j += incrementJ) {
+                for (double h = startingH; h < endingH; h += incrementH) {
+                    double[] polyWeights = new double[]{i, 0, 0, j, 0, 0, h, 0, 0};
+                    cScore = test1(polyWeights);
+                    if (cScore > score) {
+                        score = cScore;
+                        bestVal[0] = i;
+                        bestVal[1] = j;
+                        bestVal[2] = h;
+                        bestVal[3] = score;
+                        System.out.println("best i: " + bestVal[0]);
+                        System.out.println("best j: " + bestVal[1]);
+                        System.out.println("best h: " + bestVal[2]);
+                        System.out.println("score: " + cScore);
+                    }
+                }
+            }
+        }
+
+            System.out.println("FIRST TIMEEEEEE");
+            System.out.println();
+            System.out.println();
+
+
+        startingI = bestVal[0] - incrementI;
+        startingJ = bestVal[1] - incrementJ;
+        startingH = bestVal[2] - incrementH;
+
+        endingI = bestVal[0] + incrementI;
+        endingJ = bestVal[1] + incrementJ;
+        endingH = bestVal[2] + incrementH;
+
+        count++;
+        incrementI = ((Math.abs(startingI) + Math.abs(endingI)) /(count * 10));
+        incrementJ = ((Math.abs(startingJ) + Math.abs(endingJ)) /(count * 10));
+        incrementH = ((Math.abs(startingH) + Math.abs(endingH)) /(count * 10));
+
+
+            System.out.println("increment I: " + incrementI);
+            System.out.println("starting I: " + startingI);
+            System.out.println("ending I: " + endingI);
+    }
+
+
+        return bestVal;
     }
 }

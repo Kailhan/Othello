@@ -30,25 +30,15 @@ public class GA_DirectEvalFunc {
         gaLog[gaLogIndex] = ("coinWeightPoly0"); gaLogIndex++;
         gaLog[gaLogIndex] = ("coinWeightPoly1"); gaLogIndex++;
         gaLog[gaLogIndex] = ("coinWeightPoly2"); gaLogIndex++;
-        gaLog[gaLogIndex] = ("coinWeightPoly3"); gaLogIndex++;
-        gaLog[gaLogIndex] = ("cornerWeightPoly0"); gaLogIndex++;
-        gaLog[gaLogIndex] = ("cornerWeightPoly1"); gaLogIndex++;
-        gaLog[gaLogIndex] = ("cornerWeightPoly2"); gaLogIndex++;
-        gaLog[gaLogIndex] = ("cornerWeightPoly3"); gaLogIndex++;
         gaLog[gaLogIndex] = ("moveWeightPoly0"); gaLogIndex++;
         gaLog[gaLogIndex] = ("moveWeightPoly1"); gaLogIndex++;
         gaLog[gaLogIndex] = ("moveWeightPoly2"); gaLogIndex++;
-        gaLog[gaLogIndex] = ("moveWeightPoly3"); gaLogIndex++;
         gaLog[gaLogIndex] = ("territoryWeightPoly0"); gaLogIndex++;
         gaLog[gaLogIndex] = ("territoryWeightPoly1"); gaLogIndex++;
         gaLog[gaLogIndex] = ("territoryWeightPoly2"); gaLogIndex++;
-        gaLog[gaLogIndex] = ("territoryWeightPoly3"); gaLogIndex++;
-        for(int i = 0; i < pop.getBoardSize(); i++) {
-            for(int j = 0; j < pop.getBoardSize(); j++) {
-                gaLog[gaLogIndex] = ("row" + i + "col" + j);
-                gaLogIndex++;
-            }
-        }
+
+
+
         int iterationCounter = 0;
         for(int i = 0; i < maxIterations; i++) {
             long starttime = System.nanoTime();
@@ -98,9 +88,9 @@ public class GA_DirectEvalFunc {
 
         StringBuilder gaCSVLogBuilder = new StringBuilder();
 
-        for(int i = 1; i < (WEIGHT_POLY_SIZE + (pop.getBoardSize() * pop.getBoardSize()) + 2) * (1  + ((iterationCounter + 1) * pop.getPopSize())); i++) {
+        for(int i = 1; i < (WEIGHT_POLY_SIZE + 2) * (1  + ((iterationCounter + 1) * pop.getPopSize())); i++) {
             gaCSVLogBuilder.append(gaLog[i - 1]).append(",");
-            if(i % ((WEIGHT_POLY_SIZE + (pop.getBoardSize() * pop.getBoardSize()) + 2)) == 0) gaCSVLogBuilder.append("\n");
+            if(i % ((WEIGHT_POLY_SIZE + 2)) == 0) gaCSVLogBuilder.append("\n");
         }
         gaCSVLogBuilder.append(gaLog[(WEIGHT_POLY_SIZE + (pop.getBoardSize() * pop.getBoardSize()) + 2) * (1  + ((iterationCounter + 1) * pop.getPopSize()))-1]);
         String gaCSVLog = gaCSVLogBuilder.toString();
