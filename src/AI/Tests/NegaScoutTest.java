@@ -13,7 +13,7 @@ public class NegaScoutTest {
         GameTree gameTree = new GameTree(4);
         Node<Board> root = gameTree.createTree();
 
-        int games = 100;
+        int games = 50;
         int totalSims1 = 1;
         int totalSims2 = 1;
         int size = 8;

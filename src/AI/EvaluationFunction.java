@@ -24,6 +24,13 @@ public class EvaluationFunction extends AI{
         setTerritory();
     }
 
+    public EvaluationFunction(Board board, double[] weights){
+        this.cBoard = board;
+        setWeightPoly(weights);
+        setTerritory();
+    }
+
+
     public EvaluationFunction(double [][] cellValues, double[] weightPoly, Board board) {
         this.cBoard = board;
         this.cellValues = cellValues;
@@ -48,7 +55,7 @@ public class EvaluationFunction extends AI{
     public int[] getBestMove(Board board) {
         int moveCounter = 0;
         int possibleBoardIndex = 0;
-        int bestBoardIndex = -1;
+        int bestBoardIndex = -1;                    //waarom -1
 
         for (int r = 0; r < board.getSize(); r++)
         {
@@ -319,28 +326,16 @@ public class EvaluationFunction extends AI{
             weightPoly[i] = chromosome[chromesomePosCounter];
             chromesomePosCounter++;
         }
-        cellValues = new double[cBoard.getSize()][cBoard.getSize()];
-        for(int i = 0; i < cellValues.length; i++) {
-            for (int j = 0; j < cellValues[0].length; j++) {
-                cellValues[i][j] = chromosome[chromesomePosCounter];
-                chromesomePosCounter++;
-            }
-        }
     }
 
     public double[] getChromosome() {
-        this.chromosome = new double[weightPoly.length + (cellValues.length * cellValues[0].length)];
+        this.chromosome = new double[weightPoly.length];
         int chromesomePosCounter = 0;
-        for(int i = 0; i < weightPoly.length; i++)  {
+        for(int i = 0; i < weightPoly.length; i++) {
             chromosome[chromesomePosCounter] = weightPoly[i];
             chromesomePosCounter++;
         }
-        for(int i = 0; i < cellValues.length; i++) {
-            for (int j = 0; j < cellValues[0].length; j++) {
-                chromosome[chromesomePosCounter] = cellValues[i][j];
-                chromesomePosCounter++;
-            }
-        }
+
         return chromosome;
     }
 

@@ -1,25 +1,23 @@
 package AI.Tests.MCTS_GA;
 
 import AI.MCTS;
+import AI.MCTS_TreeReuse;
 import AI.Stupid;
 import AI.Tests.GenericTest;
 
-public class MCTSTest {
+public class MCTSTest_TreeReuse {
 
     public static void main(String[] args) {
-        int games = 1000;
-        int totalSims1 = 25;
-        int totalSims2 = 1;
+        int games = 500;
+        int totalSims1 = 50;
+        double explorationParameter = 20;
         int size = 8;
 
-        MCTS mcts1 = new MCTS(totalSims1);
-        MCTS mcts2 = new MCTS(totalSims2);
+        MCTS_TreeReuse mcts1 = new MCTS_TreeReuse(totalSims1, explorationParameter);
 
         long startTime = System.nanoTime();
 
         GenericTest.test(mcts1, new Stupid(), games/2, size);
-        //GenericTest.test(new Stupid(), new Stupid(), games/2, size);
-        //GenericTest.test(mcts1, mcts2, games/2, size);
 
         int mcts1Wins = GenericTest.getPlayer1Wins();
         int mcts2Wins = GenericTest.getPlayer2Wins();
@@ -30,8 +28,6 @@ public class MCTSTest {
         System.out.println("halfway thru");
 
         GenericTest.test(new Stupid(), mcts1, games/2, size);
-        //GenericTest.test(new Stupid(), new Stupid(), games/2, size);
-        //GenericTest.test(mcts2, mcts1, games/2, size);
 
         mcts1Wins += GenericTest.getPlayer2Wins();
         mcts2Wins += GenericTest.getPlayer1Wins();
@@ -41,6 +37,7 @@ public class MCTSTest {
         System.out.println("MCTS draws: " + (games/2-GenericTest.getPlayer1Wins()-GenericTest.getPlayer2Wins()));
 
         long endTime = System.nanoTime();
+
         System.out.println(endTime-startTime);
         System.out.println("mcts1 totalsims: " + totalSims1);
         System.out.println("exploration: " + mcts1.getExplorationParameter());

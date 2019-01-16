@@ -6,36 +6,43 @@ import Core.GameScene;
 public class MMAB_IterativeDeepening extends AI {
 
     private int moveTime;
-    private Board startBoard;
+    private long totalRunTime;
 
-        public MMAB_IterativeDeepening(int moveTime, Board startBoard){
+        public MMAB_IterativeDeepening(int moveTime){
             this.moveTime = moveTime;
-            this.startBoard = startBoard;
         }
 
-        public int[] getBestMove(Board board){
+         public int[] getBestMove(Board startBoard){
             long startTime = System.currentTimeMillis();
             long endTime = startTime + moveTime;
             int depth = 1;
             int[] currentBestMove = null;
-            //startBoard = new Board(board);
+            int[] previousBestMove = null;
+            Board board;
             while (System.currentTimeMillis() < endTime)
             {
                 board = new Board(startBoard);
-                int[] move = null;
                 MiniMaxAlph m = new MiniMaxAlph(depth, board);
-                for(int i = 0; i < depth; i++) {
-                    move = m.getBestMove(board);
-                    board.applyMove(move[0], move[1]);
-                }
+                //Node<Board> PV_node = m.getBestMoveNode(board);
+                //int[] move = m.getBestMoveFromNode(PV_node);
+                int[] move = m.getBestMove(board);
+                previousBestMove = currentBestMove;
                 currentBestMove = move;
                 depth++;
+                long runtime = (System.currentTimeMillis() - startTime);
+                totalRunTime = totalRunTime + runtime;
+                //System.out.println("depth: " + depth + " runtime " + runtime);
             }
-            return currentBestMove;
+            //System.out.println("depth: " + depth);
+             //System.out.println("runTime mmab: " + totalRunTime);
+             if(previousBestMove == null) previousBestMove = currentBestMove;
+            return previousBestMove;
         }
+
 
     public double evaluateFitness(int gamesToBeSimmed, int boardSize) {
         return -1;
     }
+
 
 }

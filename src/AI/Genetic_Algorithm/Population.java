@@ -17,7 +17,7 @@ public class Population {
 
     private int mutationCount;
 
-    public static final int GA_GAMES_TO_BE_SIMMED = 100;
+    public static final int GA_GAMES_TO_BE_SIMMED = 1000;
     public static final int GA_BOARD_SIZE = 8;
     public static final int DEPTH = 3;
     public static final int GA_POP_SIZE = 100;

@@ -17,6 +17,7 @@ public class GameTree {
     private int[][] boardGrid;
     private int treeDepth;
     private Minimax minimax;
+    private Node<Board> PV_node;
 
     public GameTree(int treeDepth, Board board) {
         this.logic = new Logic();
@@ -27,6 +28,14 @@ public class GameTree {
 
     public GameTree(int treeDepth){
         this(treeDepth, new Board());
+    }
+
+    public GameTree(int treeDepth, Board board, Node<Board> PV_node) {
+        this.logic = new Logic();
+        this.board = board;
+        this.boardGrid = board.getBoardGrid();
+        this.treeDepth = treeDepth;
+        this.PV_node = PV_node;
     }
 
     /**
@@ -48,6 +57,29 @@ public class GameTree {
                 }
             }
             return currentLayer;
+    }
+
+    public ArrayList<Node<Board>> createOrderedLayerIncrement(Node<Board> root, ArrayList<Node<Board>> currentLayer, Node<Board> PV_node){
+        //should add PV_node to entire layer once instead of to each increment
+        Board rootBoard = root.getData();
+        root.addChild(PV_node);
+        int PV_row = PV_node.getRow();
+        int PV_col = PV_node.getColumn();
+        for (int i = 0; i < boardGrid.length; i++) {
+            for (int j = 0; j < boardGrid[0].length; j++) {
+                if (i != PV_row && j != PV_col){
+                    if (Logic.checkSquareAllowed(i, j, rootBoard)) {
+                        Board tmpBoard = new Board(rootBoard); //makes use of the deep-copy method in board so that the child and parents' board are distinct objects
+                        tmpBoard.applyMove(i, j);
+                        tmpBoard.changePlayer();
+                        Node currentChild = new Node(tmpBoard);
+                        root.addChild(currentChild);
+                        currentLayer.add(currentChild);
+                    }
+                }
+            }
+        }
+        return currentLayer;
     }
 
     /**

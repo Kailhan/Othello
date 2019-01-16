@@ -230,26 +230,20 @@ public class Logic {
                 }
                 return new int[0][0];
             case 4 :
-                for(int i = 1; r + i < boardSize; i++)
-                {
-                    if(boardGrid[r + i][c] == 0)
-                    {
+                for(int i = 1; r + i < boardSize; i++) {
+                    if(boardGrid[r + i][c] == 0) {
                         return new int[0][0];
                     }
-                    else if(boardGrid[r + i][c] != currentPlayer)
-                    {
+                    else if(boardGrid[r + i][c] != currentPlayer) {
                         foundEnemy = true;
                         int[][] enemyCoordinate = new int[][]{{r + i, c}};
                         flippedDisks = combine(flippedDisks, enemyCoordinate);
                     }
-                    else if (boardGrid[r + i][c] == currentPlayer)
-                    {
-                        if(foundEnemy)
-                        {
+                    else if (boardGrid[r + i][c] == currentPlayer) {
+                        if(foundEnemy) {
                             return flippedDisks;
                         }
-                        else
-                        {
+                        else {
                             return new int[0][0];
                         }
                     }
