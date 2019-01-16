@@ -253,9 +253,6 @@ public class GameScene extends BorderPane {
         if(Logic.checkSquareAllowed(r, c, board))
         {
             playerModel.addMove(board, r, c);
-            playerModel.getEvaluationFunction().printWeightPoly();
-            playerModel.iterate();
-            playerModel.getEvaluationFunction().printWeightPoly();
             updateBoard(r, c);
         }
     }
