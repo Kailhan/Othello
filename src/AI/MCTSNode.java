@@ -101,11 +101,8 @@ public class MCTSNode {
             if(Logic.checkMovePossible(simulationBoard)) {
                 move = selectMove(simulationBoard, startBoard);
                 simulationBoard.applyMove(move);
-                simulationBoard.incrementTurn();
-                simulationBoard.changePlayer();
             } else {
-                simulationBoard.incrementTurn();
-                simulationBoard.changePlayer();
+                simulationBoard.applyMove();
                 if(!Logic.checkMovePossible(simulationBoard)) {
                     gameFinished = true;
                 }
@@ -195,8 +192,6 @@ public class MCTSNode {
         for(int i = 0; i < possibleMoves.length; i++){
             Board possibleBoard = new Board(board);
             possibleBoard.applyMove(possibleMoves[i]);
-            possibleBoard.incrementTurn();
-            possibleBoard.changePlayer();
             MCTSNode possibleNode = new MCTSNode(possibleBoard, explorationParameter);
             possibleNode.setParentNode(this);
             childNodes.add(possibleNode);

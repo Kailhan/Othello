@@ -33,7 +33,8 @@ public class Board implements Serializable {
         this.currentPlayer = BLACK;
     }
 
-    public Board(Board board) { // properly "deep" copy a board
+    public Board(Board board) // properly "deep" copy a board
+    {
         this.size = board.getSize();
         this.turn = board.getTurn();
         this.currentPlayer = board.getCurrentPlayer();
@@ -89,7 +90,6 @@ public class Board implements Serializable {
         return  nrSquares;
     }
 
-
     public int getCorners(int state)
     {
         int nrCorners = 0;
@@ -136,32 +136,37 @@ public class Board implements Serializable {
      * @param row specifies row of cell we want to update
      * @param col specifies column of cell we want to update
      */
-    public void applyMove(int row, int col) {
-//        EvalFunc_FixedTerr evaluator = new EvalFunc_FixedTerr(this, getBoardGrid());
-//        System.out.println(evaluator.evaluate());
+    public void applyMove(int row, int col)
+    {
         int[][] flippedDisks = Logic.getFlippedDisks(row, col, this);
         boardGrid[row][col] = currentPlayer;
         for (int[] flippedDisk : flippedDisks)
             boardGrid[flippedDisk[0]][flippedDisk[1]] = currentPlayer;
+        applyMove();
     }
 
-    public boolean isSameBoard(Board parent) {
-        boolean sameBoard = true;
+    public void applyMove(int[] move)
+    {
+        applyMove(move[0], move[1]);
+    }
+
+    public void applyMove()
+    {
+        incrementTurn();
+        changePlayer();
+    }
+
+    public boolean isSameBoard(Board parent)
+    {
         int[][] parentBoardGrid = parent.getBoardGrid();
         int[][] currentBoardGrid = this.getBoardGrid();
-        if(currentPlayer != parent.getCurrentPlayer()) {
-            sameBoard = false;
-        } else {
-            for(int r = 0; r < parentBoardGrid.length; r++) {
-                for(int c = 0; c < parentBoardGrid.length; c++) {
-                    if(parentBoardGrid[r][c] != currentBoardGrid[r][c]) {
-                        sameBoard = false;
-                        break;
-                    }
-                }
-            }
-        }
-        return sameBoard;
+        if(currentPlayer != parent.getCurrentPlayer())
+            return false;
+        else
+            for (int r = 0; r < parentBoardGrid.length; r++)
+                for (int c = 0; c < parentBoardGrid.length; c++)
+                    if (parentBoardGrid[r][c] != currentBoardGrid[r][c]) return false;
+        return true;
     }
 
     public int getRow(Board parent) {
@@ -186,10 +191,6 @@ public class Board implements Serializable {
             }
         }
         return column;
-    }
-
-    public void applyMove(int[] move) {
-        applyMove(move[0], move[1]);
     }
 
     public boolean checkTile(int r, int c, int state) {

@@ -32,11 +32,8 @@ public class GenericTest {
                         move = player2.getBestMove(board);
                     }
                     board.applyMove(move[0], move[1]);
-                    board.incrementTurn();
-                    board.changePlayer();
                 } else {
-                    board.incrementTurn();
-                    board.changePlayer();
+                    board.applyMove();
                     if(!Logic.checkMovePossible(board)) {
                         gameFinished = true;
                         if (board.getNrSquares(BLACK) > board.getNrSquares(WHITE)) {
