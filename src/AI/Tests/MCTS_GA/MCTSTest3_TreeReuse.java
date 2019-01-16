@@ -13,7 +13,7 @@ public class MCTSTest3_TreeReuse {
 
     public static void main(String[] args) {
         int minPlayouts = 1;
-        int maxPlayouts = 25;
+        int maxPlayouts = 50;
         int stepsPlayouts = 1;
         double minExplore = 0;
         double maxExplore = 2;
@@ -80,6 +80,7 @@ public class MCTSTest3_TreeReuse {
                     "_steps_" + String.valueOf(stepsPlayouts) +
                     "_totalGames_" + String.valueOf(totalGames) +
                     "_BOARDSIZE8ONLY_" + String.valueOf(8) +
+                    "_SUBTREEREUSE_" +
                     "_time" + new Timestamp(System.currentTimeMillis()).toInstant().toString() +
                     ".csv";
             fileName8 = fileName8.replaceAll(":","_");

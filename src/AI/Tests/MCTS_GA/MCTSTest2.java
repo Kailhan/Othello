@@ -28,7 +28,7 @@ public class MCTSTest2 {
 
         for(int i = 1; i < maxPlayouts + 1; i++) {
             long startTime = System.nanoTime();
-            MCTS mcts = new MCTS(i);
+            MCTS mcts = new MCTS(i, MCTS.STANDARD_EXPLORATION_PARAMETER);
             GenericTest.test(mcts, new Stupid(), totalGames/2, 4);
             log[logCounter] = String.valueOf(GenericTest.getPlayer1Wins()); logCounter++;
             log[logCounter] = String.valueOf(GenericTest.getDraws()); logCounter++;
@@ -69,7 +69,7 @@ public class MCTSTest2 {
 
         for(int i = 1; i < maxPlayouts + 1; i++) {
             long startTime = System.nanoTime();
-            MCTS mcts = new MCTS(i);
+            MCTS mcts = new MCTS(i, MCTS.STANDARD_EXPLORATION_PARAMETER);
             GenericTest.test(mcts, new Stupid(), totalGames/2, 6);
             log[logCounter] = String.valueOf(GenericTest.getPlayer1Wins()); logCounter++;
             log[logCounter] = String.valueOf(GenericTest.getDraws()); logCounter++;
@@ -110,7 +110,7 @@ public class MCTSTest2 {
 
         for(int i = 1; i < maxPlayouts + 1; i++) {
             long startTime = System.nanoTime();
-            MCTS mcts = new MCTS(i);
+            MCTS mcts = new MCTS(i, MCTS.STANDARD_EXPLORATION_PARAMETER);
             GenericTest.test(mcts, new Stupid(), totalGames/2, 8);
             log[logCounter] = String.valueOf(GenericTest.getPlayer1Wins()); logCounter++;
             log[logCounter] = String.valueOf(GenericTest.getDraws()); logCounter++;
