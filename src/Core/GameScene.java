@@ -265,7 +265,7 @@ public class GameScene extends BorderPane {
         switch(AILevel)
         {
             case 0:
-                MCTS mcts = new MCTS(1000);
+                MCTS mcts = new MCTS(1000, MCTS.STANDARD_EXPLORATION_PARAMETER);
                 move = mcts.getBestMove(board);
                 updateBoard(move[0], move[1]);
                 break;

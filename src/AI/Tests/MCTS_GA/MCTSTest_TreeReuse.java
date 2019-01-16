@@ -1,6 +1,5 @@
 package AI.Tests.MCTS_GA;
 
-import AI.MCTS;
 import AI.MCTS_TreeReuse;
 import AI.Stupid;
 import AI.Tests.GenericTest;
@@ -8,9 +7,9 @@ import AI.Tests.GenericTest;
 public class MCTSTest_TreeReuse {
 
     public static void main(String[] args) {
-        int games = 500;
-        int totalSims1 = 50;
-        double explorationParameter = 20;
+        int games = 100;
+        int totalSims1 = 100;
+        double explorationParameter = 10000;
         int size = 8;
 
         MCTS_TreeReuse mcts1 = new MCTS_TreeReuse(totalSims1, explorationParameter);
@@ -39,6 +38,7 @@ public class MCTSTest_TreeReuse {
         long endTime = System.nanoTime();
 
         System.out.println(endTime-startTime);
+        System.out.println("boardsize: " + size);
         System.out.println("mcts1 totalsims: " + totalSims1);
         System.out.println("exploration: " + mcts1.getExplorationParameter());
         System.out.println("treeSize: " + mcts1.getRootNode().getTreeSize());
