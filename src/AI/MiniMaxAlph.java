@@ -3,6 +3,8 @@ package AI;
 import AI.Tests.GenericTest;
 import Core.Board;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BinaryOperator;
 
 public class MiniMaxAlph extends AI {
@@ -46,7 +48,7 @@ public class MiniMaxAlph extends AI {
 
     public int[] getBestMove(Board board) {
 
-        Node<Board> root = getBestMoveNode(board);
+        Node<Board> root = getRootMinimaxed(board);
 
         int[] bestMove = new int[2];
         try {
@@ -101,19 +103,63 @@ public class MiniMaxAlph extends AI {
         return null;
     }
 
+    public Node<Board> selectPV_node(Node<Board> root, int depth){
+        Node<Board> currentRoot = root;
+        for(int i = 0; i < depth; i++){
+            currentRoot = selectMove(currentRoot);
+        }
+        return currentRoot;
+    }
+
+    public void PV_orderTreeLayer(Node<Board> PV_node){
+        Node<Board> currentPV_node = PV_node;
+        Node<Board> currentParent = PV_node.getParent();
+        Node<Board> foundPV_node = null;
+        //List<Node<Board>> currentChildren = currentParent.getChildren();
+
+        while(currentParent != null) {
+            List<Node<Board>> currentChildren = currentParent.getChildren();
+            for (Node<Board> child : currentChildren) {
+                if (child == currentPV_node) {
+                    foundPV_node = child;
+                    //currentChildren.add(0, child);
+                }
+            }
+            currentChildren.remove(foundPV_node);
+            currentChildren.add(0, foundPV_node);
+
+            currentPV_node = currentParent;
+            currentParent = currentParent.getParent();
+        }
+    }
+
     public Node<Board> getRoot() {
         return root;
     }
 
-    public Node<Board> getBestMoveNode(Board board){
+    public Node<Board> getRootMinimaxed(Board board){
         MiniMaxAlph minimax = new MiniMaxAlph(this.depth, board);
-        GameTree gameTree = new GameTree(this.depth, board);
+        gameTree = new GameTree(this.depth, board);
         Node<Board> root = gameTree.createTree();
 
         minimax.miniMaxAB(root, Integer.MIN_VALUE, Integer.MAX_VALUE, board.getCurrentPlayer());
 
+        //Node<Board> moveNode = selectMove(root);
+
         return root;
     }
+
+    public void MinimaxIterative(Board board, Node<Board> root){
+        MiniMaxAlph minimax = new MiniMaxAlph(this.depth, board);
+        //Node<Board> root = gameTree.createTree();
+        gameTree.addTreeLayer();
+
+
+        minimax.miniMaxAB(root, Integer.MIN_VALUE, Integer.MAX_VALUE, board.getCurrentPlayer());
+
+        //Node<Board> moveNode = selectMove(root);
+    }
+
 
     public Node<Board> getBestMoveNodeOrdered(Board board, Node<Board> PV_node){
         MiniMaxAlph minimax = new MiniMaxAlph(this.depth, board);
@@ -137,4 +183,7 @@ public class MiniMaxAlph extends AI {
         return bestMove;
     }
 
+    public GameTree getGameTree() {
+        return gameTree;
+    }
 }
