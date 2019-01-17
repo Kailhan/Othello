@@ -17,11 +17,11 @@ public class Population_EvalFunc {
 
     private int mutationCount;
 
-    public static final int GA_GAMES_TO_BE_SIMMED = 1000;
+    public static final int GA_GAMES_TO_BE_SIMMED = 10;
     public static final int GA_BOARD_SIZE = 8;
-    public static final int GA_POP_SIZE = 1000;
-    public static final double GA_WEIGHT_POLY_BOUND = 10000;
-    public static final double GA_TERRITORY_BOUND = 10000;
+    public static final int GA_POP_SIZE = 10;
+    public static final double GA_WEIGHT_POLY_BOUND = 100;
+    public static final double GA_TERRITORY_BOUND = 100;
     public static double SELECTION_RATIO = 5;
 
     public Population_EvalFunc(int popSize, int boardSize, double weightPolyBound, double territoryBound) {
@@ -229,7 +229,7 @@ public class Population_EvalFunc {
      * @return best performing AI
      */
     public AI getTopSpecimen() {
-        double fitness = Double.MIN_VALUE;
+        double fitness = Integer.MIN_VALUE;
         int indexTopSpecimen = -1;
         for(int i = 0; i < AIs.length; i++) {
             if(AIs[i].getFitness() > fitness) {
@@ -245,7 +245,7 @@ public class Population_EvalFunc {
      * @return worst performing AI
      */
     public AI getWorstSpecimen() {
-        double fitness = Double.MAX_VALUE;
+        double fitness = Integer.MAX_VALUE;
         int indexWorstSpecimen = -1;
         for(int i = 0; i < AIs.length; i++) {
             if(AIs[i].getFitness() < fitness) {
