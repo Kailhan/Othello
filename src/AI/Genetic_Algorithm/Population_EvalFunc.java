@@ -17,9 +17,9 @@ public class Population_EvalFunc {
 
     private int mutationCount;
 
-    public static final int GA_GAMES_TO_BE_SIMMED = 10;
+    public static final int GA_GAMES_TO_BE_SIMMED = 20;
     public static final int GA_BOARD_SIZE = 8;
-    public static final int GA_POP_SIZE = 10;
+    public static final int GA_POP_SIZE = 30;
     public static final double GA_WEIGHT_POLY_BOUND = 100;
     public static final double GA_TERRITORY_BOUND = 100;
     public static double SELECTION_RATIO = 5;
@@ -44,7 +44,8 @@ public class Population_EvalFunc {
      */
     public void initMiniMaxAlphPopulation() {
         for(int i = 0; i < popSize; i++) {
-            EvaluationFunction cEvalFunc = new EvaluationFunction(initTerritory(territoryBound), initWeightPoly(16, weightPolyBound), new Board(boardSize));
+            //EvaluationFunction cEvalFunc = new EvaluationFunction(initTerritory(territoryBound), initWeightPoly(16, weightPolyBound), new Board(boardSize));
+            EvaluationFunction cEvalFunc = new EvaluationFunction(initWeightPoly(16, weightPolyBound), new Board(boardSize));
             this.AIs[i] = cEvalFunc; //idk what the depth should be
             //System.out.println(AIs[i].getEvaluator().getChromosome()[1]);
         }
@@ -128,20 +129,20 @@ public class Population_EvalFunc {
     public EvaluationFunction randomCrossover(EvaluationFunction parent1, EvaluationFunction parent2) {
         double[] parent1WeightPoly = parent1.getWeightPoly();
         double[] parent2WeightPoly = parent2.getWeightPoly();
-        double[][] parent1CellValues = parent1.getCellValues();
-        double[][] parent2CellValues = parent2.getCellValues();
+       // double[][] parent1CellValues = parent1.getCellValues();
+        //double[][] parent2CellValues = parent2.getCellValues();
         double[] childWeightPoly = new double[parent1WeightPoly.length];
-        double[][] childCellValues = new double[parent1CellValues.length][parent1CellValues[0].length];
+       // double[][] childCellValues = new double[parent1CellValues.length][parent1CellValues[0].length];
 
         for(int i = 0; i < parent1WeightPoly.length; i++) {
             childWeightPoly[i] = (rand.nextInt(2) == 0) ? parent1WeightPoly[i] : parent2WeightPoly[i];
         }
-        for(int i = 0; i < parent1CellValues.length; i++) {
-            for (int j = 0; j < parent1CellValues[0].length; j++) {
-                childCellValues[i][j] = (rand.nextInt(2) == 0) ? parent1CellValues[i][j] : parent2CellValues[i][j];
-            }
-        }
-        EvaluationFunction tmpEvalFunc = new EvaluationFunction(childCellValues, childWeightPoly,new Board(boardSize));
+//        for(int i = 0; i < parent1CellValues.length; i++) {
+//            for (int j = 0; j < parent1CellValues[0].length; j++) {
+//                childCellValues[i][j] = (rand.nextInt(2) == 0) ? parent1CellValues[i][j] : parent2CellValues[i][j];
+//            }
+//        }
+       EvaluationFunction tmpEvalFunc = new EvaluationFunction(childWeightPoly,new Board(boardSize));
         return tmpEvalFunc;
     }
 
@@ -154,24 +155,26 @@ public class Population_EvalFunc {
     public EvaluationFunction randomWeightedCrossover(EvaluationFunction parent1, EvaluationFunction parent2) {
         double[] parent1WeightPoly = parent1.getWeightPoly();
         double[] parent2WeightPoly = parent2.getWeightPoly();
-        double[][] parent1CellValues = parent1.getCellValues();
-        double[][] parent2CellValues = parent2.getCellValues();
+//        double[][] parent1CellValues = parent1.getCellValues();
+//        double[][] parent2CellValues = parent2.getCellValues();
         double[] childWeightPoly = new double[parent1WeightPoly.length];
-        double[][] childCellValues = new double[parent1CellValues.length][parent1CellValues[0].length];
+//        double[][] childCellValues = new double[parent1CellValues.length][parent1CellValues[0].length];
         double proportion;
 
         for(int i = 0; i < parent1WeightPoly.length; i++) {
             proportion = rand.nextDouble();
             childWeightPoly[i] = (parent1WeightPoly[i] * proportion) + (parent2WeightPoly[i] * (1 - proportion));
         }
-        for(int i = 0; i < parent1CellValues.length; i++) {
-            for (int j = 0; j < parent1CellValues[0].length; j++) {
-                proportion = rand.nextDouble();
-                childCellValues[i][j] = parent1CellValues[i][j] * proportion + parent2CellValues[i][j] * (1 - proportion);
-            }
-        }
 
-        EvaluationFunction tmpEvalFunc = new EvaluationFunction(childCellValues, childWeightPoly,new Board(boardSize));
+//        for(int i = 0; i < parent1CellValues.length; i++) {
+//            for (int j = 0; j < parent1CellValues[0].length; j++) {
+//                proportion = rand.nextDouble();
+//                childCellValues[i][j] = parent1CellValues[i][j] * proportion + parent2CellValues[i][j] * (1 - proportion);
+//            }
+//        }
+
+//        EvaluationFunction tmpEvalFunc = new EvaluationFunction(childCellValues, childWeightPoly,new Board(boardSize));
+        EvaluationFunction tmpEvalFunc = new EvaluationFunction(childWeightPoly,new Board(boardSize));
         return tmpEvalFunc;
     }
 
@@ -229,7 +232,7 @@ public class Population_EvalFunc {
      * @return best performing AI
      */
     public AI getTopSpecimen() {
-        double fitness = Double.MIN_VALUE;
+        double fitness = Integer.MIN_VALUE;
         int indexTopSpecimen = -1;
         for(int i = 0; i < AIs.length; i++) {
             if(AIs[i].getFitness() > fitness) {

@@ -82,7 +82,7 @@ public class NegaScout extends AI {
         GameTree gameTree = new GameTree(this.depth, board);
         Node<Board> root = gameTree.createTree();
 
-        ns.NegaSAlg(root, depth, -10000, 10000, board.getCurrentPlayer());
+        ns.NegaSAlg(root, -10000, 10000, board.getCurrentPlayer());
 
         return root;
     }

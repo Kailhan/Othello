@@ -29,20 +29,20 @@ public class EvaluationFunction extends AI{
     }
 
 
-    public EvaluationFunction(double [][] cellValues, double[] weightPoly, Board board) {
-        this.cBoard = board;
-        this.cellValues = cellValues;
+    public EvaluationFunction(double[] weightPoly) {
         this.weightPoly = weightPoly;
+        setTerritory();
     }
 
     public EvaluationFunction(double[] chromosome, Board board) {
         this.cBoard = board;
+        setTerritory();
         setChromosome(chromosome);
     }
 
-    public EvaluationFunction(double[] chromosome) {
-        this(chromosome, new Board((int)Math.sqrt(chromosome.length - WEIGHT_POLY_SIZE)));
-    }
+//    public EvaluationFunction(double[] chromosome) {
+//        this(chromosome, new Board((int)Math.sqrt(chromosome.length - WEIGHT_POLY_SIZE)));
+//    }
 
     public void setWeightPoly()
     {
@@ -89,16 +89,16 @@ public class EvaluationFunction extends AI{
         }
 
 //        if(board.getCurrentPlayer() == Board.BLACK) {
-            double score = Integer.MIN_VALUE;
-            double cScore;
-            for (int i = 0; i < possibleBoards.length; i++) {
-                cScore = evaluate(possibleBoards[i]);
-                cScore *= cScore;
-                if (cScore >= score) {
-                    score = cScore;
-                    bestBoardIndex = i;
-                }
+        double score = Integer.MIN_VALUE;
+        double cScore;
+        for (int i = 0; i < possibleBoards.length; i++) {
+            cScore = evaluate(possibleBoards[i]);
+            cScore *= cScore;
+            if (cScore >= score) {
+                score = cScore;
+                bestBoardIndex = i;
             }
+        }
 
         int[] move = new int[2];
         move[0] = possibleBoards[bestBoardIndex].getRow(board);
@@ -110,10 +110,10 @@ public class EvaluationFunction extends AI{
 
         gamesToBeSimmed = (gamesToBeSimmed < 2) ? 2 : gamesToBeSimmed;
         gamesToBeSimmed = (gamesToBeSimmed % 2 != 0) ? gamesToBeSimmed + 1: gamesToBeSimmed;
-
-        GenericTest.test(this, stupid, gamesToBeSimmed/2, boardSize);
+        MCTS evaluator = new MCTS(1000);
+        GenericTest.test(this,evaluator, gamesToBeSimmed/2, boardSize);
         winsFirstMove = GenericTest.getPlayer1Wins();
-        GenericTest.test(stupid, this, gamesToBeSimmed/2, boardSize);
+        GenericTest.test(evaluator, this, gamesToBeSimmed/2, boardSize);
         winsSecondMove = GenericTest.getPlayer2Wins();
 
         this.fitness = (winsFirstMove + winsSecondMove)/gamesToBeSimmed;
@@ -158,51 +158,51 @@ public class EvaluationFunction extends AI{
     }
 
     public void setTerritory(double[][] cellValues) {
-        this.cellValues = new double[cBoard.getSize()][cBoard.getSize()];
-        for(int i = 0; i < cBoard.getSize(); i++) {
-            for(int j = 0; j < cBoard.getSize(); j++) {
+        this.cellValues = new double[8][8];         //verander 8 terug naar cBoard.getSize()
+        for(int i = 0; i < 8; i++) {
+            for(int j = 0; j < 8; j++) {
                 this.cellValues[i][j] = cellValues[i][j];
             }
         }
     }
 
     public void setTerritory(){
-        cellValues = new double[cBoard.getSize()][cBoard.getSize()];
+        cellValues = new double[8][8]; //verander terug naar cBoard.getSize()
 
-        if(cBoard.getSize() == 4)
-        {
-            setTerritory(new double[][] {
-                    {10,5,5,10},
-                    {5,0,0,5},
-                    {5,0,0,5},
-                    {10,5,5,10}});
-        }
-        else if(cBoard.getSize() == 6)
-        {
-            setTerritory(new double[][] {
-                    {10,5,8,8,5,10},
-                    {5,5,6,6,5,5},
-                    {8,6,0,0,6,8},
-                    {8,6,0,0,6,8},
-                    {5,5,6,6,5,5},
-                    {10,5,8,8,5,10}});
-        }
-
-        else if(cBoard.getSize() == 8)
-        {
-            setTerritory(new double[][] {
-                    {400,50,300,250,250,300,50,400},
-                    {50,10,150,150,150,150,10,50},
-                    {300,150,300,0,0,300,150,300},
-                    {250,150,0,0,0,0,150,250},
-                    {250,150,0,0,0,0,150,250},
-                    {300,150,300,0,0,300,150,300},
-                    {50,10,150,150,150,150,10,50},
-                    {400,50,300,250,250,300,50,400}});
-        }
-        else {
-            System.out.println("Invalid boardsize");
-        }
+//        if(cBoard.getSize() == 4)
+//        {
+//            setTerritory(new double[][] {
+//                    {10,5,5,10},
+//                    {5,0,0,5},
+//                    {5,0,0,5},
+//                    {10,5,5,10}});
+//        }
+//        else if(cBoard.getSize() == 6)
+//        {
+//            setTerritory(new double[][] {
+//                    {10,5,8,8,5,10},
+//                    {5,5,6,6,5,5},
+//                    {8,6,0,0,6,8},
+//                    {8,6,0,0,6,8},
+//                    {5,5,6,6,5,5},
+//                    {10,5,8,8,5,10}});
+//        }
+//
+//        else if(cBoard.getSize() == 8)
+//        {
+        setTerritory(new double[][] {
+                {400,50,300,250,250,300,50,400},
+                {50,10,150,150,150,150,10,50},
+                {300,150,300,0,0,300,150,300},
+                {250,150,0,0,0,0,150,250},
+                {250,150,0,0,0,0,150,250},
+                {300,150,300,0,0,300,150,300},
+                {50,10,150,150,150,150,10,50},
+                {400,50,300,250,250,300,50,400}});
+//        }
+//        else {
+//            System.out.println("Invalid boardsize");
+//        }
     }
 
     public int getTerritoryScore(int player){
