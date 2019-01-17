@@ -110,7 +110,7 @@ public class EvaluationFunction extends AI{
 
         gamesToBeSimmed = (gamesToBeSimmed < 2) ? 2 : gamesToBeSimmed;
         gamesToBeSimmed = (gamesToBeSimmed % 2 != 0) ? gamesToBeSimmed + 1: gamesToBeSimmed;
-        MCTS evaluator = new MCTS(1000);
+        MCTS evaluator = new MCTS(1000,1.414);
         GenericTest.test(this,evaluator, gamesToBeSimmed/2, boardSize);
         winsFirstMove = GenericTest.getPlayer1Wins();
         GenericTest.test(evaluator, this, gamesToBeSimmed/2, boardSize);

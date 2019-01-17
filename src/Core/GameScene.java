@@ -265,33 +265,43 @@ public class GameScene extends BorderPane {
         switch(AILevel)
         {
             case 0:
-                MCTS mcts = new MCTS(1000);
-                move = mcts.getBestMove(board);
-                updateBoard(move[0], move[1]);
-                break;
-            case 1:
                 Stupid stupid = new Stupid();
                 move = stupid.getBestMove(board);
                 updateBoard(move[0], move[1]);
                 break;
+            case 1:
+                MCTS mcts = new MCTS(1000, MCTS.STANDARD_EXPLORATION_PARAMETER);
+                move = mcts.getBestMove(board);
+                updateBoard(move[0], move[1]);
+                break;
             case 2:
+                MCTS_TreeReuse mcts_treeReuse = new MCTS_TreeReuse(1000, MCTS.STANDARD_EXPLORATION_PARAMETER);
+                move = mcts_treeReuse.getBestMove(board);
+                updateBoard(move[0], move[1]);
+                break;
+            case 3:
                 MiniMaxAlph minimaxAlph = new MiniMaxAlph(MINIMAXALPH_DEPTH, board);
                 move = minimaxAlph.getBestMove(board);
                 updateBoard(move[0], move[1]);
                 break;
-            case 3:
+            case 4:
                 Minimax minimax =new Minimax(MINIMAX_DEPTH,board);
                 move = minimax.getBestMove(board);
                 updateBoard(move[0],move[1]);
                 break;
-            case 4:
+            case 5:
                 NegaScout negascout = new NegaScout(NEGASCOUT_DEPTH, board);
                 move = negascout.getBestMove(board);
                 updateBoard(move[0], move[1]);
                 break;
-            case 5:
+            case 6:
                 MMAB_IterativeDeepening mai = new MMAB_IterativeDeepening(10);
                 move = mai.getBestMove(board);
+                updateBoard(move[0], move[1]);
+                break;
+            case 7:
+                MMAB_moveOrdering mmab_mo = new MMAB_moveOrdering(10);
+                move = mmab_mo.getBestMove(board);
                 updateBoard(move[0], move[1]);
                 break;
         }

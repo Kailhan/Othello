@@ -248,7 +248,7 @@ public class Population_EvalFunc {
      * @return worst performing AI
      */
     public AI getWorstSpecimen() {
-        double fitness = Double.MAX_VALUE;
+        double fitness = Integer.MAX_VALUE;
         int indexWorstSpecimen = -1;
         for(int i = 0; i < AIs.length; i++) {
             if(AIs[i].getFitness() < fitness) {

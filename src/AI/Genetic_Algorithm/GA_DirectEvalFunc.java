@@ -102,6 +102,7 @@ public class GA_DirectEvalFunc {
             gaCSVLogBuilder.append(gaLog[i - 1]).append(",");
             if(i % ((WEIGHT_POLY_SIZE + 2)) == 0) gaCSVLogBuilder.append("\n");
         }
+
         gaCSVLogBuilder.append(gaLog[(WEIGHT_POLY_SIZE + (pop.getBoardSize() * pop.getBoardSize()) + 2) * (1  + ((iterationCounter + 1) * pop.getPopSize()))-1]);
         String gaCSVLog = gaCSVLogBuilder.toString();
         try {

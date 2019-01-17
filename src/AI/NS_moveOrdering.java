@@ -5,6 +5,8 @@ import Core.Board;
 public class NS_moveOrdering extends  AI {
 
     private int moveTime;
+    private int[] currentBestMove;
+    private Node<Board> PV_node;
 
     public NS_moveOrdering(int moveTime){
         this.moveTime = moveTime;
@@ -12,22 +14,29 @@ public class NS_moveOrdering extends  AI {
 
 
     public int[] getBestMove(Board startBoard){
-        long startTime = System.currentTimeMillis();
-        long endTime = startTime + moveTime;
         int depth = 1;
-        int[] currentBestMove = null;
-        Board board;
-        while (System.currentTimeMillis() < endTime)
-        {
-            board = new Board(startBoard);
-            NegaScout ns = new NegaScout(depth, board);
-            Node<Board> PV_node = ns.getBestMoveNode(board);
-            int[] move = ns.getBestMoveFromNode(PV_node);
+        currentBestMove = null;
+        int[] previousBestMove = null;
+        Board board = new Board(startBoard);
+        GameTree gameTree = new GameTree(1, board);
+        NegaScout ns = new NegaScout(1, board, gameTree);
+        Node<Board> root = gameTree.createTree();
+        long startTime = System.currentTimeMillis();
+        long endTime = 0;
+        while (endTime - startTime < moveTime) {
+            ns = new NegaScout(depth, board, ns.getGameTree());
+            PV_node = ns.selectPV_node(root, depth);
+            ns.PV_orderTreeLayer(PV_node);
+            ns.MinimaxIterative(board, gameTree.getRoot());
+            int[] move = ns.getBestMoveFromNode(root);
+            previousBestMove = currentBestMove;
             currentBestMove = move;
             depth++;
+            endTime = System.currentTimeMillis();
         }
         //System.out.println("depth: " + depth);
-        return currentBestMove;
+        if(previousBestMove == null) previousBestMove = currentBestMove;
+        return previousBestMove;
     }
 
     public double evaluateFitness(int gamesToBeSimmed, int boardSize) {
