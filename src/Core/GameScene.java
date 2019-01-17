@@ -299,6 +299,11 @@ public class GameScene extends BorderPane {
                 move = mai.getBestMove(board);
                 updateBoard(move[0], move[1]);
                 break;
+            case 7:
+                MMAB_moveOrdering mmab_mo = new MMAB_moveOrdering(10);
+                move = mmab_mo.getBestMove(board);
+                updateBoard(move[0], move[1]);
+                break;
         }
     }
 

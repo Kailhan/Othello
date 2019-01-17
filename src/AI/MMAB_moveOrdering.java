@@ -1,11 +1,13 @@
 package AI;
 
 import Core.Board;
+import Core.Logic;
 
 public class MMAB_moveOrdering extends AI{
 
     private int moveTime;
     private int[] currentBestMove;
+    private Node<Board> PV_node;
 
     public MMAB_moveOrdering(int moveTime){
         this.moveTime = moveTime;
@@ -17,7 +19,6 @@ public class MMAB_moveOrdering extends AI{
             currentBestMove = null;
             int[] previousBestMove = null;
             Board board = new Board(startBoard);
-            Node<Board> PV_node = null;
             GameTree gameTree = new GameTree(1, board);
             MiniMaxAlph m = new MiniMaxAlph(1, board, gameTree);
             Node<Board> root = gameTree.createTree();
@@ -26,8 +27,8 @@ public class MMAB_moveOrdering extends AI{
             while (endTime - startTime < moveTime) {
                 //board = new Board(startBoard);
                 m = new MiniMaxAlph(depth, board, m.getGameTree());
-                if(depth > 1) m.PV_orderTreeLayer(PV_node);
                 PV_node = m.selectPV_node(root, depth);
+                m.PV_orderTreeLayer(PV_node);
                 m.MinimaxIterative(board, gameTree.getRoot());
                 int[] move = m.getBestMoveFromNode(root);
                 previousBestMove = currentBestMove;

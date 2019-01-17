@@ -107,7 +107,8 @@ public class MiniMaxAlph extends AI {
     public Node<Board> selectPV_node(Node<Board> root, int depth){
         Node<Board> currentRoot = root;
         for(int i = 0; i < depth; i++){
-            currentRoot = selectMove(currentRoot);
+            Node<Board> newRoot = selectMove(currentRoot);
+            if(newRoot != null) currentRoot = newRoot;
         }
         return currentRoot;
     }
