@@ -2,6 +2,8 @@ package AI;
 
 import Core.*;
 
+import java.util.List;
+
 public class NegaScout extends AI {
     int depth;
     private GameTree gameTree;
@@ -13,17 +15,19 @@ public class NegaScout extends AI {
 // return -1;
 // }
 
+    public NegaScout(int depth, Board board, GameTree gameTree) {
+        this.depth = depth;
+        this.evaluator = new EvaluationFunction(board);
+        this.gameTree = gameTree;
+    }
+
     public double evaluateFitness(int gamesToBeSimmed, int boardSize) {
         return -1;
     }
 
     public int[] getBestMove(Board board){
-        this.board = board;
-        this.gameTree = new GameTree(depth, board);
-        this.evaluator.setBoard(board);
-        this.root = gameTree.createTree();
+        Node<Board> root = getRootMinimaxed(board);
 
-        NegaSAlg(root, Integer.MIN_VALUE, Integer.MAX_VALUE, board.getCurrentPlayer());
         int[] bestMove = new int[2];
         try {
             bestMove[0] = selectMove(root).getRow();
@@ -125,4 +129,69 @@ public class NegaScout extends AI {
             return alpha;
         }
     }
+
+    public Node<Board> getRootMinimaxed(Board board){
+        NegaScout ns = new NegaScout(this.depth, board);
+        gameTree = new GameTree(this.depth, board);
+        Node<Board> root = gameTree.createTree();
+
+        ns.NegaSAlg(root, Integer.MIN_VALUE, Integer.MAX_VALUE, board.getCurrentPlayer());
+
+        return root;
+    }
+
+    public int[] getBestMoveFromNode(Node<Board> root){
+        int[] bestMove = new int[2];
+        try {
+            bestMove[0] = selectMove(root).getRow();
+            bestMove[1] = selectMove(root).getColumn();
+        }
+        catch(NullPointerException e) {
+            System.out.println("no more moves");
+        }
+        return bestMove;
+    }
+
+    public GameTree getGameTree() {
+        return gameTree;
+    }
+
+    public Node<Board> selectPV_node(Node<Board> root, int depth){
+        Node<Board> currentRoot = root;
+        for(int i = 0; i < depth; i++){
+            Node<Board> newRoot = selectMove(currentRoot);
+            if(newRoot != null) currentRoot = newRoot;
+        }
+        return currentRoot;
+    }
+
+    public void PV_orderTreeLayer(Node<Board> PV_node){
+        Node<Board> currentPV_node = PV_node;
+        Node<Board> currentParent = PV_node.getParent();
+        Node<Board> foundPV_node = null;
+        //List<Node<Board>> currentChildren = currentParent.getChildren();
+
+        while(currentParent != null) {
+            List<Node<Board>> currentChildren = currentParent.getChildren();
+            for (Node<Board> child : currentChildren) {
+                if (child == currentPV_node) {
+                    foundPV_node = child;
+                    //currentChildren.add(0, child);
+                }
+            }
+            currentChildren.remove(foundPV_node);
+            currentChildren.add(0, foundPV_node);
+
+            currentPV_node = currentParent;
+            currentParent = currentParent.getParent();
+        }
+    }
+
+    public void MinimaxIterative(Board board, Node<Board> root){
+        NegaScout ns = new NegaScout(this.depth, board);
+        gameTree.addTreeLayer();
+
+        ns.NegaSAlg(root, Integer.MIN_VALUE, Integer.MAX_VALUE, board.getCurrentPlayer());
+    }
+
 }

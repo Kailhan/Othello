@@ -42,9 +42,10 @@ public class MinimaxTest {
         long moveTime = 10;
         MMAB_IterativeDeepening mmab = new MMAB_IterativeDeepening(10);
         MMAB_moveOrdering mmab2 = new MMAB_moveOrdering(10);
+        NS_moveOrdering ns_mo = new NS_moveOrdering(10);
         MCTS mcts = new MCTS(moveTime, 1.414);
 
-        GenericTest.test(mmab2,mcts, GAMES, SIZE);
+        GenericTest.test(ns_mo,mcts , GAMES, SIZE);
         int p1wins = GenericTest.getPlayer1Wins();
         int p2wins = GenericTest.getPlayer2Wins();
         System.out.println("p1_wins: " + p1wins);

@@ -25,7 +25,6 @@ public class MMAB_moveOrdering extends AI{
             long startTime = System.currentTimeMillis();
             long endTime = 0;
             while (endTime - startTime < moveTime) {
-                //board = new Board(startBoard);
                 m = new MiniMaxAlph(depth, board, m.getGameTree());
                 PV_node = m.selectPV_node(root, depth);
                 m.PV_orderTreeLayer(PV_node);
