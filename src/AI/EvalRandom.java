@@ -38,7 +38,7 @@ public class EvalRandom extends EvaluationFunction {
         double cScore;
         for (int i = 0; i < possibleBoards.length; i++) {
             Random rand = new Random();
-            cScore = evaluate(possibleBoards[i]) + (Math.random()*2000-1000);
+            cScore = evaluate(possibleBoards[i]) + (Math.random()*20-20);
            // cScore = evaluate(possibleBoards[i]);
             //System.out.println(cScore);
             cScore *= cScore;
@@ -54,6 +54,14 @@ public class EvalRandom extends EvaluationFunction {
             move[1] = possibleBoards[bestBoardIndex].getColumn(board);
             return move;
         }
+
+    public EvalRandom(double[] weightPoly){
+        super(weightPoly);
+    }
+
+    public EvalRandom(Board board){
+        super(board);
+    }
 
 
 }

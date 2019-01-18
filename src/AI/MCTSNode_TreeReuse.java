@@ -2,15 +2,16 @@ package AI;
 
 import Core.Board;
 import Core.Logic;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static AI.MCTS.currentPlayer;
+import static AI.MCTS_TreeReuse.currentPlayer;
 import static Core.Board.BLACK;
 import static Core.Board.WHITE;
 
-public class MCTSNode {
+public class MCTSNode_TreeReuse {
 
 
     public static final int WIN = 1;
@@ -25,10 +26,10 @@ public class MCTSNode {
     private Board board;
     private static Random rand = new Random();
 
-    private MCTSNode parentNode;
-    private List<MCTSNode> childNodes = new ArrayList<MCTSNode>();
+    private MCTSNode_TreeReuse parentNode;
+    private List<MCTSNode_TreeReuse> childNodes = new ArrayList<MCTSNode_TreeReuse>();
 
-    public MCTSNode(Board board, double explorationParameter) {
+    public MCTSNode_TreeReuse(Board board, double explorationParameter) {
         this.board = board;
         this.parentNode = null;
         this.wins = 0;
@@ -93,8 +94,11 @@ public class MCTSNode {
             if(Logic.checkMovePossible(simulationBoard)) {
                 move = selectMove(simulationBoard, startBoard);
                 simulationBoard.applyMove(move);
+                simulationBoard.incrementTurn();
+                simulationBoard.changePlayer();
             } else {
-                simulationBoard.applyMove();
+                simulationBoard.incrementTurn();
+                simulationBoard.changePlayer();
                 if(!Logic.checkMovePossible(simulationBoard)) {
                     gameFinished = true;
                 }
@@ -104,7 +108,6 @@ public class MCTSNode {
         int gameState = DRAW;
         int numberOfBlackCoins = simulationBoard.getNrSquares(BLACK);
         int numberOfWhiteCoins = simulationBoard.getNrSquares(WHITE);
-        //System.out.println("numberOfWhiteCoins: " + numberOfWhiteCoins + " numberOfBlackCoins: " + numberOfBlackCoins + " total: " + (numberOfBlackCoins + numberOfWhiteCoins));
         if(currentPlayer == BLACK) {
             if(numberOfBlackCoins > numberOfWhiteCoins) gameState = WIN;
             if(numberOfBlackCoins < numberOfWhiteCoins) gameState = LOSS;
@@ -115,8 +118,8 @@ public class MCTSNode {
 
         wins += gameState;
         sims++;
-        MCTS.totalSims++;
-        MCTSNode currentNode = this;
+        MCTS_TreeReuse.totalSims++;
+        MCTSNode_TreeReuse currentNode = this;
 
         while(currentNode.getParentNode() != null) {
             if(currentNode.getParentNode().getData().getCurrentPlayer() != currentPlayer) currentNode.getParentNode().setWins(currentNode.getParentNode().getWins() + gameState);
@@ -130,37 +133,36 @@ public class MCTSNode {
         return possibleMoves[rand.nextInt(possibleMoves.length)];
     }
 
-
-    public MCTSNode getBestSelectionChildNode() {
-        List<MCTSNode> potentialChildren = new ArrayList<MCTSNode>();
+    public MCTSNode_TreeReuse getBestSelectionChildNode() {
+        List<MCTSNode_TreeReuse> potentialChildren = new ArrayList<MCTSNode_TreeReuse>();
         double maxScore = Integer.MIN_VALUE;
-        for(MCTSNode childNode : childNodes) {
+        for(MCTSNode_TreeReuse childNode : childNodes) {
             double childNodeScore = childNode.getSelectionScore();
             if(childNodeScore >= maxScore) maxScore = childNodeScore;
         }
-        for(MCTSNode childNode : childNodes) {
+        for(MCTSNode_TreeReuse childNode : childNodes) {
             double childNodeScore = childNode.getSelectionScore();
             if(childNodeScore >= maxScore) potentialChildren.add(childNode);
         }
         return potentialChildren.get(rand.nextInt(potentialChildren.size()));
     }
 
-    public MCTSNode getBestSimulationChildNode() {
-        List<MCTSNode> potentialChildren = new ArrayList<MCTSNode>();
+    public MCTSNode_TreeReuse getBestSimulationChildNode() {
+        List<MCTSNode_TreeReuse> potentialChildren = new ArrayList<MCTSNode_TreeReuse>();
         double maxScore = -1;
-        for(MCTSNode childNode : childNodes) {
-            double childNodeScore = (childNode.getSims() == 0) ? 0 : (double)childNode.getWins()/(double)childNode.getSims();
+        for(MCTSNode_TreeReuse childNode : childNodes) {
+            double childNodeScore = (childNode.getSims() == 0) ? 0 : (double)childNode.getWins()/childNode.getSims();
             if(childNodeScore >= maxScore) maxScore = childNodeScore;
         }
-        for(MCTSNode childNode : childNodes) {
+        for(MCTSNode_TreeReuse childNode : childNodes) {
             double childNodeScore = (childNode.getSims() == 0) ? 0 : (double)childNode.getWins()/childNode.getSims();
             if(childNodeScore >= maxScore) potentialChildren.add(childNode);
         }
         return potentialChildren.get(rand.nextInt(potentialChildren.size()));
     }
 
-    public MCTSNode getBestLeafNode() {
-        MCTSNode currentNode = this;
+    public MCTSNode_TreeReuse getBestLeafNode() {
+        MCTSNode_TreeReuse currentNode = this;
         while(!currentNode.getChildNodes().isEmpty()) {
             currentNode = currentNode.getBestSelectionChildNode();
         }
@@ -177,7 +179,9 @@ public class MCTSNode {
                 for(int i = 0; i < possibleMoves.length; i++){
                     Board possibleBoard = new Board(board);
                     possibleBoard.applyMove(possibleMoves[i]);
-                    MCTSNode possibleNode = new MCTSNode(possibleBoard, explorationParameter);
+                    possibleBoard.incrementTurn();
+                    possibleBoard.changePlayer();
+                    MCTSNode_TreeReuse possibleNode = new MCTSNode_TreeReuse(possibleBoard, explorationParameter);
                     possibleNode.setParentNode(this);
                     childNodes.add(possibleNode);
                 }
@@ -185,33 +189,36 @@ public class MCTSNode {
                 for(int i = 0; i < possibleMoves.length; i++){
                     Board possibleBoard = new Board(board);
                     possibleBoard.applyMove(possibleMoves[i]);
+                    possibleBoard.incrementTurn();
+                    possibleBoard.changePlayer();
                     boolean alreadyHasBoard = false;
-                    for(MCTSNode childNode : getChildNodes()) {
+                    for(MCTSNode_TreeReuse childNode : getChildNodes()) {
                         if(childNode.getData().isSameBoard(possibleBoard)) alreadyHasBoard = true;
                     }
                     if(!alreadyHasBoard) {
-                        MCTSNode possibleNode = new MCTSNode(possibleBoard, explorationParameter);
+                        MCTSNode_TreeReuse possibleNode = new MCTSNode_TreeReuse(possibleBoard, explorationParameter);
                         possibleNode.setParentNode(this);
                         childNodes.add(possibleNode);
                     }
                 }
             }
         } else {
-            board.applyMove();
+            board.incrementTurn();
+            board.changePlayer();
             if(Logic.checkMovePossible(board)) {
                 if(getChildNodes().isEmpty()) {
                     Board possibleBoard = new Board(board);
-                    MCTSNode possibleNode = new MCTSNode(possibleBoard, explorationParameter);
+                    MCTSNode_TreeReuse possibleNode = new MCTSNode_TreeReuse(possibleBoard, explorationParameter);
                     possibleNode.setParentNode(this);
                     childNodes.add(possibleNode);
                 } else {
                     Board possibleBoard = new Board(board);
                     boolean alreadyHasBoard = false;
-                    for(MCTSNode childNode : getChildNodes()) {
+                    for(MCTSNode_TreeReuse childNode : getChildNodes()) {
                         if(childNode.getData().isSameBoard(possibleBoard)) alreadyHasBoard = true;
                     }
                     if(!alreadyHasBoard) {
-                        MCTSNode possibleNode = new MCTSNode(possibleBoard, explorationParameter);
+                        MCTSNode_TreeReuse possibleNode = new MCTSNode_TreeReuse(possibleBoard, explorationParameter);
                         possibleNode.setParentNode(this);
                         childNodes.add(possibleNode);
                     }
@@ -222,19 +229,19 @@ public class MCTSNode {
         }
     }
 
-    public MCTSNode getParentNode() {
+    public MCTSNode_TreeReuse getParentNode() {
         return parentNode;
     }
 
-    public void setParentNode(MCTSNode parentNode) {
+    public void setParentNode(MCTSNode_TreeReuse parentNode) {
         this.parentNode = parentNode;
     }
 
-    public List<MCTSNode> getChildNodes() {
+    public List<MCTSNode_TreeReuse> getChildNodes() {
         return childNodes;
     }
 
-    public void setChildNodes(List<MCTSNode> childNodes) {
+    public void setChildNodes(List<MCTSNode_TreeReuse> childNodes) {
         this.childNodes = childNodes;
     }
 
@@ -258,25 +265,25 @@ public class MCTSNode {
         return !getChildNodes().isEmpty();
     }
 
-    public void addChild(MCTSNode childNode) {
+    public void addChild(MCTSNode_TreeReuse childNode) {
         childNodes.add(childNode);
     }
 
     public int getTreeSize() {
         int treeSize = 1;
-        List<MCTSNode> queue = new ArrayList<MCTSNode>();
+        List<MCTSNode_TreeReuse> queue = new ArrayList<MCTSNode_TreeReuse>();
         queue.add(this);
         while(!queue.isEmpty()){
-            MCTSNode node = queue.remove(0);
+            MCTSNode_TreeReuse node = queue.remove(0);
             queue.addAll(node.getChildNodes());
             treeSize += node.getChildNodes().size();
         }
         return treeSize;
     }
 
-    public int getHeight(MCTSNode rootNode){
+    public int getHeight(MCTSNode_TreeReuse rootNode){
         int height = 0;
-        for(MCTSNode node : rootNode.getChildNodes()){
+        for(MCTSNode_TreeReuse node : rootNode.getChildNodes()){
             height = Math.max(height, getHeight(node));
         }
         return height+1;

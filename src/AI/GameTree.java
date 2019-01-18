@@ -3,6 +3,7 @@ package AI;
 import Core.Board;
 import Core.Logic;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,8 @@ public class GameTree {
     private int treeDepth;
     private Minimax minimax;
     private Node<Board> PV_node;
+    private ArrayList<Node<Board>> leafLayer;
+    private Node<Board> root;
 
     public GameTree(int treeDepth, Board board) {
         this.logic = new Logic();
@@ -87,15 +90,17 @@ public class GameTree {
      */
 
     public Node<Board> createTree(){
-        Node<Board> root = new Node(board);
+        root = new Node(board);
         ArrayList<Node<Board>> currentLayer = new ArrayList<>();
         ArrayList<Node<Board>> newLayer = new ArrayList<>();
         currentLayer = createLayerIncrement(root, currentLayer); //creating the first layer below the root
+        if(treeDepth == 1) leafLayer = currentLayer;
         for(int depth = 1; depth < treeDepth; depth++){
             for(Node<Board> currentRoot: currentLayer){      //incrementally constructing the new layer
                 createLayerIncrement(currentRoot, newLayer); //by adding the children of all parents in this layer to the new layer
             }
             currentLayer = new ArrayList<>(newLayer);
+            if(depth == treeDepth - 1) leafLayer = currentLayer;
             newLayer.clear(); //clearing ArrayList so that it can be used for the next layer
         }
 
@@ -104,6 +109,23 @@ public class GameTree {
             child.getData().getCurrentPlayer();
 
         }
+        return root;
+    }
+
+    public void addTreeLayer(){
+        if(leafLayer == null){
+            System.out.println("leafLayer is null");
+        }
+        else{
+            ArrayList<Node<Board>> newLayer = new ArrayList<>();
+            for(Node<Board> currentRoot: leafLayer){      //incrementally constructing the new layer
+                createLayerIncrement(currentRoot, newLayer); //by adding the children of all parents in this layer to the new layer
+            }
+            leafLayer = new ArrayList<>(newLayer);
+        }
+    }
+
+    public Node<Board> getRoot() {
         return root;
     }
 

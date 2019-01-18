@@ -51,7 +51,7 @@ public class Population {
      */
     public void initMiniMaxAlphPopulation() {
         for(int i = 0; i < popSize; i++) {
-            EvaluationFunction cEvalFunc = new EvaluationFunction(initTerritory(territoryBound), initWeightPoly(16, weightPolyBound),new Board(boardSize));
+            EvaluationFunction cEvalFunc = new EvaluationFunction(initWeightPoly(16, weightPolyBound),new Board(boardSize));
             this.AIs[i] = new GA_MiniMaxAlph(DEPTH, new Board(boardSize), cEvalFunc); //idk what the depth should be
             //System.out.println(AIs[i].getEvaluator().getChromosome()[1]);
         }
@@ -150,7 +150,7 @@ public class Population {
                 childCellValues[i][j] = (rand.nextInt(2) == 0) ? parent1CellValues[i][j] : parent2CellValues[i][j];
             }
         }
-        EvaluationFunction tmpEvalFunc = new EvaluationFunction(childCellValues, childWeightPoly,new Board(boardSize));
+        EvaluationFunction tmpEvalFunc = new EvaluationFunction(childWeightPoly,new Board(boardSize));
         return new GA_MiniMaxAlph(DEPTH, new Board(boardSize), tmpEvalFunc);
     }
 
@@ -181,7 +181,7 @@ public class Population {
                 childCellValues[i][j] = parent1CellValues[i][j] * proportion + parent2CellValues[i][j] * (1 - proportion);
             }
         }
-        EvaluationFunction tmpEvalFunc = new EvaluationFunction(childCellValues, childWeightPoly,new Board(boardSize));
+        EvaluationFunction tmpEvalFunc = new EvaluationFunction(childWeightPoly,new Board(boardSize));
         return new GA_MiniMaxAlph(DEPTH, new Board(boardSize), tmpEvalFunc);
     }
 

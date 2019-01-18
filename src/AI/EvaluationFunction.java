@@ -31,20 +31,20 @@ public class EvaluationFunction extends AI{
     }
 
 
-    public EvaluationFunction(double [][] cellValues, double[] weightPoly, Board board) {
-        this.cBoard = board;
-        this.cellValues = cellValues;
+    public EvaluationFunction(double[] weightPoly) {
         this.weightPoly = weightPoly;
+        setTerritory();
     }
 
     public EvaluationFunction(double[] chromosome, Board board) {
         this.cBoard = board;
+        setTerritory();
         setChromosome(chromosome);
     }
 
-    public EvaluationFunction(double[] chromosome) {
-        this(chromosome, new Board((int)Math.sqrt(chromosome.length - WEIGHT_POLY_SIZE)));
-    }
+//    public EvaluationFunction(double[] chromosome) {
+//        this(chromosome, new Board((int)Math.sqrt(chromosome.length - WEIGHT_POLY_SIZE)));
+//    }
 
     /**
      * One level AI that directly and only uses the evaluation function itself (used for GA and maybe future stuff)
@@ -101,10 +101,10 @@ public class EvaluationFunction extends AI{
 
         gamesToBeSimmed = (gamesToBeSimmed < 2) ? 2 : gamesToBeSimmed;
         gamesToBeSimmed = (gamesToBeSimmed % 2 != 0) ? gamesToBeSimmed + 1: gamesToBeSimmed;
-
-        GenericTest.test(this, stupid, gamesToBeSimmed/2, boardSize);
+        MCTS evaluator = new MCTS(1000,1.414);
+        GenericTest.test(this,evaluator, gamesToBeSimmed/2, boardSize);
         winsFirstMove = GenericTest.getPlayer1Wins();
-        GenericTest.test(stupid, this, gamesToBeSimmed/2, boardSize);
+        GenericTest.test(evaluator, this, gamesToBeSimmed/2, boardSize);
         winsSecondMove = GenericTest.getPlayer2Wins();
 
         this.fitness = (winsFirstMove + winsSecondMove)/gamesToBeSimmed;

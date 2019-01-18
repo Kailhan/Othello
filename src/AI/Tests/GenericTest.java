@@ -48,7 +48,7 @@ public class GenericTest {
             }
         }
         long endTime = System.nanoTime();
-        //System.out.println("Simulated one generic test cycle in generic test in ms: " + (endTime-startTime)/1000000);
+        System.out.println("Simulated one generic test cycle in generic test in ms: " + (endTime-startTime)/1000000);
     }
 
     public static int getPlayer1Wins() {

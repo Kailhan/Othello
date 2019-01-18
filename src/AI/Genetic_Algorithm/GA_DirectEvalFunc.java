@@ -85,6 +85,16 @@ public class GA_DirectEvalFunc {
         //topSpecimen.getEvaluator().printChromosome();
         System.out.println("Wins when having first move: " + topSpecimen.getWinsFirstMove());
         System.out.println("Wins when having second move: " + topSpecimen.getWinsSecondMove());
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("Top Specimen weights: ");
+        for(int j = 0; j<pop.getAIs().length; j++){
+            if(pop.getAIs()[j] == topSpecimen){
+                double[] values = pop.getAIs()[j].getChromosome();
+                for(int i =0; i<values.length; i++){
+                    System.out.println("PolyWeight" + i + ": " + values[i]);
+                }
+            }
+        }
 
         StringBuilder gaCSVLogBuilder = new StringBuilder();
 
@@ -92,6 +102,7 @@ public class GA_DirectEvalFunc {
             gaCSVLogBuilder.append(gaLog[i - 1]).append(",");
             if(i % ((WEIGHT_POLY_SIZE + 2)) == 0) gaCSVLogBuilder.append("\n");
         }
+
         gaCSVLogBuilder.append(gaLog[(WEIGHT_POLY_SIZE + (pop.getBoardSize() * pop.getBoardSize()) + 2) * (1  + ((iterationCounter + 1) * pop.getPopSize()))-1]);
         String gaCSVLog = gaCSVLogBuilder.toString();
         try {
@@ -112,6 +123,7 @@ public class GA_DirectEvalFunc {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println();
         System.out.println("GA_Eval finished");
     }
 }
