@@ -136,33 +136,36 @@ public class EvaluationFunction extends AI{
     public static double getNumberOfCoins(Board board)
     {
         double numberOfCoins;
+        double blackCoins = board.getNrSquares(Board.BLACK);
+        double whiteCoins = board.getNrSquares(Board.WHITE);
 
-        numberOfCoins = ((double)(board.getNrSquares(Board.BLACK) - board.getNrSquares(Board.WHITE))) / ((double) (board.getNrSquares(Board.BLACK) + board.getNrSquares(Board.WHITE)));
+        numberOfCoins = ((blackCoins - whiteCoins)) / (blackCoins + whiteCoins);
 
         return numberOfCoins;
     }
 
     public static double getNumberOfMoves(Board board)
     {
+        Board tempBoard = new Board(board);
         double numberOfMoves;
-        int blackMoves;
-        int whiteMoves;
+        double blackMoves;
+        double whiteMoves;
 
-        if(board.getCurrentPlayer() == Board.WHITE)
+        if(tempBoard.getCurrentPlayer() == Board.WHITE)
         {
-            whiteMoves = Logic.numberSquaresAllowed(board);
-            board.changePlayer();
-            blackMoves = Logic.numberSquaresAllowed(board);
+            whiteMoves = Logic.numberSquaresAllowed(tempBoard);
+            tempBoard.changePlayer();
+            blackMoves = Logic.numberSquaresAllowed(tempBoard);
         }
         else
         {
-            blackMoves = Logic.numberSquaresAllowed(board);
-            board.changePlayer();
-            whiteMoves = Logic.numberSquaresAllowed(board);
+            blackMoves = Logic.numberSquaresAllowed(tempBoard);
+            tempBoard.changePlayer();
+            whiteMoves = Logic.numberSquaresAllowed(tempBoard);
         }
 
         if(blackMoves + whiteMoves != 0)
-            numberOfMoves = (double) ((blackMoves - whiteMoves) / (blackMoves + whiteMoves));
+            numberOfMoves = ((blackMoves - whiteMoves) / (blackMoves + whiteMoves));
         else numberOfMoves = 0;
 
         return numberOfMoves;
@@ -174,9 +177,9 @@ public class EvaluationFunction extends AI{
         double territoryScoreBlack = getTerritoryScore(board, Board.BLACK);
         double territoryScoreWhite = getTerritoryScore(board, Board.WHITE);
 
-        if (territoryScoreBlack + territoryScoreWhite !=0 ){
-            territory = (territoryScoreBlack - territoryScoreWhite)/ (territoryScoreBlack + territoryScoreWhite);
-        } else territory = 0;
+        if (territoryScoreBlack + territoryScoreWhite !=0 )
+            territory = (territoryScoreBlack - territoryScoreWhite) / (territoryScoreBlack + territoryScoreWhite);
+        else territory = 0;
 
         return territory;
     }
@@ -202,6 +205,11 @@ public class EvaluationFunction extends AI{
 
         for (int i = 0; i < weightPoly.length; i++)
             weightPoly[i] = weightPoly[i] * newMaxWeight / maxWeight;
+    }
+
+    public void normalizeWeightPoly()
+    {
+        normalizeWeightPoly(1.0);
     }
 
     public void setTerritory(double[][] cellValues)
@@ -257,10 +265,11 @@ public class EvaluationFunction extends AI{
     public int getTerritoryScore(Board board, int player)
     {
         int score = 0;
+        int[][] boardGrid = board.getBoardGrid();
 
-        for (int i = 0; i < board.getBoardGrid().length; i++)
-            for (int j = 0; j < board.getBoardGrid()[i].length; j++)
-                if (board.getBoardGrid()[i][j] == player)
+        for (int i = 0; i < boardGrid.length; i++)
+            for (int j = 0; j < boardGrid.length; j++)
+                if (boardGrid[i][j] == player)
                     score += cellValues[i][j];
 
         return score;

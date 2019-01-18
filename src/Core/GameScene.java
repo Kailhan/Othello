@@ -253,6 +253,9 @@ public class GameScene extends BorderPane {
         if(Logic.checkSquareAllowed(r, c, board))
         {
             playerModel.addMove(board, r, c);
+            System.out.println(playerModel.getError());
+            playerModel.iterate(100);
+            System.out.println(playerModel.getError());
             updateBoard(r, c);
         }
     }

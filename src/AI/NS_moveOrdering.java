@@ -21,9 +21,9 @@ public class NS_moveOrdering extends  AI {
         {
             board = new Board(startBoard);
             NegaScout ns = new NegaScout(depth, board);
-            Node<Board> PV_node = ns.getBestMoveNode(board);
-            int[] move = ns.getBestMoveFromNode(PV_node);
-            currentBestMove = move;
+//            Node<Board> PV_node = ns.getBestMoveNode(board);
+//            int[] move = ns.getBestMoveFromNode(PV_node);
+//            currentBestMove = move;
             depth++;
         }
         //System.out.println("depth: " + depth);

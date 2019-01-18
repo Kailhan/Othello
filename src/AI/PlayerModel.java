@@ -3,6 +3,8 @@ package AI;
 import Core.Board;
 import Core.Logic;
 
+import java.util.Arrays;
+
 public class PlayerModel
 {
     private final int STRATEGY_AMOUNT = 3; //amount of strategies an evaluation function has
@@ -19,7 +21,7 @@ public class PlayerModel
         this.LEARNING_RATE = LEARNING_RATE;
 
         this.model = new EvaluationFunction(board);
-        this.model.setWeightPoly(new double[] {1,0,0,1,0,0,0,0,0});
+        this.model.setWeightPoly(new double[] {1,0,0,1,0,0,1,0,0});
 
         this.history = new GameState[size*size];
         this.moveCount = 0;
@@ -28,7 +30,7 @@ public class PlayerModel
 
     public PlayerModel(Board board)
     {
-        this(board, 0.01);
+        this(board, 0.03);
     }
 
     public class GameState //nested class of state of the game with regards to opponent move
@@ -59,14 +61,16 @@ public class PlayerModel
             for (int i = 0; i < possibleBoards.length; i++)
             {
                 strategyScores[i][0] = EvaluationFunction.getNumberOfCoins(possibleBoards[i]);
-                strategyScores[i][1] = EvaluationFunction.getNumberOfMoves(possibleBoards[i]);
-                strategyScores[i][2] = model.getTerritory(possibleBoards[i]);
-                strategyScores[i][3] = strategyScores[i][0] * filledSquares;
-                strategyScores[i][4] = strategyScores[i][1] * filledSquares;
-                strategyScores[i][5] = strategyScores[i][2] * filledSquares;
-                strategyScores[i][6] = strategyScores[i][3] * filledSquares;
-                strategyScores[i][7] = strategyScores[i][4] * filledSquares;
-                strategyScores[i][8] = strategyScores[i][5] * filledSquares;
+//                strategyScores[i][1] = strategyScores[i][0] * filledSquares;
+//                strategyScores[i][2] = strategyScores[i][1] * filledSquares;
+
+                strategyScores[i][3] = EvaluationFunction.getNumberOfMoves(possibleBoards[i]);
+//                strategyScores[i][4] = strategyScores[i][3] * filledSquares;
+//                strategyScores[i][5] = strategyScores[i][4] * filledSquares;
+
+                strategyScores[i][6] = model.getTerritory(possibleBoards[i]);
+//                strategyScores[i][7] = strategyScores[i][6] * filledSquares;
+//                strategyScores[i][8] = strategyScores[i][7] * filledSquares;
             }
         }
     }
@@ -92,20 +96,21 @@ public class PlayerModel
             double gradientSum;
             double gradientAverage;
 
-            for (int i = 0; i < WEIGHT_POLY_SIZE; i++)
+            for (int i = 0; i < WEIGHT_POLY_SIZE; i += WEIGHT_POLY_SIZE / STRATEGY_AMOUNT)
             {
                 gradientSum = 0;
 
                 for (int j = 0; j < moveCount; j++)
+                {
                     gradientSum += history[j].strategyScores[history[j].chosenBoard][i];
+                }
 
-                gradientAverage = gradientSum / (moveCount);
+                gradientAverage = gradientSum / moveCount;
                 newWeightPoly[i] = weightPoly[i] + LEARNING_RATE * gradientAverage * getAverageChosenEvaluation();
             }
 
             model.setWeightPoly(newWeightPoly);
-            model.normalizeWeightPoly(100);
-            System.out.println(getError());
+//            model.normalizeWeightPoly();
         }
     }
 
@@ -149,9 +154,11 @@ public class PlayerModel
 
     private double evaluate(GameState state, int index)
     {
-        return model.calcCoinWeight(state.filledSquares) * state.strategyScores[index][0] +
-                model.calcMoveWeight(state.filledSquares) * state.strategyScores[index][1] +
-                model.calcTerritoryWeight(state.filledSquares) * state.strategyScores[index][2];
+        double[] tempWeightPoly = model.getWeightPoly();
+
+        return tempWeightPoly[0] * state.strategyScores[index][0] +
+                tempWeightPoly[3] * state.strategyScores[index][3] +
+                tempWeightPoly[6] * state.strategyScores[index][6];
     }
 
     private double getAverageChosenEvaluation()
