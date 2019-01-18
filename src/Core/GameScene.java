@@ -35,6 +35,7 @@ public class GameScene extends BorderPane {
     private int tileSize;
     private int AI1Level;
     private int AI2Level;
+    private PlayerModel playerModel;
     private static String[] AIs;
     private static final int MINIMAX_DEPTH = 4;
     private static final int MINIMAXALPH_DEPTH = 4;
@@ -69,15 +70,13 @@ public class GameScene extends BorderPane {
     private Button playAI;
     private ComboBox<String> AI1;
     private ComboBox<String> AI2;
-    private boolean movePossible;
-    private boolean blackIsBot;
-    private boolean whiteIsBot;
 
     public GameScene(Stage primaryStage, Settings settings) {
         this.settings = settings;
         this.primaryStage = primaryStage;
         this.board = new Board(settings.getBoard());
         this.tileSize = windowSize/ board.getSize();
+        this.playerModel = new PlayerModel(board);
         AIs = Settings.getAIs();
 
         this.discBlackImg = new Image(discBlack.toURI().toString(), tileSize, tileSize, false,false);
@@ -249,10 +248,16 @@ public class GameScene extends BorderPane {
         }
     }
 
-    public void playerMove(int x, int y)
+    public void playerMove(int r, int c)
     {
-        if(Logic.checkSquareAllowed(x, y, board))
-            updateBoard(x, y);
+        if(Logic.checkSquareAllowed(r, c, board))
+        {
+            playerModel.addMove(board, r, c);
+            System.out.println(playerModel.getError());
+            playerModel.iterate(100);
+            System.out.println(playerModel.getError());
+            updateBoard(r, c);
+        }
     }
 
     public void botMove()
@@ -310,11 +315,8 @@ public class GameScene extends BorderPane {
     public void updateBoard(int r, int c)
     {
         board.applyMove(r, c);
-        board.incrementTurn();
-        board.changePlayer();
         if(!Logic.checkMovePossible(board)) {
-            board.incrementTurn();
-            board.changePlayer();
+            board.applyMove();
             if(!Logic.checkMovePossible(board)) {
                 redrawBoard();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -336,12 +338,10 @@ public class GameScene extends BorderPane {
 
     public void updateBoard(Board board){
         this.board = board;
-        this.board.incrementTurn();
-//        this.board.changePlayer();
+        this.board.applyMove();
         if(!Logic.checkMovePossible(board))
         {
-            this.board.incrementTurn();
-            this.board.changePlayer();
+            this.board.applyMove();
             if(!Logic.checkMovePossible(board))
             {
                 redrawBoard();

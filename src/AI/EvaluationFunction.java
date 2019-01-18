@@ -4,6 +4,8 @@ import AI.Tests.GenericTest;
 import Core.Board;
 import Core.Logic;
 
+import java.util.Arrays;
+
 public class EvaluationFunction extends AI{
 
     private Board cBoard;
@@ -44,16 +46,16 @@ public class EvaluationFunction extends AI{
 //        this(chromosome, new Board((int)Math.sqrt(chromosome.length - WEIGHT_POLY_SIZE)));
 //    }
 
-    public void setWeightPoly()
-    {
-        setWeightPoly(new double[] {-25.935107984403448,	42.91479197569383,	29.745188566702527,	63.54179606069827,	-20.326279895422864,	-17.834800055781518	,-27.478073313276703,	5.985431145459364,	29.882144082487788});
-        //setWeightPoly(new double[] {0,1,0,100,-1,0,75,2.5,-0.05});
-    }
+//    public void setWeightPoly()
+//    {
+//        setWeightPoly(new double[] {-25.935107984403448,	42.91479197569383,	29.745188566702527,	63.54179606069827,	-20.326279895422864,	-17.834800055781518	,-27.478073313276703,	5.985431145459364,	29.882144082487788});
+//        //setWeightPoly(new double[] {0,1,0,100,-1,0,75,2.5,-0.05});
+//    }
 
-    public void setWeightPoly(double[] weightPoly) {
-        this.weightPoly = new double[WEIGHT_POLY_SIZE];
-        System.arraycopy(weightPoly, 0, this.weightPoly, 0, weightPoly.length);
-    }
+//    public void setWeightPoly(double[] weightPoly) {
+//        this.weightPoly = new double[WEIGHT_POLY_SIZE];
+//        System.arraycopy(weightPoly, 0, this.weightPoly, 0, weightPoly.length);
+//    }
 
     /**
      * One level AI that directly and only uses the evaluation function itself (used for GA and maybe future stuff)
@@ -89,13 +91,12 @@ public class EvaluationFunction extends AI{
             }
         }
 
-//        if(board.getCurrentPlayer() == Board.BLACK) {
         double score = Integer.MIN_VALUE;
         double cScore;
-        for (int i = 0; i < possibleBoards.length; i++) {
+        for(int i = 0; i < possibleBoards.length; i++) {
             cScore = evaluate(possibleBoards[i]);
             cScore *= cScore;
-            if (cScore >= score) {
+            if(cScore >= score) {
                 score = cScore;
                 bestBoardIndex = i;
             }
@@ -121,100 +122,167 @@ public class EvaluationFunction extends AI{
         return this.fitness;
     }
 
-    public double evaluate(Board cBoard){
+    public double evaluate(Board cBoard)
+    {
         this.cBoard = new Board(cBoard);
-        int currentPlayer = cBoard.getCurrentPlayer();
+        int size = cBoard.getSize();
+        int filledSquares = size * size - cBoard.getNrSquares(Board.EMPTY);
+
         double totalScore;
-        int blackMoves;
-        int whiteMoves;
-        double numberOfMoves;
         double numberOfCoins;
+        double numberOfMoves;
         double territory;
 
-        numberOfCoins = ((double) (this.cBoard.getNrSquares(Board.BLACK) - this.cBoard.getNrSquares(Board.WHITE))) / ((double) (this.cBoard.getNrSquares(Board.BLACK) + this.cBoard.getNrSquares(Board.WHITE)));
+        numberOfCoins = getNumberOfCoins(this.cBoard);
+        numberOfMoves = getNumberOfMoves(this.cBoard);
+        territory = getTerritory(this.cBoard);
 
-        if(this.cBoard.getCurrentPlayer() == Board.WHITE){
-            whiteMoves = Logic.numberSquaresAllowed(this.cBoard);
-            this.cBoard.changePlayer();
-            blackMoves = Logic.numberSquaresAllowed(this.cBoard);
-        }
-        else {
-            blackMoves = Logic.numberSquaresAllowed(this.cBoard);
-            this.cBoard.changePlayer();
-            whiteMoves = Logic.numberSquaresAllowed(this.cBoard);
-        }
-
-        if(blackMoves + whiteMoves != 0){
-            numberOfMoves =  (double) ((blackMoves - whiteMoves) / (blackMoves + whiteMoves));
-        } else numberOfMoves = 0;
-
-        if (getTerritoryScore(Board.BLACK) + getTerritoryScore(Board.WHITE) !=0 ){
-            territory = (double) (getTerritoryScore(Board.BLACK) - getTerritoryScore(Board.WHITE))/ (getTerritoryScore(Board.BLACK) + getTerritoryScore(Board.WHITE));
-        } else territory = 0;
-
-        totalScore = (calcCoinWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfCoins +
-                calcMoveWeight(cBoard.getNrSquares(Board.EMPTY)) * numberOfMoves + calcTerritoryWeight(cBoard.getNrSquares(Board.EMPTY)) * territory);
+        totalScore = calcCoinWeight(filledSquares) * numberOfCoins +
+                calcMoveWeight(filledSquares) * numberOfMoves +
+                calcTerritoryWeight(filledSquares) * territory;
 
         return totalScore;
     }
 
-    public void setTerritory(double[][] cellValues) {
-        this.cellValues = new double[8][8];         //verander 8 terug naar cBoard.getSize()
-        for(int i = 0; i < 8; i++) {
-            for(int j = 0; j < 8; j++) {
+    public static double getNumberOfCoins(Board board)
+    {
+        double numberOfCoins;
+        double blackCoins = board.getNrSquares(Board.BLACK);
+        double whiteCoins = board.getNrSquares(Board.WHITE);
+
+        numberOfCoins = ((blackCoins - whiteCoins)) / (blackCoins + whiteCoins);
+
+        return numberOfCoins;
+    }
+
+    public static double getNumberOfMoves(Board board)
+    {
+        Board tempBoard = new Board(board);
+        double numberOfMoves;
+        double blackMoves;
+        double whiteMoves;
+
+        if(tempBoard.getCurrentPlayer() == Board.WHITE)
+        {
+            whiteMoves = Logic.numberSquaresAllowed(tempBoard);
+            tempBoard.changePlayer();
+            blackMoves = Logic.numberSquaresAllowed(tempBoard);
+        }
+        else
+        {
+            blackMoves = Logic.numberSquaresAllowed(tempBoard);
+            tempBoard.changePlayer();
+            whiteMoves = Logic.numberSquaresAllowed(tempBoard);
+        }
+
+        if(blackMoves + whiteMoves != 0)
+            numberOfMoves = ((blackMoves - whiteMoves) / (blackMoves + whiteMoves));
+        else numberOfMoves = 0;
+
+        return numberOfMoves;
+    }
+
+    public double getTerritory(Board board)
+    {
+        double territory;
+        double territoryScoreBlack = getTerritoryScore(board, Board.BLACK);
+        double territoryScoreWhite = getTerritoryScore(board, Board.WHITE);
+
+        if (territoryScoreBlack + territoryScoreWhite !=0 )
+            territory = (territoryScoreBlack - territoryScoreWhite) / (territoryScoreBlack + territoryScoreWhite);
+        else territory = 0;
+
+        return territory;
+    }
+
+    public void setWeightPoly()
+    {
+        setWeightPoly(new double[] {0,1,0,100,-1,0,75,2.5,-0.05});
+    }
+
+    public void setWeightPoly(double[] weightPoly)
+    {
+        this.weightPoly = new double[WEIGHT_POLY_SIZE];
+        System.arraycopy(weightPoly, 0, this.weightPoly, 0, weightPoly.length);
+    }
+
+    public void normalizeWeightPoly(double newMaxWeight)
+    {
+        double maxWeight = 0;
+
+        for (double aWeightPoly : weightPoly)
+            if (Math.abs(aWeightPoly) > maxWeight)
+                maxWeight = Math.abs(aWeightPoly);
+
+        for (int i = 0; i < weightPoly.length; i++)
+            weightPoly[i] = weightPoly[i] * newMaxWeight / maxWeight;
+    }
+
+    public void normalizeWeightPoly()
+    {
+        normalizeWeightPoly(1.0);
+    }
+
+    public void setTerritory(double[][] cellValues)
+    {
+        this.cellValues = new double[cBoard.getSize()][cBoard.getSize()];
+        for(int i = 0; i < cBoard.getSize(); i++) {
+            for(int j = 0; j < cBoard.getSize(); j++) {
                 this.cellValues[i][j] = cellValues[i][j];
             }
         }
     }
 
-    public void setTerritory(){
-        cellValues = new double[8][8]; //verander terug naar cBoard.getSize()
+    public void setTerritory()
+    {
+        cellValues = new double[cBoard.getSize()][cBoard.getSize()];
 
-//        if(cBoard.getSize() == 4)
-//        {
-//            setTerritory(new double[][] {
-//                    {10,5,5,10},
-//                    {5,0,0,5},
-//                    {5,0,0,5},
-//                    {10,5,5,10}});
-//        }
-//        else if(cBoard.getSize() == 6)
-//        {
-//            setTerritory(new double[][] {
-//                    {10,5,8,8,5,10},
-//                    {5,5,6,6,5,5},
-//                    {8,6,0,0,6,8},
-//                    {8,6,0,0,6,8},
-//                    {5,5,6,6,5,5},
-//                    {10,5,8,8,5,10}});
-//        }
-//
-//        else if(cBoard.getSize() == 8)
-//        {
-        setTerritory(new double[][] {
-                {400,50,300,250,250,300,50,400},
-                {50,10,150,150,150,150,10,50},
-                {300,150,300,0,0,300,150,300},
-                {250,150,0,0,0,0,150,250},
-                {250,150,0,0,0,0,150,250},
-                {300,150,300,0,0,300,150,300},
-                {50,10,150,150,150,150,10,50},
-                {400,50,300,250,250,300,50,400}});
-//        }
-//        else {
-//            System.out.println("Invalid boardsize");
-//        }
+        if(cBoard.getSize() == 4)
+        {
+            setTerritory(new double[][] {
+                    {10,5,5,10},
+                    {5,0,0,5},
+                    {5,0,0,5},
+                    {10,5,5,10}});
+        }
+        else if(cBoard.getSize() == 6)
+        {
+            setTerritory(new double[][] {
+                    {10,5,8,8,5,10},
+                    {5,5,6,6,5,5},
+                    {8,6,0,0,6,8},
+                    {8,6,0,0,6,8},
+                    {5,5,6,6,5,5},
+                    {10,5,8,8,5,10}});
+        }
+
+        else if(cBoard.getSize() == 8)
+        {
+            setTerritory(new double[][] {
+                    {1000,100,300,250,250,300,100,1000},
+                    {100,10,150,150,150,150,10,100},
+                    {300,150,300,0,0,300,150,300},
+                    {250,150,0,0,0,0,150,250},
+                    {250,150,0,0,0,0,150,250},
+                    {300,150,300,0,0,300,150,300},
+                    {100,10,150,150,150,150,10,100},
+                    {1000,100,300,250,250,300,100,1000}});
+        }
+        else {
+            System.out.println("Invalid boardsize");
+        }
     }
 
-    public int getTerritoryScore(int player){
+    public int getTerritoryScore(Board board, int player)
+    {
         int score = 0;
-        for (int i = 0; i < cBoard.getBoardGrid().length; i++) {
-            for (int j = 0; j < cBoard.getBoardGrid()[i].length; j++) {
-                if (cBoard.getBoardGrid()[i][j] == player) {
+        int[][] boardGrid = board.getBoardGrid();
+
+        for (int i = 0; i < boardGrid.length; i++)
+            for (int j = 0; j < boardGrid.length; j++)
+                if (boardGrid[i][j] == player)
                     score += cellValues[i][j];
-                }
-            }
-        }
+
         return score;
     }
 
@@ -242,27 +310,24 @@ public class EvaluationFunction extends AI{
         return territoryWeightPoly;
     }
 
-    public double calcCoinWeight(int emptySquares)
+    public double calcCoinWeight(int filledSquares)
     {
-        int pracTurn = cBoard.getSize() * cBoard.getSize() - emptySquares;
         double[] coinWeightPoly = coinWeightPoly();
-        double coinWeight = coinWeightPoly[0] + (coinWeightPoly[1] * pracTurn) + (coinWeightPoly[2] * pracTurn * pracTurn);
+        double coinWeight = coinWeightPoly[0] + (coinWeightPoly[1] * filledSquares) + (coinWeightPoly[2] * filledSquares * filledSquares);
         return coinWeight;
     }
 
-    public double calcMoveWeight(int emptySquares)
+    public double calcMoveWeight(int filledSquares)
     {
-        int pracTurn = cBoard.getSize() * cBoard.getSize() - emptySquares;
         double[] moveWeightPoly = moveWeightPoly();
-        double moveWeight = moveWeightPoly[0] + (moveWeightPoly[1] * pracTurn) + (moveWeightPoly[2] * pracTurn * pracTurn);
+        double moveWeight = moveWeightPoly[0] + (moveWeightPoly[1] * filledSquares) + (moveWeightPoly[2] * filledSquares * filledSquares);
         return moveWeight;
     }
 
-    public double calcTerritoryWeight(int emptySquares)
+    public double calcTerritoryWeight(int filledSquares)
     {
-        int pracTurn = cBoard.getSize() * cBoard.getSize() - emptySquares;
         double[] territoryWeightPoly = territoryWeightPoly();
-        double territoryWeight = territoryWeightPoly[0] + (territoryWeightPoly[1] * pracTurn) + (territoryWeightPoly[2] * pracTurn * pracTurn);
+        double territoryWeight = territoryWeightPoly[0] + (territoryWeightPoly[1] * filledSquares) + (territoryWeightPoly[2] * filledSquares * filledSquares);
         return territoryWeight;
     }
 
@@ -299,6 +364,11 @@ public class EvaluationFunction extends AI{
         for(int i = 0; i < chromosome.length; i++){
             System.out.println("Gene " + i + " has value: " + chromosome[i]);
         }
+    }
+
+    public void printWeightPoly()
+    {
+        System.out.println(Arrays.toString(weightPoly));
     }
 
     public Board getBoard() {

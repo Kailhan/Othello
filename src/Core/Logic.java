@@ -397,6 +397,22 @@ public class Logic {
         return possibleMoves;
     }
 
+    public static Board[] getPossibleBoards(Board board)
+    {
+        int[][] possibleMoves = getPossibleMoves(board);
+        Board[] possibleBoards = new Board[possibleMoves.length];
+        Board tempBoard;
+
+        for (int i = 0; i < possibleMoves.length; i++)
+        {
+            tempBoard = new Board(board);
+            tempBoard.applyMove(possibleMoves[i][0], possibleMoves[i][1]);
+            possibleBoards[i] = tempBoard;
+        }
+
+        return possibleBoards;
+    }
+
     public static boolean checkMovePossible(Board board)
     {
         int boardSize = board.getSize();

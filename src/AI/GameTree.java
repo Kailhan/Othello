@@ -53,7 +53,6 @@ public class GameTree {
                     if (Logic.checkSquareAllowed(i, j, rootBoard)) {
                         Board tmpBoard = new Board(rootBoard); //makes use of the deep-copy method in board so that the child and parents' board are distinct objects
                         tmpBoard.applyMove(i, j);
-                        tmpBoard.changePlayer();
                         Node currentChild = new Node(tmpBoard);
                         root.addChild(currentChild);
                         currentLayer.add(currentChild);
