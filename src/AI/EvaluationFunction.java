@@ -46,7 +46,8 @@ public class EvaluationFunction extends AI{
 
     public void setWeightPoly()
     {
-        setWeightPoly(new double[] {0,1,0,100,-1,0,75,2.5,-0.05});
+        setWeightPoly(new double[] {-25.935107984403448,	42.91479197569383,	29.745188566702527,	63.54179606069827,	-20.326279895422864,	-17.834800055781518	,-27.478073313276703,	5.985431145459364,	29.882144082487788});
+        //setWeightPoly(new double[] {0,1,0,100,-1,0,75,2.5,-0.05});
     }
 
     public void setWeightPoly(double[] weightPoly) {
@@ -110,7 +111,7 @@ public class EvaluationFunction extends AI{
 
         gamesToBeSimmed = (gamesToBeSimmed < 2) ? 2 : gamesToBeSimmed;
         gamesToBeSimmed = (gamesToBeSimmed % 2 != 0) ? gamesToBeSimmed + 1: gamesToBeSimmed;
-        MCTS evaluator = new MCTS(1000,1.414);
+        Stupid evaluator = new Stupid();
         GenericTest.test(this,evaluator, gamesToBeSimmed/2, boardSize);
         winsFirstMove = GenericTest.getPlayer1Wins();
         GenericTest.test(evaluator, this, gamesToBeSimmed/2, boardSize);

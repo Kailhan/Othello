@@ -38,7 +38,8 @@ public class EvalRandom extends EvaluationFunction {
         double cScore;
         for (int i = 0; i < possibleBoards.length; i++) {
             Random rand = new Random();
-            cScore = evaluate(possibleBoards[i]) + (Math.random()*20-20);
+            cScore = evaluate(possibleBoards[i]);
+            cScore = cScore + (Math.random()*(cScore/5)-cScore/10);
            // cScore = evaluate(possibleBoards[i]);
             //System.out.println(cScore);
             cScore *= cScore;

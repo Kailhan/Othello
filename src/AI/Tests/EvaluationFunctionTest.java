@@ -6,21 +6,21 @@ import Core.Board;
 public class EvaluationFunctionTest {
 
     private static final int SIZE = 8;
-    private static final int GAMES = 100;
+    private static final int GAMES = 1000;
     private static final int DEPTH = 1;
 
     public static void main(String[] args){
 
-//        double[] polyWeights = new double[9];
-//      test1(polyWeights);
+      double[] polyWeights = new double[9];
+    test1(polyWeights);
 
 
 
 
 
-         double[] polyWeight1 = new double[] {10.282435566733383,-0.2208326435675777,2.907362038915502,-18.54089231016665,17.906558153459244,-29.34779296568235,1.4012722350153906,17.230612271737314,7.354460684853822};
-//        double[] polyWeight2 = new double[] {10,20,100,0,0,0,0,0,0};
-        test2(polyWeight1);
+//         double[] polyWeight1 = new double[] {10.282435566733383,-0.2208326435675777,2.907362038915502,-18.54089231016665,17.906558153459244,-29.34779296568235,1.4012722350153906,17.230612271737314,7.354460684853822};
+////        double[] polyWeight2 = new double[] {10,20,100,0,0,0,0,0,0};
+//        test2(polyWeight1);
     }
 
     private static int test1(double[] polyWeights){
@@ -33,10 +33,10 @@ public class EvaluationFunctionTest {
         Stupid stupid = new Stupid();
 
         EvaluationFunction evaluator = new EvaluationFunction(board) ;
-//        double[] polyWeights2 = new double[] {50,50,50,50,50,50,50,50,50};
-//        evaluator.setWeightPoly(polyWeights2);
+         double[] polyWeights2 = new double[] {-25.935107984403448,	42.91479197569383,	29.745188566702527,	63.54179606069827,	-20.326279895422864,	-17.834800055781518	,-27.478073313276703,	5.985431145459364,	29.882144082487788};
+        EvalRandom evaluator5 = new EvalRandom(board,polyWeights2);
 
-        generic.test(evaluator,stupid,GAMES, SIZE);
+        generic.test(evaluator,evaluator5,GAMES, SIZE);
 
 
         System.out.println("EvaluationFunction wins: " + (generic.getPlayer1Wins()));
@@ -57,10 +57,10 @@ public class EvaluationFunctionTest {
 
         evaluator1.setWeightPoly(polyWeights1);
         EvalRandom evaluator3 = new EvalRandom(board);
-        MCTS evaluator5 = new MCTS(1000);
 
 
-        generic.test(evaluator2,evaluator5,GAMES,SIZE);
+
+        generic.test(evaluator2,evaluator3,GAMES,SIZE);
         System.out.println("Evaluationfunction 1 wins: " + generic.getPlayer1Wins());
         System.out.println("Evaluationfunction 2 wins: " + generic.getPlayer2Wins());
         System.out.println("Draws: " + generic.getDraws());
