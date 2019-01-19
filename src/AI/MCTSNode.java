@@ -89,27 +89,6 @@ public class MCTSNode {
     public double getSelectionScore() {
         double exploitationScore = (sims == 0) ? 0 : ((double) (wins / sims));
         double explorationScore = ((wins == 0) || (MCTS.totalSims == 0)) ? (explorationParameter * (Math.sqrt(Math.log(MCTS.totalSims + 1)))) : (explorationParameter * (double) (Math.sqrt(Math.log(MCTS.totalSims) / wins)));
-        if (sims != 0) {
-//            System.out.println("ploit: " + exploitationScore);
-//            System.out.println("plore: " + explorationScore);
-        }
-//        System.out.println("ploit: " + exploitationScore);
-//        System.out.println("plore: " + explorationScore);
-//        System.out.println("ploit: " + exploitationScore);
-//        System.out.println("plore: " + explorationScore);
-        if(!((wins == 0) || (MCTS.totalSims == 0))) {
-//            System.out.println("(MCTS.totalSims)" + MCTS.totalSims);
-//            System.out.println("Math.log(MCTS.totalSims)" + Math.log(MCTS.totalSims));
-//        System.out.println("explorepart:" + (Math.sqrt(Math.log(MCTS.totalSims) / wins)));
-    }
-//
-//        } else {
-//            System.out.println("(MCTS.totalSims)" + MCTS.totalSims);
-//            System.out.println("Math.log(MCTS.totalSims)" + Math.log(MCTS.totalSims));
-//            System.out.println("explorepart:" + (Math.sqrt(Math.log(MCTS.totalSims + 1))));
-//        }
-//            System.out.println("Math.log(MCTS.totalSims)" + Math.log(MCTS.totalSims));
-//            System.out.println("explorepart:" + (Math.sqrt(Math.log(MCTS.totalSims)/wins)));
         double selectionScore = exploitationScore + explorationScore;
         //selectionScore = (sims == 0) ? 1 : 1/sims;
         return selectionScore;
