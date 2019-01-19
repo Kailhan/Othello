@@ -264,6 +264,8 @@ public class GameScene extends BorderPane {
     public void botMove()
     {
         int AILevel;
+        int maxSims = 1000; //int or long determines if using seconds or sims
+        long timeForMoveInMs = 2000;
         AILevel = settings.getAI1Level();
         if (board.getCurrentPlayer() == WHITE)
             AILevel = settings.getAI2Level();
@@ -276,12 +278,12 @@ public class GameScene extends BorderPane {
                 updateBoard(move[0], move[1]);
                 break;
             case 1:
-                MCTS mcts = new MCTS(1000, MCTS.STANDARD_EXPLORATION_PARAMETER);
+                MCTS mcts = new MCTS(timeForMoveInMs, MCTS.STANDARD_EXPLORATION_PARAMETER);
                 move = mcts.getBestMove(board);
                 updateBoard(move[0], move[1]);
                 break;
             case 2:
-                MCTS_TreeReuse mcts_treeReuse = new MCTS_TreeReuse(1000, MCTS.STANDARD_EXPLORATION_PARAMETER);
+                MCTS_TreeReuse mcts_treeReuse = new MCTS_TreeReuse(timeForMoveInMs, MCTS.STANDARD_EXPLORATION_PARAMETER);
                 move = mcts_treeReuse.getBestMove(board);
                 updateBoard(move[0], move[1]);
                 break;

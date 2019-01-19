@@ -21,6 +21,7 @@ public class MCTS_TreeReuse extends AI {
     public static int currentPlayer;
 
     public MCTS_TreeReuse(long timeForMoveInMs, double explorationParameter ) {
+        System.out.println("using time as threshold");
         this.timeForMoveInMs = timeForMoveInMs;
         this.maxSims = 0;
         this.explorationParameter = explorationParameter;
@@ -70,7 +71,9 @@ public class MCTS_TreeReuse extends AI {
             if((currentAmountOfSims >= maxSims) && (maxSims !=0)) {
                 reachedThreshold = true; //to enable otherways of thresholds eg time
             }
-            if((System.nanoTime() - startTime >= timeForMoveInMs) && (timeForMoveInMs !=0)) {
+            if(((System.nanoTime() - startTime)/1000000 >= timeForMoveInMs) && (timeForMoveInMs !=0)) {
+                System.out.println("time elapsed: " +(System.nanoTime() - startTime)/1000);
+                System.out.println("timeForMoveInMS: " + timeForMoveInMs);
                 reachedThreshold = true; //to enable otherways of thresholds eg time
             }
         }
