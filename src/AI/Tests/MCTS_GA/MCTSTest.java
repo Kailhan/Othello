@@ -7,13 +7,13 @@ import AI.Tests.GenericTest;
 public class MCTSTest {
 
     public static void main(String[] args) {
-        int games = 100;
-        int totalSims1 = 100;
+        int games = 1000;
+        int totalSims1 = 50;
         int totalSims2 = 1;
         int size = 8;
 
-        MCTS mcts1 = new MCTS(totalSims1, MCTS.STANDARD_EXPLORATION_PARAMETER);
-        MCTS mcts2 = new MCTS(totalSims2, MCTS.STANDARD_EXPLORATION_PARAMETER);
+        MCTS mcts1 = new MCTS(totalSims1, 0.5);
+        MCTS mcts2 = new MCTS(totalSims2, 0.0);
 
         long startTime = System.nanoTime();
 

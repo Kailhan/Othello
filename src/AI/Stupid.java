@@ -5,8 +5,6 @@ import Core.Logic;
 import java.util.Random;
 
 public class Stupid extends AI {
-    private int[][] board;
-    private int[][] move;
     private Random rand = new Random();
 
     public Stupid(){}
@@ -15,6 +13,11 @@ public class Stupid extends AI {
         return -1;
     }
 
+    /**
+     * Return uniformly random legal move based on board
+     * @param board current board
+     * @return legal move
+     */
     public int[] getBestMove(Board board) {
         int[][] moves = Logic.getPossibleMoves(board);
         try {

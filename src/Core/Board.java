@@ -89,7 +89,11 @@ public class Board implements Serializable {
         return  nrSquares;
     }
 
-
+    /**
+     * Count amount of corners that have the value of state
+     * @param state e.g. Black or White
+     * @return amount of corners
+     */
     public int getCorners(int state)
     {
         int nrCorners = 0;
@@ -145,6 +149,11 @@ public class Board implements Serializable {
             boardGrid[flippedDisk[0]][flippedDisk[1]] = currentPlayer;
     }
 
+    /**
+     * Checks if all values in board matrix and current players are the same
+     * @param parent board that this board needs to be compared with
+     * @return if this and parent board sre same
+     */
     public boolean isSameBoard(Board parent) {
         boolean sameBoard = true;
         int[][] parentBoardGrid = parent.getBoardGrid();
@@ -164,6 +173,10 @@ public class Board implements Serializable {
         return sameBoard;
     }
 
+    /**
+     * Finds different in board with regards to row ccmpared to parent
+     * @return row, where board and parent's board differ
+     */
     public int getRow(Board parent) {
         int row = -1; //makes sure we throw an error if we have not updated our coordinate
         int[][] parentBoardGrid = parent.getBoardGrid();
@@ -176,6 +189,10 @@ public class Board implements Serializable {
         return row;
     }
 
+    /**
+     * Finds different in board with regards to column ccmpared to parent
+     * @return column, where board and parent's board differ
+     */
     public int getColumn(Board parent) {
         int column = -1; //makes sure we throw an error if we have not updated our coordinate
         int[][] parentBoardGrid = parent.getBoardGrid();
@@ -188,6 +205,10 @@ public class Board implements Serializable {
         return column;
     }
 
+    /**
+     * Adapter for new way of doing moves
+     * @param move that needs to be applied to this board
+     */
     public void applyMove(int[] move) {
         applyMove(move[0], move[1]);
     }

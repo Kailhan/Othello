@@ -34,6 +34,11 @@ public class MCTS extends AI {
         return -1;
     }
 
+    /**
+     * Gets best move using MCTS algorithm for board
+     * @param board board for which best move needs to be found
+     * @return best move
+     */
     public int[] getBestMove(Board board) {
         int[] move = new int[2];
         MCTSNode node = findMove(board);
@@ -42,6 +47,11 @@ public class MCTS extends AI {
         return move;
     }
 
+    /**
+     * Gets best node using MCTS algorithm for board
+     * @param board board for which best move needs to be found
+     * @return best node
+     */
     public MCTSNode findMove(Board board) {
         MCTSNode currentNode = new MCTSNode(new Board(board), explorationParameter);
         MCTSNode moveNode = null;

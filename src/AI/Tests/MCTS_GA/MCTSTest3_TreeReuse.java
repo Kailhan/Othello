@@ -13,16 +13,16 @@ public class MCTSTest3_TreeReuse {
 
     public static void main(String[] args) {
         int minPlayouts = 1;
-        int maxPlayouts = 50;
+        int maxPlayouts = 10;
         int stepsPlayouts = 1;
         double minExplore = 0;
-        double maxExplore = 2;
-        double stepsExplore = 0.1;
+        double maxExplore = 10;
+        double stepsExplore = 0.5;
         int scaling = 100;
         int minExploreInt = (int)Math.round(minExplore * scaling);
         int maxExploreInt = (int)Math.round(maxExplore * scaling);
         int stepsExploreInt = (int)Math.round(stepsExplore * scaling);
-        int totalGames = 800;
+        int totalGames = 1000;
         int rowWidth = 6;
 
         int logCounter = 0;

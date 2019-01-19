@@ -13,23 +13,22 @@ public class MCTSTest3 {
 
     public static void main(String[] args) {
         int minPlayouts = 1;
-        int maxPlayouts = 25;
+        int maxPlayouts = 10;
         int stepsPlayouts = 1;
-        double minExplore = 100;
-        double maxExplore = 200;
-        double stepsExplore = 10;
+        double minExplore = 0;
+        double maxExplore = 1;
+        double stepsExplore = 0.1;
         int scaling = 100;
         int minExploreInt = (int)Math.round(minExplore * scaling);
         int maxExploreInt = (int)Math.round(maxExplore * scaling);
         int stepsExploreInt = (int)Math.round(stepsExplore * scaling);
-        int totalGames = 800;
+        int totalGames = 1000;
         int rowWidth = 6;
 
         int logCounter = 0;
-        System.out.println((((maxPlayouts - minPlayouts)/stepsPlayouts) + 1));
-        System.out.println((((maxExploreInt - minExploreInt)/stepsExploreInt) + 1));
+        //System.out.println((((maxPlayouts - minPlayouts)/stepsPlayouts) + 1));
+        //System.out.println((((maxExploreInt - minExploreInt)/stepsExploreInt) + 1));
         String [] log = new String[(((maxPlayouts - minPlayouts)/stepsPlayouts) + 1) * (((maxExploreInt - minExploreInt)/stepsExploreInt) + 1) * rowWidth];
-        //String[] log = new String[660];
         System.out.println("loglength: " +  log.length);
         System.out.println("minExploreInt: " +  minExploreInt);
         System.out.println("maxExploreInt: " +  maxExploreInt);

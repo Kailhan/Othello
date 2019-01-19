@@ -38,6 +38,11 @@ public class MCTS_TreeReuse extends AI {
         return -1;
     }
 
+    /**
+     * Finds best move based for board on MCTS algorithm
+     * @param board board for which best move needs to be found
+     * @return best move
+     */
     public int[] getBestMove(Board board) {
         int[] move = new int[2];
         MCTSNode_TreeReuse node = findMove(board);
@@ -46,6 +51,11 @@ public class MCTS_TreeReuse extends AI {
         return move;
     }
 
+    /**
+     * Gets best node using MCTS algorithm for board
+     * @param board board for which best move needs to be found
+     * @return best node
+     */
     public MCTSNode_TreeReuse findMove(Board board) {
         MCTSNode_TreeReuse currentNode = findCurrentNode(board);
         MCTSNode_TreeReuse moveNode = null;

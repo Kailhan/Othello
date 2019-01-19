@@ -176,7 +176,6 @@ public class GameScene extends BorderPane {
             }
         });
 
-
         grid.setGridLinesVisible(false);
         grid.setAlignment(Pos.CENTER);
         redrawBoard();
@@ -186,6 +185,9 @@ public class GameScene extends BorderPane {
         scene = new Scene(bPane);
     }
 
+    /**
+     * Updates tiles and general information displayed in the actual game screen
+     */
     public void redrawBoard (){
         grid.getChildren().clear();
         createTiles();
@@ -219,6 +221,10 @@ public class GameScene extends BorderPane {
         }
     }
 
+    /**
+     * Creates different kind of tiles depending on who owns a certain cell and how many disks will be flipped
+     * if someone places a disk in that certain cell
+     */
     public void createTiles(){
         toAdd.clear();
         for (int r = 0; r < board.getSize(); r++) {
@@ -285,7 +291,7 @@ public class GameScene extends BorderPane {
                 updateBoard(move[0], move[1]);
                 break;
             case 4:
-                Minimax minimax =new Minimax(MINIMAX_DEPTH,board);
+                Minimax minimax = new Minimax(MINIMAX_DEPTH,board);
                 move = minimax.getBestMove(board);
                 updateBoard(move[0],move[1]);
                 break;
@@ -302,6 +308,11 @@ public class GameScene extends BorderPane {
         }
     }
 
+    /**
+     * Update game with specific move and check if game is finished
+     * @param r row, which we need to update
+     * @param c column, which we need to update
+     */
     public void updateBoard(int r, int c)
     {
         board.applyMove(r, c);
@@ -329,6 +340,10 @@ public class GameScene extends BorderPane {
         redrawBoard();
     }
 
+    /**
+     * Update board with need new board
+     * @param board new board for update
+     */
     public void updateBoard(Board board){
         this.board = board;
         this.board.incrementTurn();
