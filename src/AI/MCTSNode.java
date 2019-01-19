@@ -37,6 +37,10 @@ public class MCTSNode {
         this.terminalNode = false;
     }
 
+    /**
+     * Finds different in board with regards to row ccmpared to parent
+     * @return row, where board and parent's board differ
+     */
     public int getRow() {
         int row = -1; //makes sure we throw an error if we have not updated our coordinate
         Board parentBoard = new Board(parentNode.getData());
@@ -51,6 +55,10 @@ public class MCTSNode {
         return row;
     }
 
+    /**
+     * Finds different in board with regards to column ccmpared to parent
+     * @return column, where board and parent's board differ
+     */
     public int getColumn() {
         int column = -1; //makes sure we throw an error if we have not updated our coordinate
         Board parentBoard = new Board(parentNode.getData());
@@ -65,25 +73,30 @@ public class MCTSNode {
         return column;
     }
 
+
+    /**
+     * Board in MCTSNode
+     * @return instance of board in node
+     */
     public Board getData() {
         return board;
     }
 
+    /**
+     * Score based on which we traverse tree, balances exploration and exploitation
+     * @return tree traversal score
+     */
     public double getSelectionScore() {
-        //double exploitationScore = (sims == 0) ? 1 : ((double)(wins/sims));
-        //double explorationScore = ((wins == 0) || (MCTS_TreeReuse.totalSims == 0)) ? 1 : (explorationParameter * (double)(Math.sqrt(Math.log(MCTS_TreeReuse.totalSims)/wins)));
-        if(sims != 0) {
-            //System.out.println("ploit: " + exploitationScore);
-            //System.out.println("plore: " + explorationScore);
-        }
-//        System.out.println("ploit: " + exploitationScore);
-//        System.out.println("plore: " + explorationScore);
-        //double selectionScore = exploitationScore + explorationScore;
-
-        double selectionScore = (sims == 0) ? 1 : 1/sims;
+        double exploitationScore = (sims == 0) ? 0 : ((double) (wins / sims));
+        double explorationScore = ((wins == 0) || (MCTS.totalSims == 0)) ? (explorationParameter * (Math.sqrt(Math.log(MCTS.totalSims + 1)))) : (explorationParameter * (double) (Math.sqrt(Math.log(MCTS.totalSims) / wins)));
+        double selectionScore = exploitationScore + explorationScore;
+        //selectionScore = (sims == 0) ? 1 : 1/sims;
         return selectionScore;
     }
 
+    /**
+     * Simulate a game following game logic starting from board in node &&&& backpropogate score
+     */
     public void playoutSimulation() {
         Board startBoard = new Board(board);
         Board simulationBoard = new Board(board);
@@ -118,6 +131,7 @@ public class MCTSNode {
         MCTS.totalSims++;
         MCTSNode currentNode = this;
 
+        //BACKPROPOGATION
         while(currentNode.getParentNode() != null) {
             if(currentNode.getParentNode().getData().getCurrentPlayer() != currentPlayer) currentNode.getParentNode().setWins(currentNode.getParentNode().getWins() + gameState);
             currentNode.getParentNode().setSims(currentNode.getParentNode().getSims() + 1);
@@ -125,12 +139,21 @@ public class MCTSNode {
         }
     }
 
+    /**
+     * Returns a random move thats legal from simulationBoard
+     * @param simulationBoard board from which legal move is determined
+     * @param startBoard not used
+     * @return a move that can be applied to a (simulation)board
+     */
     public int[] selectMove(Board simulationBoard, Board startBoard) {
         int[][] possibleMoves = Logic.getPossibleMoves(simulationBoard);
         return possibleMoves[rand.nextInt(possibleMoves.length)];
     }
 
-
+    /**
+     * Finds node(s) with the best selection score and randomly returns one
+     * @return child node with a highest selection score
+     */
     public MCTSNode getBestSelectionChildNode() {
         List<MCTSNode> potentialChildren = new ArrayList<MCTSNode>();
         double maxScore = Integer.MIN_VALUE;
@@ -145,6 +168,10 @@ public class MCTSNode {
         return potentialChildren.get(rand.nextInt(potentialChildren.size()));
     }
 
+    /**
+     * Finds node(s) with the best simulation score (wins/sims) and randomly returns one
+     * @return child node with a highest simulation score
+     */
     public MCTSNode getBestSimulationChildNode() {
         List<MCTSNode> potentialChildren = new ArrayList<MCTSNode>();
         double maxScore = -1;
@@ -159,6 +186,11 @@ public class MCTSNode {
         return potentialChildren.get(rand.nextInt(potentialChildren.size()));
     }
 
+    /**
+     * Starting from current node traverse down tree until reaching a leaf node (node with no children)
+     * picking from the potential nodes along the traversal the ones with the highest selection score
+     * @return leaf node with highest selection score
+     */
     public MCTSNode getBestLeafNode() {
         MCTSNode currentNode = this;
         while(!currentNode.getChildNodes().isEmpty()) {
@@ -168,6 +200,10 @@ public class MCTSNode {
         return currentNode;
     }
 
+    /**
+     * Find all legal boards that can be constructed from applying one legal move to board in current node
+     * and store those as its children
+     */
     public void createChildren() {
         Board board = new Board(this.board);
         int[][] possibleMoves;
@@ -262,6 +298,10 @@ public class MCTSNode {
         childNodes.add(childNode);
     }
 
+    /**
+     * Determines size of (sub)tree starting from this node
+     * @return size of tree in amount of nodes
+     */
     public int getTreeSize() {
         int treeSize = 1;
         List<MCTSNode> queue = new ArrayList<MCTSNode>();

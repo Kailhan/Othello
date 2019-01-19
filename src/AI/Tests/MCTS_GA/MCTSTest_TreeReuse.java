@@ -7,9 +7,9 @@ import AI.Tests.GenericTest;
 public class MCTSTest_TreeReuse {
 
     public static void main(String[] args) {
-        int games = 100;
-        int totalSims1 = 100;
-        double explorationParameter = 1.414;
+        int games = 1000;
+        int totalSims1 = 10;
+        double explorationParameter = 0;
         int size = 8;
 
         MCTS_TreeReuse mcts1 = new MCTS_TreeReuse(totalSims1, explorationParameter);

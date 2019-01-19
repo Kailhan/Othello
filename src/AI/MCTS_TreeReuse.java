@@ -21,6 +21,7 @@ public class MCTS_TreeReuse extends AI {
     public static int currentPlayer;
 
     public MCTS_TreeReuse(long timeForMoveInMs, double explorationParameter ) {
+        System.out.println("using time as threshold");
         this.timeForMoveInMs = timeForMoveInMs;
         this.maxSims = 0;
         this.explorationParameter = explorationParameter;
@@ -38,6 +39,11 @@ public class MCTS_TreeReuse extends AI {
         return -1;
     }
 
+    /**
+     * Finds best move based for board on MCTS algorithm
+     * @param board board for which best move needs to be found
+     * @return best move
+     */
     public int[] getBestMove(Board board) {
         int[] move = new int[2];
         MCTSNode_TreeReuse node = findMove(board);
@@ -46,6 +52,11 @@ public class MCTS_TreeReuse extends AI {
         return move;
     }
 
+    /**
+     * Gets best node using MCTS algorithm for board
+     * @param board board for which best move needs to be found
+     * @return best node
+     */
     public MCTSNode_TreeReuse findMove(Board board) {
         MCTSNode_TreeReuse currentNode = findCurrentNode(board);
         MCTSNode_TreeReuse moveNode = null;
@@ -60,7 +71,9 @@ public class MCTS_TreeReuse extends AI {
             if((currentAmountOfSims >= maxSims) && (maxSims !=0)) {
                 reachedThreshold = true; //to enable otherways of thresholds eg time
             }
-            if((System.nanoTime() - startTime >= timeForMoveInMs) && (timeForMoveInMs !=0)) {
+            if(((System.nanoTime() - startTime)/1000000 >= timeForMoveInMs) && (timeForMoveInMs !=0)) {
+                System.out.println("time elapsed: " +(System.nanoTime() - startTime)/1000);
+                System.out.println("timeForMoveInMS: " + timeForMoveInMs);
                 reachedThreshold = true; //to enable otherways of thresholds eg time
             }
         }

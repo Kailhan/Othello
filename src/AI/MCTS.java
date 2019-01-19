@@ -17,6 +17,7 @@ public class MCTS extends AI {
     public static final double STANDARD_EXPLORATION_PARAMETER = 1.414;
 
     public MCTS(long timeForMoveInMs, double explorationParameter ) {
+        System.out.println("using time as threshold");
         this.timeForMoveInMs = timeForMoveInMs;
         this.maxSims = 0;
         this.explorationParameter = explorationParameter;
@@ -34,6 +35,11 @@ public class MCTS extends AI {
         return -1;
     }
 
+    /**
+     * Gets best move using MCTS algorithm for board
+     * @param board board for which best move needs to be found
+     * @return best move
+     */
     public int[] getBestMove(Board board) {
         int[] move = new int[2];
         MCTSNode node = findMove(board);
@@ -42,6 +48,11 @@ public class MCTS extends AI {
         return move;
     }
 
+    /**
+     * Gets best node using MCTS algorithm for board
+     * @param board board for which best move needs to be found
+     * @return best node
+     */
     public MCTSNode findMove(Board board) {
         MCTSNode currentNode = new MCTSNode(new Board(board), explorationParameter);
         MCTSNode moveNode = null;
@@ -56,7 +67,11 @@ public class MCTS extends AI {
             if((currentAmountOfSims >= maxSims) && (maxSims !=0)) {
                 reachedThreshold = true; //to enable otherways of thresholds eg time
             }
-            if((System.nanoTime() - startTime >= timeForMoveInMs) && (timeForMoveInMs !=0)) {
+            if(((System.nanoTime() - startTime)/1000000 >= timeForMoveInMs) && (timeForMoveInMs !=0)) {
+                System.out.println("currentTime in nano: " + System.nanoTime());
+                System.out.println("currentTime in milli: " + System.nanoTime()/1000);
+                System.out.println("time elapsed: " +(System.nanoTime() - startTime)/1000);
+                System.out.println("timeForMoveInMS: " + timeForMoveInMs);
                 reachedThreshold = true; //to enable otherways of thresholds eg time
             }
         }
