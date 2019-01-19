@@ -14,6 +14,7 @@ public class MiniMaxAlphaTest {
 
         test1();
         test2();
+
     }
 
     //value test
@@ -39,7 +40,7 @@ public class MiniMaxAlphaTest {
         GenericTest.test(s, m, GAMES, SIZE);
         int minimaxAB_Wins = GenericTest.getPlayer2Wins();
         int stupidWins = GenericTest.getPlayer1Wins();
-        System.out.println("MinimaxAB wins: " + minimaxAB_Wins);
+        System.out.println(": " + minimaxAB_Wins);
         System.out.println("Stupid wins: " + stupidWins);
 
     }
