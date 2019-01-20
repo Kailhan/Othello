@@ -87,17 +87,19 @@ public class MCTSNode_TreeReuse {
      * @return tree traversal score
      */
     public double getSelectionScore() {
-        //double exploitationScore = (sims == 0) ? 1 : ((double)(wins/sims));
-        //double explorationScore = ((wins == 0) || (MCTS_TreeReuse.totalSims == 0)) ? 1 : (explorationParameter * (double)(Math.sqrt(Math.log(MCTS_TreeReuse.totalSims)/wins)));
-        if(sims != 0) {
-            //System.out.println("ploit: " + exploitationScore);
-            //System.out.println("plore: " + explorationScore);
+        double exploitationScore = (sims == 0) ? 0 : ((double) (wins / sims));
+        double explorationScore;
+        if((wins == 0) && (MCTS_TreeReuse.totalSims == 0)) {
+            explorationScore = 0;
+        } else if((wins == 0) && !(MCTS_TreeReuse.totalSims == 0)) {
+            explorationScore = (explorationParameter * (double) (Math.sqrt(Math.log(MCTS_TreeReuse.totalSims))));
+        } else if(!(wins == 0) && (MCTS_TreeReuse.totalSims == 0)) {
+            explorationScore = 0;
+        } else {
+            explorationScore = (explorationParameter * (double) (Math.sqrt(Math.log(MCTS_TreeReuse.totalSims) / wins)));
         }
-//        System.out.println("ploit: " + exploitationScore);
-//        System.out.println("plore: " + explorationScore);
-        //double selectionScore = exploitationScore + explorationScore;
-
-        double selectionScore = (sims == 0) ? 1 : 1/sims;
+       double selectionScore = exploitationScore + explorationScore;
+        //selectionScore = (sims == 0) ? 1 : 1/sims;
         return selectionScore;
     }
 

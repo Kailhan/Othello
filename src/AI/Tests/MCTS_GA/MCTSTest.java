@@ -10,9 +10,11 @@ public class MCTSTest {
         int games = 1000;
         int totalSims1 = 50;
         int totalSims2 = 1;
+        long timeInMs = 50;
         int size = 8;
 
-        MCTS mcts1 = new MCTS(totalSims1, 0.5);
+        //MCTS mcts1 = new MCTS(totalSims1, 0.76);
+        MCTS mcts1 = new MCTS(timeInMs, 0.76);
         MCTS mcts2 = new MCTS(totalSims2, 0.0);
 
         long startTime = System.nanoTime();

@@ -19,6 +19,7 @@ public class MCTS_TreeReuse extends AI {
 
     public static int totalSims;
     public static int currentPlayer;
+    public static final double STANDARD_EXPLORATION_PARAMETER = 0.51;
 
     public MCTS_TreeReuse(long timeForMoveInMs, double explorationParameter ) {
         System.out.println("using time as threshold");
