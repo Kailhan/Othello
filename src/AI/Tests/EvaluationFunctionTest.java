@@ -33,7 +33,7 @@ public class EvaluationFunctionTest {
         Stupid stupid = new Stupid();
 
         EvaluationFunction evaluator = new EvaluationFunction(board) ;
-         double[] polyWeights2 = new double[] {-25.935107984403448,	42.91479197569383,	29.745188566702527,	63.54179606069827,	-20.326279895422864,	-17.834800055781518	,-27.478073313276703,	5.985431145459364,	29.882144082487788};
+         double[] polyWeights2 = new double[] {16.732,-16.367,8.213,16.4399,8.688,8.509,10.061,-9.2966,19.754};
         EvalRandom evaluator5 = new EvalRandom(board,polyWeights2);
 
         generic.test(evaluator,evaluator5,GAMES, SIZE);

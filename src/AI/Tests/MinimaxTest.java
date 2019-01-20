@@ -40,10 +40,10 @@ public class MinimaxTest {
         Board board = new Board();
         //Minimax m = new Minimax(DEPTH, board);
         long moveTime = 10;
-        MMAB_IterativeDeepening mmab = new MMAB_IterativeDeepening(10);
+        MMAB_IterativeDeepening mmab = new MMAB_IterativeDeepening(20);
         MMAB_moveOrdering mmab2 = new MMAB_moveOrdering(10);
         NS_moveOrdering ns_mo = new NS_moveOrdering(10);
-        MCTS mcts = new MCTS(1000, 1.414);
+        MCTS mcts = new MCTS(20, 1.414);
 
         GenericTest.test(mmab,mcts , GAMES, SIZE);
         int p1wins = GenericTest.getPlayer1Wins();
