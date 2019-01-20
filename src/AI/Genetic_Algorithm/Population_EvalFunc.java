@@ -19,7 +19,7 @@ public class Population_EvalFunc {
 
     public static final int GA_GAMES_TO_BE_SIMMED = 800;
     public static final int GA_BOARD_SIZE = 8;
-    public static final int GA_POP_SIZE = 60;
+    public static final int GA_POP_SIZE = 200;
     public static final double GA_WEIGHT_POLY_BOUND = 100;
     public static final double GA_TERRITORY_BOUND = 100;
     public static double SELECTION_RATIO = 10;
@@ -45,7 +45,7 @@ public class Population_EvalFunc {
     public void initMiniMaxAlphPopulation() {
         for(int i = 0; i < popSize; i++) {
             //EvaluationFunction cEvalFunc = new EvaluationFunction(initTerritory(territoryBound), initWeightPoly(16, weightPolyBound), new Board(boardSize));
-            EvaluationFunction cEvalFunc = new EvaluationFunction(initWeightPoly(16, weightPolyBound), new Board(boardSize));
+            EvaluationFunction cEvalFunc = new EvaluationFunction(initWeightPoly(9, weightPolyBound), new Board(boardSize));
             this.AIs[i] = cEvalFunc; //idk what the depth should be
             //System.out.println(AIs[i].getEvaluator().getChromosome()[1]);
         }

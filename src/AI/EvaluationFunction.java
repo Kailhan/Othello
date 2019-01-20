@@ -45,7 +45,7 @@ public class EvaluationFunction extends AI{
 
     public void setWeightPoly()
     {
-        setWeightPoly(new double[] {16.732,-16.367,8.213,16.4399,8.688,8.509,10.061,-9.2966,19.754});
+        setWeightPoly(new double[] {-6.60,10.42,6.25,-9.33,-14.13,6.15,-38.24,-19.03,42.315});
     }
 
     /**
@@ -57,7 +57,7 @@ public class EvaluationFunction extends AI{
     public int[] getBestMove(Board board) {
         int moveCounter = 0;
         int possibleBoardIndex = 0;
-        int bestBoardIndex = -1;                    //waarom -1
+        int bestBoardIndex = -1;
 
         for (int r = 0; r < board.getSize(); r++)
         {
@@ -104,7 +104,6 @@ public class EvaluationFunction extends AI{
         gamesToBeSimmed = (gamesToBeSimmed < 2) ? 2 : gamesToBeSimmed;
         gamesToBeSimmed = (gamesToBeSimmed % 2 != 0) ? gamesToBeSimmed + 1: gamesToBeSimmed;
         Stupid evaluator = new Stupid();
-        MCTS mcts = new MCTS(20, MCTS.STANDARD_EXPLORATION_PARAMETER);
         GenericTest.test(this,evaluator, gamesToBeSimmed/2, boardSize);
         winsFirstMove = GenericTest.getPlayer1Wins();
         GenericTest.test(evaluator, this, gamesToBeSimmed/2, boardSize);
@@ -132,6 +131,7 @@ public class EvaluationFunction extends AI{
         totalScore = calcCoinWeight(filledSquares) * numberOfCoins +
                 calcMoveWeight(filledSquares) * numberOfMoves +
                 calcTerritoryWeight(filledSquares) * territory;
+
 
         return totalScore;
     }
