@@ -14,7 +14,7 @@ public class MCTS extends AI {
 
     public static int currentPlayer;
     public static int totalSims;
-    public static final double STANDARD_EXPLORATION_PARAMETER = 1.414;
+    public static final double STANDARD_EXPLORATION_PARAMETER = 0.76;
 
     public MCTS(long timeForMoveInMs, double explorationParameter ) {
         System.out.println("using time as threshold");

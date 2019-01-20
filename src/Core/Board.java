@@ -149,6 +149,12 @@ public class Board implements Serializable {
             boardGrid[flippedDisk[0]][flippedDisk[1]] = currentPlayer;
     }
 
+    public void applyMove()
+    {
+        incrementTurn();
+        changePlayer();
+    }
+
     /**
      * Checks if all values in board matrix and current players are the same
      * @param parent board that this board needs to be compared with
