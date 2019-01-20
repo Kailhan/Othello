@@ -1,6 +1,7 @@
 package AI.Tests.MCTS_GA;
 
 import AI.MCTS;
+import AI.MCTS_TreeReuse;
 import AI.Stupid;
 import AI.Tests.GenericTest;
 
@@ -22,7 +23,7 @@ public class MCTSTest3_TreeReuse {
         int minExploreInt = (int)Math.round(minExplore * scaling);
         int maxExploreInt = (int)Math.round(maxExplore * scaling);
         int stepsExploreInt = (int)Math.round(stepsExplore * scaling);
-        int totalGames = 1000;
+        int totalGames = 100;
         int rowWidth = 6;
 
         int logCounter = 0;
@@ -41,7 +42,7 @@ public class MCTSTest3_TreeReuse {
             long startTimeTot = System.nanoTime();
             for(int j = minPlayouts; j < maxPlayouts + 1; j += stepsPlayouts) {
                 long startTime = System.nanoTime();
-                MCTS mcts = new MCTS(j, (double)i/scaling);
+                MCTS_TreeReuse mcts = new MCTS_TreeReuse(j, (double)i/scaling);
 
                 log[logCounter] = String.valueOf((double)i/scaling); logCounter++;
                 GenericTest.test(mcts, new Stupid(), totalGames/2, 8);

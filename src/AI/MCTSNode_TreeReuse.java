@@ -115,11 +115,8 @@ public class MCTSNode_TreeReuse {
             if(Logic.checkMovePossible(simulationBoard)) {
                 move = selectMove(simulationBoard, startBoard);
                 simulationBoard.applyMove(move);
-                simulationBoard.incrementTurn();
-                simulationBoard.changePlayer();
             } else {
-                simulationBoard.incrementTurn();
-                simulationBoard.changePlayer();
+                simulationBoard.applyMove();
                 if(!Logic.checkMovePossible(simulationBoard)) {
                     gameFinished = true;
                 }
@@ -225,8 +222,6 @@ public class MCTSNode_TreeReuse {
                 for(int i = 0; i < possibleMoves.length; i++){
                     Board possibleBoard = new Board(board);
                     possibleBoard.applyMove(possibleMoves[i]);
-                    possibleBoard.incrementTurn();
-                    possibleBoard.changePlayer();
                     MCTSNode_TreeReuse possibleNode = new MCTSNode_TreeReuse(possibleBoard, explorationParameter);
                     possibleNode.setParentNode(this);
                     childNodes.add(possibleNode);
@@ -235,8 +230,6 @@ public class MCTSNode_TreeReuse {
                 for(int i = 0; i < possibleMoves.length; i++){
                     Board possibleBoard = new Board(board);
                     possibleBoard.applyMove(possibleMoves[i]);
-                    possibleBoard.incrementTurn();
-                    possibleBoard.changePlayer();
                     boolean alreadyHasBoard = false;
                     for(MCTSNode_TreeReuse childNode : getChildNodes()) {
                         if(childNode.getData().isSameBoard(possibleBoard)) alreadyHasBoard = true;
@@ -249,8 +242,7 @@ public class MCTSNode_TreeReuse {
                 }
             }
         } else {
-            board.incrementTurn();
-            board.changePlayer();
+            board.applyMove();
             if(Logic.checkMovePossible(board)) {
                 if(getChildNodes().isEmpty()) {
                     Board possibleBoard = new Board(board);
