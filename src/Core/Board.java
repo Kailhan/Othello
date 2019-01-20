@@ -147,6 +147,21 @@ public class Board implements Serializable {
         boardGrid[row][col] = currentPlayer;
         for (int[] flippedDisk : flippedDisks)
             boardGrid[flippedDisk[0]][flippedDisk[1]] = currentPlayer;
+        applyMove();
+    }
+
+    /**
+     * Adapter for new way of doing moves
+     * @param move that needs to be applied to this board
+     */
+    public void applyMove(int[] move) {
+        applyMove(move[0], move[1]);
+    }
+
+    public void applyMove()
+    {
+        incrementTurn();
+        changePlayer();
     }
 
     public void applyMove()
@@ -211,13 +226,7 @@ public class Board implements Serializable {
         return column;
     }
 
-    /**
-     * Adapter for new way of doing moves
-     * @param move that needs to be applied to this board
-     */
-    public void applyMove(int[] move) {
-        applyMove(move[0], move[1]);
-    }
+
 
     public boolean checkTile(int r, int c, int state) {
         return (boardGrid[r][c] == state);

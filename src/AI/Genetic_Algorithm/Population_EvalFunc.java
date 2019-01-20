@@ -17,9 +17,9 @@ public class Population_EvalFunc {
 
     private int mutationCount;
 
-    public static final int GA_GAMES_TO_BE_SIMMED = 300;
+    public static final int GA_GAMES_TO_BE_SIMMED = 800;
     public static final int GA_BOARD_SIZE = 8;
-    public static final int GA_POP_SIZE = 50;
+    public static final int GA_POP_SIZE = 60;
     public static final double GA_WEIGHT_POLY_BOUND = 100;
     public static final double GA_TERRITORY_BOUND = 100;
     public static double SELECTION_RATIO = 10;

@@ -42,20 +42,11 @@ public class EvaluationFunction extends AI{
         setChromosome(chromosome);
     }
 
-//    public EvaluationFunction(double[] chromosome) {
-//        this(chromosome, new Board((int)Math.sqrt(chromosome.length - WEIGHT_POLY_SIZE)));
-//    }
 
-//    public void setWeightPoly()
-//    {
-//        setWeightPoly(new double[] {-25.935107984403448,	42.91479197569383,	29.745188566702527,	63.54179606069827,	-20.326279895422864,	-17.834800055781518	,-27.478073313276703,	5.985431145459364,	29.882144082487788});
-//        //setWeightPoly(new double[] {0,1,0,100,-1,0,75,2.5,-0.05});
-//    }
-
-//    public void setWeightPoly(double[] weightPoly) {
-//        this.weightPoly = new double[WEIGHT_POLY_SIZE];
-//        System.arraycopy(weightPoly, 0, this.weightPoly, 0, weightPoly.length);
-//    }
+    public void setWeightPoly()
+    {
+        setWeightPoly(new double[] {16.732,-16.367,8.213,16.4399,8.688,8.509,10.061,-9.2966,19.754});
+    }
 
     /**
      * One level AI that directly and only uses the evaluation function itself (used for GA and maybe future stuff)
@@ -113,6 +104,7 @@ public class EvaluationFunction extends AI{
         gamesToBeSimmed = (gamesToBeSimmed < 2) ? 2 : gamesToBeSimmed;
         gamesToBeSimmed = (gamesToBeSimmed % 2 != 0) ? gamesToBeSimmed + 1: gamesToBeSimmed;
         Stupid evaluator = new Stupid();
+        MCTS mcts = new MCTS(20, MCTS.STANDARD_EXPLORATION_PARAMETER);
         GenericTest.test(this,evaluator, gamesToBeSimmed/2, boardSize);
         winsFirstMove = GenericTest.getPlayer1Wins();
         GenericTest.test(evaluator, this, gamesToBeSimmed/2, boardSize);
@@ -195,10 +187,6 @@ public class EvaluationFunction extends AI{
         return territory;
     }
 
-    public void setWeightPoly()
-    {
-        setWeightPoly(new double[] {0,1,0,100,-1,0,75,2.5,-0.05});
-    }
 
     public void setWeightPoly(double[] weightPoly)
     {
