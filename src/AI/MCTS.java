@@ -68,10 +68,6 @@ public class MCTS extends AI {
                 reachedThreshold = true; //to enable otherways of thresholds eg time
             }
             if(((System.nanoTime() - startTime)/1000000 >= timeForMoveInMs) && (timeForMoveInMs !=0)) {
-                System.out.println("currentTime in nano: " + System.nanoTime());
-                System.out.println("currentTime in milli: " + System.nanoTime()/1000);
-                System.out.println("time elapsed: " +(System.nanoTime() - startTime)/1000);
-                System.out.println("timeForMoveInMS: " + timeForMoveInMs);
                 reachedThreshold = true; //to enable otherways of thresholds eg time
             }
         }

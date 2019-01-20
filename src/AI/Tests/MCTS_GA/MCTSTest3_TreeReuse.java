@@ -16,8 +16,8 @@ public class MCTSTest3_TreeReuse {
         int maxPlayouts = 10;
         int stepsPlayouts = 1;
         double minExplore = 0;
-        double maxExplore = 10;
-        double stepsExplore = 0.5;
+        double maxExplore = 5;
+        double stepsExplore = 1;
         int scaling = 100;
         int minExploreInt = (int)Math.round(minExplore * scaling);
         int maxExploreInt = (int)Math.round(maxExplore * scaling);
@@ -75,9 +75,12 @@ public class MCTSTest3_TreeReuse {
 
         try {
             String logCSV8 = logBuilder8.toString();
-            String fileName8  = "minPlayouts_" + String.valueOf(minPlayouts) +
-                    "_maxPlayouts_" + String.valueOf(maxPlayouts) +
+            String fileName8  = "minPlay_" + String.valueOf(minPlayouts) +
+                    "_maxPlay_" + String.valueOf(maxPlayouts) +
                     "_steps_" + String.valueOf(stepsPlayouts) +
+                    "_minExp_" + String.valueOf(minExplore) +
+                    "_maxExp_" + String.valueOf(maxExplore) +
+                    "_steps_" + String.valueOf(stepsExplore) +
                     "_totalGames_" + String.valueOf(totalGames) +
                     "_BOARDSIZE8ONLY_" + String.valueOf(8) +
                     "_SUBTREEREUSE_" +

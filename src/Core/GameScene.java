@@ -288,7 +288,7 @@ public class GameScene extends BorderPane {
                 updateBoard(move[0], move[1]);
                 break;
             case 2:
-                MCTS_TreeReuse mcts_treeReuse = new MCTS_TreeReuse(timeForMoveInMs, MCTS.STANDARD_EXPLORATION_PARAMETER);
+                MCTS_TreeReuse mcts_treeReuse = new MCTS_TreeReuse(timeForMoveInMs, MCTS_TreeReuse.STANDARD_EXPLORATION_PARAMETER);
                 move = mcts_treeReuse.getBestMove(board);
                 updateBoard(move[0], move[1]);
                 break;

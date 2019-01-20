@@ -87,8 +87,22 @@ public class MCTSNode {
      * @return tree traversal score
      */
     public double getSelectionScore() {
+//        double exploitationScore = (sims == 0) ? 0 : ((double) (wins / sims));
+//        double explorationScore = ((wins == 0) || (MCTS.totalSims == 0)) ? (explorationParameter * (Math.sqrt(Math.log(MCTS.totalSims + 1)))) : (explorationParameter * (double) (Math.sqrt(Math.log(MCTS.totalSims) / wins)));
+//        double selectionScore = exploitationScore + explorationScore;
+//        //selectionScore = (sims == 0) ? 1 : 1/sims;
+//        return selectionScore;
         double exploitationScore = (sims == 0) ? 0 : ((double) (wins / sims));
-        double explorationScore = ((wins == 0) || (MCTS.totalSims == 0)) ? (explorationParameter * (Math.sqrt(Math.log(MCTS.totalSims + 1)))) : (explorationParameter * (double) (Math.sqrt(Math.log(MCTS.totalSims) / wins)));
+        double explorationScore;
+        if((wins == 0) && (MCTS.totalSims == 0)) {
+            explorationScore = 0;
+        } else if((wins == 0) && !(MCTS.totalSims == 0)) {
+            explorationScore = (explorationParameter * (double) (Math.sqrt(Math.log(MCTS.totalSims))));
+        } else if(!(wins == 0) && (MCTS.totalSims == 0)) {
+            explorationScore = 0;
+        } else {
+            explorationScore = (explorationParameter * (double) (Math.sqrt(Math.log(MCTS.totalSims) / wins)));
+        }
         double selectionScore = exploitationScore + explorationScore;
         //selectionScore = (sims == 0) ? 1 : 1/sims;
         return selectionScore;
