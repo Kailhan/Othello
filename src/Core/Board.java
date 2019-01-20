@@ -147,6 +147,7 @@ public class Board implements Serializable {
         boardGrid[row][col] = currentPlayer;
         for (int[] flippedDisk : flippedDisks)
             boardGrid[flippedDisk[0]][flippedDisk[1]] = currentPlayer;
+        applyMove();
     }
 
     /**
