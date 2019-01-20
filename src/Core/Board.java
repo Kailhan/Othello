@@ -150,6 +150,20 @@ public class Board implements Serializable {
     }
 
     /**
+     * Adapter for new way of doing moves
+     * @param move that needs to be applied to this board
+     */
+    public void applyMove(int[] move) {
+        applyMove(move[0], move[1]);
+    }
+
+    public void applyMove()
+    {
+        incrementTurn();
+        changePlayer();
+    }
+
+    /**
      * Checks if all values in board matrix and current players are the same
      * @param parent board that this board needs to be compared with
      * @return if this and parent board sre same
@@ -205,13 +219,7 @@ public class Board implements Serializable {
         return column;
     }
 
-    /**
-     * Adapter for new way of doing moves
-     * @param move that needs to be applied to this board
-     */
-    public void applyMove(int[] move) {
-        applyMove(move[0], move[1]);
-    }
+
 
     public boolean checkTile(int r, int c, int state) {
         return (boardGrid[r][c] == state);

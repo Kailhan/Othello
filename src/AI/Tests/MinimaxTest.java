@@ -6,7 +6,7 @@ import Core.Board;
 public class MinimaxTest {
 
     final static int DEPTH = 3;
-    final static int GAMES = 10;
+    final static int GAMES = 100;
     final static int SIZE  = 8;
 
     public static void main(String[] args) {
@@ -43,9 +43,9 @@ public class MinimaxTest {
         MMAB_IterativeDeepening mmab = new MMAB_IterativeDeepening(10);
         MMAB_moveOrdering mmab2 = new MMAB_moveOrdering(10);
         NS_moveOrdering ns_mo = new NS_moveOrdering(10);
-        MCTS mcts = new MCTS(moveTime, 1.414);
+        MCTS mcts = new MCTS(1000, 1.414);
 
-        GenericTest.test(ns_mo,mcts , GAMES, SIZE);
+        GenericTest.test(mmab,mcts , GAMES, SIZE);
         int p1wins = GenericTest.getPlayer1Wins();
         int p2wins = GenericTest.getPlayer2Wins();
         System.out.println("p1_wins: " + p1wins);
