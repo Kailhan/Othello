@@ -15,9 +15,9 @@ public class MCTSTest3 {
         int minPlayouts = 1;
         int maxPlayouts = 10;
         int stepsPlayouts = 1;
-        double minExplore = 0;
-        double maxExplore = 5;
-        double stepsExplore = 1;
+        double minExplore = 0.7;
+        double maxExplore = 0.8;
+        double stepsExplore = 0.01;
         int scaling = 100;
         int minExploreInt = (int)Math.round(minExplore * scaling);
         int maxExploreInt = (int)Math.round(maxExplore * scaling);
