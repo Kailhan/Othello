@@ -16,6 +16,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 
+/**
+ * In game screen where we can determine board size and starting AI's
+ * @author Kailhan Hokstam
+ */
 public class SettingsScene extends VBox {
 
     private Stage primaryStage;

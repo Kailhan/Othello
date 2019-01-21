@@ -3,6 +3,12 @@ package AI;
 import Core.Board;
 import java.util.Random;
 
+
+/**
+ * MCTS Algorithm
+ * @author Kailhan Hokstam
+ */
+
 public class MCTS extends AI {
 
     private int maxSims;
@@ -16,6 +22,11 @@ public class MCTS extends AI {
     public static int totalSims;
     public static final double STANDARD_EXPLORATION_PARAMETER = 0.76;
 
+    /**
+     * Creates MCTS using time as a threshold for simulation step
+     * @param timeForMoveInMs time in ms for simulation step
+     * @param explorationParameter higher values makes MCTS favcr exploring
+     */
     public MCTS(long timeForMoveInMs, double explorationParameter ) {
         System.out.println("using time as threshold");
         this.timeForMoveInMs = timeForMoveInMs;
@@ -24,6 +35,11 @@ public class MCTS extends AI {
         this.rand = new Random();
     }
 
+    /**
+     * Creates MCTS using amount as a threshold for simulation step
+     * @param maxSims max amount of simulations
+     * @param explorationParameter higher values makes MCTS favcr exploring
+     */
     public MCTS(int maxSims, double explorationParameter) {
         this.maxSims = maxSims;
         this.timeForMoveInMs = 0;

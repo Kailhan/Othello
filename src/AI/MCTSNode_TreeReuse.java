@@ -11,8 +11,12 @@ import static AI.MCTS_TreeReuse.currentPlayer;
 import static Core.Board.BLACK;
 import static Core.Board.WHITE;
 
-public class MCTSNode_TreeReuse {
+/**
+ * Node structure used by MCTS with TreeReuse
+ * @author Kailhan Hokstam
+ */
 
+public class MCTSNode_TreeReuse {
 
     public static final int WIN = 1;
     public static final int DRAW = 0;

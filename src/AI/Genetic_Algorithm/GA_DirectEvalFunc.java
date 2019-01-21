@@ -10,6 +10,10 @@ import java.io.IOException;
 import static AI.EvaluationFunction.WEIGHT_POLY_SIZE;
 import static AI.Genetic_Algorithm.Population_EvalFunc.*;
 
+/**
+ * Genetic Algorithm starter, population consists of Evaluation functions
+ * @author Kailhan Hokstam, Martijn Hilders
+ */
 public class GA_DirectEvalFunc {
 
     public static void main(String[] args) {

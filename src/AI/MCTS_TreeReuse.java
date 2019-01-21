@@ -6,6 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * MCTS Algorithm with TreeReuse
+ * @author Kailhan Hokstam
+ */
+
 public class MCTS_TreeReuse extends AI {
 
     private int maxSims;
@@ -21,6 +26,11 @@ public class MCTS_TreeReuse extends AI {
     public static int currentPlayer;
     public static final double STANDARD_EXPLORATION_PARAMETER = 0.51;
 
+    /**
+     * Creates MCTS (TreeReuse) using time as a threshold for simulation step
+     * @param timeForMoveInMs time in ms for simulation step
+     * @param explorationParameter higher values makes MCTS favcr exploring
+     */
     public MCTS_TreeReuse(long timeForMoveInMs, double explorationParameter ) {
         System.out.println("using time as threshold");
         this.timeForMoveInMs = timeForMoveInMs;
@@ -29,6 +39,11 @@ public class MCTS_TreeReuse extends AI {
         this.rand = new Random();
     }
 
+    /**
+     * Creates MCTS (TreeReuse) using amount as a threshold for simulation step
+     * @param maxSims max amount of simulations
+     * @param explorationParameter higher values makes MCTS favcr exploring
+     */
     public MCTS_TreeReuse(int maxSims, double explorationParameter) {
         this.maxSims = maxSims;
         this.timeForMoveInMs = 0;
@@ -103,6 +118,7 @@ public class MCTS_TreeReuse extends AI {
                 break;
             }
         }
+        previousNode.getChildNodes().clear();
         return currentNode;
     }
 

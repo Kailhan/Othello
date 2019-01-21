@@ -24,7 +24,7 @@ public class EvaluationFunctionTest {
     private static void test1(int gamesToBeSimmed){
 
         Board board = new Board();
-        double[] polyWeights = new double[] {19.31,0.0,0.0,16.1,0.0,0.0,12.59,0.0,0.0};
+        double[] bestStaticWeights = new double[] {19.31,0.0,0.0,16.1,0.0,0.0,12.59,0.0,0.0};
         //double[] polyWeights2 = new double[] {0,1,0,100,-1,0,75,2.5,-0.05};
 
 
@@ -32,27 +32,27 @@ public class EvaluationFunctionTest {
 //        EvaluationFunction evaluator = new EvaluationFunction(board);
 //        EvaluationFunction evaluatorStatic = new EvaluationFunction(board,polyWeights);
         EvalRandom evaluator = new EvalRandom(board);
-        EvalRandom evaluatorStatic = new EvalRandom(board, polyWeights);
+        EvalRandom evaluatorStatic = new EvalRandom(board, bestStaticWeights);
 
         gamesToBeSimmed = (gamesToBeSimmed < 2) ? 2 : gamesToBeSimmed;
         gamesToBeSimmed = (gamesToBeSimmed % 2 != 0) ? gamesToBeSimmed + 1: gamesToBeSimmed;
 
-        GenericTest.test(evaluator,stupid, gamesToBeSimmed/2, SIZE);
+        GenericTest.test(evaluator,evaluatorStatic, gamesToBeSimmed/2, SIZE);
         int  winsFirstMove = GenericTest.getPlayer1Wins();
         int  PolyWins = GenericTest.getPlayer2Wins();
         int draws1 = GenericTest.getDraws();
-        GenericTest.test(stupid, evaluator, gamesToBeSimmed/2, SIZE);
+        GenericTest.test(evaluatorStatic, evaluator, gamesToBeSimmed/2, SIZE);
         int winsSecondMove = GenericTest.getPlayer2Wins();
         int polywins2 = GenericTest.getPlayer1Wins();
         int draws2 = GenericTest.getDraws();
 
         System.out.println("Evaluator win first move: " + winsFirstMove);
-        //System.out.println("poly wins: " + PolyWins);
+        System.out.println("poly wins: " + PolyWins);
         System.out.println("Evaluator win second move: " + winsSecondMove);
-        //System.out.println("poly wins " + polywins2);
+        System.out.println("poly wins " + polywins2);
         System.out.println("Draws: " +  (draws1+draws2));
         System.out.println("Total wins Evaluator: " + (winsFirstMove+winsSecondMove));
-        //System.out.println("Total wins Poly: " + (PolyWins+polywins2));
+        System.out.println("Total wins Poly: " + (PolyWins+polywins2));
         System.out.println("--------------------------------------");
 
     }

@@ -2,6 +2,10 @@ package Core;
 
 import AI.*;
 
+/**
+ * Sort used by GA
+ * @author Kailhan Hokstam
+ */
 public class QuickSort {
 
     private AI[] AIs;

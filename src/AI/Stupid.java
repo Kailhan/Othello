@@ -4,6 +4,11 @@ import Core.Logic;
 
 import java.util.Random;
 
+/**
+ * Also referred to as the Random algorithm, AI that picks uniform random move
+ * @author Kailhan Hokstam
+ */
+
 public class Stupid extends AI {
     private Random rand = new Random();
 

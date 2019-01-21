@@ -11,6 +11,11 @@ import static AI.Genetic_Algorithm.Population.*;
 
 public class GA_Eval {
 
+    /**
+     * Genetic Algorithm starter, population consists of AI (originally Minimax) with evaluation functions
+     * @author Kailhan Hokstam, Martijn Hilders
+     */
+
     public static double SELECTION_RATIO = 3;
 
     public static void main(String[] args) {

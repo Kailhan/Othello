@@ -10,15 +10,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Timestamp;
 
+/**
+ *
+ */
 public class MCTSTest3_TreeReuse {
 
     public static void main(String[] args) {
-        int minPlayouts = 5;
+        int minPlayouts = 1;
         int maxPlayouts = 10;
         int stepsPlayouts = 1;
-        double minExplore = 0;
-        double maxExplore = 2;
-        double stepsExplore = 0.1;
+        double minExplore = 2;
+        double maxExplore = 5;
+        double stepsExplore = 0.5;
         int scaling = 100;
         int minExploreInt = (int)Math.round(minExplore * scaling);
         int maxExploreInt = (int)Math.round(maxExplore * scaling);
