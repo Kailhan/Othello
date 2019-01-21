@@ -37,11 +37,9 @@ public class MCTSTest3_TreeReuse {
         System.out.println("stepsExploreInt: " + stepsExploreInt);
 
         StringBuilder logBuilder8 = new StringBuilder();
-        int sometmpcntr =0;
         for(int i = minExploreInt; i <= maxExploreInt; i += stepsExploreInt) {
             long startTimeTot = System.nanoTime();
             for(int j = minPlayouts; j < maxPlayouts + 1; j += stepsPlayouts) {
-                sometmpcntr++;
                 long startTime = System.nanoTime();
                 MCTS_TreeReuse mcts = new MCTS_TreeReuse(j, (double)i/scaling);
                 log[logCounter] = String.valueOf(j); logCounter++;
@@ -61,7 +59,6 @@ public class MCTSTest3_TreeReuse {
             System.out.println("Done with exploreparam: " + (double)i/scaling);
             System.out.println(((endTimeTot-startTimeTot)/1000000000));
         }
-        System.out.println("tmpcntr" +sometmpcntr);
         System.out.println("Done with board 8: " + System.currentTimeMillis());
 
         logBuilder8.append("maxPlayouts").append(",").append("explorationParam").append(",").append("board(8)_p1").append(",").append("draws").append(",").append("board(8)_p2").append(",").append("draws").append(",").append("iterTime");
