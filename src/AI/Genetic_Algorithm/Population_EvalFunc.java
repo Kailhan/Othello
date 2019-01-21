@@ -5,6 +5,10 @@ import AI.EvaluationFunction;
 import Core.Board;
 import java.util.Random;
 
+/**
+ * Specific evaluation function population for Genetic Algorithm
+ * @author Kailhan Hokstam, Martijn Hilders
+ */
 public class Population_EvalFunc {
 
     private int popSize;

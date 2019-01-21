@@ -3,6 +3,10 @@ package Core;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+/**
+ * Main starter class
+ * @author Kailhan Hokstam
+ */
 public class StartGame extends Application {
     public static void main(String[] args) {launch(args);}
 

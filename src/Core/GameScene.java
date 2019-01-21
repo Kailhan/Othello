@@ -24,6 +24,10 @@ import static Core.Board.BLACK;
 import static Core.Board.EMPTY;
 import static Core.Board.WHITE;
 
+/**
+ * Main in game screen
+ * @author Kailhan Hokstam
+ */
 public class GameScene extends BorderPane {
     private Settings settings;
     private Stage primaryStage;
@@ -70,6 +74,8 @@ public class GameScene extends BorderPane {
     private Button playAI;
     private ComboBox<String> AI1;
     private ComboBox<String> AI2;
+    private MCTS_TreeReuse mcts_treeReuse;
+    private static final long timeForMoveInMs = 2000;
 
     public GameScene(Stage primaryStage, Settings settings) {
         this.settings = settings;
@@ -77,6 +83,7 @@ public class GameScene extends BorderPane {
         this.board = new Board(settings.getBoard());
         this.tileSize = windowSize/ board.getSize();
         this.playerModel = new PlayerModel(board);
+        this.mcts_treeReuse = new MCTS_TreeReuse(timeForMoveInMs, MCTS_TreeReuse.STANDARD_EXPLORATION_PARAMETER);
         AIs = Settings.getAIs();
 
         this.discBlackImg = new Image(discBlack.toURI().toString(), tileSize, tileSize, false,false);
@@ -270,7 +277,6 @@ public class GameScene extends BorderPane {
     {
         int AILevel;
         int maxSims = 1000; //int or long determines if using seconds or sims
-        long timeForMoveInMs = 2000;
         AILevel = settings.getAI1Level();
         if (board.getCurrentPlayer() == WHITE)
             AILevel = settings.getAI2Level();
@@ -288,7 +294,6 @@ public class GameScene extends BorderPane {
                 updateBoard(move[0], move[1]);
                 break;
             case 2:
-                MCTS_TreeReuse mcts_treeReuse = new MCTS_TreeReuse(timeForMoveInMs, MCTS.STANDARD_EXPLORATION_PARAMETER);
                 move = mcts_treeReuse.getBestMove(board);
                 updateBoard(move[0], move[1]);
                 break;

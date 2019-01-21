@@ -1,19 +1,22 @@
 package AI.Tests.MCTS_GA;
 
 import AI.MCTS;
+import AI.MCTS_TreeReuse;
 import AI.Stupid;
 import AI.Tests.GenericTest;
 
 public class MCTSTest {
 
     public static void main(String[] args) {
-        int games = 1000;
+        int games = 100;
         int totalSims1 = 50;
         int totalSims2 = 1;
+        long timeInMs = 50;
         int size = 8;
 
-        MCTS mcts1 = new MCTS(totalSims1, 0.5);
-        MCTS mcts2 = new MCTS(totalSims2, 0.0);
+        //MCTS mcts1 = new MCTS(totalSims1, 0.76);
+        MCTS_TreeReuse mcts1 = new MCTS_TreeReuse(totalSims1, 0.76);
+        MCTS mcts2 = new MCTS(timeInMs, 0.76);
 
         long startTime = System.nanoTime();
 
@@ -40,7 +43,7 @@ public class MCTSTest {
         System.out.println("exploration: " + mcts1.getExplorationParameter());
         System.out.println("totalGames: " + games);
         System.out.println("MCTS 1 win%: " + (double)mcts1Wins/games);
-        System.out.println("MCTS 2 win%: " + (double)mcts2Wins/games);
+        System.out.println("MCTS(reuse) 2 win%: " + (double)mcts2Wins/games);
         System.out.println("MCTS draw%: " + (double)(games-mcts1Wins-mcts2Wins)/games);
 
 //        System.out.println("MCTS 1 wins: " + mcts1Wins);
