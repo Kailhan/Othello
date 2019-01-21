@@ -45,8 +45,8 @@ public class EvaluationFunction extends AI{
 
     public void setWeightPoly()
     {
-        // setWeightPoly(new double[] {-6.60,10.42,6.25,-9.33,-14.13,6.15,-38.24,-19.03,42.315});
-        setWeightPoly(new double[] {19.31,0.0,0.0,16.1,0.0,0.0,12.59,0.0,0.0});
+        setWeightPoly(new double[] {-6.60,10.42,6.25,-9.33,-14.13,6.15,-38.24,-19.03,42.315});
+        //setWeightPoly(new double[] {19.31,0.0,0.0,16.1,0.0,0.0,12.59,0.0,0.0});
 
     }
 
