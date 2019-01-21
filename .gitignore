@@ -11,3 +11,4 @@ out/
 .Rhistory
 *.log
 src/AI/Tests/test.java
+*.driveupload
