@@ -23,7 +23,7 @@ public class MCTSTest3_TreeReuse {
         int minExploreInt = (int)Math.round(minExplore * scaling);
         int maxExploreInt = (int)Math.round(maxExplore * scaling);
         int stepsExploreInt = (int)Math.round(stepsExplore * scaling);
-        int totalGames = 4;
+        int totalGames = 1000;
         int rowWidth = 6;
 
         int logCounter = 0;
@@ -44,10 +44,10 @@ public class MCTSTest3_TreeReuse {
                 MCTS_TreeReuse mcts = new MCTS_TreeReuse(j, (double)i/scaling);
                 log[logCounter] = String.valueOf(j); logCounter++;
                 log[logCounter] = String.valueOf((double)i/scaling); logCounter++;
-                GenericTest.test(mcts, new Stupid(), totalGames/2, 4);
+                GenericTest.test(mcts, new Stupid(), totalGames/2, 8);
                 log[logCounter] = String.valueOf(GenericTest.getPlayer1Wins()); logCounter++;
                 log[logCounter] = String.valueOf(GenericTest.getDraws()); logCounter++;
-                GenericTest.test(new Stupid(), mcts, totalGames/2, 4);
+                GenericTest.test(new Stupid(), mcts, totalGames/2, 8);
                 log[logCounter] = String.valueOf(GenericTest.getPlayer2Wins()); logCounter++;
                 log[logCounter] = String.valueOf(GenericTest.getDraws()); logCounter++;
                 long endTime = System.nanoTime();
