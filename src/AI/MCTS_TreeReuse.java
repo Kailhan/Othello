@@ -73,8 +73,6 @@ public class MCTS_TreeReuse extends AI {
                 reachedThreshold = true; //to enable otherways of thresholds eg time
             }
             if(((System.nanoTime() - startTime)/1000000 >= timeForMoveInMs) && (timeForMoveInMs !=0)) {
-                System.out.println("time elapsed: " +(System.nanoTime() - startTime)/1000);
-                System.out.println("timeForMoveInMS: " + timeForMoveInMs);
                 reachedThreshold = true; //to enable otherways of thresholds eg time
             }
         }
