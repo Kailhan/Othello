@@ -6,6 +6,10 @@ import Core.Board;
 
 import java.util.Random;
 
+/**
+ * General AI population for Genetic Algorithm
+ * @author Kailhan Hokstam, Martijn Hilders
+ */
 public class Population {
 
     private int popSize;

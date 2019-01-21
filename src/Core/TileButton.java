@@ -3,6 +3,11 @@ package Core;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 
+/**
+ * Tiles that are actually kinda buttons with which we can represent boards
+ * @author Kailhan Hokstam
+ */
+
 public class TileButton extends Button {
     private int x;
     private int y;

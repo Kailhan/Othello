@@ -24,6 +24,10 @@ import static Core.Board.BLACK;
 import static Core.Board.EMPTY;
 import static Core.Board.WHITE;
 
+/**
+ * Main in game screen
+ * @author Kailhan Hokstam
+ */
 public class GameScene extends BorderPane {
     private Settings settings;
     private Stage primaryStage;

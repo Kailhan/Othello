@@ -2,6 +2,11 @@ package Core;
 
 import java.io.Serializable;
 
+/**
+ * Board data structure
+ * @author Kailhan Hokstam
+ */
+
 public class Board implements Serializable {
 
     public int[][] boardGrid;

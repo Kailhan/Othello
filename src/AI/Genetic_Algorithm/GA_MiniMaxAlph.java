@@ -8,6 +8,11 @@ import AI.AI;
 import AI.Stupid;
 import Core.Board;
 
+/**
+ * Version of minimax with alpha beta pruning adapted for use in Genetic Algorithm
+ * @author Kailhan
+ */
+
 public class GA_MiniMaxAlph extends MiniMaxAlph {
     private GameTree gameTree;
     private Node<Board> root;

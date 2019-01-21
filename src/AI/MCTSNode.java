@@ -10,8 +10,11 @@ import static AI.MCTS.currentPlayer;
 import static Core.Board.BLACK;
 import static Core.Board.WHITE;
 
+/**
+ * Node structure used by MCTS
+ * @author Kailhan Hokstam
+ */
 public class MCTSNode {
-
 
     public static final int WIN = 1;
     public static final int DRAW = 0;
