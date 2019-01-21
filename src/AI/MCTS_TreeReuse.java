@@ -24,7 +24,7 @@ public class MCTS_TreeReuse extends AI {
 
     public static int totalSims;
     public static int currentPlayer;
-    public static final double STANDARD_EXPLORATION_PARAMETER = 0.51;
+    public static final double STANDARD_EXPLORATION_PARAMETER = 1.15;
 
     /**
      * Creates MCTS (TreeReuse) using time as a threshold for simulation step
