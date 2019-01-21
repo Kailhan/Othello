@@ -1,6 +1,7 @@
 package AI.Tests.MCTS_GA;
 
 import AI.MCTS;
+import AI.MCTS_TreeReuse;
 import AI.Stupid;
 import AI.Tests.GenericTest;
 
@@ -9,11 +10,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Timestamp;
 
-public class MCTSTest2_1 {
+public class MCTSTest2_TreeReuse {
     public static void main(String[] args) {
 
-        int maxPlayouts = 100;
-        int totalGames = 800;
+        int maxPlayouts = 50;
+        int totalGames = 1000;
 
         int logCounter = 0;
         int rowWidth = 5;
@@ -24,10 +25,11 @@ public class MCTSTest2_1 {
 
         for(int i = 1; i < maxPlayouts + 1; i++) {
             long startTime = System.nanoTime();
-            MCTS mcts = new MCTS(i, MCTS.STANDARD_EXPLORATION_PARAMETER);
+            MCTS_TreeReuse mcts = new MCTS_TreeReuse(i, MCTS_TreeReuse.STANDARD_EXPLORATION_PARAMETER);
             GenericTest.test(mcts, new Stupid(), totalGames/2, 8);
             log[logCounter] = String.valueOf(GenericTest.getPlayer1Wins()); logCounter++;
             log[logCounter] = String.valueOf(GenericTest.getDraws()); logCounter++;
+            mcts = new MCTS_TreeReuse(i, MCTS_TreeReuse.STANDARD_EXPLORATION_PARAMETER);
             GenericTest.test(new Stupid(), mcts, totalGames/2, 8);
             log[logCounter] = String.valueOf(GenericTest.getPlayer2Wins()); logCounter++;
             log[logCounter] = String.valueOf(GenericTest.getDraws()); logCounter++;
@@ -39,7 +41,7 @@ public class MCTSTest2_1 {
         System.out.println("Done with board 8: " + System.currentTimeMillis());
 
         logBuilder8.append("maxPlayouts").append(",").append("board(8)_p1").append(",").append("draws").append(",").append("board(8)_p2").append(",").append("draws").append(",").append("iterTime");
-        for(int i = 0; i < (log.length/3)*1; i++) {
+        for(int i = 0; i < log.length; i++) {
             if(i % rowWidth == 0) {
                 logBuilder8.append("\n");
                 logBuilder8.append((i/rowWidth)+1).append(",");
@@ -53,6 +55,7 @@ public class MCTSTest2_1 {
             String fileName8  = "maxPlayouts_" + String.valueOf(maxPlayouts) +
                     "_totalGames_" + String.valueOf(totalGames) +
                     "_boardSize_8_" +
+                    "_TREEREUSE_" +
                     "_time" + new Timestamp(System.currentTimeMillis()).toInstant().toString() +
                     ".csv";
             fileName8 = fileName8.replaceAll(":","_");
