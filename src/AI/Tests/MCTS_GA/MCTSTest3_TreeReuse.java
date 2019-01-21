@@ -13,12 +13,12 @@ import java.sql.Timestamp;
 public class MCTSTest3_TreeReuse {
 
     public static void main(String[] args) {
-        int minPlayouts = 5;
+        int minPlayouts = 1;
         int maxPlayouts = 10;
         int stepsPlayouts = 1;
-        double minExplore = 5;
-        double maxExplore = 10;
-        double stepsExplore = 0.1;
+        double minExplore = 1.15;
+        double maxExplore = 1.25;
+        double stepsExplore = 0.01;
         int scaling = 100;
         int minExploreInt = (int)Math.round(minExplore * scaling);
         int maxExploreInt = (int)Math.round(maxExplore * scaling);

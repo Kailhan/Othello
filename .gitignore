@@ -16,3 +16,4 @@ src/AI/Tests/test.java
 .idea/uiDesigner.xml
 .idea/vcs.xml
 Othello.iml
+*.driveupload
