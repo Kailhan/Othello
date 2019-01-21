@@ -11,3 +11,8 @@ out/
 .Rhistory
 *.log
 src/AI/Tests/test.java
+.idea/misc.xml
+.idea/modules.xml
+.idea/uiDesigner.xml
+.idea/vcs.xml
+Othello.iml
