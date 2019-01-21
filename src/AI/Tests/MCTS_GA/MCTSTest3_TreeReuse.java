@@ -19,9 +19,9 @@ public class MCTSTest3_TreeReuse {
         int minPlayouts = 1;
         int maxPlayouts = 10;
         int stepsPlayouts = 1;
-        double minExplore = 2;
-        double maxExplore = 5;
-        double stepsExplore = 0.5;
+        double minExplore = 0.0;
+        double maxExplore = 1.00;
+        double stepsExplore = 0.01;
         int scaling = 100;
         int minExploreInt = (int)Math.round(minExplore * scaling);
         int maxExploreInt = (int)Math.round(maxExplore * scaling);
@@ -45,6 +45,7 @@ public class MCTSTest3_TreeReuse {
             for(int j = minPlayouts; j < maxPlayouts + 1; j += stepsPlayouts) {
                 long startTime = System.nanoTime();
                 MCTS_TreeReuse mcts = new MCTS_TreeReuse(j, (double)i/scaling);
+                System.gc();
                 log[logCounter] = String.valueOf(j); logCounter++;
                 log[logCounter] = String.valueOf((double)i/scaling); logCounter++;
                 GenericTest.test(mcts, new Stupid(), totalGames/2, 8);

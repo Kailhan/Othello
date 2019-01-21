@@ -230,4 +230,14 @@ public class Board implements Serializable {
     public boolean checkTile(int r, int c, int state) {
         return (boardGrid[r][c] == state);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        boolean response = false;
+        if (o instanceof Board) {
+            Board board = (Board) o;
+            response = isSameBoard(board);
+        }
+        return response;
+    }
 }

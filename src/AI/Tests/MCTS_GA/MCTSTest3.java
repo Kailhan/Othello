@@ -15,14 +15,14 @@ public class MCTSTest3 {
         int minPlayouts = 1;
         int maxPlayouts = 10;
         int stepsPlayouts = 1;
-        double minExplore = 0.7;
-        double maxExplore = 0.8;
-        double stepsExplore = 0.01;
+        double minExplore = 0.0;
+        double maxExplore = 2.0;
+        double stepsExplore = 0.05;
         int scaling = 100;
         int minExploreInt = (int)Math.round(minExplore * scaling);
         int maxExploreInt = (int)Math.round(maxExplore * scaling);
         int stepsExploreInt = (int)Math.round(stepsExplore * scaling);
-        int totalGames = 1000;
+        int totalGames = 10000;
         int rowWidth = 6;
 
         int logCounter = 0;
