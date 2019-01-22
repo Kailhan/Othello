@@ -6,6 +6,10 @@ import Core.Logic;
 
 import java.util.Arrays;
 
+/**
+ * Evaluation function; combination of heuristic methods.
+ * @author Martijn
+ */
 public class EvaluationFunction extends AI{
 
     private Board cBoard;
@@ -18,36 +22,64 @@ public class EvaluationFunction extends AI{
 
     public static final int WEIGHT_POLY_SIZE = 9;
 
+    /**
+     * creates evaluation function using the default weights but a board as input
+     * @param board
+     */
     public EvaluationFunction(Board board){
         this.cBoard = board;
         setWeightPoly();
         setTerritory();
     }
 
+    /**
+     * creates evaluation function, with allowed input of custom weights and a board as input
+     * @param board
+     * @param weights
+     */
     public EvaluationFunction(Board board, double[] weights){
         this.cBoard = board;
         setWeightPoly(weights);
         setTerritory();
     }
 
-
+    /**
+     * creates evalution function with allowed input of custom weights
+     * @param weightPoly
+     */
     public EvaluationFunction(double[] weightPoly) {
         this.weightPoly = weightPoly;
         setTerritory();
     }
 
+    /**
+     * creates evluation function with allowed input of the chromosome created in the Genetic Algorithm and an allowed
+     * input for the board that has to be evaluated.
+     * @param chromosome
+     * @param board
+     */
     public EvaluationFunction(double[] chromosome, Board board) {
         this.cBoard = board;
         setTerritory();
         setChromosome(chromosome);
     }
 
-
+    /**
+     * Sets the polynomial weights to the standard weigths
+     */
     public void setWeightPoly()
     {
         setWeightPoly(new double[] {-6.60,10.42,6.25,-9.33,-14.13,6.15,-38.24,-19.03,42.315});
-        //setWeightPoly(new double[] {19.31,0.0,0.0,16.1,0.0,0.0,12.59,0.0,0.0});
+    }
 
+    /**
+     * sets the weight of the polynomial but allows an input, for customization purposes.
+     * @param weightPoly
+     */
+    public void setWeightPoly(double[] weightPoly)
+    {
+        this.weightPoly = new double[WEIGHT_POLY_SIZE];
+        System.arraycopy(weightPoly, 0, this.weightPoly, 0, weightPoly.length);
     }
 
     /**
@@ -101,6 +133,15 @@ public class EvaluationFunction extends AI{
         return move;
     }
 
+    /**
+     * used to evaluated to fitness of the direct evalutionfunction AI, where the amount of games is taken and
+     * divided in 2. This, in order to have an unbiased result by playing half of the games on the other players
+     * position -first move problem-. The amount of games won is then divided by the total games in order to get the
+     * fitness value used by the Genetic Algorithm to rank the weights.
+     * @param gamesToBeSimmed
+     * @param boardSize
+     * @return
+     */
     public double evaluateFitness(int gamesToBeSimmed, int boardSize) {
 
         gamesToBeSimmed = (gamesToBeSimmed < 2) ? 2 : gamesToBeSimmed;
@@ -115,6 +156,13 @@ public class EvaluationFunction extends AI{
         return this.fitness;
     }
 
+
+    /**
+     * Scores a specific board state on different heuristic functions.
+     * which is hereafter returned.
+     * @param cBoard
+     * @return
+     */
     public double evaluate(Board cBoard)
     {
         this.cBoard = new Board(cBoard);
@@ -138,6 +186,11 @@ public class EvaluationFunction extends AI{
         return totalScore;
     }
 
+    /**
+     * retrieves the ratio of difference between Black and White on Coin Parity.
+     * @param board
+     * @return
+     */
     public static double getNumberOfCoins(Board board)
     {
         double numberOfCoins;
@@ -149,6 +202,12 @@ public class EvaluationFunction extends AI{
         return numberOfCoins;
     }
 
+    /**
+     * retrieves the ratio of difference between Black and White on Mobility. Based on the number of moves the opponent
+     * can make.
+     * @param board
+     * @return
+     */
     public static double getNumberOfMoves(Board board)
     {
         Board tempBoard = new Board(board);
@@ -176,6 +235,12 @@ public class EvaluationFunction extends AI{
         return numberOfMoves;
     }
 
+    /**
+     * retrieves the ratio of difference between Black and White on Territory score. Based on the static territorial
+     * values.
+     * @param board
+     * @return
+     */
     public double getTerritory(Board board)
     {
         double territory;
@@ -189,30 +254,10 @@ public class EvaluationFunction extends AI{
         return territory;
     }
 
-
-    public void setWeightPoly(double[] weightPoly)
-    {
-        this.weightPoly = new double[WEIGHT_POLY_SIZE];
-        System.arraycopy(weightPoly, 0, this.weightPoly, 0, weightPoly.length);
-    }
-
-    public void normalizeWeightPoly(double newMaxWeight)
-    {
-        double maxWeight = 0;
-
-        for (double aWeightPoly : weightPoly)
-            if (Math.abs(aWeightPoly) > maxWeight)
-                maxWeight = Math.abs(aWeightPoly);
-
-        for (int i = 0; i < weightPoly.length; i++)
-            weightPoly[i] = weightPoly[i] * newMaxWeight / maxWeight;
-    }
-
-    public void normalizeWeightPoly()
-    {
-        normalizeWeightPoly(1.0);
-    }
-
+    /**
+     * allows customization of the territorial grid values.
+     * @param cellValues
+     */
     public void setTerritory(double[][] cellValues)
     {
         this.cellValues = new double[cBoard.getSize()][cBoard.getSize()];
@@ -223,6 +268,10 @@ public class EvaluationFunction extends AI{
         }
     }
 
+    /**
+     * adds the already defined static territorial values to the grid; this can be done for both a 4x4 board, 6x6 and
+     * 8x8
+     */
     public void setTerritory()
     {
         cellValues = new double[cBoard.getSize()][cBoard.getSize()];
@@ -263,6 +312,12 @@ public class EvaluationFunction extends AI{
         }
     }
 
+    /**
+     * retrieves the territory score for the specified player.
+     * @param board
+     * @param player
+     * @return
+     */
     public int getTerritoryScore(Board board, int player)
     {
         int score = 0;
@@ -276,6 +331,10 @@ public class EvaluationFunction extends AI{
         return score;
     }
 
+    /**
+     * initializes the partial coin weight polynomial
+     * @return
+     */
     public double[] coinWeightPoly() {
         double[] coinWeightPoly = new double[3];
         coinWeightPoly[0] = weightPoly[0];
@@ -284,6 +343,10 @@ public class EvaluationFunction extends AI{
         return coinWeightPoly;
     }
 
+    /**
+     * initializes the partial move weight polynomial
+     * @return
+     */
     public double[] moveWeightPoly() {
         double[] moveWeightPoly = new double[3];
         moveWeightPoly[0] = weightPoly[3];
@@ -292,6 +355,10 @@ public class EvaluationFunction extends AI{
         return moveWeightPoly;
     }
 
+    /**
+     * initializes the territory coin weight polynomial
+     * @return
+     */
     public double[] territoryWeightPoly() {
         double[] territoryWeightPoly = new double[3];
         territoryWeightPoly[0] = weightPoly[6];
@@ -300,6 +367,11 @@ public class EvaluationFunction extends AI{
         return territoryWeightPoly;
     }
 
+    /**
+     * Calculates the coin value scaling with the amount of empty squares
+     * @param filledSquares
+     * @return
+     */
     public double calcCoinWeight(int filledSquares)
     {
         double[] coinWeightPoly = coinWeightPoly();
@@ -307,6 +379,11 @@ public class EvaluationFunction extends AI{
         return coinWeight;
     }
 
+    /**
+     * Calculates the move value scaling with the amount of empty squares
+     * @param filledSquares
+     * @return
+     */
     public double calcMoveWeight(int filledSquares)
     {
         double[] moveWeightPoly = moveWeightPoly();
@@ -314,6 +391,11 @@ public class EvaluationFunction extends AI{
         return moveWeight;
     }
 
+    /**
+     * Calculates the territory value scaling with the amount of empty squares
+     * @param filledSquares
+     * @return
+     */
     public double calcTerritoryWeight(int filledSquares)
     {
         double[] territoryWeightPoly = territoryWeightPoly();
@@ -321,6 +403,10 @@ public class EvaluationFunction extends AI{
         return territoryWeight;
     }
 
+    /**
+     * getters and setters
+     * @return
+     */
     public double[][] getCellValues() {
         return cellValues;
     }
