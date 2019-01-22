@@ -1,6 +1,10 @@
 package AI;
 import Core.Board;
 
+/**
+ * AI interface
+ * @author Yvar Hulshof, Marco Rietjens
+ */
 public abstract class AI {
 
     protected EvaluationFunction evaluator;

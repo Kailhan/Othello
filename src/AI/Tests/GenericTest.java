@@ -2,11 +2,13 @@ package AI.Tests;
 import AI.AI;
 import Core.Board;
 import Core.Logic;
+import AI.PlayerModel;
 
 import static Core.Board.BLACK;
 import static Core.Board.WHITE;
 
 public class GenericTest {
+    private static PlayerModel playerModel;
     private static int player1Wins = 0;
     private static int player2Wins = 0;
     private static int draws = 0;
@@ -22,11 +24,15 @@ public class GenericTest {
             //if((i % (gamesToBeSimmed/5.0)) == 0) System.out.println("GTIter: " + i);
             boolean gameFinished = false;
             board = new Board(boardSize);
+//            playerModel = new PlayerModel(board);
+            System.out.println(i);
             int[] move = new int[2];
             while (!gameFinished) {
                 if(Logic.checkMovePossible(board)) {
                     if (board.getCurrentPlayer() == BLACK) {
                         move = player1.getBestMove(board);
+//                        playerModel.addMove(board, move);
+//                        playerModel.iterate(100);
                     }
                     if (board.getCurrentPlayer() == WHITE) {
                         move = player2.getBestMove(board);
@@ -58,6 +64,8 @@ public class GenericTest {
     public static int getPlayer2Wins() {
         return player2Wins;
     }
+
+    public static PlayerModel getPlayerModel() { return playerModel; }
 
     public static int getDraws() {
         return draws;

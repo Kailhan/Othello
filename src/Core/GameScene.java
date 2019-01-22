@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static Core.Board.BLACK;
@@ -39,11 +40,11 @@ public class GameScene extends BorderPane {
     private int tileSize;
     private int AI1Level;
     private int AI2Level;
-    private PlayerModel playerModel;
+    private static PlayerModel playerModel;
     private static String[] AIs;
     private static final int MINIMAX_DEPTH = 4;
     private static final int MINIMAXALPH_DEPTH = 4;
-    private static final int NEGASCOUT_DEPTH = 2;
+    private static final int NEGASCOUT_DEPTH = 5;
 
     private File discBlack = new File("src/Assets/disc_blackBgr.png");
     private File discWhite = new File("src/Assets/disc_whiteBgrFthr.png");
@@ -266,9 +267,7 @@ public class GameScene extends BorderPane {
         if(Logic.checkSquareAllowed(r, c, board))
         {
             playerModel.addMove(board, r, c);
-            System.out.println(playerModel.getError());
             playerModel.iterate(100);
-            System.out.println(playerModel.getError());
             updateBoard(r, c);
         }
     }
@@ -388,5 +387,7 @@ public class GameScene extends BorderPane {
     public Scene getGameScene() {
         return scene;
     }
+
+    public static PlayerModel getPlayerModel() {return playerModel;}
 }
 

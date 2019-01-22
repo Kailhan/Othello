@@ -4,12 +4,22 @@ import Core.*;
 
 import java.util.Random;
 
+/**
+ * Evaluation function adaption
+ * @author Martijn
+ */
 public class EvalRandom extends EvaluationFunction {
 
     public EvalRandom(Board board, double[] polyWeights){
         super(board,polyWeights);
     }
 
+    /**
+     * getBestMove function where the eventual score is multiplied by a random factor of the score this to make sure
+     * different play-outs will be done when playing against non random opponents.
+     * @param board current board for which we want to find the best move
+     * @return
+     */
     @Override
     public int[] getBestMove(Board board) {
         int moveCounter = 0;
@@ -56,6 +66,10 @@ public class EvalRandom extends EvaluationFunction {
             return move;
         }
 
+    /**
+     * super to Evaluation(double[] weightPoly)
+     * @param weightPoly
+     */
     public EvalRandom(double[] weightPoly){
         super(weightPoly);
     }
