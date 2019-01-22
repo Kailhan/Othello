@@ -2,6 +2,7 @@ package AI;
 
 import AI.Tests.GenericTest;
 import Core.Board;
+import Core.GameScene;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,20 @@ public class MiniMaxAlph extends AI {
 
     public double miniMaxAB(Node<Board> currentNode, double alpha, double beta, int playerValue) {
         if (currentNode.getChildren().size() == 0) {
-            double value = playerValue * evaluator.evaluate(currentNode.getData());
+            double value;
+
+//            PlayerModel playerModel = GenericTest.getPlayerModel();
+//            if (playerValue == Board.BLACK)
+//            {
+//                value = playerValue * playerModel.getEvaluationFunction().evaluate(currentNode.getData());
+//            }
+//            else
+//            {
+//                value = playerValue * evaluator.evaluate(currentNode.getData());
+//            }
+
+            value = playerValue * evaluator.evaluate(currentNode.getData());
+
             currentNode.setValue(value);
             return value;
 

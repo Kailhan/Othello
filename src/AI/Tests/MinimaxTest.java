@@ -49,17 +49,17 @@ public class MinimaxTest {
 
         MiniMaxAlph mini = new MiniMaxAlph(DEPTH,board);
 
-        MMAB_moveOrdering mmab2 = new MMAB_moveOrdering(10);
+        MMAB_moveOrdering mmab2 = new MMAB_moveOrdering(40);
         NS_moveOrdering ns_mo = new NS_moveOrdering(5);
         //MCTS_TreeReuse mcts = new MCTS_TreeReuse(moveTime, 1.414);
-
+        MCTS mcts = new MCTS(40, MCTS.STANDARD_EXPLORATION_PARAMETER);
 
         gamesToBeSimmed = (gamesToBeSimmed < 2) ? 2 : gamesToBeSimmed;
         gamesToBeSimmed = (gamesToBeSimmed % 2 != 0) ? gamesToBeSimmed + 1: gamesToBeSimmed;
-        GenericTest.test(mmab2,s, gamesToBeSimmed/2, 8);
+        GenericTest.test(mmab2,mcts, gamesToBeSimmed/2, 8);
         winsFirstMove = GenericTest.getPlayer1Wins();
         int draws = GenericTest.getDraws();
-        GenericTest.test(s, mmab2, gamesToBeSimmed/2, 8);
+        GenericTest.test(mcts, mmab2, gamesToBeSimmed/2, 8);
         winsSecondMove = GenericTest.getPlayer2Wins();
         draws = draws + GenericTest.getDraws();
 

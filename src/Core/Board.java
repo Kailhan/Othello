@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * Board data structure
- * @author Kailhan Hokstam
+ * @author Kailhan Hokstam, Marco Rietjens
  */
 
 public class Board implements Serializable {
@@ -38,7 +38,11 @@ public class Board implements Serializable {
         this.currentPlayer = BLACK;
     }
 
-    public Board(Board board) { // properly "deep" copy a board
+    /**
+     * properly deep copies a board
+     * @param board board to copy
+     */
+    public Board(Board board) {
         this.size = board.getSize();
         this.turn = board.getTurn();
         this.currentPlayer = board.getCurrentPlayer();
@@ -145,9 +149,8 @@ public class Board implements Serializable {
      * @param row specifies row of cell we want to update
      * @param col specifies column of cell we want to update
      */
-    public void applyMove(int row, int col) {
-//        EvalFunc_FixedTerr evaluator = new EvalFunc_FixedTerr(this, getBoardGrid());
-//        System.out.println(evaluator.evaluate());
+    public void applyMove(int row, int col)
+    {
         int[][] flippedDisks = Logic.getFlippedDisks(row, col, this);
         boardGrid[row][col] = currentPlayer;
         for (int[] flippedDisk : flippedDisks)
@@ -163,6 +166,9 @@ public class Board implements Serializable {
         applyMove(move[0], move[1]);
     }
 
+    /**
+     * Apply move, without actually making a move
+     */
     public void applyMove()
     {
         incrementTurn();
@@ -225,8 +231,13 @@ public class Board implements Serializable {
         return column;
     }
 
-
-
+    /**
+     * checks if a square has a certain state
+     * @param r row
+     * @param c column
+     * @param state state to compare to
+     * @return true if the square has the same state at state
+     */
     public boolean checkTile(int r, int c, int state) {
         return (boardGrid[r][c] == state);
     }

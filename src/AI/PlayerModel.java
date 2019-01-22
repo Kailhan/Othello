@@ -5,6 +5,10 @@ import Core.Logic;
 
 import java.util.Arrays;
 
+/**
+ * Stores, adapts, and evaluates the player model
+ * @author Marco Rietjens
+ */
 public class PlayerModel
 {
     private final int STRATEGY_AMOUNT = 3; //amount of strategies an evaluation function has
@@ -15,6 +19,11 @@ public class PlayerModel
     private GameState[] history; //history of boards and opponent moves
     private int moveCount; //amount of moves the opponent has made
 
+    /**
+     * constructor of playermodel
+     * @param board board to get size from
+     * @param LEARNING_RATE learning rate
+     */
     public PlayerModel(Board board, double LEARNING_RATE)
     {
         int size = board.getSize();
@@ -33,6 +42,9 @@ public class PlayerModel
         this(board, 0.03);
     }
 
+    /**
+     * nested class for keeping track of game states and the opponent move at that state
+     */
     public class GameState //nested class of state of the game with regards to opponent move
     {
         private Board[] possibleBoards; //choices the opponent had
@@ -75,17 +87,32 @@ public class PlayerModel
         }
     }
 
+    /**
+     * adds a move to the game state history
+     * @param board board at which the move was made
+     * @param move move that was made
+     */
     public void addMove(Board board, int[] move)
     {
         history[moveCount] = new GameState(board, move);
         moveCount++;
     }
 
+    /**
+     * addMove with other move notation
+     * @param board
+     * @param r row
+     * @param c column
+     */
     public void addMove(Board board, int r, int c)
     {
         addMove(board, new int[] {r, c});
     }
 
+    /**
+     * changes weights of the polynomial based on
+     * @param count
+     */
     public void iterate(int count)
     {
         for (int c = 0; c < count; c++) //iterate a certain amount of times
@@ -185,5 +212,12 @@ public class PlayerModel
     public int[] getMove(Board board)
     {
         return model.getBestMove(board);
+    }
+
+    public Board getBoard(Board board)
+    {
+        Board tempBoard = new Board(board);
+        tempBoard.applyMove(model.getBestMove(board));
+        return tempBoard;
     }
 }
