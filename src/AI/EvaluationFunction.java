@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 /**
  * Evaluation function; combination of heuristic methods.
- * @author Martijn
+ * @author Martijn Hilders
  */
 public class EvaluationFunction extends AI{
 

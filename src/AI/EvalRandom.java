@@ -6,7 +6,7 @@ import java.util.Random;
 
 /**
  * Evaluation function adaption
- * @author Martijn
+ * @author Martijn Hilders
  */
 public class EvalRandom extends EvaluationFunction {
 

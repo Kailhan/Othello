@@ -76,7 +76,7 @@ public class GameScene extends BorderPane {
     private ComboBox<String> AI1;
     private ComboBox<String> AI2;
     private MCTS_TreeReuse mcts_treeReuse;
-    private static final long timeForMoveInMs = 2000;
+    private static final long timeForMoveInMs = 500;
 
     public GameScene(Stage primaryStage, Settings settings) {
         this.settings = settings;

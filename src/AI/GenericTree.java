@@ -2,6 +2,10 @@ package AI;
 import java.util.*;
 
 
+/**
+ * generic tree interface
+ * @param <T>
+ */
 public interface GenericTree<T> {
 
     Node<T> getRoot();
