@@ -8,15 +8,15 @@ import AI.Tests.GenericTest;
 public class MCTSTest {
 
     public static void main(String[] args) {
-        int games = 100;
-        int totalSims1 = 50;
+        int games = 1000;
+        int totalSims1 = 20;
         int totalSims2 = 1;
-        long timeInMs = 50;
+        long timeInMs = 10;
         int size = 8;
 
-        //MCTS mcts1 = new MCTS(totalSims1, 0.76);
-        MCTS_TreeReuse mcts1 = new MCTS_TreeReuse(totalSims1, 0.76);
-        MCTS mcts2 = new MCTS(timeInMs, 0.76);
+        MCTS mcts1 = new MCTS(timeInMs, 0.76);
+        MCTS_TreeReuse mcts2 = new MCTS_TreeReuse(timeInMs, 0.76);
+        //MCTS mcts2 = new MCTS(timeInMs, 0.76);
 
         long startTime = System.nanoTime();
 

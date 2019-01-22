@@ -10,7 +10,7 @@ import Core.Board;
 
 /**
  * Version of minimax with alpha beta pruning adapted for use in Genetic Algorithm
- * @author Kailhan
+ * @author Kailhan Hokstam
  */
 
 public class GA_MiniMaxAlph extends MiniMaxAlph {
