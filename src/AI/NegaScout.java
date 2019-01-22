@@ -3,7 +3,10 @@ package AI;
 import Core.*;
 
 import java.util.List;
-
+/**
+ * This class contains the NegaScout algorithm along with the best move for it
+ * @author Maaike & Yvar
+ */
 public class NegaScout extends AI {
     int depth;
     private GameTree gameTree;
@@ -21,15 +24,25 @@ public class NegaScout extends AI {
         this.gameTree = gameTree;
     }
 
+    public NegaScout(int depth, Board board) {
+        this.depth = depth;
+        this.evaluator = new EvaluationFunction(board);
+    }
+
     public double evaluateFitness(int gamesToBeSimmed, int boardSize) {
         return -1;
     }
 
+    /**
+     * Finds best move based for board on NegaScout algorithm
+     * @param board board for which best move needs to be found
+     * @return best move
+     */
     public int[] getBestMove(Board board){
         Node<Board> root = getRootMinimaxed(board);
 
         int[] bestMove = new int[2];
-        try {
+       try {
             bestMove[0] = selectMove(root).getRow();
             bestMove[1] = selectMove(root).getColumn();
         }
@@ -39,41 +52,11 @@ public class NegaScout extends AI {
         return bestMove;
     }
 
-    public NegaScout(int depth, Board board) {
-        this.depth = depth;
-        this.evaluator = new EvaluationFunction(board);
-    }
-
-//    public double NegaSAlg(Node<Board> currentNode, double alpha, double beta, int player) {
-//        if (currentNode.getChildren().size() == 0) {
-//            //System.out.println(player * evaluator.evaluate(currentNode.getData()));
-//            double value = player * evaluator.evaluate(currentNode.getData());
-//            currentNode.setValue(value);
-//            return value;
-//        } else {
-//            double value = 0;
-//            for (Node<Board> child : currentNode.getChildren()) {
-//                if (child == currentNode.getChildren().get(0)) {
-//                    value = -1 * NegaSAlg(child, -1 * beta, -1 * alpha, -1 * player);
-//                    //currentNode.setValue(value);
-//                } else {
-//                    value = -1 * NegaSAlg(child, -1 * alpha - 1, -1 * alpha, -1 * player);
-//                    if (alpha < value && value < beta) {
-//                        value = -1 * NegaSAlg(child, -1 * beta, -1 * value, -1 * player);
-//                        //currentNode.setValue(value);
-//                    }
-//                    //currentNode.setValue(value);
-//                }
-//                alpha = Math.max(alpha, value);
-//                if (alpha >= beta) {
-//                    break;
-//                }
-//            }
-//            currentNode.setValue(alpha);
-//            return alpha;
-//        }
-//    }
-
+    /**
+     * Chooses the move according to the best move
+     * @param root root of the tree that is created
+     * @return move
+     */
     public Node<Board> selectMove(Node<Board> root) {
         for (Node<Board> currentChild : root.getChildren()) {
             if (-1 * currentChild.getValue() == root.getValue()) return currentChild;
@@ -81,30 +64,16 @@ public class NegaScout extends AI {
         return null;
     }
 
-//    public double NegaSAlg(Node<Board> currentNode, double alpha, double beta, int player) {
-//        if (depth == 0 || currentNode.getChildren().size() == 0) {
-//            //System.out.println(player * evaluator.evaluate(currentNode.getData()));
-//            double value = player * evaluator.evaluate(currentNode.getData());
-//            currentNode.setValue(value);
-//            return value;
-//        } else {
-//            double value = Integer.MIN_VALUE;
-//            double b = beta;
-//            for (Node<Board> child : currentNode.getChildren()) {
-//                value = -NegaSAlg(child, -b, -alpha, -player);
-//                if (alpha < value && value < beta && child != currentNode.getChildren().get(0))
-//                    value = -NegaSAlg(child, -beta, -alpha, -player);
-//                alpha = Math.max(alpha, value);
-//                if (beta <= alpha) break;
-//                b = alpha + 1;
-//            }
-//            currentNode.setValue(alpha);
-//            return alpha;
-//        }
-//    }
-
+    /**
+     * NegaScout algorithm using an alpha-beta window
+     * @param currentNode the node that is currently viewed
+     * @param alpha alpha being the cutoff point of the tree
+     * @param beta
+     * @param player player being the black or white player
+     * @return the minimax evaluation value of all the nodes
+     */
     public double NegaSAlg(Node<Board> currentNode, double alpha, double beta, int player) {
-        if (depth == 0 || currentNode.getChildren().size() == 0) {
+        if (currentNode.getChildren().size() == 0) {
             //System.out.println(player * evaluator.evaluate(currentNode.getData()));
             double value = player * evaluator.evaluate(currentNode.getData());
             currentNode.setValue(value);

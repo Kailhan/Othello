@@ -43,7 +43,7 @@ public class GameScene extends BorderPane {
     private static String[] AIs;
     private static final int MINIMAX_DEPTH = 4;
     private static final int MINIMAXALPH_DEPTH = 4;
-    private static final int NEGASCOUT_DEPTH = 2;
+    private static final int NEGASCOUT_DEPTH = 5;
 
     private File discBlack = new File("src/Assets/disc_blackBgr.png");
     private File discWhite = new File("src/Assets/disc_whiteBgrFthr.png");
